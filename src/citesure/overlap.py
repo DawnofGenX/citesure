@@ -39,6 +39,11 @@ Design (deterministic, NO LLM, NO embeddings — NLI is Phase 3):
 Pipeline: fetch → classify reachability (tier 1) → if reachable with no red
 flags, run the overlap tier (tier 2) → final status. ``tier_reached`` is 2
 whenever the overlap tier ran.
+
+Phase 3 (D2/D6): with ``use_nli=True`` a third tier runs on top of tiers 1+2
+— a local cross-encoder scores entailment for each (claim, best-passage) pair
+in ONE batched forward pass, and the D3 banding (see :mod:`citesure.nli`)
+produces the final status. ``tier_reached`` is 3 whenever the NLI tier ran.
 """
 
 from __future__ import annotations
@@ -266,8 +271,17 @@ def status_for_score(score: float) -> Status:
 # ---------------------------------------------------------------------------
 
 
-async def _verify_one(citation: Citation, use_overlap: bool) -> Verdict:
-    """Verify a single citation: fetch → tier 1 → (if clean) tier 2."""
+async def _verify_one(
+    citation: Citation, use_overlap: bool
+) -> tuple[Verdict, dict | None]:
+    """Verify a single citation: fetch → tier 1 → (if clean) tier 2.
+
+    Returns ``(verdict, nli_context)`` where ``nli_context`` is
+    ``{"claim": str, "passage": str, "marker_locatable": bool}`` when the
+    NLI tier has something to score for this citation (a fetched page or
+    excerpt with a usable best passage), else ``None`` (tier-1 outcomes,
+    JS pages with no extractable text, empty claims).
+    """
     try:
         page = await fetch(citation.url)
     except Exception as exc:  # malformed URL etc. → treat as unreachable
@@ -280,6 +294,7 @@ async def _verify_one(citation: Citation, use_overlap: bool) -> Verdict:
     tier = 1
     score: float | None = None
     evidence = page.text or ""
+    nli_context: dict | None = None
 
     if use_overlap and status is Status.SUPPORTED:
         tier = 2
@@ -302,38 +317,90 @@ async def _verify_one(citation: Citation, use_overlap: bool) -> Verdict:
             evidence = target
         else:
             passages = segment_passages(target)
-            score, snippet = score_overlap(citation.claim, passages)
+            ranked = rank_passages(citation.claim, passages)
+            if ranked:
+                score, best_passage = ranked[0]
+            else:
+                score, best_passage = 0.0, ""
             status = status_for_score(score)
             notes.append(
                 f"overlap tier: score {score:.3f} against {source_label}; "
                 f"thresholds: >= {HIGH_OVERLAP_THRESHOLD} supported, "
                 f">= {LOW_OVERLAP_THRESHOLD} ambiguous, below unsupported"
             )
-            evidence = snippet
+            evidence = _clip_snippet(best_passage)
+            if best_passage:
+                nli_context = {
+                    "claim": clean_claim(citation.claim),
+                    "passage": best_passage,
+                    "marker_locatable": True,
+                }
 
-    return Verdict(
-        citation_id=citation.citation_id,
-        url=citation.url,
-        status=status,
-        tier_reached=tier,
-        score=score,
-        evidence=evidence,
-        notes=notes,
+    return (
+        Verdict(
+            citation_id=citation.citation_id,
+            url=citation.url,
+            status=status,
+            tier_reached=tier,
+            score=score,
+            evidence=evidence,
+            notes=notes,
+        ),
+        nli_context,
     )
 
 
 async def verify_citations(
-    citations: list[Citation], *, use_overlap: bool = True
+    citations: list[Citation], *, use_overlap: bool = True, use_nli: bool = False,
+    nli_model: str | None = None,
 ) -> Report:
-    """Verify citations through the full default pipeline (D2 tiers 1+2).
+    """Verify citations through the full pipeline (D2 tiers 1+2, +3 with NLI).
 
     Each citation is fetched concurrently, classified at tier 1
     (reachability), and — when the page is reachable with no red flags and
     ``use_overlap`` is true — refined at tier 2 (content overlap).
     ``tier_reached`` is 2 whenever the overlap tier ran. Pass
     ``use_overlap=False`` to reproduce the Phase-1 tier-1-only behaviour.
+
+    With ``use_nli=True`` (Phase 3, D2/D6) the NLI cross-encoder
+    (``nli_model`` resolved via the D6 chain) scores every scorable
+    (claim, best-passage) pair in one batched forward pass and the D3
+    banding produces the final status; ``tier_reached`` is 3 whenever the
+    NLI tier ran. Model-load failures raise :class:`citesure.nli.NLIError`
+    (fail fast — no silent fallback).
     """
-    verdicts = list(
+    results = list(
         await asyncio.gather(*(_verify_one(c, use_overlap) for c in citations))
     )
+    verdicts: list[Verdict] = [v for v, _ in results]
+
+    if use_nli:
+        from .nli import apply_nli_tier, get_nli_model, score_nli_batch
+
+        # Load once (lazy download on first use), then score all pairs in a
+        # single batched pass — deterministic given the same model+input.
+        encoder = get_nli_model(nli_model)
+        eligible = [(i, ctx) for i, (_, ctx) in enumerate(results) if ctx]
+        if eligible:
+            pairs = [(ctx["claim"], ctx["passage"]) for _, ctx in eligible]
+            scores = score_nli_batch(encoder, pairs)
+            for (i, ctx), s in zip(eligible, scores):
+                verdict = verdicts[i]
+                final, tier, new_score, notes = apply_nli_tier(
+                    verdict.status,
+                    list(verdict.notes),
+                    nli_score=s,
+                    marker_locatable=ctx["marker_locatable"],
+                    evidence=verdict.evidence,
+                )
+                verdicts[i] = Verdict(
+                    citation_id=verdict.citation_id,
+                    url=verdict.url,
+                    status=final,
+                    tier_reached=tier,
+                    score=new_score,
+                    evidence=verdict.evidence,
+                    notes=notes,
+                )
+
     return Report.from_verdicts(verdicts)

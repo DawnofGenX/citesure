@@ -70,7 +70,8 @@ async def _fetch_safe(url: str) -> FetchedPage:
 
 
 async def verify_citations(
-    citations: list[Citation], *, use_overlap: bool = False
+    citations: list[Citation], *, use_overlap: bool = False, use_nli: bool = False,
+    nli_model: str | None = None,
 ) -> Report:
     """Verify citations and build a :class:`Report`.
 
@@ -83,11 +84,26 @@ async def verify_citations(
     this delegates to :func:`citesure.overlap.verify_citations`, which adds
     the content-overlap tier for pages that reach tier 1 cleanly
     (``tier_reached=2`` whenever the overlap tier ran).
+
+    With ``use_nli=True`` (Phase 3, D2/D6) the NLI entailment tier runs on
+    top of tiers 1+2: the cross-encoder (resolved via the D6 chain from
+    ``nli_model`` → ``CITECHECK_NLI_MODEL`` → default) scores each
+    (claim, best-passage) pair and the D3 banding produces the final status
+    (``tier_reached=3`` whenever the NLI tier ran). Model-load failures raise
+    :class:`citesure.nli.NLIError` — fail fast, no silent fallback.
+
+    ``use_nli`` implies ``use_overlap``: the NLI tier runs *after* the
+    reachability + overlap tiers (D2), so enabling it without overlap would
+    be meaningless.
     """
+    if use_nli:
+        use_overlap = True
     if use_overlap:
         from .overlap import verify_citations as _verify_with_overlap
 
-        return await _verify_with_overlap(citations, use_overlap=True)
+        return await _verify_with_overlap(
+            citations, use_overlap=True, use_nli=use_nli, nli_model=nli_model
+        )
 
     pages = await asyncio.gather(
         *(_fetch_safe(c.url) for c in citations)

@@ -15,6 +15,17 @@ from __future__ import annotations
 
 from .citations import Citation, extract_citations, load_input
 from .models import Report, Status, Verdict
+from .nli import (
+    DEFAULT_NLI_MODEL,
+    NLIError,
+    NLICrossEncoder,
+    apply_nli_tier,
+    get_nli_model,
+    resolve_nli_model,
+    score_nli,
+    score_nli_batch,
+    status_for_nli,
+)
 from .overlap import (
     DEFAULT_TOP_K,
     HIGH_OVERLAP_THRESHOLD,
@@ -46,4 +57,14 @@ __all__ = [
     "DEFAULT_TOP_K",
     "HIGH_OVERLAP_THRESHOLD",
     "LOW_OVERLAP_THRESHOLD",
+    # NLI tier (Phase 3)
+    "NLIError",
+    "NLICrossEncoder",
+    "get_nli_model",
+    "resolve_nli_model",
+    "score_nli",
+    "score_nli_batch",
+    "status_for_nli",
+    "apply_nli_tier",
+    "DEFAULT_NLI_MODEL",
 ]

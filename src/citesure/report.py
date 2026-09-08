@@ -43,19 +43,24 @@ def _verdict_label(verdict: Verdict, strict: bool) -> str:
 
 
 def render_human(
-    report: Report, meta: dict, threshold: float, strict: bool
+    report: Report, meta: dict, threshold: float, strict: bool,
+    nli_model: str | None = None,
 ) -> str:
     """Render the human-readable Markdown-style report to a string.
 
     Per-citation lines carry a status symbol, label, url, overlap score
     (tier 2) and an evidence snippet; a summary block closes with totals,
-    per-status counts and the pass/decision line.
+    per-status counts and the pass/decision line. When ``nli_model`` is
+    given (the NLI tier is on), the header shows which cross-encoder was
+    used (D6).
     """
     lines: list[str] = [
         f"# citesure verification report — {report.total} citation(s) "
-        f"(input format: {meta.get('format', 'unknown')})",
-        "",
+        f"(input format: {meta.get('format', 'unknown')})"
     ]
+    if nli_model:
+        lines.append(f"NLI: {nli_model}")
+    lines.append("")
     for v in report.verdicts:
         symbol = _STATUS_SYMBOLS.get(v.status, "•")
         score_part = f" score={v.score:.3f}" if v.score is not None else ""
@@ -92,9 +97,12 @@ def render_human(
     return "\n".join(lines)
 
 
-def render_markdown(report: Report, meta: dict, threshold: float, strict: bool) -> str:
+def render_markdown(
+    report: Report, meta: dict, threshold: float, strict: bool,
+    nli_model: str | None = None,
+) -> str:
     """Markdown report file variant (same content as :func:`render_human`)."""
-    return render_human(report, meta, threshold, strict)
+    return render_human(report, meta, threshold, strict, nli_model=nli_model)
 
 
 def exit_code(report: Report, threshold: float, strict: bool) -> int:

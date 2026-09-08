@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import argparse
 import json
 import subprocess
 import sys
@@ -147,13 +148,30 @@ def test_md_flag_writes_markdown_file(tmp_path: Path):
 
 
 def test_nli_flags_accepted_with_notice(tmp_path: Path, capsys):
+    # Phase 3: --nli/--nli-model are REAL now. An unloadable model name must
+    # fail fast with a clear error and exit code 2 (distinct from the
+    # verification-failure exit 1).
     rc = main(
-        ["verify", str(SAMPLE_MD), "--nli", "--nli-model", "some/model",
+        ["verify", str(SAMPLE_MD), "--nli", "--nli-model", "citesure/does-not-exist-xyz",
          "--cache-dir", str(tmp_path)]
     )
     err = capsys.readouterr().err
-    assert "Phase 3" in err
-    assert rc == 0  # same report as without --nli
+    assert rc == 2
+    assert "could not load NLI model" in err
+    assert "citesure/does-not-exist-xyz" in err
+
+
+def test_nli_model_flag_alone_implies_nli_and_help_lists_flags():
+    from citesure.cli import _build_parser
+
+    parser = _build_parser()
+    # The flags live on the `verify` subparser, not the top-level parser.
+    verify_parser = next(
+        a for a in parser._subparsers._actions if isinstance(a, argparse._SubParsersAction)
+    ).choices["verify"]
+    help_text = verify_parser.format_help()
+    assert "--nli" in help_text
+    assert "--nli-model" in help_text
 
 
 # ---------------------------------------------------------------------------

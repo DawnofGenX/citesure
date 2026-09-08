@@ -52,7 +52,10 @@ where = ["src"]
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 # Live-network tests are skipped by default; enable with `-m live`.
-addopts = '-m "not live"'
+# NLI model tests (real DeBERTa-v3 weights) are skipped by default; enable
+# with `-m nli` once the model has been downloaded (~425 MB).
+addopts = '-m "not live and not nli"'
 markers = [
     "live: tests that hit the real internet (skipped by default)",
+    "nli: tests that require the real NLI cross-encoder weights (skipped by default)",
 ]

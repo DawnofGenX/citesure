@@ -1619,3 +1619,233 @@ The corpus test iterates every case and asserts its expected status — a real a
 
 ╰──────────────────────────────────────────────────────────────────────────────╯
   ┊ 💻 preparing terminal…
+  ┊ 💻 $         git add -A + 3 commands  0.0s
+  ┊ 🔧 preparing patch…
+  ┊ 🔧 patch     /home/hermes/citesure/PROGRESS.md  0.1s
+  ┊ review diff
+a//home/hermes/citesure/PROGRESS.md → b//home/hermes/citesure/PROGRESS.md
+@@ -60,3 +60,34 @@
+ 
+ **Gaps:** none for Phase 1 scope. (Overlap/NLI tiers are later phases by design.)
+ Commit: 92e2980.
++
++### Phase 2 — Overlap tier + reporting — COMPLETE (2026-09-08)
++Target: software-engineer (dispatched ~15:47, finished 17:52, ~2h wall — same
++slow-provider pattern; one context-compaction mid-run, no impact).
++
++**Built (verified by orchestrator on disk):**
++- `src/citesure/overlap.py` (339 ln) — D4 citation-anchored windows: passage
++  segmentation, top-k relevance ranking, deterministic overlap scoring
++  (module-level thresholds), excerpt override path. NO LLM/embeddings.
++- `src/citesure/report.py` (113 ln) — report rendering (human + markdown).
++- `tests/fixtures/mock_server.py` (118 ln) — local http.server on 127.0.0.1
++  serving 404/500/timeout routes (D9 "5 unreachable via local mock server").
++- `tests/fixtures/cases.json` — 27-case frozen corpus with expected_status per
++  case; 20 fixture HTML pages under tests/fixtures/pages/.
++- `tests/test_overlap.py`, `tests/test_corpus.py` (189 ln) — corpus test iterates
++  EVERY case and asserts its expected status (real acceptance gate).
++- CLI extended: --strict now real, --md output, exit-code semantics documented.
++
++**Orchestrator's own verification (not subagent claims):**
++- `.venv/bin/python -m pytest -x -q` → **113 passed in 50.14s** (exit 0).
++- `pytest tests/test_corpus.py -q` → 4 passed in 22.18s (full-corpus gate).
++- `citesure verify tests/fixtures/sample.md` → PASS, pass_rate 0.8, exit 0.
++- `citesure verify tests/fixtures/cases.json --json [--strict]` → exit 1
++  (pass_rate 0.2222 < 0.8); strict semantics correct.
++- Corpus composition vs D9: supported=6(≥5), unsupported=9(≥5), unreachable=5
++  (incl. 3 mock-server), paywalled=3, ambiguous=4 (incl. JS-page), retraction/
++  dead-link=3, local/file:// paths=22(≥3). Meets/exceeds D9.
++- Overlap tier genuinely exercised: tier_reached=2 on 17/27 verdicts, real
++  numeric scores (e.g. sup1 score=0.9444).
++
++**Gaps:** none for Phase 2 scope. Commit: 92845bd.
+
+╭─ ⚕ Hermes ───────────────────────────────────────────────────────────────────╮
+Dispatching Phase 3 (NLI tier) to ai-ml-engineer. This phase includes the ~425MB model download, which may take up to 10 minutes.
+
+╰──────────────────────────────────────────────────────────────────────────────╯
+  ┊ 💻 preparing terminal…
+  ┊ 💻 $         hermes -p ai-ml-engineer chat --yolo --query-file /tmp/citesure-phase3-brief.md  0.0s
+
+╭─ ⚕ Hermes ───────────────────────────────────────────────────────────────────╮
+Phase 3 dispatched to ai-ml-engineer. This phase includes the ~425MB model download (up to 10 min). Let me monitor, watching for nli.py creation and the download activity.
+
+╰──────────────────────────────────────────────────────────────────────────────╯
+  ┊ 💻 preparing terminal…
+  ┊ 💻 $         sleep 180 + 10 commands  191.8s
+
+╭─ ⚕ Hermes ───────────────────────────────────────────────────────────────────╮
+Still exploring (reading Phase 1-2 code). Cache dir exists (88K — likely just structure). Let me continue monitoring, watching for nli.py and cache growth (the 425MB download).
+
+╰──────────────────────────────────────────────────────────────────────────────╯
+  ┊ 💻 preparing terminal…
+  ┊ 💻 $         for i in $(seq 1 7) + 11 commands  408.7s
+
+╭─ ⚕ Hermes ───────────────────────────────────────────────────────────────────╮
+It's probing the CrossEncoder API surface (transformers vs sentence-transformers). Good — it's choosing the right loader before writing code. Continuing to monitor for nli.py and the download.
+
+╰──────────────────────────────────────────────────────────────────────────────╯
+  ┊ 💻 preparing terminal…
+  ┊ 💻 $         for i in $(seq 1 7) + 11 commands  407.6s
+
+╭─ ⚕ Hermes ───────────────────────────────────────────────────────────────────╮
+Still exploring (reading test_overlap.py, cases.json structure). Continuing to monitor for nli.py and the model download.
+
+╰──────────────────────────────────────────────────────────────────────────────╯
+  ┊ 💻 preparing terminal…
+  ┊ 💻 $         for i in $(seq 1 7) + 11 commands  407.4s
+
+╭─ ⚕ Hermes ───────────────────────────────────────────────────────────────────╮
+Frozen at 175 for ~6 min (long generation turn, same pattern). Let me confirm the process is alive and continue waiting.
+
+╰──────────────────────────────────────────────────────────────────────────────╯
+  ┊ 💻 preparing terminal…
+  ┊ 💻 $         PID=$(pgrep -f "hermes -p ai-ml-engineer" | while read p + 15 commands  350.5s
+
+╭─ ⚕ Hermes ───────────────────────────────────────────────────────────────────╮
+Alive (25min, established API connection, in a long generation turn). Continuing to monitor for nli.py and the model download.
+
+╰──────────────────────────────────────────────────────────────────────────────╯
+  ┊ 💻 preparing terminal…
+  ┊ 💻 $         for i in $(seq 1 7) + 11 commands  409.1s
+
+╭─ ⚕ Hermes ───────────────────────────────────────────────────────────────────╮
+nli.py is now created. It's wiring the tier-3 pass. Continuing to monitor for the model download (cache growth) and test_nli.py.
+
+╰──────────────────────────────────────────────────────────────────────────────╯
+  ┊ 💻 preparing terminal…
+  ┊ 💻 $         for i in $(seq 1 7) + 11 commands  407.5s
+
+╭─ ⚕ Hermes ───────────────────────────────────────────────────────────────────╮
+It's testing HuggingFace reachability (critical for the model download). Let me see that result and continue monitoring.
+
+╰──────────────────────────────────────────────────────────────────────────────╯
+  ┊ 💻 preparing terminal…
+  ┊ 💻 $         grep -iE "HF (reachable|unreachable)|huggingface" /tmp/citesure-phase3-out.log + 13 commands  409.9s
+
+╭─ ⚕ Hermes ───────────────────────────────────────────────────────────────────╮
+Two signals: fail-fast verified (clean NLIError in ~9.5s), but there's a "Response truncated — stream ended before completion" warning and the cache is still only 92K (model not downloaded yet). Let me check HF reachability result and keep monitoring.
+
+╰──────────────────────────────────────────────────────────────────────────────╯
+  ┊ 💻 preparing terminal…
+  ┊ 💻 $         echo "=== HF reachability result ===" + 16 commands  409.8s
+
+╭─ ⚕ Hermes ───────────────────────────────────────────────────────────────────╮
+test_nli.py is created. Cache still 92K (model not yet downloaded). Two stream-truncation warnings occurred but the agent is continuing. Let me monitor for the model download attempt and completion.
+
+╰──────────────────────────────────────────────────────────────────────────────╯
+  ┊ 💻 preparing terminal…
+  ┊ 💻 $         for i in $(seq 1 7) + 10 commands  410.3s
+
+╭─ ⚕ Hermes ───────────────────────────────────────────────────────────────────╮
+It's creating a tiny local model (BertConfig + tokenizer) for the model-swap-to-local-path test — a smart way to verify swap without the big download. Let me continue monitoring for the real model download attempt and completion.
+
+╰──────────────────────────────────────────────────────────────────────────────╯
+  ┊ 💻 preparing terminal…
+  ┊ 💻 $         for i in $(seq 1 7) + 10 commands  410.8s
+
+╭─ ⚕ Hermes ───────────────────────────────────────────────────────────────────╮
+Still iterating on tests (cache still 92K — the 425MB model not yet downloaded). Let me continue monitoring, watching specifically for the download (cache growth) and completion.
+
+╰──────────────────────────────────────────────────────────────────────────────╯
+  ┊ 💻 preparing terminal…
+  ┊ 💻 $         for i in $(seq 1 7) + 10 commands  410.4s
+
+╭─ ⚕ Hermes ───────────────────────────────────────────────────────────────────╮
+The subagent hit a test hang (>420s vs ~50s before) and is debugging it verbosely. This is a real issue it's working through. Let me continue monitoring.
+
+╰──────────────────────────────────────────────────────────────────────────────╯
+  ┊ 💻 preparing terminal…
+  ┊ 💻 $         for i in $(seq 1 7) + 10 commands  410.7s
+
+╭─ ⚕ Hermes ───────────────────────────────────────────────────────────────────╮
+All tests pass (100%) but the process hangs in teardown — a real bug (likely a non-daemon thread). The subagent is investigating. This matters for CI too. Let me keep monitoring.
+
+╰──────────────────────────────────────────────────────────────────────────────╯
+  ┊ 💻 preparing terminal…
+  ┊ 💻 $         for i in $(seq 1 7) + 10 commands  409.9s
+
+╭─ ⚕ Hermes ───────────────────────────────────────────────────────────────────╮
+Cache grew 92K→132K (something downloaded). Still debugging the teardown hang. Continuing to monitor.
+
+╰──────────────────────────────────────────────────────────────────────────────╯
+  ┊ 💻 preparing terminal…
+  ┊ 💻 $         for i in $(seq 1 7) + 10 commands  408.0s
+
+╭─ ⚕ Hermes ───────────────────────────────────────────────────────────────────╮
+The 425MB model download has started (44K so far, slow). The subagent is measuring throughput. This is the expected Phase-3 download step. Let me monitor cache growth over a longer window.
+
+╰──────────────────────────────────────────────────────────────────────────────╯
+  ┊ 💻 preparing terminal…
+  ┊ 💻 $         for i in $(seq 1 7) + 10 commands  447.7s
+  ┊ 💻 preparing terminal…
+  ┊ 💻 $         (grep -q "EXIT=" /tmp/citesure-phase3-out.log + 6 commands  0.0s
+
+╭─ ⚕ Hermes ───────────────────────────────────────────────────────────────────╮
+The model download is in progress but slow, and it's holding the HF cache lock (causing a CLI test to hang). The subagent is waiting for the download to finish. Let me monitor cache growth over a longer window to see if the ~425MB completes or stalls.
+
+╰──────────────────────────────────────────────────────────────────────────────╯
+  ┊ 💻 preparing terminal…
+  ┊ 💻 $         for i in $(seq 1 6) + 10 commands  382.8s
+
+╭─ ⚕ Hermes ───────────────────────────────────────────────────────────────────╮
+Good — 143 passed, 4 deselected (the nli-marked model tests). The download stalled at 132K (not full 425MB). The subagent is finalizing. Let me wait for completion.
+
+╰──────────────────────────────────────────────────────────────────────────────╯
+  ┊ 💻 preparing terminal…
+  ┊ 💻 $         for i in $(seq 1 7) + 9 commands  59.4s
+
+╭─ ⚕ Hermes ───────────────────────────────────────────────────────────────────╮
+Phase 3 finished (2h 2m). Now I verify independently — full suite, NLI module substance, D6 chain, fail-fast, and model-download status.
+
+╰──────────────────────────────────────────────────────────────────────────────╯
+  ┊ 💻 preparing terminal…
+  ┊ 💻 $         echo "=== MY OWN FULL SUITE ===" + 8 commands  71.0s
+
+╭─ ⚕ Hermes ───────────────────────────────────────────────────────────────────╮
+My own run: 143 passed, 4 deselected (the nli-marked model tests). nli.py (438 ln) + test_nli.py (591 ln) exist. Model download did NOT complete (cache 132K, no weight files). Let me verify the D6 chain and fail-fast myself.
+
+╰──────────────────────────────────────────────────────────────────────────────╯
+  ┊ 💻 preparing terminal…
+  ┊ 💻 $         echo "=== D6 resolution chain (my own test) ===" + 4 commands  19.1s
+
+╭─ ⚕ Hermes ───────────────────────────────────────────────────────────────────╮
+Fail-fast works (clean NLIError). Let me verify the D6 priority chain (arg > env > default) directly.
+
+╰──────────────────────────────────────────────────────────────────────────────╯
+  ┊ 💻 preparing terminal…
+  ┊ 💻 $         .venv/bin/python -c " import os import citesure.nli as nli # 1. default (no arg, no env) os.environ.pop('CITECHECK_NLI_MODEL', None) print('default :', nli.resolve_nli_model(None)) # 2. env only os.environ['CITECHECK_NLI_MODEL'] = 'env-model/name' print('env only :', nli.resolve_nli_model(None)) # 3. arg overrides env print('arg over env :', nli.resolve_nli_model('flag-model/name')) # 4. empty/None arg falls back to env print('empty arg :', nli.resolve_nli_model('')) os.environ.pop('CITECHECK_NLI_MODEL', None) "  0.4s
+
+╭─ ⚕ Hermes ───────────────────────────────────────────────────────────────────╮
+D6 chain verified (default → env → arg priority all correct). Let me confirm the --nli CLI flag is genuinely wired (not just accepted) and the banding logic is real, then assess the model download.
+
+╰──────────────────────────────────────────────────────────────────────────────╯
+  ┊ 💻 preparing terminal…
+  ┊ 💻 $         grep -nE "use_nli|nli_model|--nli|NLI tier lands|Phase 3" src/citesure/cli.py + 6 commands  0.0s
+
+╭─ ⚕ Hermes ───────────────────────────────────────────────────────────────────╮
+NLI is genuinely wired: --nli/--nli-model flags, use_nli computed, nli_band() with D3 thresholds (0.7/0.3), documented combination rules. Let me confirm the pipeline actually threads use_nli through to tier 3, then commit Phase 3.
+
+╰──────────────────────────────────────────────────────────────────────────────╯
+  ┊ 💻 preparing terminal…
+  ┊ 💻 $         echo "=== overlap.verify_citations signature ===" + 3 commands  0.0s
+
+╭─ ⚕ Hermes ───────────────────────────────────────────────────────────────────╮
+The CLI imports verify_citations from reachability but passes use_nli. Let me confirm reachability's version threads that through to the full pipeline (not silently dropping it).
+
+╰──────────────────────────────────────────────────────────────────────────────╯
+  ┊ 💻 preparing terminal…
+  ┊ 💻 $         sed -n '72,120p' src/citesure/reachability.py  0.0s
+
+╭─ ⚕ Hermes ───────────────────────────────────────────────────────────────────╮
+NLI is fully wired end-to-end (CLI → reachability → overlap → tier-3 batched scoring, use_nli implies overlap). Code is complete; the only gap is the model download (stalled at 132K/425MB — network-limited). Let me re-confirm my suite run exits cleanly (the subagent reported a teardown hang) before committing.
+
+╰──────────────────────────────────────────────────────────────────────────────╯
+  ┊ 💻 preparing terminal…
+  ┊ 💻 $         echo "=== clean-exit check (timeout 180s) ===" + 2 commands  69.4s
+
+╭─ ⚕ Hermes ───────────────────────────────────────────────────────────────────╮
+Clean exit (PYTEST_EXIT=0, no hang in my run — the subagent's hang was a transient HF-lock artifact during its debugging). Phase 3 code is complete and verified; only the model download is pending. Committing and updating PROGRESS.md.
+
+╰──────────────────────────────────────────────────────────────────────────────╯
+  ┊ 💻 preparing terminal…

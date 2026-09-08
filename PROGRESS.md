@@ -60,3 +60,34 @@ wall time — the custom model provider is slow, several single-turn waits of
 
 **Gaps:** none for Phase 1 scope. (Overlap/NLI tiers are later phases by design.)
 Commit: 92e2980.
+
+### Phase 2 — Overlap tier + reporting — COMPLETE (2026-09-08)
+Target: software-engineer (dispatched ~15:47, finished 17:52, ~2h wall — same
+slow-provider pattern; one context-compaction mid-run, no impact).
+
+**Built (verified by orchestrator on disk):**
+- `src/citesure/overlap.py` (339 ln) — D4 citation-anchored windows: passage
+  segmentation, top-k relevance ranking, deterministic overlap scoring
+  (module-level thresholds), excerpt override path. NO LLM/embeddings.
+- `src/citesure/report.py` (113 ln) — report rendering (human + markdown).
+- `tests/fixtures/mock_server.py` (118 ln) — local http.server on 127.0.0.1
+  serving 404/500/timeout routes (D9 "5 unreachable via local mock server").
+- `tests/fixtures/cases.json` — 27-case frozen corpus with expected_status per
+  case; 20 fixture HTML pages under tests/fixtures/pages/.
+- `tests/test_overlap.py`, `tests/test_corpus.py` (189 ln) — corpus test iterates
+  EVERY case and asserts its expected status (real acceptance gate).
+- CLI extended: --strict now real, --md output, exit-code semantics documented.
+
+**Orchestrator's own verification (not subagent claims):**
+- `.venv/bin/python -m pytest -x -q` → **113 passed in 50.14s** (exit 0).
+- `pytest tests/test_corpus.py -q` → 4 passed in 22.18s (full-corpus gate).
+- `citesure verify tests/fixtures/sample.md` → PASS, pass_rate 0.8, exit 0.
+- `citesure verify tests/fixtures/cases.json --json [--strict]` → exit 1
+  (pass_rate 0.2222 < 0.8); strict semantics correct.
+- Corpus composition vs D9: supported=6(≥5), unsupported=9(≥5), unreachable=5
+  (incl. 3 mock-server), paywalled=3, ambiguous=4 (incl. JS-page), retraction/
+  dead-link=3, local/file:// paths=22(≥3). Meets/exceeds D9.
+- Overlap tier genuinely exercised: tier_reached=2 on 17/27 verdicts, real
+  numeric scores (e.g. sup1 score=0.9444).
+
+**Gaps:** none for Phase 2 scope. Commit: 92845bd.

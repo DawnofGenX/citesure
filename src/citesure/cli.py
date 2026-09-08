@@ -6,6 +6,8 @@ Usage::
     citesure verify tests/fixtures/sample.md --json     # machine-readable
     citesure verify sample.json --threshold 0.9 --strict
     citesure verify sample.md --md report.md            # also write a .md file
+    citesure verify sample.md --nli                     # + NLI entailment tier
+    citesure verify sample.md --nli --nli-model NAME    # custom cross-encoder
 
 Exit codes (D3):
 
@@ -15,13 +17,20 @@ Exit codes (D3):
   failure.
 * ``1`` — verification ran but the exit rule above is not met.
 * ``2`` — input error (unreadable file, malformed JSON, no citations found
-  in a JSON input that must have some).
+  in a JSON input that must have some) OR the NLI model failed to load
+  (fail fast, D6 — distinct from a verification-failure exit 1).
 
 The default pipeline runs both D2 tiers: reachability (tier 1) and content
 overlap (tier 2); ``tier_reached`` in each verdict records how far it got.
 
-``--nli`` / ``--nli-model`` are accepted now for forward compatibility but
-print a notice and are ignored — the NLI tier lands in Phase 3 (D2/D6).
+``--nli`` enables the NLI entailment tier (tier 3, D2/D6): a local
+cross-encoder scores each (claim, best-passage) pair and the D3 banding
+produces the final status. ``--nli-model NAME`` selects the model via the
+D6 priority chain (flag → ``CITECHECK_NLI_MODEL`` env → built-in default
+``cross-encoder/nli-deberta-v3-base``). The model is lazy-downloaded on
+first use (~425 MB) into ``~/.cache/citesure/`` (override:
+``CITECHECK_CACHE_DIR``). When NLI is on, the report header shows which
+model was used.
 """
 
 from __future__ import annotations
@@ -35,13 +44,9 @@ from pathlib import Path
 
 from .citations import load_input
 from .models import Report
+from .nli import NLIError, get_nli_model, resolve_nli_model
 from .reachability import verify_citations
 from .report import exit_code, render_human, render_markdown
-
-NLI_NOTICE = (
-    "citesure: --nli/--nli-model accepted but ignored for now — "
-    "the NLI entailment tier lands in Phase 3."
-)
 
 
 def _build_parser() -> argparse.ArgumentParser:
@@ -92,12 +97,20 @@ def _build_parser() -> argparse.ArgumentParser:
     v.add_argument(
         "--nli",
         action="store_true",
-        help="(Phase 3) enable the NLI entailment tier",
+        help=(
+            "enable the NLI entailment tier (tier 3): a local cross-encoder "
+            "scores each (claim, best-passage) pair. Lazy-downloads the "
+            "default model (~425 MB) into ~/.cache/citesure/ on first use."
+        ),
     )
     v.add_argument(
         "--nli-model",
         metavar="NAME",
-        help="(Phase 3) cross-encoder model name or local path",
+        help=(
+            "cross-encoder model name (Hugging Face id) or local path; "
+            "highest priority in the D6 chain (flag > CITECHECK_NLI_MODEL "
+            "env > built-in default). Implies --nli."
+        ),
     )
     v.add_argument(
         "--cache-dir",
@@ -117,8 +130,8 @@ def _cmd_verify(args: argparse.Namespace) -> int:
         os.environ["CITECHECK_CACHE_DIR"] = str(
             Path(args.cache_dir).expanduser().resolve()
         )
-    if args.nli or args.nli_model:
-        print(NLI_NOTICE, file=sys.stderr)
+    # --nli-model implies --nli (selecting a model means using the tier).
+    use_nli = bool(args.nli or args.nli_model)
 
     try:
         citations, meta = load_input(args.file)
@@ -128,16 +141,38 @@ def _cmd_verify(args: argparse.Namespace) -> int:
     if not citations:
         print("citesure: warning: no citations found in input", file=sys.stderr)
 
-    # Default pipeline: tier 1 (reachability) + tier 2 (content overlap).
-    report = asyncio.run(verify_citations(citations, use_overlap=True))
+    nli_name: str | None = None
+    if use_nli:
+        # Fail fast BEFORE any fetching/scoring (D6): a bad model name must
+        # not burn a full verification run only to die at the end.
+        try:
+            get_nli_model(args.nli_model)
+        except NLIError as exc:
+            print(f"citesure: {exc}", file=sys.stderr)
+            return 2
+        nli_name = resolve_nli_model(args.nli_model)
+
+    # Pipeline: tier 1 (reachability) + tier 2 (content overlap), plus tier 3
+    # (NLI entailment) when enabled.
+    try:
+        report = asyncio.run(
+            verify_citations(
+                citations, use_overlap=True, use_nli=use_nli, nli_model=args.nli_model
+            )
+        )
+    except NLIError as exc:  # defensive: load already validated above
+        print(f"citesure: {exc}", file=sys.stderr)
+        return 2
 
     if args.json:
         print(json.dumps(report.to_dict(), indent=2))
     else:
-        print(render_human(report, meta, args.threshold, args.strict))
+        print(render_human(report, meta, args.threshold, args.strict, nli_model=nli_name))
     if args.md:
         Path(args.md).write_text(
-            render_markdown(report, meta, args.threshold, args.strict),
+            render_markdown(
+                report, meta, args.threshold, args.strict, nli_model=nli_name
+            ),
             encoding="utf-8",
         )
     return exit_code(report, args.threshold, args.strict)
