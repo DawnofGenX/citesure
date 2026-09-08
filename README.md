@@ -79,5 +79,61 @@ score, snippet = score_overlap("Python 3.12 was released in 2023.", ["...page te
 
 ## MCP server
 
-`citesure-mcp` is provided as an entry point; the FastMCP tools
-(`verify_citations`, `verify_markdown`) are built in Phase 4.
+`citesure-mcp` is a stdio MCP server (official `mcp` Python SDK) exposing two
+tools:
+
+* **`verify_citations(citations)`** — the D1 structured JSON form: a list of
+  `{"claim": str, "citation": url-or-id}` objects (optional per-item
+  `"excerpt"`). Returns the D3 report: `{total, supported, unsupported,
+  unverifiable, pass_rate, verdicts[]}`.
+* **`verify_markdown(markdown, url_map?)`** — raw markdown with inline
+  citations (`[n]` markers resolved via `url_map` or a trailing
+  `## Sources`/`## References` section, plus `[label](url)` links). Same
+  report shape.
+
+Both tools run the full pipeline (reachability + content overlap) and return
+clean JSON-serializable dicts; bad input comes back as `{"error": "..."}`
+rather than a protocol error.
+
+### Adding it to an MCP client
+
+Generic / Claude Desktop style config (any client that launches stdio MCP
+servers):
+
+```json
+{
+  "mcpServers": {
+    "citesure": {
+      "command": "citesure-mcp",
+      "args": []
+    }
+  }
+}
+```
+
+If the package isn't on your `PATH`, use the absolute path to the console
+script instead, e.g. `"command": "/path/to/venv/bin/citesure-mcp"` (in this
+repo: `.venv/bin/citesure-mcp`).
+
+### NLI tier (opt-in)
+
+NLI entailment (tier 3) is **off by default** — the fast tiers-1+2 path runs
+with no model download. Enable it at *server start* via environment
+variables:
+
+```json
+{
+  "mcpServers": {
+    "citesure": {
+      "command": "citesure-mcp",
+      "env": {
+        "CITECHECK_NLI": "1",
+        "CITECHECK_NLI_MODEL": "cross-encoder/nli-deberta-v3-base"
+      }
+    }
+  }
+}
+```
+
+`CITECHECK_NLI_MODEL` is optional (the built-in default applies); the model
+is lazy-downloaded on first use (~425 MB) into `~/.cache/citesure/`.

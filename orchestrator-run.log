@@ -1849,3 +1849,165 @@ Clean exit (PYTEST_EXIT=0, no hang in my run — the subagent's hang was a trans
 
 ╰──────────────────────────────────────────────────────────────────────────────╯
   ┊ 💻 preparing terminal…
+  ┊ 💻 $         git add -A + 3 commands  0.0s
+
+╭─ ⚕ Hermes ───────────────────────────────────────────────────────────────────╮
+Phase 3 committed. Now let me record the Phase-3 entry in PROGRESS.md and kick off the model download in the background (a plain python process, not a hermes child — so it doesn't touch the sequential-API-call cap) so it can finish while Phase 4 runs.
+
+╰──────────────────────────────────────────────────────────────────────────────╯
+  ┊ 🔧 preparing patch…
+  ┊ 🔧 patch     /home/hermes/citesure/PROGRESS.md  0.1s
+  ┊ review diff
+a//home/hermes/citesure/PROGRESS.md → b//home/hermes/citesure/PROGRESS.md
+@@ -91,3 +91,39 @@
+   numeric scores (e.g. sup1 score=0.9444).
+ 
+ **Gaps:** none for Phase 2 scope. Commit: 92845bd.
++
++### Phase 3 — NLI tier — CODE COMPLETE, MODEL DOWNLOAD PENDING (2026-09-08)
++Target: ai-ml-engineer (dispatched ~17:58, finished 20:01, ~2h wall; one
++context-compaction + a transient HF-cache-lock hang during its own debugging,
++both resolved).
++
++**Built (verified by orchestrator on disk):**
++- `src/citesure/nli.py` (438 ln) — D6: `resolve_nli_model()` (arg > env >
++  default chain), lazy `get_nli_model()` with module-level cache, CPU-only
++  CrossEncoder load, batched scoring, `nli_band()` D3 banding (>=0.7 supported,
++  0.3–0.7 ambiguous, <0.3 unsupported) + documented overlap×NLI combination
++  rules, custom `NLIError` (fail fast, no silent fallback). Cache under
++  ~/.cache/citesure (CITECHECK_CACHE_DIR override).
++- `tests/test_nli.py` (591 ln) — D6 chain, fail-fast, banding, mock-model
++  plumbing (all offline); 4 @pytest.mark.nli model-dependent tests (skipped by
++  default).
++- CLI wired: `--nli` / `--nli-model` (implies --nli); pipeline threads
++  use_nli through reachability→overlap→tier-3 (use_nli implies overlap).
++
++**Orchestrator's own verification (not subagent claims):**
++- `.venv/bin/python -m pytest -x -q` → **143 passed, 4 deselected in 65.45s**
++  (exit 0). Clean exit re-confirmed (PYTEST_EXIT=0, no teardown hang in my run).
++- D6 chain verified directly: default=cross-encoder/nli-deberta-v3-base;
++  env-only→env value; arg-over-env→arg value; empty-arg→env value. ✓
++- Fail-fast verified directly: bad name raises NLIError with clear message
++  ("not a local folder and not a valid model identifier"). ✓
++- Banding thresholds present (NLi_SUPPORTED_THRESHOLD=0.7, AMBIGUOUS=0.3). ✓
++
++**GAP (recorded per protocol):** the ~425MB DeBERTa-v3 model did NOT finish
++downloading — HF is reachable (fail-fast got a real HF response) but throughput
++was very slow; cache stalled at ~132K of ~425MB, no weight files present. The
++4 @pytest.mark.nli tests are therefore deselected/skipped. Code is complete and
++the non-model suite is green. A background download was started by the
++orchestrator to attempt completion; if it lands, run
++`.venv/bin/python -m pytest -q -m nli` to exercise the model-dependent tests.
++Commit: 2d2cef2.
+
+╭─ ⚕ Hermes ───────────────────────────────────────────────────────────────────╮
+Now I'll start the model download in the background (a plain Python process — not a child profile, so it doesn't touch the sequential-API-call cap) and dispatch Phase 4. These are independent: the download hits HuggingFace, Phase 4's child profile hits the LLM API, and Phase 4 runs without NLI so there's no cache-lock contention.
+
+╰──────────────────────────────────────────────────────────────────────────────╯
+  ┊ 💻 preparing terminal…
+  ┊ 💻 $         .venv/bin/python -c " import time t0=time.time() from citesure.nli import get_nli_model m = get_nli_model() print('NLI MODEL LOADED OK in %.1fs' % (time.time()-t0), type(m).__name__) "  0.0s
+
+╭─ ⚕ Hermes ───────────────────────────────────────────────────────────────────╮
+Model download running in background (plain Python → HuggingFace, not an LLM API call). Now dispatching Phase 4 (MCP server) to software-engineer — it runs without NLI, so no cache-lock contention with the download.
+
+╰──────────────────────────────────────────────────────────────────────────────╯
+  ┊ 💻 preparing terminal…
+  ┊ 💻 $         hermes -p software-engineer chat --yolo --query-file /tmp/citesure-phase4-brief.md  0.0s
+
+╭─ ⚕ Hermes ───────────────────────────────────────────────────────────────────╮
+Both running: model download (plain Python → HF) and Phase 4 (child profile → LLM API). The download is not an LLM API call, so the sequential-API-call cap is respected (only one hermes -p child at a time). Let me monitor both.
+
+╰──────────────────────────────────────────────────────────────────────────────╯
+  ┊ 💻 preparing terminal…
+  ┊ 💻 $         sleep 150 + 12 commands  160.9s
+
+╭─ ⚕ Hermes ───────────────────────────────────────────────────────────────────╮
+Model download shows torch loading warnings (progress past download into model init), but ~/.cache/citesure is still 132K — let me check where the weights are actually landing (nli.py may use a different HF cache path). Phase 4 is exploring the MCP client API.
+
+╰──────────────────────────────────────────────────────────────────────────────╯
+  ┊ 💻 preparing terminal…
+  ┊ 💻 $         echo "=== where does nli.py point the HF cache? ===" + 10 commands  1.8s
+
+╭─ ⚕ Hermes ───────────────────────────────────────────────────────────────────╮
+nli.py correctly targets ~/.cache/citesure/ (132K — still tiny). The torch warning may just be from import. Let me check the download process state and whether it's actually pulling bytes.
+
+╰──────────────────────────────────────────────────────────────────────────────╯
+  ┊ 💻 preparing terminal…
+  ┊ 💻 $         echo "=== full download log ===" + 14 commands  0.0s
+
+╭─ ⚕ Hermes ───────────────────────────────────────────────────────────────────╮
+The cache only has small JSON config/tokenizer files (132K) — the 425MB weights haven't arrived yet. Let me find the actual Python download process and check if it's actively pulling bytes from HF.
+
+╰──────────────────────────────────────────────────────────────────────────────╯
+  ┊ 💻 preparing terminal…
+  ┊ 💻 $         echo "=== children of wrapper 905779 ===" + 11 commands  0.1s
+
+╭─ ⚕ Hermes ───────────────────────────────────────────────────────────────────╮
+Download process (905794) is alive with 2 established connections to HF's CDN (52.221.162.66:443) and an .incomplete blob file exists — but it's 0 bytes after 5 min, confirming the network to HF is extremely slow/stalled. This is the anticipated "model download pending" gap. It will keep trying in the background. Let me monitor Phase 4 progress.
+
+╰──────────────────────────────────────────────────────────────────────────────╯
+  ┊ 💻 preparing terminal…
+  ┊ 💻 $         for i in $(seq 1 7) + 12 commands  408.3s
+
+╭─ ⚕ Hermes ───────────────────────────────────────────────────────────────────╮
+Phase 4 is still exploring the MCP SDK internals. Download still stalled at 132K. Continuing to monitor.
+
+╰──────────────────────────────────────────────────────────────────────────────╯
+  ┊ 💻 preparing terminal…
+  ┊ 💻 $         for i in $(seq 1 7) + 11 commands  410.6s
+
+╭─ ⚕ Hermes ───────────────────────────────────────────────────────────────────╮
+Phase 4 is verifying import-time cost of nli (important for the no-heavy-imports constraint). Continuing to monitor.
+
+╰──────────────────────────────────────────────────────────────────────────────╯
+  ┊ 💻 preparing terminal…
+  ┊ 💻 $         for i in $(seq 1 7) + 11 commands  410.4s
+
+╭─ ⚕ Hermes ───────────────────────────────────────────────────────────────────╮
+Phase 4 is prototyping the full MCP client/server flow (it correctly discovered the installed SDK v2.2.0 uses MCPServer/Client, not FastMCP, and is adapting). Continuing to monitor.
+
+╰──────────────────────────────────────────────────────────────────────────────╯
+  ┊ 💻 preparing terminal…
+  ┊ 💻 $         for i in $(seq 1 7) + 11 commands  409.7s
+
+╭─ ⚕ Hermes ───────────────────────────────────────────────────────────────────╮
+Integration test file created; verifying stdio server behavior. Continuing to monitor.
+
+╰──────────────────────────────────────────────────────────────────────────────╯
+  ┊ 💻 preparing terminal…
+  ┊ 💻 $         for i in $(seq 1 7) + 10 commands  410.1s
+
+╭─ ⚕ Hermes ───────────────────────────────────────────────────────────────────╮
+It's debugging a test-ordering issue (passes alone, fails in full suite). Continuing to monitor.
+
+╰──────────────────────────────────────────────────────────────────────────────╯
+  ┊ 💻 preparing terminal…
+  ┊ 💻 $         for i in $(seq 1 7) + 10 commands  124.1s [exit 130]
+Traceback (most recent call last):
+  File "/home/hermes/.hermes/hermes-agent/hermes", line 11, in <module>
+    main()
+  File "/home/hermes/.hermes/hermes-agent/hermes_cli/main.py", line 3358, in main
+    if _try_fast_chat_launch():
+       ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/hermes/.hermes/hermes-agent/hermes_cli/main.py", line 2994, in _try_fast_chat_launch
+    cmd_chat(args)
+  File "/home/hermes/.hermes/hermes-agent/hermes_cli/main.py", line 1719, in cmd_chat
+    cli_main(**kwargs)
+  File "/home/hermes/.hermes/hermes-agent/cli.py", line 4576, in main
+    _run_single_query_mode(cli, query, image, quiet, oneshot)
+  File "/home/hermes/.hermes/hermes-agent/cli.py", line 4458, in _run_single_query_mode
+    cli.chat(query, images=single_query_images or None)
+  File "/home/hermes/.hermes/hermes-agent/hermes_cli/cli_chat_turn_mixin.py", line 85, in chat
+    interrupt_msg = self._chat_monitor_agent_thread(turn, agent_thread)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/hermes/.hermes/hermes-agent/hermes_cli/cli_chat_turn_mixin.py", line 363, in _chat_monitor_agent_thread
+    interrupt_msg = self._interrupt_queue.get(timeout=0.1)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/hermes/.hermes/hermes-agent/.hermes-runtime/python/generation-1788119027-28675-48115e2e/cpython-3.12.14-linux-x86_64-gnu/lib/python3.12/queue.py", line 180, in get
+    self.not_empty.wait(remaining)
+  File "/home/hermes/.hermes/hermes-agent/.hermes-runtime/python/generation-1788119027-28675-48115e2e/cpython-3.12.14-linux-x86_64-gnu/lib/python3.12/threading.py", line 359, in wait
+    gotit = waiter.acquire(True, timeout)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/hermes/.hermes/hermes-agent/cli.py", line 4256, in _signal_handler_q
+    raise KeyboardInterrupt()
+KeyboardInterrupt
