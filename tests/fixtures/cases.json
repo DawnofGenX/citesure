@@ -1,0 +1,168 @@
+{
+  "citations": [
+    {
+      "id": "sup1",
+      "claim": "Python 3.12 was released on October 2, 2023, bringing a new interactive debugger and faster startup times.",
+      "citation": "pages/page1.html",
+      "expected_status": "supported"
+    },
+    {
+      "id": "sup2",
+      "claim": "The HTTP/2 protocol multiplexes multiple requests over a single TCP connection, eliminating head-of-line blocking.",
+      "citation": "pages/page2.html",
+      "expected_status": "supported"
+    },
+    {
+      "id": "sup3",
+      "claim": "PostgreSQL 16 added asynchronous I/O support to its storage engine.",
+      "citation": "pages/page3.html",
+      "expected_status": "supported"
+    },
+    {
+      "id": "sup4",
+      "claim": "Rust 1.75 was released on July 25, 2024, introducing a new inline assembly syntax.",
+      "citation": "file:///home/hermes/citesure/tests/fixtures/pages/sup4.html",
+      "expected_status": "supported"
+    },
+    {
+      "id": "sup5",
+      "claim": "Kubernetes 1.30 was released on April 16, 2024, promoting in-place pod vertical scaling to beta.",
+      "citation": "file:///home/hermes/citesure/tests/fixtures/pages/sup5.html",
+      "expected_status": "supported"
+    },
+    {
+      "id": "unsup1",
+      "claim": "Python 3.12 was released on October 2, 2023, bringing a new interactive debugger and faster startup times.",
+      "citation": "pages/unsup1.html",
+      "expected_status": "unsupported"
+    },
+    {
+      "id": "unsup2",
+      "claim": "The HTTP/2 protocol multiplexes multiple requests over a single TCP connection, eliminating head-of-line blocking.",
+      "citation": "pages/unsup2.html",
+      "expected_status": "unsupported"
+    },
+    {
+      "id": "unsup3",
+      "claim": "PostgreSQL 16 added asynchronous I/O support to its storage engine.",
+      "citation": "pages/unsup3.html",
+      "expected_status": "unsupported"
+    },
+    {
+      "id": "unsup4",
+      "claim": "Rust 1.75 was released on July 25, 2024, introducing a new inline assembly syntax.",
+      "citation": "pages/unsup4.html",
+      "expected_status": "unsupported"
+    },
+    {
+      "id": "unsup5",
+      "claim": "Kubernetes 1.30 was released on April 16, 2024, promoting in-place pod vertical scaling to beta.",
+      "citation": "pages/unsup5.html",
+      "expected_status": "unsupported"
+    },
+    {
+      "id": "unreach-dns1",
+      "claim": "Python 3.12 was released on October 2, 2023.",
+      "citation": "https://unreachable-citesure-test.invalid/dns-failure",
+      "expected_status": "unreachable"
+    },
+    {
+      "id": "unreach-dns2",
+      "claim": "HTTP/2 multiplexes requests over a single TCP connection.",
+      "citation": "https://dead-citesure-test.invalid/http2-article",
+      "expected_status": "unreachable"
+    },
+    {
+      "id": "unreach-mock-404",
+      "claim": "The quarterly earnings report exceeded analyst expectations.",
+      "citation": "https://citesure-404-test.invalid/earnings-report",
+      "expected_status": "unreachable"
+    },
+    {
+      "id": "unreach-mock-500",
+      "claim": "The new compiler backend reduces code size by 12 percent.",
+      "citation": "https://citesure-500-test.invalid/compiler-backend",
+      "expected_status": "unreachable"
+    },
+    {
+      "id": "unreach-mock-timeout",
+      "claim": "The satellite relay station went offline during the storm.",
+      "citation": "https://citesure-timeout-test.invalid/relay-station",
+      "expected_status": "unreachable"
+    },
+    {
+      "id": "paywalled1",
+      "claim": "The research team announced a milestone in quantum error correction this morning.",
+      "citation": "pages/paywalled1.html",
+      "expected_status": "paywalled"
+    },
+    {
+      "id": "paywalled2",
+      "claim": "Lithium prices have fallen sharply over the past two years.",
+      "citation": "pages/paywalled2.html",
+      "expected_status": "paywalled"
+    },
+    {
+      "id": "paywalled3",
+      "claim": "Our fixed-income allocation outperformed the benchmark this quarter.",
+      "citation": "pages/paywalled3.html",
+      "expected_status": "paywalled"
+    },
+    {
+      "id": "ambig1",
+      "claim": "Python 3.12 was released on October 2, 2023, bringing a new interactive debugger and faster startup times.",
+      "citation": "pages/ambig1.html",
+      "expected_status": "ambiguous"
+    },
+    {
+      "id": "ambig2",
+      "claim": "The HTTP/2 protocol multiplexes multiple requests over a single TCP connection, eliminating head-of-line blocking.",
+      "citation": "pages/ambig2.html",
+      "expected_status": "ambiguous"
+    },
+    {
+      "id": "ambig3",
+      "claim": "PostgreSQL 16 added asynchronous I/O support to its storage engine.",
+      "citation": "pages/ambig3.html",
+      "expected_status": "ambiguous"
+    },
+    {
+      "id": "ambig-js",
+      "claim": "The dashboard shows real-time server metrics and alert counts.",
+      "citation": "pages/js_page.html",
+      "expected_status": "ambiguous"
+    },
+    {
+      "id": "retract1",
+      "claim": "A single supplement improved recall scores by 40 percent in a double-blind trial.",
+      "citation": "pages/retracted1.html",
+      "expected_status": "unsupported"
+    },
+    {
+      "id": "retract2",
+      "claim": "The model predicted a 3 degree warming by 2040 under current emission scenarios.",
+      "citation": "pages/retracted2.html",
+      "expected_status": "unsupported"
+    },
+    {
+      "id": "deadlink",
+      "claim": "The migration moved all documents to the new repository in spring.",
+      "citation": "file:///home/hermes/citesure/tests/fixtures/pages/deadlink.html",
+      "expected_status": "unsupported"
+    },
+    {
+      "id": "excerpt-supported",
+      "claim": "Rust 1.75 was released on July 25, 2024, introducing a new inline assembly syntax.",
+      "citation": "pages/unsup4.html",
+      "excerpt": "Rust 1.75 was released on July 25, 2024. It introduces a new inline assembly syntax, portable SIMD types, and faster compile times for large crates.",
+      "expected_status": "supported"
+    },
+    {
+      "id": "excerpt-unsupported",
+      "claim": "Kubernetes 1.30 promoted in-place pod vertical scaling to beta.",
+      "citation": "pages/sup5.html",
+      "excerpt": "The quick brown fox jumps over the lazy dog while the farmer naps.",
+      "expected_status": "unsupported"
+    }
+  ]
+}

@@ -8,13 +8,22 @@ Typical library usage::
     from citesure import extract_citations, verify_citations, Report
 
     citations = extract_citations("The sky is blue [1].", {"1": "https://..."})
-    report = verify_citations(citations)   # reachability tier by default
+    report = verify_citations(citations)   # tiers 1+2 by default (Phase 2)
 """
 
 from __future__ import annotations
 
 from .citations import Citation, extract_citations, load_input
 from .models import Report, Status, Verdict
+from .overlap import (
+    DEFAULT_TOP_K,
+    HIGH_OVERLAP_THRESHOLD,
+    LOW_OVERLAP_THRESHOLD,
+    rank_passages,
+    score_overlap,
+    segment_passages,
+    status_for_score,
+)
 from .reachability import classify_reachability, verify_citations
 
 __version__ = "0.1.0"
@@ -29,4 +38,12 @@ __all__ = [
     "load_input",
     "classify_reachability",
     "verify_citations",
+    # overlap tier (Phase 2)
+    "score_overlap",
+    "rank_passages",
+    "segment_passages",
+    "status_for_score",
+    "DEFAULT_TOP_K",
+    "HIGH_OVERLAP_THRESHOLD",
+    "LOW_OVERLAP_THRESHOLD",
 ]

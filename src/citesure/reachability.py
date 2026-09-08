@@ -59,15 +59,39 @@ def classify_reachability(page: FetchedPage) -> tuple[Status, list[str]]:
     return Status.SUPPORTED, notes
 
 
-async def verify_citations(citations: list[Citation]) -> Report:
-    """Verify citations at tier 1 (reachability) and build a :class:`Report`.
+async def _fetch_safe(url: str) -> FetchedPage:
+    """Fetch a URL, converting any exception (e.g. malformed URL) into a
+    failed :class:`FetchedPage` so a single bad citation cannot crash the
+    whole batch."""
+    try:
+        return await fetch(url)
+    except Exception as exc:  # noqa: BLE001 - defensive batch guard
+        return FetchedPage(url=url, ok=False, error=f"{type(exc).__name__}: {exc}")
 
-    Each citation is fetched concurrently (bounded by the fetcher's
-    semaphore), classified via :func:`classify_reachability`, and turned into
-    a :class:`Verdict` with ``tier_reached=1`` and evidence clipped from the
-    fetched text (≤300 chars, handled by :class:`Verdict`).
+
+async def verify_citations(
+    citations: list[Citation], *, use_overlap: bool = False
+) -> Report:
+    """Verify citations and build a :class:`Report`.
+
+    With ``use_overlap=False`` (the historical Phase-1 behaviour) only tier 1
+    (reachability) runs: each citation is fetched concurrently (bounded by
+    the fetcher's semaphore), classified via :func:`classify_reachability`,
+    and turned into a :class:`Verdict` with ``tier_reached=1``.
+
+    With ``use_overlap=True`` the full default pipeline (D2 tiers 1+2) runs —
+    this delegates to :func:`citesure.overlap.verify_citations`, which adds
+    the content-overlap tier for pages that reach tier 1 cleanly
+    (``tier_reached=2`` whenever the overlap tier ran).
     """
-    pages = await asyncio.gather(*(fetch(c.url) for c in citations))
+    if use_overlap:
+        from .overlap import verify_citations as _verify_with_overlap
+
+        return await _verify_with_overlap(citations, use_overlap=True)
+
+    pages = await asyncio.gather(
+        *(_fetch_safe(c.url) for c in citations)
+    )
     verdicts: list[Verdict] = []
     for citation, page in zip(citations, pages):
         status, notes = classify_reachability(page)

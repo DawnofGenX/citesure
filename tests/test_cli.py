@@ -9,8 +9,9 @@ from pathlib import Path
 
 import pytest
 
-from citesure.cli import _verdict_label, exit_code, main, render_human
+from citesure.cli import main
 from citesure.models import Report, Status, Verdict
+from citesure.report import _verdict_label, exit_code, render_human
 
 FIXTURES = Path(__file__).parent / "fixtures"
 SAMPLE_MD = FIXTURES / "sample.md"
@@ -41,7 +42,7 @@ def _run_cli(*args: str, cache_dir: Path) -> subprocess.CompletedProcess:
 def test_verify_sample_md_passes_default_threshold(tmp_path: Path):
     proc = _run_cli("verify", str(SAMPLE_MD), cache_dir=tmp_path)
     assert proc.returncode == 0, proc.stderr
-    assert "pass_rate=0.8000" in proc.stdout
+    assert "pass_rate: 0.8000" in proc.stdout
     assert "Decision: PASS" in proc.stdout
 
 
@@ -52,10 +53,13 @@ def test_verify_sample_md_fails_high_threshold(tmp_path: Path):
 
 
 def test_verify_json_input(tmp_path: Path):
-    proc = _run_cli("verify", str(SAMPLE_JSON), "--threshold", "0.5", cache_dir=tmp_path)
+    proc = _run_cli(
+        "verify", str(SAMPLE_JSON), "--json", "--threshold", "0.5", cache_dir=tmp_path
+    )
     assert proc.returncode == 0, proc.stderr
     # 2 of 3 supported → pass_rate 0.6667 >= 0.5
-    assert "pass_rate=0.6667" in proc.stdout
+    data = json.loads(proc.stdout)
+    assert data["pass_rate"] == pytest.approx(0.6667)
 
 
 # ---------------------------------------------------------------------------
@@ -76,7 +80,14 @@ def test_json_output_shape(tmp_path: Path):
     statuses = {v["status"] for v in data["verdicts"]}
     assert statuses == {"supported", "unreachable"}
     for v in data["verdicts"]:
-        assert v["tier_reached"] == 1
+        # Tier-2 overlap ran on the reachable pages; the dead URL stopped at
+        # tier 1.
+        if v["status"] == "supported":
+            assert v["tier_reached"] == 2
+            assert v["score"] is not None
+        else:
+            assert v["tier_reached"] == 1
+            assert v["score"] is None
         assert len(v["evidence"]) <= 300
 
 
@@ -86,8 +97,7 @@ def test_json_output_shape(tmp_path: Path):
 
 
 def test_strict_flag_accepted_and_relabels_ambiguous(tmp_path: Path):
-    # No ambiguous verdicts in the fixture, but the flag must be accepted
-    # and must not change the exit rule (D3 math unchanged).
+    # No ambiguous verdicts in the fixture, but the flag must be accepted.
     proc = _run_cli("verify", str(SAMPLE_MD), "--strict", cache_dir=tmp_path)
     assert proc.returncode == 0, proc.stderr
 
@@ -99,9 +109,41 @@ def test_strict_flag_accepted_and_relabels_ambiguous(tmp_path: Path):
     )
     assert _verdict_label(report.verdicts[1], strict=False) == "UNVERIFIABLE"
     assert _verdict_label(report.verdicts[1], strict=True) == "FAIL (strict)"
-    # Exit rule unchanged by --strict: ambiguous never enters the numerator.
-    assert exit_code(report, threshold=0.5, strict=True) == 0
+    # Phase-2 strict semantics: ambiguous counts as FAILURE — exit 0 only if
+    # pass_rate >= threshold AND no ambiguous AND no unsupported.
+    assert exit_code(report, threshold=0.5, strict=False) == 0  # default: math only
+    assert exit_code(report, threshold=0.5, strict=True) == 1  # ambiguous fails
     assert exit_code(report, threshold=0.6, strict=True) == 1
+
+
+def test_strict_passes_when_no_ambiguous_or_unsupported():
+    report = Report.from_verdicts(
+        [
+            Verdict("a", "https://e.example/a", Status.SUPPORTED, 2),
+            Verdict("b", "https://e.example/b", Status.UNREACHABLE, 1),
+        ]
+    )
+    # pass_rate 0.5 >= 0.5, no ambiguous/unsupported → strict passes.
+    assert exit_code(report, threshold=0.5, strict=True) == 0
+    # ...but a single unsupported flips it.
+    report2 = Report.from_verdicts(
+        [
+            Verdict("a", "https://e.example/a", Status.SUPPORTED, 2),
+            Verdict("b", "https://e.example/b", Status.UNSUPPORTED, 2),
+        ]
+    )
+    assert exit_code(report2, threshold=0.5, strict=True) == 1
+
+
+def test_md_flag_writes_markdown_file(tmp_path: Path):
+    out_file = tmp_path / "report.md"
+    rc = main(
+        ["verify", str(SAMPLE_MD), "--md", str(out_file), "--cache-dir", str(tmp_path)]
+    )
+    assert rc == 0
+    text = out_file.read_text(encoding="utf-8")
+    assert "# citesure verification report" in text
+    assert "## Summary" in text
 
 
 def test_nli_flags_accepted_with_notice(tmp_path: Path, capsys):
@@ -140,11 +182,13 @@ def test_malformed_json_exits_2(tmp_path: Path):
 
 def test_render_human_contains_summary():
     report = Report.from_verdicts(
-        [Verdict("1", "https://e.example/1", Status.SUPPORTED, 1, evidence="ok")]
+        [Verdict("1", "https://e.example/1", Status.SUPPORTED, 2, score=0.9, evidence="ok")]
     )
     out = render_human(report, {"format": "markdown"}, threshold=0.8, strict=False)
     assert "PASS" in out
-    assert "total=1 supported=1" in out
+    assert "- total: 1" in out
+    assert "- supported: 1" in out
+    assert "score=0.900" in out
     assert "Decision: PASS" in out
 
 

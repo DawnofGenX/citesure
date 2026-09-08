@@ -8,7 +8,8 @@ connection, eliminating head-of-line blocking [2].
 
 PostgreSQL 16 added asynchronous I/O support to its storage engine [3].
 
-For more on binary framing, see [the HTTP/2 overview](pages/page2.html).
+For more on binary framing and header compression, see
+[the HTTP/2 overview](pages/page2.html).
 
 This claim cites a source that no longer exists anywhere on the internet [4].
 

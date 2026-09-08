@@ -1368,3 +1368,254 @@ All modules are substantive (no stubs; the single pass is a legitimate best-effo
 
 ╰──────────────────────────────────────────────────────────────────────────────╯
   ┊ 💻 preparing terminal…
+  ┊ 💻 $         git add -A + 3 commands  0.0s
+  ┊ 🔧 preparing patch…
+  ┊ 🔧 patch     /home/hermes/citesure/PROGRESS.md  0.1s
+  ┊ review diff
+a//home/hermes/citesure/PROGRESS.md → b//home/hermes/citesure/PROGRESS.md
+@@ -24,8 +24,39 @@
+ **Action:** committed this verified partial state as the first commit
+ ("phase 1: partial — skeleton + models"), then resumed Phase 1.
+ 
+-### Phase 1 — Core engine (IN PROGRESS)
+-Target: software-engineer. Remaining scope: citations.py (D1 extraction),
+-fetcher (D7), reachability tier, cli.py, tests/ + fixture subset, editable
+-install. Exit criterion: offline suite green on reachability fixtures;
+-`citesure verify` runs end-to-end on a sample file.
++### Phase 1 — Core engine — COMPLETE (2026-09-08)
++Target: software-engineer (dispatched via `hermes -p software-engineer`, ~58 min
++wall time — the custom model provider is slow, several single-turn waits of
++10–20 min; process stayed alive on an established API connection throughout).
++
++**Built (verified by orchestrator on disk):**
++- `src/citesure/citations.py` (304 ln) — D1 extraction: `[n]` markers + url_map,
++  `[source](url)` inline links, JSON `{claim, citation}` pairs; claim-unit =
++  sentence/paragraph containing marker (D4); `load_input()` auto-detects
++  json vs markdown incl. "## Sources" reference sections.
++- `src/citesure/fetcher.py` (353 ln) — D7: httpx async, 5s timeout, 2 retries w/
++  backoff, 10-concurrent semaphore, citesure User-Agent, robots.txt via
++  robotparser (cached per domain), 24h disk cache keyed URL+etag under
++  ~/.cache/citesure (CITECHECK_CACHE_DIR override), file:// + bare-path support,
++  trafilatura HTML→text, pure paywall/retraction heuristic functions. No browser.
++- `src/citesure/reachability.py` (85 ln) — tier 1: classify_reachability →
++  D3 statuses; verify_citations → Report (tier_reached=1).
++- `src/citesure/cli.py` (188 ln) — `citesure verify <file>`; --json, --threshold
++  (default 0.8), --strict, --nli/--nli-model accepted (Phase-3 notice),
++  --cache-dir; exit 0 iff pass_rate>=threshold else 1.
++- `tests/` — test_citations.py (245 ln), test_fetcher.py (313 ln),
++  test_reachability.py (148 ln), test_cli.py (157 ln); fixtures: pages/page1-3.html,
++  sample.md (5 citations: 4 local file:// + 1 .invalid dead URL), sample.json.
++- Editable install done (`pip install -e .`); console scripts resolve.
++
++**Orchestrator's own verification (not subagent claims):**
++- `.venv/bin/python -m pytest -x -q` → **78 passed in 21.12s** (exit 0).
++- `.venv/bin/citesure verify tests/fixtures/sample.md --json` → valid report:
++  total=5 supported=4 unverifiable=1 pass_rate=0.8, exit 0.
++- Human-readable mode renders correctly (PASS/UNVERIFIABLE lines + summary).
++- `--threshold 0.9 --strict` → exit 1 (exit-code semantics correct).
++- Stub scan clean (only benign best-effort-cache `pass` in fetcher).
++- `import citesure` resolves all __all__ exports.
++
++**Gaps:** none for Phase 1 scope. (Overlap/NLI tiers are later phases by design.)
++Commit: 92e2980.
+  ┊ 💻 preparing terminal…
+  ┊ 💻 $         hermes -p software-engineer chat --yolo --query-file /tmp/citesure-phase2-brief.md  0.0s
+
+╭─ ⚕ Hermes ───────────────────────────────────────────────────────────────────╮
+Phase 2 dispatched. Given the slow provider (~58 min for Phase 1), I'll monitor in bounded windows for the EXIT marker and file growth.
+
+╰──────────────────────────────────────────────────────────────────────────────╯
+  ┊ 💻 preparing terminal…
+  ┊ 💻 $         sleep 240 + 8 commands  255.2s
+
+╭─ ⚕ Hermes ───────────────────────────────────────────────────────────────────╮
+Phase 2 is in its exploration phase (reading existing code). Given the slow provider, this will take a while. Let me monitor in longer bounded windows, watching for the new Phase-2 artifacts (overlap.py, cases.json, mock_server.py) and the EXIT marker.
+
+╰──────────────────────────────────────────────────────────────────────────────╯
+  ┊ 💻 preparing terminal…
+  ┊ 💻 $         for i in $(seq 1 8) + 12 commands  381.1s
+
+╭─ ⚕ Hermes ───────────────────────────────────────────────────────────────────╮
+Log frozen at 155 lines for ~6 min — same slow-provider pattern as Phase 1 (long generation turn). Let me confirm the process is alive on an API connection and keep waiting.
+
+╰──────────────────────────────────────────────────────────────────────────────╯
+  ┊ 💻 preparing terminal…
+  ┊ 💻 $         PID=$(pgrep -f "hermes -p software-engineer" | while read p + 14 commands  253.5s
+
+╭─ ⚕ Hermes ───────────────────────────────────────────────────────────────────╮
+Alive on an established API connection (Cloudflare endpoint), CPU climbing slowly — actively generating, just slow. Let me wait in a longer window for real progress.
+
+╰──────────────────────────────────────────────────────────────────────────────╯
+  ┊ 💻 preparing terminal…
+  ┊ 💻 $         for i in $(seq 1 8) + 12 commands  423.9s
+
+╭─ ⚕ Hermes ───────────────────────────────────────────────────────────────────╮
+Slow but alive (log 159→168). Let me check what it's doing now and continue monitoring.
+
+╰──────────────────────────────────────────────────────────────────────────────╯
+  ┊ 💻 preparing terminal…
+  ┊ 💻 $         tail -20 /tmp/citesure-phase2-out.log  0.0s
+
+╭─ ⚕ Hermes ───────────────────────────────────────────────────────────────────╮
+Still in exploration (reading README/PROGRESS). It will start writing soon. Continuing to monitor in a longer window.
+
+╰──────────────────────────────────────────────────────────────────────────────╯
+  ┊ 💻 preparing terminal…
+  ┊ 💻 $         for i in $(seq 1 8) + 12 commands  423.3s
+
+╭─ ⚕ Hermes ───────────────────────────────────────────────────────────────────╮
+Still exploring (log creeping 168→177). The provider is just slow. Let me continue monitoring with a longer window.
+
+╰──────────────────────────────────────────────────────────────────────────────╯
+  ┊ 💻 preparing terminal…
+  ┊ 💻 $         for i in $(seq 1 8) + 13 commands  445.5s
+  ┊ 💻 preparing terminal…
+  ┊ 💻 $         (grep -q "EXIT=" /tmp/citesure-phase2-out.log + 8 commands  0.0s
+
+╭─ ⚕ Hermes ───────────────────────────────────────────────────────────────────╮
+It's now running the baseline test suite (21s) before building — good sign it's transitioning to the build phase. Let me continue monitoring.
+
+╰──────────────────────────────────────────────────────────────────────────────╯
+  ┊ 💻 preparing terminal…
+  ┊ 💻 $         for i in $(seq 1 7) + 12 commands  408.5s
+
+╭─ ⚕ Hermes ───────────────────────────────────────────────────────────────────╮
+Log frozen at 177 for ~6 min (last action: baseline pytest). Same slow-generation pattern. Let me confirm the process is alive on an API connection and continue waiting.
+
+╰──────────────────────────────────────────────────────────────────────────────╯
+  ┊ 💻 preparing terminal…
+  ┊ 💻 $         PID=$(pgrep -f "hermes -p software-engineer" | while read p + 14 commands  291.0s
+
+╭─ ⚕ Hermes ───────────────────────────────────────────────────────────────────╮
+Alive (42min elapsed, CPU climbing 37s→40s, established API connection). In a long generation turn. Continuing to monitor for the build to start.
+
+╰──────────────────────────────────────────────────────────────────────────────╯
+  ┊ 💻 preparing terminal…
+  ┊ 💻 $         for i in $(seq 1 7) + 13 commands  407.3s
+
+╭─ ⚕ Hermes ───────────────────────────────────────────────────────────────────╮
+Frozen at 177 for ~15 min now — same long-generation pattern Phase 1 showed (it was frozen ~19 min before bursting into file writes). Process is alive and CPU is climbing. Let me keep waiting patiently.
+
+╰──────────────────────────────────────────────────────────────────────────────╯
+  ┊ 💻 preparing terminal…
+  ┊ 💻 $         for i in $(seq 1 7) + 13 commands  408.3s
+
+╭─ ⚕ Hermes ───────────────────────────────────────────────────────────────────╮
+The build is now in full swing — overlap.py, report.py, and mock_server.py have been created, and it's generating the fixture corpus. Continuing to monitor.
+
+╰──────────────────────────────────────────────────────────────────────────────╯
+  ┊ 💻 preparing terminal…
+  ┊ 💻 $         for i in $(seq 1 7) + 14 commands  408.1s
+
+╭─ ⚕ Hermes ───────────────────────────────────────────────────────────────────╮
+20 fixture pages generated, now refining the JS-page case. Continuing to monitor.
+
+╰──────────────────────────────────────────────────────────────────────────────╯
+  ┊ 💻 preparing terminal…
+  ┊ 💻 $         for i in $(seq 1 7) + 13 commands  408.4s
+
+╭─ ⚕ Hermes ───────────────────────────────────────────────────────────────────╮
+Still refining fixtures (updating sample.md). Continuing to monitor.
+
+╰──────────────────────────────────────────────────────────────────────────────╯
+  ┊ 💻 preparing terminal…
+  ┊ 💻 $         for i in $(seq 1 7) + 14 commands  408.8s
+
+╭─ ⚕ Hermes ───────────────────────────────────────────────────────────────────╮
+Still building fixtures. Continuing to monitor for cases.json and the test files.
+
+╰──────────────────────────────────────────────────────────────────────────────╯
+  ┊ 💻 preparing terminal…
+  ┊ 💻 $         for i in $(seq 1 7) + 14 commands  408.7s
+
+╭─ ⚕ Hermes ───────────────────────────────────────────────────────────────────╮
+cases.json and test_overlap.py are in. Waiting on test_corpus.py (the acceptance gate) and the final test run.
+
+╰──────────────────────────────────────────────────────────────────────────────╯
+  ┊ 💻 preparing terminal…
+  ┊ 💻 $         for i in $(seq 1 7) + 12 commands  409.1s
+
+╭─ ⚕ Hermes ───────────────────────────────────────────────────────────────────╮
+All test files exist and it's running the corpus test. Continuing to monitor for completion.
+
+╰──────────────────────────────────────────────────────────────────────────────╯
+  ┊ 💻 preparing terminal…
+  ┊ 💻 $         for i in $(seq 1 7) + 9 commands  408.2s
+
+╭─ ⚕ Hermes ───────────────────────────────────────────────────────────────────╮
+It's iterating on test failures (patching test_overlap.py). Continuing to monitor.
+
+╰──────────────────────────────────────────────────────────────────────────────╯
+  ┊ 💻 preparing terminal…
+  ┊ 💻 $         for i in $(seq 1 7) + 9 commands  407.9s
+  ┊ 💻 preparing terminal…
+  ┊ 💻 $         for i in $(seq 1 7) + 9 commands  408.6s
+
+╭─ ⚕ Hermes ───────────────────────────────────────────────────────────────────╮
+Nearly done — it's doing final flag verification and compacting context. Continuing to monitor.
+
+╰──────────────────────────────────────────────────────────────────────────────╯
+  ┊ 💻 preparing terminal…
+  ┊ 💻 $         for i in $(seq 1 7) + 9 commands  408.6s
+
+╭─ ⚕ Hermes ───────────────────────────────────────────────────────────────────╮
+It's writing its final summary. Let me wait for completion.
+
+╰──────────────────────────────────────────────────────────────────────────────╯
+  ┊ 💻 preparing terminal…
+  ┊ 💻 $         for i in $(seq 1 6) + 9 commands  0.0s
+
+╭─ ⚕ Hermes ───────────────────────────────────────────────────────────────────╮
+Phase 2 finished. Now I verify independently — full suite, CLI on both inputs, and corpus composition.
+
+╰──────────────────────────────────────────────────────────────────────────────╯
+  ┊ 💻 preparing terminal…
+  ┊ 💻 $         echo "=== MY OWN FULL SUITE ===" + 1 command  52.6s
+
+╭─ ⚕ Hermes ───────────────────────────────────────────────────────────────────╮
+113 passed (up from 78). Now CLI verification on both inputs + corpus composition check.
+
+╰──────────────────────────────────────────────────────────────────────────────╯
+  ┊ 💻 preparing terminal…
+  ┊ 💻 $         echo "=== sample.md human ===" + 6 commands  5.6s [exit 1]
+
+╭─ ⚕ Hermes ───────────────────────────────────────────────────────────────────╮
+The strict EXIT=0 is a measurement artifact (the pipe to python masks the CLI's exit code). Let me re-measure properly and inspect cases.json structure.
+
+╰──────────────────────────────────────────────────────────────────────────────╯
+  ┊ 💻 preparing terminal…
+  ┊ 💻 $         echo "=== cases.json top-level structure ===" + 4 commands  5.4s
+
+╭─ ⚕ Hermes ───────────────────────────────────────────────────────────────────╮
+Exit codes are correct now (both 1, since pass_rate 0.22 < 0.8). Let me check the corpus composition properly.
+
+╰──────────────────────────────────────────────────────────────────────────────╯
+  ┊ 💻 preparing terminal…
+  ┊ 💻 $         .venv/bin/python -c " import json, collections d = json.load(open('tests/fixtures/cases.json')) cases = d['citations'] print('total cases:', len(cases)) print('sample keys:', list(cases[0].keys())) c = collections.Counter(x.get('expected_status') for x in cases) for k,v in sorted(c.items()): print(f' {k}: {v}') # D9 target: 5 supported, 5 unsupported, 5 unreachable, 3 paywalled, 3 ambiguous, 3 retraction/dead, 3 file:// print() print('D9 target: supported=5 unsupported=5 unreachable=5 paywalled=3 ambiguous=3 retraction=3 file=3') "  0.0s
+
+╭─ ⚕ Hermes ───────────────────────────────────────────────────────────────────╮
+I found 27 cases total with statuses distributed across five categories, where retraction and dead-link cases map to existing statuses rather than having their own. Now I'll verify the retraction and file:// coverage by case ID.
+
+╰──────────────────────────────────────────────────────────────────────────────╯
+  ┊ 💻 preparing terminal…
+  ┊ 💻 $         .venv/bin/python -c " import json d = json.load(open('tests/fixtures/cases.json')) cases = d['citations'] retr = [x for x in cases if 'retract' in x['id'] or 'dead' in x['id']] filec = [x for x in cases if x['citation'].startswith('file://') or x['citation'].endswith('.html')] mock = [x for x in cases if 'mock' in x['id']] print('retraction/dead-link cases:', len(retr), [x['id'] for x in retr]) print('file:// or local-path cases:', len(filec)) print('mock-server cases:', len(mock), [x['id'] for x in mock]) print() print('all ids:') for x in cases: print(' ', x['id'], '->', x['expected_status']) "  0.0s
+
+╭─ ⚕ Hermes ───────────────────────────────────────────────────────────────────╮
+Corpus meets/exceeds D9 (5+supported, 5+unsupported, 5 unreachable incl. 3 mock-server, 3 paywalled, 4 ambiguous incl. JS-page, 3 retraction/dead, 22 local/file://). Let me confirm the overlap tier is genuinely exercised (tier_reached=2, real scores) and that the corpus acceptance test passed in my own run.
+
+╰──────────────────────────────────────────────────────────────────────────────╯
+  ┊ 💻 preparing terminal…
+  ┊ 💻 $         echo "=== corpus test alone (my run) ===" + 3 commands  24.5s
+
+╭─ ⚕ Hermes ───────────────────────────────────────────────────────────────────╮
+Overlap tier is genuinely working (tier_reached=2 on 17 verdicts, real scores like 0.9444). Let me confirm the corpus test asserts every case's expected status (not just spot checks), then commit.
+
+╰──────────────────────────────────────────────────────────────────────────────╯
+  ┊ 💻 preparing terminal…
+  ┊ 💻 $         grep -nE "def test_|parametrize|expected_status|for .* in .*cases|len\(cases\)" tests/test_corpus.py + 2 commands  0.0s
+
+╭─ ⚕ Hermes ───────────────────────────────────────────────────────────────────╮
+The corpus test iterates every case and asserts its expected status — a real acceptance gate, and it passed in my own run. Phase 2 verified. Committing and updating PROGRESS.md.
+
+╰──────────────────────────────────────────────────────────────────────────────╯
+  ┊ 💻 preparing terminal…

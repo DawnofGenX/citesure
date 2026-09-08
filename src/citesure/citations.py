@@ -13,7 +13,9 @@ Supported input forms:
 * **Structured JSON** — a list of ``{"claim": ..., "citation": url-or-id}``
   objects, optionally wrapped in ``{"citations": [...]}``. When
   ``citation`` is an id rather than a URL, it is resolved through an
-  optional top-level ``"sources"`` (or ``"url_map"``) dict.
+  optional top-level ``"sources"`` (or ``"url_map"``) dict. An optional
+  per-item ``"excerpt"`` field (D4) carries a user-supplied passage that
+  the overlap tier matches against instead of the fetched page.
 
 Claim unit (D4): the *sentence* containing the marker is the claim text. If
 the surrounding paragraph has no sentence boundary (no ``.``/``!``/``?``
@@ -70,6 +72,10 @@ class Citation:
     claim: str
     #: Optional raw context around the citation in the source document.
     source_text: str | None = None
+    #: Optional user-supplied excerpt (D4): when set, the overlap tier
+    #: matches the claim against this text instead of the fetched page.
+    #: Only the structured JSON input form carries it (``"excerpt"`` field).
+    excerpt: str | None = None
 
 
 # ---------------------------------------------------------------------------
@@ -240,6 +246,12 @@ def _citations_from_json(data: Any) -> list[Citation]:
             )
         cid = str(item.get("id") or f"c{i}")
         ref = str(item["citation"]).strip()
+        if "{{" in ref or "}}" in ref:
+            raise ValueError(
+                f"citation #{i} ({cid}): citation '{ref}' contains an "
+                "unresolved template placeholder (e.g. {{MOCK}}) — substitute "
+                "a concrete URL before verifying"
+            )
         if _looks_like_path(ref):
             url = ref
         elif ref in sources:
@@ -255,6 +267,9 @@ def _citations_from_json(data: Any) -> list[Citation]:
                 url=url,
                 claim=str(item["claim"]),
                 source_text=item.get("source_text"),
+                excerpt=(str(item["excerpt"]).strip() or None)
+                if item.get("excerpt") is not None
+                else None,
             )
         )
     return out
