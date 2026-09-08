@@ -1,0 +1,760 @@
+Query: You are running the citesure build as Orchestrator. The full spec is at 
+/home/hermes/citesure/PLAN.md — READ IT FIRST and treat every "Locked Decision" 
+(D1-D12) as binding. Do not deviate from locked decisions; if you hit a genuine 
+blocker, record it in PROGRESS.md and continue with what is unblocked.
+
+## Your job
+Execute ALL FIVE PHASES in order (Phase 1 → Phase 5). For each phase:
+1. Dispatch the target specialist profile(s) as subagent(s) using the terminal 
+tool:
+   `hermes -p <profile> chat --yolo -q "<task brief>"` (use --query-file with a 
+temp file if the brief is long)
+   Give each subagent: the relevant PLAN.md decisions verbatim, exact file paths
+under /home/hermes/citesure/, the phase exit criterion, and an instruction to 
+commit nothing (you handle git).
+2. VERIFY on disk yourself before accepting: run the test suite (`cd 
+/home/hermes/citesure && python -m pytest -x -q`), run the CLI on the sample 
+file, inspect key files. A subagent claiming "done" without your own 
+verification does NOT count.
+3. If verification fails, send a follow-up dispatch with the specific failures. 
+Max 2 retries per phase, then record the gap in PROGRESS.md and move on.
+4. Append a phase-completion entry to /home/hermes/citesure/PROGRESS.md (what 
+was built, test results you personally ran, files created, gaps).
+
+## Hard constraints
+- HARD CAP: 2 concurrent API calls total. Run child profiles STRICTLY 
+SEQUENTIALLY — one `hermes -p ...` at a time, wait for it to finish before 
+starting the next. Never parallelize two hermes invocations.
+- Phase 3 (NLI) will download a ~425MB model on first use — that is expected; 
+allow up to 10 minutes for that step. If the download fails due to network, mark
+Phase 3 as "code complete, model download pending" in PROGRESS.md and continue.
+- Phase 5 PyPI publish: PREPARE everything (twine-ready sdist/wheel, verified 
+metadata) but do NOT actually publish to PyPI — record the publish command in 
+PROGRESS.md for the user to run.
+- Git: initialize the repo at /home/hermes/citesure if not already (git init, 
+.gitignore for .venv/__pycache__/.cache), make one clean commit per completed 
+phase with a descriptive message. Do NOT push to GitHub — the user will review 
+first.
+- Work ONLY inside /home/hermes/citesure/ (plus temp files in /tmp). Never touch
+other directories.
+- Python: create a venv at /home/hermes/citesure/.venv and install deps there 
+(httpx, trafilatura, mcp, transformers, torch CPU, sentence-transformers, 
+pytest). Use `pip install torch --index-url 
+https://download.pytorch.org/whl/cpu` to get the CPU-only torch build (smaller).
+
+## Final report
+When all five phases are done (or you are out of turns), end with a summary: 
+per-phase status (complete/gap), test counts from YOUR OWN runs, git log 
+--oneline output, and the exact commands the user needs to (a) install, (b) run 
+the demo, (c) publish to PyPI when ready.
+
+Initializing agent...
+────────────────────────────────────────
+
+  ┊ 📖 preparing read_file…
+  ┊ 📖 read      PLAN.md  0.1s
+  ┊ 💻 preparing terminal…
+  ┊ 💻 $         ls -la /home/hermes/citesure/ 2>/dev/null + 3 commands  0.1s
+  ┊ 📖 preparing read_file…
+  ┊ 💻 preparing terminal…
+  ┊ 📖 read      orchestrator-run.log  0.0s
+  ┊ 💻 $         hermes profile list 2>/dev/null + 2 commands  0.8s
+
+╭─ ⚕ Hermes ───────────────────────────────────────────────────────────────────╮
+I've reviewed the plan and confirmed all five specialist profiles are available. Now I'll set up the environment with git, a virtual environment, and dependencies before starting Phase 1.
+
+╰──────────────────────────────────────────────────────────────────────────────╯
+  ┊ 📋 preparing todo_list…
+  ┊ ⚡ preparing tool_describe…
+  ┊ ⚡ tool_desc   0.0s
+  ┊ ⚡ preparing tool_call…
+  ┊ 📋 plan      7 task(s)  0.0s
+
+╭─ ⚕ Hermes ───────────────────────────────────────────────────────────────────╮
+Now let me set up the environment: git init, .gitignore, and the venv with dependencies.
+
+╰──────────────────────────────────────────────────────────────────────────────╯
+  ┊ 💻 preparing terminal…
+  ┊ 💻 $         git init + 4 commands  1.4s
+
+╭─ ⚕ Hermes ───────────────────────────────────────────────────────────────────╮
+Now let me install dependencies. Torch CPU is the largest, so I'll install it first in the background with a notification, then the rest.
+
+╰──────────────────────────────────────────────────────────────────────────────╯
+  ┊ 💻 preparing terminal…
+  ┊ 💻 $         .venv/bin/pip install --upgrade pip -q + 2 commands  0.0s
+
+╭─ ⚕ Hermes ───────────────────────────────────────────────────────────────────╮
+While torch downloads, let me draft the Phase 1 brief. First, checking the install progress:
+
+╰──────────────────────────────────────────────────────────────────────────────╯
+  ┊ ⚡ preparing tool_call…
+  ┊ ⚡ tool_call tool_call  0.0s [tool_call cannot invoke 'tool_call' (it is it...]
+  ┊ ⚡ preparing tool_describe…
+  ┊ ⚡ tool_desc   0.0s
+
+╭─ ⚕ Hermes ───────────────────────────────────────────────────────────────────╮
+While torch installs, let me draft the Phase 1 brief for the software-engineer.
+
+╰──────────────────────────────────────────────────────────────────────────────╯
+  ┊ ✍️ preparing write_file…
+  ┊ ✍️  write     /tmp/phase1_brief.md  0.2s
+  ┊ review diff
+a//tmp/phase1_brief.md → b//tmp/phase1_brief.md
+@@ -0,0 +1,60 @@
++You are the software-engineer building Phase 1 of `citesure` — an MCP citation verifier (MCP server + CLI + library that verifies whether an LLM's claims are supported by the sources it cites).
++
++## Working directory
++/home/hermes/citesure/  (work ONLY here; temp files in /tmp)
++A venv already exists at /home/hermes/citesure/.venv with deps installed: httpx, trafilatura, mcp, transformers, torch (CPU), sentence-transformers, pytest. Use `.venv/bin/python` and `.venv/bin/pip`. Do NOT create a new venv.
++
++## Locked Decisions (BINDING — do not deviate)
++- D1 Input formats: BOTH markdown with inline citations (`[1]`, `[source](url)`) AND structured JSON `{claim, citation}` pairs.
++- D2 Verification tiers (all in v1): (1) reachability — URL resolves, fetches, not dead/retracted/paywalled; (2) content overlap — claim terms/entities vs cited passage, no LLM; (3) NLI entailment — local cross-encoder scores entailment. Tiers 1+2 are the default path; tier 3 is a first-class opt-in (`--nli`), fully built and tested, NOT a stub.
++- D3 Verdict model: per-citation `{citation_id, url, status, tier_reached, score, evidence (≤300 chars), notes[]}`. Statuses: `supported | unsupported | unreachable | paywalled | ambiguous`. Rules: unsupported = page fetched but claim absent from cited region AND (NLI < 0.3 when on); ambiguous = partial overlap, NLI 0.3–0.7 band, or marker not locatable (JS page); unreachable = DNS/404/timeout; paywalled = login/paywall detected. Overall report: `{total, supported, unsupported, unverifiable, pass_rate}`. Exit code 0 if pass_rate ≥ threshold else 1. `--strict` flag: ambiguous counts as failure (CI mode).
++- D4 Matching engine: citation-anchored windows — sentence/paragraph containing the `[n]` marker is the claim unit; match against top-k most relevant passages in fetched page. User-supplied excerpts accepted as input option. NO whole-page matching.
++- D5 Form factor: ONE Python package, THREE entry points — `citesure` CLI (batch/CI), importable library API, `citesure-mcp` server exposing `verify_citations` + `verify_markdown` tools. Built on the OFFICIAL `mcp` Python SDK (FastMCP). ~80% of code testable without MCP plumbing.
++- D6 NLI model: `cross-encoder/nli-deberta-v3-base` default (~425 MB), lazy download on first `--nli` use, cached to `~/.cache/citesure/`. Model swap at 3 levels (priority order): `--nli-model <hf-name-or-path>` flag / `nli_model=` lib param → `CITECHECK_NLI_MODEL` env var → built-in default. Any HF cross-encoder name or local path; fail fast with clear error if it won't load.
++- D7 Fetcher: httpx + trafilatura (HTML→clean text). 5s timeout, 2 retries w/ backoff, max 10 concurrent, custom User-Agent identifying citesure, respect robots.txt. 24h disk cache keyed by URL+etag. `file://` and bare paths supported for offline tests/demos. NO headless browser.
++- D8 Non-goals (v1): no headless-browser rendering (JS pages → ambiguous); no DOI/Crossref/OpenAlex resolution; no claim extraction from scratch; no cross-document batch scoring; no paid API integrations (zero keys required); Linux/macOS only.
++- D9 Acceptance bar: frozen fixture corpus in `tests/fixtures/` (~30 saved HTML pages + claim/citation pairs): 5 supported, 5 unsupported, 5 unreachable (via local mock server), 3 paywalled, 3 ambiguous, 3 retraction/dead-link, 3 file://. Unit tests for citation extraction (all 3 input forms), overlap scoring, verdict logic. One live smoke test (`@pytest.mark.live`, skipped by default). GitHub Actions CI on every push. Done = `pip install -e .` → `citesure verify sample.md` correct on bundled sample; full suite green offline; MCP server passes real-client integration test; README demo reproducible from clean venv in <2 min, zero API keys.
++- D10 Name: `citesure` everywhere (repo, package, CLI).
++- D12 One-command install: proper `pyproject.toml`, `pip install citesure` / `pipx install citesure`, entry points for both CLIs.
++
++## YOUR PHASE 1 SCOPE (build exactly this, nothing more)
++Package skeleton + citation extraction + fetcher + reachability tier + verdict data model + CLI.
++
++1. **Package skeleton** — src layout under `/home/hermes/citesure/`:
++   - `pyproject.toml` (name `citesure`, version 0.1.0, deps: httpx, trafilatura, mcp, transformers, torch, sentence-transformers; entry points: `citesure = citesure.cli:main`, `citesure-mcp = citesure.mcp_server:main`). Use `[project.scripts]`. Setuptools or hatchling build backend. Must support `pip install -e .`.
++   - `src/citesure/__init__.py` (expose version + public API).
++   - `src/citesure/models.py` — verdict data model per D3 (dataclasses/pydantic): `Verdict` with fields `{citation_id, url, status, tier_reached, score, evidence, notes}`, `Report` with `{total, supported, unsupported, unverifiable, pass_rate}`. Status enum: supported/unsupported/unreachable/paywalled/ambiguous.
++   - `src/citesure/citations.py` — citation extraction for ALL 3 input forms (D1): markdown inline `[n]` markers, markdown `[source](url)` links, and structured JSON `{claim, citation}` pairs. Return a list of `Citation` objects each carrying: id, claim text (the sentence/paragraph containing the marker per D4), url, raw marker.
++   - `src/citesure/fetcher.py` — D7 fetcher: httpx + trafilatura, 5s timeout, 2 retries w/ backoff, max 10 concurrent (asyncio.Semaphore), custom User-Agent "citesure/0.1 (+https://github.com/DawnofGenX/citesure)", respect robots.txt, 24h disk cache keyed by URL+etag (store under ~/.cache/citesure/fetch/), support `file://` and bare local paths for offline use. Return clean text + metadata (status_code, etag, final_url, headers).
++   - `src/citesure/reachability.py` — Tier 1: classify a fetched URL as reachable / unreachable (DNS/404/timeout) / paywalled (login/paywall heuristics). No LLM.
++   - `src/citesure/cli.py` — `citesure verify <file>` command (argparse or click). Reads a markdown or JSON file, extracts citations, runs reachability tier, prints a report. Support `--json` output. Exit code 0 if pass_rate ≥ threshold else 1 (threshold default e.g. 0.8, add `--threshold`). For Phase 1, tier_reached will be 1 (reachability only); overlap/NLI come in later phases — leave clean extension points but do NOT implement overlap/NLI now.
++   - `src/citesure/mcp_server.py` — STUB ONLY for now (Phase 4 builds it). Just a `main()` placeholder so the entry point resolves; do not implement MCP tools yet.
++
++2. **Fixture corpus** — create `tests/fixtures/` with saved HTML pages + claim/citation pairs covering the categories in D9. For Phase 1 you MUST at minimum create the **reachability-relevant** fixtures:
++   - 5 `supported`-category HTML pages (real content that would support a claim)
++   - 5 `unsupported`-category HTML pages (content that does NOT support the claim)
++   - 5 `unreachable` cases (these will be served by a local mock server in tests — create the mock server helper + fixture URLs pointing at it)
++   - 3 `paywalled` HTML pages (login/paywall markers)
++   - 3 `retraction/dead-link` cases
++   - 3 `file://` local HTML files
++   Also create a `tests/fixtures/sample.md` (a small markdown doc with inline citations) and `tests/fixtures/sample.json` (structured pairs) used by the CLI demo.
++   Create a local mock HTTP server helper (e.g. `tests/mock_server.py`) using Python's http.server or a tiny ASGI app that serves the unreachable/paywalled/supported pages on localhost for offline testing.
++
++3. **Tests** — `tests/`:
++   - `test_citations.py` — unit tests for citation extraction across all 3 input forms (markdown `[n]`, markdown `[source](url)`, JSON pairs).
++   - `test_fetcher.py` — fetcher tests using file:// paths and the local mock server (offline). Test timeout/retry/cache behavior where feasible.
++   - `test_reachability.py` — reachability classification on the fixture corpus subset (the reachability cases: supported/unsupported/unreachable/paywalled/retraction/file://).
++   - `test_verdict.py` — verdict model + report aggregation logic.
++   - Mark any test hitting the real internet with `@pytest.mark.live` and ensure it is SKIPPED by default (add a pytest.ini/pyproject config: `addopts = -m "not live"`).
++   - The full offline suite must be GREEN.
++
++## Phase 1 EXIT CRITERION (you must satisfy before reporting done)
++- `cd /home/hermes/citesure && .venv/bin/python -m pytest -x -q` is GREEN (offline; live tests skipped).
++- `citesure verify tests/fixtures/sample.md` runs end-to-end and produces a correct report (reachability tier).
++- `pip install -e .` works (you may run it to confirm; it's already installed editable if you set it up).
++
++## Rules
++- Commit NOTHING to git — the orchestrator handles git. Do NOT run `git commit`.
++- Do NOT touch anything outside /home/hermes/citesure/ (and /tmp).
++- Keep code clean, typed, documented. ~80% of logic must be testable without MCP plumbing.
++- When done, print a concise summary: files created, test count passed, and the exact command you ran to verify.
+
+╭─ ⚕ Hermes ───────────────────────────────────────────────────────────────────╮
+Now let me check the torch install progress before dispatching Phase 1.
+
+╰──────────────────────────────────────────────────────────────────────────────╯
+  ┊ ⚡ preparing tool_call…
+  ┊ ⚙️  proc      poll proc_3060816  0.0s
+
+╭─ ⚕ Hermes ───────────────────────────────────────────────────────────────────╮
+Torch CPU installed. Now the remaining deps:
+
+╰──────────────────────────────────────────────────────────────────────────────╯
+  ┊ 💻 preparing terminal…
+  ┊ 💻 $         .venv/bin/pip install httpx trafilatura mcp transformers sentence-transformers pytest  22.7s
+
+╭─ ⚕ Hermes ───────────────────────────────────────────────────────────────────╮
+All deps installed. Let me verify the hermes CLI syntax for dispatching, then launch Phase 1:
+
+╰──────────────────────────────────────────────────────────────────────────────╯
+  ┊ 💻 preparing terminal…
+  ┊ 💻 $         hermes chat --help  0.3s
+
+╭─ ⚕ Hermes ───────────────────────────────────────────────────────────────────╮
+Environment is ready. Now dispatching Phase 1 to the software-engineer (running sequentially, one at a time). This is a long agent run, so I'll run it in the background with a completion notification.
+
+╰──────────────────────────────────────────────────────────────────────────────╯
+  ┊ 💻 preparing terminal…
+  ┊ 💻 $         hermes -p software-engineer chat --yolo --query-file /tmp/phase1_brief.md | tee /tmp/phase1_run.log  0.0s
+
+╭─ ⚕ Hermes ───────────────────────────────────────────────────────────────────╮
+Phase 1 is running. Let me update the todo list and monitor progress.
+
+╰──────────────────────────────────────────────────────────────────────────────╯
+  ┊ ⚡ preparing tool_call…
+  ┊ ⚡ preparing tool_call…
+  ┊ 📋 plan      update 1/7 ✓  0.0s
+
+╭─ ⚕ Hermes ───────────────────────────────────────────────────────────────────╮
+Phase 1 is running. Let me wait for it to make progress, then check.
+
+╰──────────────────────────────────────────────────────────────────────────────╯
+  ┊ ⚡ preparing tool_call…
+  ┊ ⚙️  proc      wait proc_860d299  189.6s
+
+╭─ ⚕ Hermes ───────────────────────────────────────────────────────────────────╮
+Phase 1 agent is actively working (inspecting mcp SDK API, building files). While it runs, let me draft the remaining phase briefs so dispatches are fast. These are just file writes — no parallel hermes invocations.
+
+╰──────────────────────────────────────────────────────────────────────────────╯
+  ┊ ✍️ preparing write_file…
+  ┊ ✍️  write     /tmp/phase2_brief.md  0.2s
+  ┊ review diff
+a//tmp/phase2_brief.md → b//tmp/phase2_brief.md
+@@ -0,0 +1,57 @@
++You are the software-engineer building Phase 2 of `citesure` — an MCP citation verifier. Phase 1 (package skeleton, citation extraction, fetcher, reachability tier, verdict model, CLI) is ALREADY BUILT and its tests pass. Read the existing code first before changing anything.
++
++## Working directory
++/home/hermes/citesure/  (work ONLY here; temp files in /tmp)
++Venv at /home/hermes/citesure/.venv with all deps installed. Use `.venv/bin/python` and `.venv/bin/pip`. Do NOT create a new venv. Do NOT run `git commit` (orchestrator handles git).
++
++## Locked Decisions (BINDING)
++- D2 Tiers: (1) reachability [DONE in P1]; (2) content overlap — claim terms/entities vs cited passage, NO LLM; (3) NLI entailment [P3]. Tiers 1+2 are the default path.
++- D3 Verdict model: per-citation `{citation_id, url, status, tier_reached, score, evidence (≤300 chars), notes[]}`. Statuses: `supported | unsupported | unreachable | paywalled | ambiguous`. Rules: unsupported = page fetched but claim absent from cited region AND (NLI < 0.3 when on); ambiguous = partial overlap, NLI 0.3–0.7 band, or marker not locatable (JS page); unreachable = DNS/404/timeout; paywalled = login/paywall detected. Overall report: `{total, supported, unsupported, unverifiable, pass_rate}`. Exit code 0 if pass_rate ≥ threshold else 1. `--strict`: ambiguous counts as failure (CI mode).
++- D4 Matching engine: citation-anchored windows — sentence/paragraph containing the `[n]` marker is the claim unit; match against top-k most relevant passages in fetched page. User-supplied excerpts accepted as input option. NO whole-page matching.
++- D7 Fetcher: httpx + trafilatura (HTML→clean text). 5s timeout, 2 retries w/ backoff, max 10 concurrent, custom User-Agent, respect robots.txt, 24h disk cache keyed by URL+etag, file:// + bare paths for offline. NO headless browser.
++- D8 Non-goals: no headless-browser rendering (JS pages → ambiguous); no DOI/Crossref/OpenAlex; no claim extraction from scratch; no cross-document batch scoring; no paid APIs; Linux/macOS only.
++- D9 Acceptance bar: frozen fixture corpus in tests/fixtures/ (~30 saved HTML pages + claim/citation pairs): 5 supported, 5 unsupported, 5 unreachable (local mock server), 3 paywalled, 3 ambiguous, 3 retraction/dead-link, 3 file://. Unit tests for citation extraction (all 3 forms), overlap scoring, verdict logic. One live smoke test (@pytest.mark.live, skipped by default). Done = pip install -e . → citesure verify sample.md correct on bundled sample; full suite green offline; MCP server passes real-client integration test; README demo reproducible from clean venv <2 min, zero keys.
++
++## YOUR PHASE 2 SCOPE (build exactly this)
++Content-overlap tier + full reporting + all 5 statuses + exit codes.
++
++1. **trafilatura extraction** — ensure fetched HTML is converted to clean text via trafilatura (fetcher may already do this; verify and harden). Split clean text into passages (sentences/paragraphs).
++
++2. **Citation-anchored window logic (D4)** — for each citation, the claim unit is the sentence/paragraph containing the `[n]` marker. Implement a function that, given the source document text and a citation marker, returns the claim window (the containing sentence/paragraph). Support user-supplied excerpts as an alternative claim unit (input option).
++
++3. **Top-k passage matching** — given a claim unit and the fetched page's passages, select the top-k most relevant passages to compare against (relevance by term/entity overlap or simple TF-IDF/cosine — NO LLM). k configurable (default e.g. 5).
++
++4. **Overlap scoring** — score how well the claim unit is supported by the top-k passages. Use term/entity overlap (e.g. Jaccard / cosine over token sets, plus named-entity-ish keyword matching). Produce a numeric score in [0,1]. NO LLM. This is tier 2.
++
++5. **All 5 statuses** — wire the verdict logic so each citation gets one of: supported / unsupported / unreachable / paywalled / ambiguous, following D3 rules exactly. For tier 2 (no NLI yet): 
++   - unreachable/paywalled come from reachability tier (P1).
++   - supported = high overlap (claim terms present in cited region).
++   - unsupported = page fetched fine but claim absent from cited region (low overlap).
++   - ambiguous = partial overlap (mid-band) OR marker not locatable (e.g. JS page where trafilatura yields little/no text).
++   Define clear thresholds for the overlap score bands (document them). Leave a clean hook so NLI (P3) can refine the mid-band into supported/unsupported later.
++
++6. **Reporting** — 
++   - JSON report output (`--json`) matching D3 shapes: per-citation verdicts + overall `{total, supported, unsupported, unverifiable, pass_rate}`.
++   - Markdown report output (human-readable table/list) as the default.
++   - `--strict` flag: ambiguous counts as failure.
++   - Exit code 0 if pass_rate ≥ threshold else 1 (`--threshold`, default e.g. 0.8).
++   - Update the CLI (`citesure verify <file>`) to run tiers 1+2 by default and emit these reports.
++
++7. **Tests** — extend `tests/`:
++   - `test_overlap.py` — overlap scoring unit tests (known-supported, known-unsupported, partial cases).
++   - `test_windows.py` — citation-anchored window logic (marker→claim unit; user excerpt option).
++   - `test_topk.py` — top-k passage selection.
++   - Extend `test_verdict.py` — all 5 statuses produced correctly across the FULL fixture corpus offline.
++   - Ensure ALL ~30 fixtures produce their CORRECT status offline (this is the key Phase 2 exit check). Add a test that iterates the fixture corpus and asserts each citation's expected status.
++   - Keep live tests marked `@pytest.mark.live` and skipped by default.
++
++## Phase 2 EXIT CRITERION (must satisfy before reporting done)
++- `cd /home/hermes/citesure && .venv/bin/python -m pytest -x -q` GREEN (offline; live skipped).
++- ALL ~30 fixtures produce correct statuses offline (a dedicated corpus test asserts this).
++- Report renders correctly in both JSON and Markdown; `--strict` and exit codes behave per D3.
++- `citesure verify tests/fixtures/sample.md` produces a correct report using tiers 1+2.
++
++## Rules
++- Commit NOTHING to git. Do NOT touch anything outside /home/hermes/citesure/ (and /tmp).
++- Preserve Phase 1 behavior; extend, don't break. Keep ~80% of logic testable without MCP plumbing.
++- When done, print a concise summary: files created/changed, test count passed, exact command you ran to verify, and the fixture-corpus status breakdown you observed.
+
+╭─ ⚕ Hermes ───────────────────────────────────────────────────────────────────╮
+Now the Phase 3 (NLI) brief for the ai-ml-engineer:
+
+╰──────────────────────────────────────────────────────────────────────────────╯
+  ┊ ✍️ preparing write_file…
+  ┊ ✍️  write     /tmp/phase3_brief.md  0.3s
+  ┊ review diff
+a//tmp/phase3_brief.md → b//tmp/phase3_brief.md
+@@ -0,0 +1,58 @@
++You are the ai-ml-engineer building Phase 3 of `citesure` — an MCP citation verifier. Phases 1–2 are ALREADY BUILT and their tests pass: package skeleton, citation extraction, fetcher, reachability tier, content-overlap tier, verdict model, CLI, reporting. Read the existing code first before changing anything.
++
++## Working directory
++/home/hermes/citesure/  (work ONLY here; temp files in /tmp)
++Venv at /home/hermes/citesure/.venv with all deps installed INCLUDING torch (CPU), transformers, sentence-transformers. Use `.venv/bin/python` and `.venv/bin/pip`. Do NOT create a new venv. Do NOT run `git commit` (orchestrator handles git).
++
++## Locked Decisions (BINDING)
++- D2 Tiers: (1) reachability [DONE]; (2) content overlap [DONE]; (3) NLI entailment — local cross-encoder scores entailment. Tier 3 is a first-class opt-in (`--nli`), fully built and tested, NOT a stub.
++- D3 Verdict model: per-citation `{citation_id, url, status, tier_reached, score, evidence (≤300 chars), notes[]}`. Statuses: `supported | unsupported | unreachable | paywalled | ambiguous`. Rules: unsupported = page fetched but claim absent from cited region AND (NLI < 0.3 when on); ambiguous = partial overlap, NLI 0.3–0.7 band, or marker not locatable (JS page). Overall report `{total, supported, unsupported, unverifiable, pass_rate}`. Exit code 0 if pass_rate ≥ threshold else 1. `--strict`: ambiguous counts as failure.
++- D4 Matching engine: citation-anchored windows — sentence/paragraph containing the `[n]` marker is the claim unit; match against top-k most relevant passages in fetched page. NO whole-page matching.
++- D6 NLI model: `cross-encoder/nli-deberta-v3-base` default (~425 MB), lazy download on first `--nli` use, cached to `~/.cache/citesure/`. Model swap at 3 levels (priority order): `--nli-model <hf-name-or-path>` flag / `nli_model=` lib param → `CITECHECK_NLI_MODEL` env var → built-in default. Any HF cross-encoder name or local path; fail fast with clear error if it won't load.
++- D8 Non-goals: no headless-browser rendering; no DOI/Crossref/OpenAlex; no claim extraction from scratch; no paid APIs; Linux/macOS only.
++- D9 Acceptance bar: frozen fixture corpus in tests/fixtures/ (~30 saved HTML pages + claim/citation pairs). Unit tests for citation extraction, overlap scoring, verdict logic. One live smoke test (@pytest.mark.live, skipped by default). Done = full suite green offline; README demo reproducible from clean venv <2 min, zero keys.
++
++## YOUR PHASE 3 SCOPE (build exactly this)
++NLI entailment tier (tier 3) as a first-class opt-in.
++
++1. **DeBERTa-v3 integration (D6)** — implement `src/citesure/nli.py`:
++   - Load `cross-encoder/nli-deberta-v3-base` via `sentence_transformers.CrossEncoder` (or transformers directly). 
++   - Lazy download on first `--nli` use; cache to `~/.cache/citesure/` (set HF cache dir accordingly, e.g. via env or `cache_dir=`).
++   - Score function: given a claim unit (premise) and a passage (hypothesis), return an entailment probability in [0,1]. The DeBERTa NLI model outputs 3 logits (contradiction, neutral, entailment) — use softmax and take the entailment class probability as the score. Document this mapping.
++   - Batch scoring where feasible for CPU perf.
++
++2. **Model swap at 3 levels (D6, priority order)** — resolve the model name/path in this order:
++   1. `--nli-model <hf-name-or-path>` CLI flag / `nli_model=` library param
++   2. `CITECHECK_NLI_MODEL` environment variable
++   3. built-in default `cross-encoder/nli-deberta-v3-base`
++   Any HF cross-encoder name or local path must work. **Fail fast with a clear error** if the model won't load (bad name, no network, etc.) — do not silently fall back.
++
++3. **Mid-band ambiguity logic (D3)** — wire NLI into the verdict logic so that when `--nli` is on:
++   - NLI < 0.3 → supports `unsupported` (claim absent from cited region).
++   - NLI 0.3–0.7 → `ambiguous` (mid-band).
++   - NLI ≥ 0.7 → supports `supported`.
++   Combine with the overlap tier sensibly (e.g. NLI refines the mid-band that overlap left ambiguous). Keep it deterministic and documented. When `--nli` is OFF, behavior must be EXACTLY as Phase 2 (no regression).
++
++4. **CLI + library wiring** — add `--nli` flag and `--nli-model` to the `citesure verify` CLI and the library API (`verify(..., nli=True, nli_model=...)`). When `--nli` is on, `tier_reached` should reflect that tier 3 was used.
++
++5. **CPU perf sanity** — the fixture suite with NLI must complete in <5 min on CPU. Add a note/measurement. If too slow, reduce batch size or limit passages scored (document the tradeoff). Do NOT make it a stub.
++
++6. **Tests** — extend `tests/`:
++   - `test_nli.py` — NLI scoring unit tests. IMPORTANT: these must be runnable offline for CI. Strategy: mark the real-model tests with a marker (e.g. `@pytest.mark.nli`) that is SKIPPED by default (add to pytest config `addopts`), BUT also include lightweight tests that verify:
++     - model-name resolution priority (flag > env > default) WITHOUT loading the model (mock/stub the loader).
++     - fail-fast error on a bad model name (assert a clear exception is raised) — can use a fake name and mock the network/load to avoid a real download.
++     - the mid-band ambiguity logic (score→status mapping) using a MOCK scorer (inject a fake scorer returning fixed scores) so the verdict logic is tested without the 425MB model.
++   - Ensure the DEFAULT offline suite (no markers) stays GREEN and does NOT require the model download.
++   - Keep live tests marked `@pytest.mark.live` and skipped by default.
++
++## Phase 3 EXIT CRITERION (must satisfy before reporting done)
++- `cd /home/hermes/citesure && .venv/bin/python -m pytest -x -q` GREEN (offline; live AND nli-marker tests skipped by default).
++- NLI logic tests pass on CPU (the mock-based ones always run; the real-model ones are gated behind a marker you document how to enable).
++- Model-swap paths verified: flag + env both work (test the resolution logic).
++- Fail-fast error on bad model name (tested).
++- If the ~425MB model download succeeds during your testing, great — report the actual NLI scores on a couple of fixtures. If the download FAILS due to network, that's acceptable: mark it "code complete, model download pending" and ensure all non-download tests pass.
++
++## Rules
++- Commit NOTHING to git. Do NOT touch anything outside /home/hermes/citesure/ (and /tmp).
++- Preserve Phases 1–2 behavior exactly when `--nli` is off. Keep ~80% of logic testable without MCP plumbing.
++- When done, print a concise summary: files created/changed, test count passed, exact command you ran to verify, whether the model downloaded, and any NLI scores you observed.
+
+╭─ ⚕ Hermes ───────────────────────────────────────────────────────────────────╮
+Now let me check Phase 1 progress.
+
+╰──────────────────────────────────────────────────────────────────────────────╯
+  ┊ ⚡ preparing tool_call…
+  ┊ ⚙️  proc      poll proc_860d299  0.0s
+
+╭─ ⚕ Hermes ───────────────────────────────────────────────────────────────────╮
+While Phase 1 runs, let me draft the Phase 4 and Phase 5 briefs.
+
+╰──────────────────────────────────────────────────────────────────────────────╯
+  ┊ ✍️ preparing write_file…
+  ┊ ✍️  write     /tmp/phase4_brief.md  0.2s
+  ┊ review diff
+a//tmp/phase4_brief.md → b//tmp/phase4_brief.md
+@@ -0,0 +1,41 @@
++You are the software-engineer building Phase 4 of `citesure` — an MCP citation verifier. Phases 1–3 are ALREADY BUILT and their tests pass: package skeleton, citation extraction, fetcher, reachability tier, content-overlap tier, NLI tier, verdict model, CLI, reporting. Read the existing code first before changing anything.
++
++## Working directory
++/home/hermes/citesure/  (work ONLY here; temp files in /tmp)
++Venv at /home/hermes/citesure/.venv with all deps installed INCLUDING the `mcp` Python SDK (v2.x — note FastMCP may be renamed to MCPServer in 2.x; inspect the installed API). Use `.venv/bin/python` and `.venv/bin/pip`. Do NOT create a new venv. Do NOT run `git commit` (orchestrator handles git).
++
++## Locked Decisions (BINDING)
++- D3 Verdict model: per-citation `{citation_id, url, status, tier_reached, score, evidence (≤300 chars), notes[]}`. Statuses: `supported | unsupported | unreachable | paywalled | ambiguous`. Overall report `{total, supported, unsupported, unverifiable, pass_rate}`. Exit code 0 if pass_rate ≥ threshold else 1. `--strict`: ambiguous counts as failure.
++- D5 Form factor: ONE Python package, THREE entry points — `citesure` CLI [DONE], importable library API [DONE], `citesure-mcp` server exposing `verify_citations` + `verify_markdown` tools. Built on the OFFICIAL `mcp` Python SDK (FastMCP/MCPServer). ~80% of code testable without MCP plumbing.
++- D6 NLI model: `cross-encoder/nli-deberta-v3-base` default, lazy download, cached to ~/.cache/citesure/. Model swap: --nli-model / nli_model= → CITECHECK_NLI_MODEL env → default. Fail fast on bad model.
++- D7 Fetcher: httpx + trafilatura, 5s timeout, 2 retries w/ backoff, max 10 concurrent, custom User-Agent, respect robots.txt, 24h disk cache keyed by URL+etag, file:// + bare paths for offline. NO headless browser.
++- D8 Non-goals: no headless-browser rendering; no DOI/Crossref/OpenAlex; no claim extraction from scratch; no paid APIs; Linux/macOS only.
++- D9 Acceptance bar: frozen fixture corpus in tests/fixtures/ (~30 saved HTML pages + claim/citation pairs). One live smoke test (@pytest.mark.live, skipped by default). Done = full suite green offline; MCP server passes real-client integration test; README demo reproducible from clean venv <2 min, zero keys.
++- D12 One-command install: proper pyproject.toml, entry points for both CLIs (`citesure` and `citesure-mcp`).
++
++## YOUR PHASE 4 SCOPE (build exactly this)
++MCP server with two tools + a real-client integration test.
++
++1. **`citesure-mcp` entry point** — implement `src/citesure/mcp_server.py` (replace the Phase 1 stub) using the OFFICIAL `mcp` Python SDK. Inspect the installed mcp 2.x API first (FastMCP vs MCPServer naming) and use whatever is correct for the installed version. The server must expose exactly TWO tools:
++   - `verify_citations(citations: list[{claim, citation}], nli: bool = False, nli_model: str | None = None, strict: bool = False, threshold: float = 0.8)` — takes structured JSON claim/citation pairs (D1), runs the verification pipeline (tiers 1+2 by default, tier 3 if nli=True), returns the report as JSON (per-citation verdicts + overall stats per D3).
++   - `verify_markdown(markdown: str, nli: bool = False, nli_model: str | None = None, strict: bool = False, threshold: float = 0.8)` — takes a markdown string with inline citations (D1), extracts citations, runs the pipeline, returns the report as JSON.
++   Both tools should REUSE the existing library API (the same code path the CLI uses) — do not duplicate logic. The MCP layer is thin plumbing over the library.
++   - Provide a `main()` that starts the server (stdio transport by default). Ensure the `citesure-mcp` console-script entry point in pyproject.toml resolves to it.
++
++2. **Real MCP client integration test** — `tests/test_mcp_integration.py`:
++   - Spin up the MCP server (in-process or via stdio subprocess) and connect a REAL MCP client from the `mcp` SDK.
++   - Call `verify_citations` with a small set of claim/citation pairs pointing at file:// fixtures (offline) and assert the returned report has the correct shape and statuses.
++   - Call `verify_markdown` with a small markdown string using file:// citations and assert correct output.
++   - This test must run OFFLINE (file:// fixtures) and be part of the default suite (NOT skipped), because D9 requires "MCP server passes real-client integration test" as part of Done. If it needs the model, gate that part behind the nli marker; the base (tiers 1+2) must run offline by default.
++   - Keep live tests marked @pytest.mark.live and skipped by default.
++
++## Phase 4 EXIT CRITERION (must satisfy before reporting done)
++- `cd /home/hermes/citesure && .venv/bin/python -m pytest -x -q` GREEN (offline; live skipped).
++- The MCP server works in an ACTUAL MCP client session: the integration test connects a real client, calls both tools, and gets correct results.
++- `citesure-mcp` entry point resolves and the server starts (you can verify it launches without error, e.g. a quick import/instantiation check or a short stdio handshake).
++- Both tools reuse the library pipeline (no duplicated verification logic).
++
++## Rules
++- Commit NOTHING to git. Do NOT touch anything outside /home/hermes/citesure/ (and /tmp).
++- Preserve Phases 1–3 behavior. Keep ~80% of logic testable without MCP plumbing (the MCP layer should be thin).
++- When done, print a concise summary: files created/changed, test count passed, exact command you ran to verify, and confirmation that the real-client integration test passed offline.
+  ┊ ✍️ preparing write_file…
+  ┊ ✍️  write     /tmp/phase5_writer_brief.md  0.3s
+  ┊ review diff
+a//tmp/phase5_writer_brief.md → b//tmp/phase5_writer_brief.md
+@@ -0,0 +1,41 @@
++You are the technical-writer for `citesure` — an MCP citation verifier (MCP server + CLI + library that verifies whether an LLM's claims are supported by the sources it cites). Phases 1–4 are BUILT and tested: package skeleton, citation extraction (markdown [n], markdown [source](url), JSON pairs), fetcher (httpx+trafilatura), reachability tier, content-overlap tier, NLI tier (--nli opt-in with cross-encoder/nli-deberta-v3-base), verdict model (supported/unsupported/unreachable/paywalled/ambiguous), CLI (`citesure verify <file>` with --json/--strict/--threshold/--nli/--nli-model), MCP server (`citesure-mcp` exposing verify_citations + verify_markdown). Read the existing code and tests first so the docs match reality EXACTLY.
++
++## Working directory
++/home/hermes/citesure/  (work ONLY here; temp files in /tmp)
++Venv at /home/hermes/citesure/.venv. Use `.venv/bin/python`. Do NOT run `git commit` (orchestrator handles git). Do NOT change any Python source code — docs only. If you find a doc/code mismatch, note it in your summary instead of fixing code.
++
++## Locked Decisions relevant to docs (BINDING)
++- D1 Input formats: markdown inline citations ([1], [source](url)) AND structured JSON {claim, citation} pairs.
++- D2 Three tiers: reachability (default), content overlap (default), NLI entailment (--nli opt-in, fully built not a stub).
++- D3 Verdicts: per-citation {citation_id, url, status, tier_reached, score, evidence ≤300 chars, notes[]}; statuses supported|unsupported|unreachable|paywalled|ambiguous; overall {total, supported, unsupported, unverifiable, pass_rate}; exit code 0 if pass_rate ≥ threshold else 1; --strict makes ambiguous count as failure.
++- D6 NLI: cross-encoder/nli-deberta-v3-base default (~425MB) lazy download cached to ~/.cache/citesure/; model swap: --nli-model flag / nli_model= param → CITECHECK_NLI_MODEL env → default.
++- D7 Fetcher: httpx+trafilatura, 5s timeout, 2 retries w/ backoff, max 10 concurrent, custom User-Agent, respects robots.txt, 24h disk cache keyed by URL+etag, file:// and bare paths for offline use. NO headless browser.
++- D8 Non-goals: no headless-browser rendering (JS pages → ambiguous); no DOI/Crossref/OpenAlex; no claim extraction from scratch; no cross-document batch scoring; no paid API integrations (zero keys required); Linux/macOS only.
++- D9 Acceptance bar: README demo reproducible from clean venv in <2 min, zero API keys.
++- D10 Name: citesure everywhere.
++- D12 One-command install: pip install citesure / pipx install citesure; entry points citesure + citesure-mcp.
++
++## YOUR PHASE 5 SCOPE (technical-writer part)
++1. **README.md** at /home/hermes/citesure/README.md — complete, accurate, reproducible:
++   - One-liner + what it does (verifies claims against cited sources; flags dead/retracted/paywalled links; abstains when it can't confirm).
++   - Install: one-command (`pip install citesure` / `pipx install citesure`) AND from this repo (`pip install -e .`).
++   - Quickstart demo that is REPRODUCIBLE FROM A CLEAN VENV IN <2 MIN WITH ZERO API KEYS: use the bundled sample file (tests/fixtures/sample.md or wherever the demo sample lives — check what exists) with file:// or local citations so it works fully offline. Show real command + real expected output (run it yourself to capture actual output).
++   - CLI reference: all flags of `citesure verify` (verify each against the actual argparse/click code: --json, --strict, --threshold, --nli, --nli-model, and any others that exist).
++   - Input formats section: markdown inline [n], markdown [source](url), JSON pairs — with small examples matching the real parser behavior.
++   - Verdicts section: the 5 statuses, what triggers each, pass_rate, exit codes, --strict semantics.
++   - Tiers section: reachability + overlap (default) and NLI (--nli): model name, ~425MB lazy download to ~/.cache/citesure/, model-swap priority (flag → CITECHECK_NLI_MODEL env → default).
++   - MCP server section: how to run `citesure-mcp`, the two tools (verify_citations, verify_markdown) with parameter tables, and a minimal client config example (e.g. mcp.json / claude_desktop_config style snippet) using stdio.
++   - Library API section: importable usage examples (verify function signature as it actually is).
++   - Non-goals / limitations (D8) clearly stated.
++   - Testing section: how to run the offline suite, how to enable live tests, how to enable NLI-model tests.
++2. **docs/** — at minimum `docs/architecture.md` (module map: citations.py, fetcher.py, reachability.py, overlap/matching modules, nli.py, models.py, cli.py, mcp_server.py — describe data flow from input → extraction → fetch → tiers → verdict → report) and `docs/faq.md` (short: why ambiguous on JS pages, why zero API keys, how caching works, how to swap the NLI model, Windows support status). Keep both accurate to the real code.
++3. Verify every command you document ACTUALLY WORKS by running it in the venv (especially the quickstart demo). Capture real output into the README.
++
++## EXIT CRITERION
++- README.md quickstart runs end-to-end successfully in the venv (you ran it yourself; paste the real output in the README).
++- All documented flags/params match the actual code (spot-check each).
++- docs/architecture.md and docs/faq.md exist and are accurate.
++
++## Rules
++- Commit NOTHING to git. Do NOT touch anything outside /home/hermes/citesure/ (and /tmp). Docs only — no Python changes.
++- When done, print a concise summary: files created, the exact commands you ran to verify the demo, and any doc/code mismatches you found.
+  ┊ ✍️ preparing write_file…
+  ┊ ✍️  write     /tmp/phase5_devops_brief.md  0.2s
+  ┊ review diff
+a//tmp/phase5_devops_brief.md → b//tmp/phase5_devops_brief.md
+@@ -0,0 +1,38 @@
++You are the devops-engineer for `citesure` — an MCP citation verifier (MCP server + CLI + library). Phases 1–4 are BUILT and tested: package skeleton, citation extraction, fetcher, reachability/overlap/NLI tiers, verdict model, CLI (`citesure verify`), MCP server (`citesure-mcp`). Read the existing code, pyproject.toml, and tests first.
++
++## Working directory
++/home/hermes/citesure/  (work ONLY here; temp files in /tmp)
++Venv at /home/hermes/citesure/.venv with all deps installed. Use `.venv/bin/python` and `.venv/bin/pip`. Do NOT create a new venv. Do NOT run `git commit` (orchestrator handles git).
++
++## Locked Decisions relevant to you (BINDING)
++- D9 Acceptance bar: GitHub Actions CI on every push. One live smoke test (@pytest.mark.live, skipped by default). Done = pip install -e . → citesure verify sample.md correct on bundled sample; full suite green offline; MCP server passes real-client integration test; README demo reproducible from clean venv in <2 min, zero API keys.
++- D10 Name: citesure everywhere (repo DawnofGenX/citesure, package citesure, CLI citesure + citesure-mcp).
++- D12 One-command install: proper pyproject.toml, pip install citesure / pipx install citesure, entry points for both CLIs.
++- D6 NLI model ~425MB lazy download — CI must NOT download it (offline suite must stay fast and green without it).
++
++## YOUR PHASE 5 SCOPE (devops part)
++1. **GitHub Actions CI** — `.github/workflows/ci.yml`:
++   - Triggers: push + pull_request.
++   - Matrix or single job: ubuntu-latest (and macos-latest if cheap), Python 3.11 and 3.12.
++   - Steps: checkout, setup-python, `pip install -e .[dev]` (add a `dev` extra with pytest if not present — you may edit pyproject.toml for this), then `python -m pytest -q` (default markers: live and nli-model tests skipped). 
++   - Optionally a second job that runs the live smoke tests (`-m live`) — but keep the main gate offline-only so CI is deterministic.
++   - The workflow must be valid YAML that would pass `actionlint`-style review (you can't run GH Actions here, but make it correct and self-consistent with the actual test markers in pyproject/pytest config — CHECK what markers exist: live, nli, etc.).
++2. **PyPI publish PREP (do NOT publish)**:
++   - Ensure pyproject.toml is publish-ready: name `citesure`, version, description, readme = "README.md", license, authors, classifiers (Python 3.11/3.12, OS :: POSIX, etc.), project_urls (Repository → https://github.com/DawnofGenX/citesure), keywords, accurate dependencies. Check that `readme` file referenced actually exists (README.md may be written by another specialist in parallel — if missing at build time, note it; do not fabricate).
++   - Build the distribution: `.venv/bin/pip install build twine` then `.venv/bin/python -m build` (produces dist/*.tar.gz + dist/*.whl). Fix any build errors (missing files, bad metadata, src-layout issues).
++   - Verify metadata: `.venv/bin/twine check dist/*` must pass.
++   - Verify the wheel actually installs and works in a FRESH venv: create /tmp/citesure-publish-check/.venv, `pip install dist/citesure-*.whl`, then run `citesure --help` and `citesure verify <bundled sample>` against file:// fixtures to prove the wheel is functional. Report the result.
++   - Do NOT run `twine upload`. Record the exact publish command in your summary (and we'll put it in PROGRESS.md): `twine upload dist/*` (with note about PyPI API token via ~/.pypirc or TWINE_PASSWORD env).
++3. **pyproject hardening** — ensure `[project.optional-dependencies]` has a sensible `dev` extra (pytest) and that torch/torch-CPU guidance is documented (a comment or README note is fine; the dep itself stays as `torch` per plan). Make sure entry points for BOTH `citesure` and `citesure-mcp` are present and correct.
++
++## EXIT CRITERION
++- `.github/workflows/ci.yml` exists, valid YAML, consistent with actual test markers.
++- `python -m build` succeeds → sdist + wheel in dist/.
++- `twine check dist/*` passes.
++- Fresh-venv install of the built wheel works: `citesure --help` + `citesure verify <sample>` succeed.
++- Publish command recorded (NOT executed).
++
++## Rules
++- Commit NOTHING to git. Do NOT touch anything outside /home/hermes/citesure/ (and /tmp).
++- You MAY edit pyproject.toml (metadata/dev-extra/build config) but do NOT change runtime behavior of the package code.
++- When done, print a concise summary: files created/changed, build output listing, twine check result, fresh-venv verification result, and the exact publish command for the user.
+  ┊ ✍️ preparing write_file…
+  ┊ ✍️  write     /tmp/phase5_qa_brief.md  0.2s
+  ┊ review diff
+a//tmp/phase5_qa_brief.md → b//tmp/phase5_qa_brief.md
+@@ -0,0 +1,45 @@
++You are the qa-engineer performing the FINAL QA GATE for `citesure` — an MCP citation verifier (MCP server + CLI + library that verifies whether an LLM's claims are supported by the sources it cites). Phases 1–5 are BUILT: package skeleton, citation extraction (markdown [n], markdown [source](url), JSON pairs), fetcher (httpx+trafilatura), reachability tier, content-overlap tier, NLI tier (--nli opt-in), verdict model (supported/unsupported/unreachable/paywalled/ambiguous), CLI (`citesure verify` with --json/--strict/--threshold/--nli/--nli-model), MCP server (`citesure-mcp` exposing verify_citations + verify_markdown), README/docs, CI workflow, built sdist+wheel. Read the code and tests first.
++
++## Working directory
++/home/hermes/citesure/  (work ONLY here; temp files in /tmp)
++Venv at /home/hermes/citesure/.venv with all deps installed. Use `.venv/bin/python`. Do NOT run `git commit` (orchestrator handles git). You may create test files under tests/ if needed for the gate, but do NOT modify runtime source code — if you find a bug, document it precisely (file, line, repro, expected vs actual) instead of fixing it.
++
++## Locked Decisions to verify against (BINDING)
++- D1 Input formats: markdown inline [n], markdown [source](url), JSON {claim, citation} pairs — all three must work.
++- D2 Tiers: reachability + overlap default; NLI --nli opt-in fully built (not a stub).
++- D3 Verdicts: per-citation {citation_id, url, status, tier_reached, score, evidence ≤300 chars, notes[]}; statuses supported|unsupported|unreachable|paywalled|ambiguous; overall {total, supported, unsupported, unverifiable, pass_rate}; exit code 0 if pass_rate ≥ threshold else 1; --strict makes ambiguous count as failure.
++- D4 Matching: citation-anchored windows; top-k passages; NO whole-page matching.
++- D6 NLI: cross-encoder/nli-deberta-v3-base default, lazy download to ~/.cache/citesure/, swap priority flag → CITECHECK_NLI_MODEL env → default, fail fast on bad model.
++- D7 Fetcher: httpx+trafilatura, 5s timeout, 2 retries w/ backoff, max 10 concurrent, custom User-Agent, robots.txt, 24h disk cache keyed by URL+etag, file:// + bare paths offline. NO headless browser.
++- D8 Non-goals: no headless browser, no DOI/Crossref/OpenAlex, no claim extraction from scratch, no paid APIs (zero keys), Linux/macOS only.
++- D9 Acceptance bar (THE GATE): frozen fixture corpus in tests/fixtures/ (~30 saved HTML pages + claim/citation pairs): 5 supported, 5 unsupported, 5 unreachable (local mock server), 3 paywalled, 3 ambiguous, 3 retraction/dead-link, 3 file://. Unit tests for citation extraction (all 3 forms), overlap scoring, verdict logic. One live smoke test (@pytest.mark.live, skipped by default). GitHub Actions CI on every push. Done = (a) pip install -e . → citesure verify sample.md correct on bundled sample; (b) full suite green offline; (c) MCP server passes real-client integration test; (d) README demo reproducible from clean venv in <2 min, zero API keys.
++- D10 Name: citesure everywhere.
++- D12 One-command install: pyproject.toml, pip/pipx install, entry points for both CLIs.
++
++## YOUR PHASE 5 SCOPE (QA gate)
++Execute the D9 acceptance bar end-to-end and produce a sign-off checklist.
++
++1. **Clean-venv install test** — create a FRESH venv at /tmp/qa-clean-venv, `pip install -e /home/hermes/citesure` (or the built wheel if present in dist/), then run `citesure verify <bundled sample>` and confirm the report is correct. Time it (must be <2 min for the demo path). Zero API keys used.
++2. **Full offline suite** — run `cd /home/hermes/citesure && .venv/bin/python -m pytest -q` (default markers; live+nli skipped). Record exact pass/fail/skip counts. Must be GREEN.
++3. **Fixture corpus audit** — verify tests/fixtures/ actually contains the D9 distribution: 5 supported, 5 unsupported, 5 unreachable (mock server), 3 paywalled, 3 ambiguous, 3 retraction/dead-link, 3 file://. Count them. Verify a corpus test asserts each citation's expected status and that it passes.
++4. **MCP real-client integration** — confirm the MCP integration test exists, uses a REAL client from the mcp SDK, runs offline, and passes. Run it specifically: `.venv/bin/python -m pytest -q tests/test_mcp_integration.py`.
++5. **CLI behavior spot-checks** (run them yourself, record actual output):
++   - `citesure verify <sample>` default (markdown report) — correct statuses?
++   - `--json` — valid JSON matching D3 shapes?
++   - `--strict` — ambiguous counted as failure?
++   - exit codes: construct a case with pass_rate below threshold → exit 1; above → exit 0.
++   - all 3 input forms parse (markdown [n], markdown [source](url), JSON pairs).
++6. **NLI fail-fast check** — verify a bad model name fails fast with a clear error (run with a fake --nli-model name; it should error clearly, not hang or silently fall back). This may not need the real model download.
++7. **README demo reproducibility** — follow the README quickstart EXACTLY in a clean venv; confirm it works in <2 min with zero keys. Note any step that fails or is inaccurate.
++8. **Sign-off checklist** — write `/home/hermes/citesure/QA_SIGNOFF.md` with a table: each D9 criterion → PASS/FAIL/GAP + evidence (command + observed result). Include the fixture distribution counts, test counts, clean-venv timing, and any bugs found (file/line/repro/expected-vs-actual).
++
++## EXIT CRITERION
++- QA_SIGNOFF.md written with every D9 criterion evaluated PASS/FAIL/GAP.
++- Full offline suite green (or gaps documented precisely).
++- Clean-venv install + verify works (or gap documented).
++- MCP integration test confirmed passing (or gap documented).
++
++## Rules
++- Commit NOTHING to git. Do NOT touch anything outside /home/hermes/citesure/ (and /tmp).
++- Do NOT modify runtime source code — document bugs, don't fix them.
++- When done, print a concise summary: overall verdict (PASS/FAIL-with-gaps), test counts, fixture distribution counts, clean-venv timing, and the list of any gaps/bugs found.
+
+╭─ ⚕ Hermes ───────────────────────────────────────────────────────────────────╮
+All briefs are drafted. Let me check Phase 1 progress.
+
+╰──────────────────────────────────────────────────────────────────────────────╯
+  ┊ ⚡ preparing tool_call…
+  ┊ ⚙️  proc      poll proc_860d299  0.0s
+
+╭─ ⚕ Hermes ───────────────────────────────────────────────────────────────────╮
+Phase 1 is progressing (10 min in, building the fetcher). Let me check what files exist so far while it continues.
+
+╰──────────────────────────────────────────────────────────────────────────────╯
+  ┊ 💻 preparing terminal…
+  ┊ 💻 $         find /home/hermes/citesure -type f -not -path '*/.venv/*' -not -path '*/.git/*'  0.6s
+
+╭─ ⚕ Hermes ───────────────────────────────────────────────────────────────────╮
+Still exploring APIs, no files written yet. Let me wait for it to progress further.
+
+╰──────────────────────────────────────────────────────────────────────────────╯
+  ┊ ⚡ preparing tool_call…
+  ┊ ⚙️  proc      wait proc_860d299  189.9s
+
+╭─ ⚕ Hermes ───────────────────────────────────────────────────────────────────╮
+Let me check the run log tail and file state to gauge real progress.
+
+╰──────────────────────────────────────────────────────────────────────────────╯
+  ┊ 💻 preparing terminal…
+  ┊ 💻 $         echo "=== FILES ===" + 3 commands  0.1s
+
+╭─ ⚕ Hermes ───────────────────────────────────────────────────────────────────╮
+The agent is doing thorough API exploration (trafilatura 2.2.0 metadata API, mcp 2.x, setuptools). No files yet at ~13 min. This is due diligence before writing. Let me keep waiting for completion.
+
+╰──────────────────────────────────────────────────────────────────────────────╯
+  ┊ ⚡ preparing tool_call…
+  ┊ ⚙️  proc      wait proc_860d299  189.8s
+  ┊ 💻 preparing terminal…
+  ┊ 💻 $         ls -la /tmp/phase1_run.log + 4 commands  0.1s
+
+╭─ ⚕ Hermes ───────────────────────────────────────────────────────────────────╮
+The log stopped updating at 11:28 and I don't see the hermes child process in the list. Let me investigate whether it's actually still running or stalled.
+
+╰──────────────────────────────────────────────────────────────────────────────╯
+  ┊ 💻 preparing terminal…
+  ┊ 💻 $         date + 8 commands  0.2s
+
+╭─ ⚕ Hermes ───────────────────────────────────────────────────────────────────╮
+The child process is alive but has only used 13s CPU in 16min and the log hasn't updated in ~8 min. It may be waiting on a slow model response or stalled. Let me check its state more closely.
+
+╰──────────────────────────────────────────────────────────────────────────────╯
+  ┊ 💻 preparing terminal…
+  ┊ 💻 $         echo "=== child state ===" + 7 commands  0.1s
+
+╭─ ⚕ Hermes ───────────────────────────────────────────────────────────────────╮
+The child is sleeping on network (3 sockets) — likely waiting on a slow model API response since 11:28 (~8 min). Let me give it a bit more time before deciding.
+
+╰──────────────────────────────────────────────────────────────────────────────╯
+  ┊ ⚡ preparing tool_call…
+  ┊ ⚙️  proc      wait proc_860d299  158.6s
+
+╭─ ⚕ Hermes ───────────────────────────────────────────────────────────────────╮
+Good — it's moving now (setting up task list, starting to build). There were a couple of tool_call hiccups but it's recovering. Let me continue waiting.
+
+╰──────────────────────────────────────────────────────────────────────────────╯
+  ┊ ⚡ preparing tool_call…
+  ┊ ⚙️  proc      wait proc_860d299  190.0s
+
+╭─ ⚕ Hermes ───────────────────────────────────────────────────────────────────╮
+Still progressing (probing trafilatura API). The child is slow but working. Let me keep waiting.
+
+╰──────────────────────────────────────────────────────────────────────────────╯
+  ┊ ⚡ preparing tool_call…
+  ┊ ⚙️  proc      wait proc_860d299  188.5s
+
+╭─ ⚕ Hermes ───────────────────────────────────────────────────────────────────╮
+It's now writing files (mcp_server.py stub visible). Let me check what's been created.
+
+╰──────────────────────────────────────────────────────────────────────────────╯
+  ┊ 💻 preparing terminal…
+  ┊ 💻 $         find /home/hermes/citesure -type f -not -path '*/.venv/*' -not -path '*/.git/*' + 3 commands  0.1s
+
+╭─ ⚕ Hermes ───────────────────────────────────────────────────────────────────╮
+Files are being written now (pyproject.toml, models.py, mcp_server.py stub, README). Progressing well. Let me continue waiting for completion.
+
+╰──────────────────────────────────────────────────────────────────────────────╯
+  ┊ ⚡ preparing tool_call…
+  ┊ ⚙️  proc      wait proc_860d299  175.4s
+Query: You are running the citesure build as Orchestrator. The full spec is at 
+/home/hermes/citesure/PLAN.md — READ IT FIRST and treat every "Locked Decision" 
+(D1-D12) as binding. Do not deviate from locked decisions; if you hit a genuine 
+blocker, record it in PROGRESS.md and continue with what is unblocked.
+
+## RESUME NOTE (this is a restart after a WSL reboot killed the previous run)
+Previous run state on disk:
+- Venv at /home/hermes/citesure/.venv exists with ALL deps installed (httpx, 
+trafilatura, mcp, torch CPU, transformers, sentence-transformers, pytest). Do 
+NOT recreate it.
+- Phase 1 was PARTIALLY done: pyproject.toml, src/citesure/__init__.py, 
+src/citesure/models.py (verdict model, D3), src/citesure/mcp_server.py 
+(deliberate STUB for Phase 4), README.md exist. No fetcher, no extractor, no 
+CLI, no tests/ dir, no fixtures yet.
+- Git repo initialized but ZERO commits. PROGRESS.md does not exist.
+- First action: VERIFY what exists (run .venv/bin/python -m pytest -q, inspect 
+files), then continue Phase 1 from where it stopped. Commit the verified state 
+as the first commit ("phase 1: partial — skeleton + models").
+
+## Your job
+Execute ALL FIVE PHASES in order (Phase 1 → Phase 5). For each phase:
+1. Dispatch the target specialist profile(s) as subagent(s) using the terminal 
+tool:
+   `hermes -p <profile> chat --yolo -q "<task brief>"` (use --query-file with a 
+temp file if the brief is long)
+   Give each subagent: the relevant PLAN.md decisions verbatim, exact file paths
+under /home/hermes/citesure/, the phase exit criterion, and an instruction to 
+commit nothing (you handle git).
+2. VERIFY on disk yourself before accepting: run the test suite (`cd 
+/home/hermes/citesure && .venv/bin/python -m pytest -x -q`), run the CLI on the 
+sample file, inspect key files. A subagent claiming "done" without your own 
+verification does NOT count.
+3. If verification fails, send a follow-up dispatch with the specific failures. 
+Max 2 retries per phase, then record the gap in PROGRESS.md and move on.
+4. Append a phase-completion entry to /home/hermes/citesure/PROGRESS.md (what 
+was built, test results you personally ran, files created, gaps).
+
+## Hard constraints
+- HARD CAP: 2 concurrent API calls total. Run child profiles STRICTLY 
+SEQUENTIALLY — one `hermes -p ...` at a time, wait for it to finish before 
+starting the next. Never parallelize two hermes invocations.
+- Phase 3 (NLI) will download a ~425MB model on first use — that is expected; 
+allow up to 10 minutes for that step. If the download fails due to network, mark
+Phase 3 as "code complete, model download pending" in PROGRESS.md and continue.
+- Phase 5 PyPI publish: PREPARE everything (twine-ready sdist/wheel, verified 
+metadata) but do NOT actually publish to PyPI — record the publish command in 
+PROGRESS.md for the user to run.
+- Git: make one clean commit per completed phase with a descriptive message. Do 
+NOT push to GitHub — the user will review first.
+- Work ONLY inside /home/hermes/citesure/ (plus temp files in /tmp). Never touch
+other directories.
+- Python: use /home/hermes/citesure/.venv/bin/python and .venv/bin/pip. Do NOT 
+create a new venv.
+
+## Final report
+When all five phases are done (or you are out of turns), end with a summary: 
+per-phase status (complete/gap), test counts from YOUR OWN runs, git log 
+--oneline output, and the exact commands the user needs to (a) install, (b) run 
+the demo, (c) publish to PyPI when ready.
+Initializing agent...
+────────────────────────────────────────
+
+
+╭─ ⚕ Hermes ───────────────────────────────────────────────────────────────────╮
+I'll start by reading the full spec and verifying the current on-disk state in parallel.
+
+╰──────────────────────────────────────────────────────────────────────────────╯
+  ┊ 📖 preparing read_file…
+  ┊ 💻 preparing terminal…
+  ┊ 📖 read      PLAN.md  0.0s
+  ┊ 💻 $         echo "=== TREE ===" + 5 commands  0.6s
+
+╭─ ⚕ Hermes ───────────────────────────────────────────────────────────────────╮
+Now let me inspect the existing files and verify the venv/test state.
+
+╰──────────────────────────────────────────────────────────────────────────────╯
+  ┊ 📖 preparing read_file…
+  ┊ 📖 preparing read_file…
+  ┊ 📖 preparing read_file…
+  ┊ 📖 preparing read_file…
+  ┊ 💻 preparing terminal…
+  ┊ 📖 read      pyproject.toml  0.0s
+  ┊ 📖 read      models.py  0.0s
+  ┊ 📖 read      __init__.py  0.0s
+  ┊ 📖 read      mcp_server.py  0.0s
+  ┊ 💻 $         echo "=== VENV CHECK ===" + 6 commands  0.4s
+
+╭─ ⚕ Hermes ───────────────────────────────────────────────────────────────────╮
+I've confirmed the venv is set up correctly, but the package is currently broken—init.py is importing modules that don't exist yet. Now I'll document this state and prepare for the next phase.
+
+╰──────────────────────────────────────────────────────────────────────────────╯
+  ┊ 💻 preparing terminal…
+  ┊ 💻 $         echo "=== IMPORT CHECK ===" + 5 commands  0.8s
+
+╭─ ⚕ Hermes ───────────────────────────────────────────────────────────────────╮
+I've confirmed the venv has all dependencies but the citesure package itself isn't installed yet, and init.py references modules that don't exist. Now I'll document this state in PROGRESS.md and make the first commit.
+
+╰──────────────────────────────────────────────────────────────────────────────╯
+  ┊ ✍️ preparing write_file…
+  ┊ ✍️  write     /home/hermes/citesure/PROGRESS.md  0.0s
+  ┊ review diff
+a/PROGRESS.md → b/PROGRESS.md
+@@ -0,0 +1,31 @@
++# citesure — Build Progress Log
++
++Orchestrator-driven build per PLAN.md. All "Locked Decisions" D1–D12 are binding.
++Each phase entry records what was built, test results the orchestrator ran
++personally, files created, and gaps.
++
++---
++
++## 2026-09-08 — Resume after WSL reboot (pre-Phase-1 state verified)
++
++**Verified on disk by orchestrator:**
++- Venv at `.venv/` intact: Python 3.12.14; httpx 0.28.1, trafilatura 2.2.0,
++  mcp 2.2.0, torch 2.14.0+cpu, transformers 5.16.1, sentence-transformers 6.0.1,
++  pytest 9.1.1 all present. NOT recreated.
++- Existing files: `pyproject.toml`, `src/citesure/__init__.py`,
++  `src/citesure/models.py` (D3 verdict model), `src/citesure/mcp_server.py`
++  (deliberate Phase-4 stub), `README.md`, `.gitignore`, `PLAN.md`.
++- **Known breakage (expected mid-phase state):** `__init__.py` imports
++  `citesure.citations` and `citesure.reachability`, which do not exist yet →
++  `import citesure` fails. Package NOT pip-installed into the venv yet.
++- No `tests/` dir, no fixtures, no fetcher, no CLI. Git repo initialized, zero commits.
++- `pytest -q`: no tests found (warning only) — consistent with no tests/ dir.
++
++**Action:** committed this verified partial state as the first commit
++("phase 1: partial — skeleton + models"), then resumed Phase 1.
++
++### Phase 1 — Core engine (IN PROGRESS)
++Target: software-engineer. Remaining scope: citations.py (D1 extraction),
++fetcher (D7), reachability tier, cli.py, tests/ + fixture subset, editable
++install. Exit criterion: offline suite green on reachability fixtures;
++`citesure verify` runs end-to-end on a sample file.
+  ┊ 💻 preparing terminal…

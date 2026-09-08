@@ -1,0 +1,58 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "citesure"
+version = "0.1.0"
+description = "MCP citation verifier: check whether an LLM's claims are actually supported by the sources it cites."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [{ name = "DawnofGenX" }]
+keywords = ["citations", "verification", "mcp", "hallucination", "nli", "fact-checking"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Software Development :: Libraries",
+    "Topic :: Text Processing :: Linguistic",
+]
+# Core runtime deps. The NLI stack (transformers/torch/sentence-transformers) is
+# only exercised by the opt-in --nli tier, but is declared here so a plain
+# `pip install citesure` is fully functional out of the box (D6/D12).
+dependencies = [
+    "httpx>=0.27",
+    "trafilatura>=1.9",
+    "mcp>=1.0",
+    "transformers>=4.40",
+    "torch>=2.0",
+    "sentence-transformers>=2.6",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0",
+]
+
+[project.scripts]
+citesure = "citesure.cli:main"
+citesure-mcp = "citesure.mcp_server:main"
+
+[project.urls]
+Homepage = "https://github.com/DawnofGenX/citesure"
+Repository = "https://github.com/DawnofGenX/citesure"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+# Live-network tests are skipped by default; enable with `-m live`.
+addopts = '-m "not live"'
+markers = [
+    "live: tests that hit the real internet (skipped by default)",
+]
