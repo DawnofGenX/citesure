@@ -164,3 +164,125 @@ Built by software-engineer child before pause; verified by main agent on resume.
 **Gaps:** none for Phase 4 scope. Open item carried from Phase 3: DeBERTa-v3
 model download stalled at 132K/425MB — retry before final acceptance.
 Commit: (this commit).
+
+---
+
+## 2026-09-08 — Phase 5 — Polish & launch
+
+### NLI correctness fix (unblocked by completed model download)
+
+The background DeBERTa-v3 download **finished** during Phase 5
+(`du -sh ~/.cache/citesure` = 715M; no `.incomplete` blobs; weights present).
+Running the previously-deselected `@pytest.mark.nli` tests for the first time
+exposed a real bug: `test_real_default_model_entailment_ordering` FAILED —
+clearly-entailed pairs scored ~0.0002 instead of ~0.99.
+
+**Root cause:** the cross-encoder is trained on `(premise, hypothesis)` where
+the *premise* is the source text and the *hypothesis* is the statement being
+checked. `_entailment_probs` fed the tokenizer `(claim, passage)` — i.e. it
+asked "does the claim entail the passage?" instead of "does the passage
+support the claim?". A passage that merely *adds* information to the claim
+reads as "neutral" (~0), silently collapsing every verdict toward unsupported.
+Verified empirically against `cross-encoder/nli-deberta-v3-base`: swapped order
+gives ent=0.993 (entailed) vs ent=0.0007 (unrelated); original order gave
+ent=0.0002 / ent=0.0003.
+
+**Fix:** feed the tokenizer `(passage, claim)` in `_entailment_probs`
+(`src/citesure/nli.py`), keeping the public `score_nli(model, claim, passage)`
+API and all mock-based tests intact. Committed as `579dc7c`. After the fix,
+`pytest -q -m nli` → **4 passed in 133.40s**. This bug was masked through
+Phases 1–4 because the model never finished downloading, so all NLI tests were
+deselected.
+
+### Deliverable 1 — README.md polish
+
+Rewrote `README.md` (technical-writer scope): accurate quickstart with REAL
+captured output, MCP server setup snippet (mcpServers JSON + CITECHECK_NLI env
+vars), the 3-tier pipeline, the 5 verdict statuses, exit codes, all flags
+(`--strict`/`--json`/`--md`/`--threshold`/`--nli`/`--nli-model`/`--cache-dir`),
+cache behavior (`CITECHECK_CACHE_DIR`), and offline-first design.
+
+**D9 reproducibility claim verified by actually running it in a fresh venv:**
+- `python3 -m venv /tmp/citesure-clean` (created 22:11:28)
+- `/tmp/citesure-clean/bin/pip install dist/citesure-0.1.0.tar.gz`
+  (finished 22:13:19) → **total install ≈ 1 min 51 s**, zero API keys.
+- `/tmp/citesure-clean/bin/citesure verify notes.md` → **real 2.37 s**, output
+  byte-identical to the repo venv (1 supported, 1 unreachable, pass_rate 0.5,
+  exit 1). Well under the <2 min bar.
+
+### Deliverable 2 — GitHub Actions CI
+
+Created `.github/workflows/ci.yml`: trigger on push + PR; matrix python
+3.10/3.11/3.12 (matches `requires-python >= 3.10`); steps checkout →
+setup-python (pip cache) → `pip install -e ".[dev]"` → `pytest -q`. The `[dev]`
+extra (pytest) already existed in pyproject. Live + NLI-model tests are
+deselected by default via pyproject addopts, so CI is green offline (D9).
+Validated: `python -c "import yaml; yaml.safe_load(...)"` → YAML OK, jobs/matrix/
+steps parsed correctly. Local validation only (cannot push to GitHub — user
+reviews first).
+
+### Deliverable 3 — PyPI publish PREP (NOT published)
+
+- pyproject.toml metadata confirmed complete: name=citesure, version=0.1.0,
+  description, readme (long_description), license MIT, authors, keywords,
+  classifiers, project_urls (Homepage + Repository).
+- `.venv/bin/pip install build twine`; `.venv/bin/python -m build` →
+  **Successfully built citesure-0.1.0.tar.gz and citesure-0.1.0-py3-none-any.whl**
+  (both in `dist/`).
+- `.venv/bin/twine check dist/*` →
+  ```
+  Checking dist/citesure-0.1.0-py3-none-any.whl: PASSED
+  Checking dist/citesure-0.1.0.tar.gz: PASSED
+  ```
+- Note: the sdist includes `tests/*.py` but not the HTML/JSON fixtures (standard
+  library packaging); the README quickstart uses self-contained inline files so
+  it does not depend on shipped fixtures.
+
+### PUBLISH (user runs this)
+
+Do NOT run this automatically — publishing requires PyPI credentials and user
+approval. From the repo root, after confirming `dist/` holds the intended
+artifacts:
+
+```bash
+twine upload dist/*
+```
+
+(Optionally `twine upload --repository pypi dist/*` if multiple repositories
+are configured. Requires `TWINE_USERNAME`/`TWINE_PASSWORD` or an API token.)
+
+### Deliverable 4 — Phase 5 QA gate
+
+Full offline suite run personally: `.venv/bin/python -m pytest -q` →
+**146 passed, 5 deselected in 55.04s** (deselected = 4 NLI-model + 1 live).
+
+| Check | Result | Evidence |
+|-------|--------|----------|
+| Full offline suite | PASS | 146 passed, 5 deselected in 55.04s |
+| `citesure verify tests/fixtures/sample.md` | PASS | 4 supported, 1 unverifiable, pass_rate 0.8, exit 0 |
+| `citesure verify tests/fixtures/cases.json --json --strict` | PASS | exit 1; pass_rate 0.2222 (< 0.8) |
+| MCP integration test alone | PASS | `pytest tests/test_mcp_integration.py -v` → 3 passed in 1.77s |
+| NLI live tests (model now present) | PASS | `pytest -q -m nli` → 4 passed in 133.40s (post-fix) |
+
+**D9 acceptance bar, item by item:**
+
+| # | Item | Status | Evidence |
+|---|------|--------|----------|
+| 1 | Corpus composition (~30 saved pages + pairs) | PASS | 27 cases: supported=6(≥5), unsupported=9(≥5), unreachable=5(≥5, incl. mock server), paywalled=3(≥3), ambiguous=4(≥3), retraction/dead-link=3, local/file://=22(≥3); 20 fixture HTML pages. Meets/exceeds D9. |
+| 2 | Extraction forms (all 3 input forms) | PASS | test_citations.py: 12 markdown-form tests (`[n]`, `[source](url)`, url_map, Sources/References sections) + 6 JSON-form tests (list-of-pairs, wrapper+sources map, relative path, malformed). |
+| 3 | Overlap scoring | PASS | test_overlap.py present; tier_reached=2 exercised across corpus with real numeric scores (e.g. sup1 score=0.944). |
+| 4 | Verdict logic (all 5 statuses) | PASS | All 5 statuses represented in the frozen corpus and asserted per-case by test_corpus.py. |
+| 5 | Live smoke test `@pytest.mark.live`, skipped by default | PASS | Added `tests/test_live_smoke.py` (was a gap — marker declared in pyproject but unused). Deselected by default (now 5 deselected); `pytest -q -m live` → 1 passed in 1.27s against example.com / python.org / wikipedia. |
+| 6 | CI file present | PASS | `.github/workflows/ci.yml` created, valid YAML, matrix 3.10/3.11/3.12, offline `pytest -q`. |
+| 7 | One-command install works | PASS | Clean venv install from sdist ≈ 1 min 51 s; `citesure` console script resolves and runs. |
+| 8 | MCP real-client test green | PASS | Real stdio MCP client session (subprocess spawn + JSON-RPC): 3 passed in 1.77s. |
+| 9 | README demo reproducible <2 min, zero API keys | PASS | Fresh venv: install ≈ 1 min 51 s + demo run 2.37 s, zero API keys, output matches README exactly. |
+
+**Gaps / notes:**
+- The `@pytest.mark.live` smoke test did not exist before Phase 5 (marker was
+  declared but no test used it) — added this phase to satisfy D9 item 5.
+- The NLI premise/hypothesis direction bug was found and fixed this phase
+  (commit `579dc7c`); it was latent through Phases 1–4 because the model never
+  downloaded. All 150 tests (146 offline + 4 NLI) now pass.
+- Nothing committed by this phase except the NLI fix (`579dc7c`); git is
+  handled by the main agent.

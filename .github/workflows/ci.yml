@@ -1,0 +1,33 @@
+name: CI
+
+on:
+  push:
+    branches: ["*"]
+  pull_request:
+
+jobs:
+  test:
+    name: pytest (py${{ matrix.python-version }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        # pyproject.toml: requires-python = ">=3.10"
+        python-version: ["3.10", "3.11", "3.12"]
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: pip
+
+      - name: Install package + dev extras
+        run: pip install -e ".[dev]"
+
+      - name: Run offline test suite
+        # Live-network tests (@pytest.mark.live) and real-model NLI tests
+        # (@pytest.mark.nli, ~425 MB download) are deselected by default via
+        # pyproject addopts — the suite must be green fully offline (D9).
+        run: pytest -q
