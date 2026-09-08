@@ -311,6 +311,15 @@ def _entailment_probs(
       falls back to column 0, the conventional order).
     * Single-logit models (custom binary classifiers): sigmoid of the logit.
     Deterministic: eval mode, no_grad, fixed device.
+
+    **Argument order (important):** ``pairs`` are ``(claim, passage)`` at this
+    API boundary, but the underlying cross-encoder is trained on
+    ``(premise, hypothesis)`` where the *premise* is the source text and the
+    *hypothesis* is the statement being checked. We therefore feed the
+    tokenizer ``(passage, claim)`` — i.e. the cited passage as premise and the
+    claim as hypothesis. Feeding them the other way round makes a passage that
+    merely *adds* information to the claim read as "neutral" (~0) rather than
+    "entailed", silently collapsing every verdict toward unsupported.
     """
     if not pairs:
         return []
@@ -324,9 +333,15 @@ def _entailment_probs(
     with torch.no_grad():
         for i in range(0, len(pairs), DEFAULT_BATCH_SIZE):
             batch = pairs[i : i + DEFAULT_BATCH_SIZE]
+            # Pairs are (claim, passage). Cross-encoders expect
+            # (premise, hypothesis); we want P(passage supports claim), so
+            # the passage is the premise and the claim the hypothesis.
+            # (Feeding them the other way around scores near 0 even for
+            # clearly-entailed pairs — verified empirically against
+            # cross-encoder/nli-deberta-v3-base.)
             enc = tokenizer(
-                [p[0] for p in batch],
                 [p[1] for p in batch],
+                [p[0] for p in batch],
                 padding=True,
                 truncation=True,
                 max_length=MAX_LENGTH,
