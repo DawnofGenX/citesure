@@ -70,6 +70,7 @@ def test_stdio_verify_citations(tmp_path):
             result = await client.call_tool(
                 "verify_citations",
                 {
+                    "use_nli": False,
                     "citations": [
                         {
                             "claim": (
@@ -90,7 +91,7 @@ def test_stdio_verify_citations(tmp_path):
                             "claim": "This source does not exist.",
                             "citation": "file:///tmp/citesure-no-such-page-xyz.html",
                         },
-                    ]
+                    ],
                 },
             )
             return names, result
@@ -109,9 +110,9 @@ def test_stdio_verify_citations(tmp_path):
 
     by_id = {v["citation_id"]: v for v in report["verdicts"]}
     assert by_id["c1"]["status"] == "supported"
-    assert by_id["c1"]["tier_reached"] == 3  # NLI now on by default
+    assert by_id["c1"]["tier_reached"] == 2  # use_nli=False
     assert by_id["c2"]["status"] == "unsupported"
-    assert by_id["c2"]["tier_reached"] == 3  # NLI now on by default
+    assert by_id["c2"]["tier_reached"] == 2  # use_nli=False
     assert by_id["c3"]["status"] == "unreachable"
     assert by_id["c3"]["tier_reached"] == 1
 
@@ -130,7 +131,7 @@ def test_stdio_verify_markdown(tmp_path):
 
     async def run():
         async with Client(params, read_timeout_seconds=60) as client:
-            return await client.call_tool("verify_markdown", {"markdown": markdown})
+            return await client.call_tool("verify_markdown", {"use_nli": False, "markdown": markdown})
 
     report = _report(_run(run()))
     assert report["total"] == 1
@@ -138,7 +139,7 @@ def test_stdio_verify_markdown(tmp_path):
     assert report["pass_rate"] == 1.0
     verdict = report["verdicts"][0]
     assert verdict["status"] == "supported"
-    assert verdict["tier_reached"] == 3  # NLI now on by default
+    assert verdict["tier_reached"] == 2  # use_nli=False
     assert verdict["citation_id"] == "the HTTP/2 overview"
 
 

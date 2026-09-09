@@ -239,6 +239,8 @@ def _citations_from_json(data: Any) -> list[Citation]:
         raise ValueError("JSON input must be a list or an object")
 
     out: list[Citation] = []
+    if items is None:
+        return out
     for i, item in enumerate(items, 1):
         if not isinstance(item, dict) or "claim" not in item or "citation" not in item:
             raise ValueError(

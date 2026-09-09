@@ -93,6 +93,11 @@ class MockEncoder:
                 out.append(self.default)
         return out
 
+    def predict_all(self, pairs: list[tuple[str, str]]) -> list[tuple[float, float]]:
+        """Return (ent, con) per pair; contradiction is always 0.0 for the mock."""
+        ent = self.predict(pairs)
+        return [(e, 0.0) for e in ent]
+
 
 # ---------------------------------------------------------------------------
 # D6 priority chain: explicit arg > CITECHECK_NLI_MODEL env > default

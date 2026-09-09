@@ -375,7 +375,7 @@ async def verify_citations(
     verdicts: list[Verdict] = [v for v, _ in results]
 
     if use_nli:
-        from .nli import apply_nli_tier, get_nli_model, score_nli_batch
+        from .nli import apply_nli_tier, get_nli_model, score_nli_batch_all
 
         # Load once (lazy download on first use), then score all pairs in a
         # single batched pass — deterministic given the same model+input.
@@ -383,15 +383,16 @@ async def verify_citations(
         eligible = [(i, ctx) for i, (_, ctx) in enumerate(results) if ctx]
         if eligible:
             pairs = [(ctx["claim"], ctx["passage"]) for _, ctx in eligible]
-            scores = score_nli_batch(encoder, pairs)
-            for (i, ctx), s in zip(eligible, scores):
+            scores = score_nli_batch_all(encoder, pairs)
+            for (i, ctx), (ent, con) in zip(eligible, scores):
                 verdict = verdicts[i]
                 final, tier, new_score, notes = apply_nli_tier(
                     verdict.status,
                     list(verdict.notes),
-                    nli_score=s,
+                    nli_score=ent,
                     marker_locatable=ctx["marker_locatable"],
                     evidence=verdict.evidence,
+                    contradiction=con,
                 )
                 verdicts[i] = Verdict(
                     citation_id=verdict.citation_id,

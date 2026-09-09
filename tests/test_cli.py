@@ -41,14 +41,14 @@ def _run_cli(*args: str, cache_dir: Path) -> subprocess.CompletedProcess:
 
 
 def test_verify_sample_md_passes_default_threshold(tmp_path: Path):
-    proc = _run_cli("verify", str(SAMPLE_MD), cache_dir=tmp_path)
+    proc = _run_cli("verify", str(SAMPLE_MD), "--no-nli", cache_dir=tmp_path)
     assert proc.returncode == 0, proc.stderr
     assert "pass_rate: 0.8000" in proc.stdout
     assert "Decision: PASS" in proc.stdout
 
 
 def test_verify_sample_md_fails_high_threshold(tmp_path: Path):
-    proc = _run_cli("verify", str(SAMPLE_MD), "--threshold", "0.9", cache_dir=tmp_path)
+    proc = _run_cli("verify", str(SAMPLE_MD), "--no-nli", "--threshold", "0.9", cache_dir=tmp_path)
     assert proc.returncode == 1, proc.stdout + proc.stderr
     assert "Decision: FAIL" in proc.stdout
 
@@ -69,7 +69,7 @@ def test_verify_json_input(tmp_path: Path):
 
 
 def test_json_output_shape(tmp_path: Path):
-    proc = _run_cli("verify", str(SAMPLE_MD), "--json", cache_dir=tmp_path)
+    proc = _run_cli("verify", str(SAMPLE_MD), "--no-nli", "--json", cache_dir=tmp_path)
     assert proc.returncode == 0, proc.stderr
     data = json.loads(proc.stdout)
     for key in ("total", "supported", "unsupported", "unverifiable", "pass_rate", "verdicts"):
@@ -84,7 +84,7 @@ def test_json_output_shape(tmp_path: Path):
         # Tier-2 overlap ran on the reachable pages; the dead URL stopped at
         # tier 1.
         if v["status"] == "supported":
-            assert v["tier_reached"] == 3  # NLI now on by default
+            assert v["tier_reached"] == 2  # --no-nli
             assert v["score"] is not None
         else:
             assert v["tier_reached"] == 1
@@ -99,7 +99,7 @@ def test_json_output_shape(tmp_path: Path):
 
 def test_strict_flag_accepted_and_relabels_ambiguous(tmp_path: Path):
     # No ambiguous verdicts in the fixture, but the flag must be accepted.
-    proc = _run_cli("verify", str(SAMPLE_MD), "--strict", cache_dir=tmp_path)
+    proc = _run_cli("verify", str(SAMPLE_MD), "--no-nli", "--strict", cache_dir=tmp_path)
     assert proc.returncode == 0, proc.stderr
 
     report = Report.from_verdicts(
@@ -139,7 +139,7 @@ def test_strict_passes_when_no_ambiguous_or_unsupported():
 def test_md_flag_writes_markdown_file(tmp_path: Path):
     out_file = tmp_path / "report.md"
     rc = main(
-        ["verify", str(SAMPLE_MD), "--md", str(out_file), "--cache-dir", str(tmp_path)]
+        ["verify", str(SAMPLE_MD), "--md", str(out_file), "--cache-dir", str(tmp_path), "--no-nli"]
     )
     assert rc == 0
     text = out_file.read_text(encoding="utf-8")
@@ -180,7 +180,7 @@ def test_nli_model_flag_alone_implies_nli_and_help_lists_flags():
 
 
 def test_missing_file_exits_2(tmp_path: Path):
-    proc = _run_cli("verify", str(tmp_path / "nope.md"), cache_dir=tmp_path)
+    proc = _run_cli("verify", str(tmp_path / "nope.md"), "--no-nli", cache_dir=tmp_path)
     assert proc.returncode == 2
     assert "cannot read input" in proc.stderr
 
@@ -188,7 +188,7 @@ def test_missing_file_exits_2(tmp_path: Path):
 def test_malformed_json_exits_2(tmp_path: Path):
     bad = tmp_path / "bad.json"
     bad.write_text('{"claim": "no citation key"}', encoding="utf-8")
-    proc = _run_cli("verify", str(bad), cache_dir=tmp_path)
+    proc = _run_cli("verify", str(bad), "--no-nli", cache_dir=tmp_path)
     assert proc.returncode == 2
     assert "cannot read input" in proc.stderr
 

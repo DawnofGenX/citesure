@@ -63,7 +63,7 @@ def test_mcp_500_citation_payload(tmp_path):
         async with Client(params, read_timeout_seconds=300) as client:
             t0 = time.time()
             result = await client.call_tool(
-                "verify_citations", {"citations": citations}
+                "verify_citations", {"use_nli": False, "citations": citations}
             )
             elapsed = time.time() - t0
         return result, elapsed

@@ -60,7 +60,7 @@ def test_cli_nonexistent_file_exits_2(tmp_path: Path):
 def test_cli_empty_file_warns_and_exits_1(tmp_path: Path):
     f = tmp_path / "empty.md"
     f.write_text("", encoding="utf-8")
-    proc = _run_cli("verify", str(f), cache_dir=tmp_path)
+    proc = _run_cli("verify", str(f), "--no-nli", cache_dir=tmp_path)
     # No citations → pass_rate 0.0 < default threshold 0.8 → exit 1, with a
     # warning on stderr and a valid (empty) report on stdout.
     assert proc.returncode == 1, proc.stderr
@@ -72,7 +72,7 @@ def test_cli_empty_file_warns_and_exits_1(tmp_path: Path):
 def test_cli_binary_file_exits_2_cleanly(tmp_path: Path):
     f = tmp_path / "binary.md"
     f.write_bytes(os.urandom(512))
-    proc = _run_cli("verify", str(f), cache_dir=tmp_path)
+    proc = _run_cli("verify", str(f), "--no-nli", cache_dir=tmp_path)
     assert proc.returncode == 2
     assert "cannot read input" in proc.stderr
     assert "Traceback" not in proc.stderr
@@ -91,7 +91,7 @@ def test_cli_utf16_file_exits_2_cleanly(tmp_path: Path):
 def test_cli_zero_citation_file(tmp_path: Path):
     f = tmp_path / "nocite.md"
     f.write_text("Just prose. No citations at all.\n", encoding="utf-8")
-    proc = _run_cli("verify", str(f), "--json", cache_dir=tmp_path)
+    proc = _run_cli("verify", str(f), "--no-nli", "--json", cache_dir=tmp_path)
     assert proc.returncode == 1  # pass_rate 0 < 0.8
     data = json.loads(proc.stdout)
     assert data["total"] == 0
@@ -114,7 +114,7 @@ def test_cli_1000_citations_completes_in_bounded_time(tmp_path: Path):
     f = tmp_path / "big.md"
     f.write_text("\n\n".join(lines), encoding="utf-8")
     t0 = time.time()
-    proc = _run_cli("verify", str(f), "--json", cache_dir=tmp_path, timeout=300)
+    proc = _run_cli("verify", str(f), "--no-nli", "--json", cache_dir=tmp_path, timeout=300)
     elapsed = time.time() - t0
     assert proc.returncode in (0, 1), proc.stderr
     data = json.loads(proc.stdout)
@@ -133,11 +133,11 @@ def test_cli_threshold_zero_and_one(tmp_path: Path):
     f = tmp_path / "one.md"
     f.write_text(f"Rust 1.75 was released on July 25, 2024. [c]({page.as_uri()})\n", encoding="utf-8")
     # threshold 0: any pass_rate >= 0 passes (even all-unverifiable).
-    p0 = _run_cli("verify", str(f), "--threshold", "0", "--json", cache_dir=tmp_path)
+    p0 = _run_cli("verify", str(f), "--no-nli", "--threshold", "0", "--json", cache_dir=tmp_path)
     assert p0.returncode == 0, p0.stderr
     # threshold 1: requires pass_rate == 1.0; this page is <80 chars of text
     # so it lands ambiguous → pass_rate 0 → exit 1.
-    p1 = _run_cli("verify", str(f), "--threshold", "1", "--json", cache_dir=tmp_path)
+    p1 = _run_cli("verify", str(f), "--no-nli", "--threshold", "1", "--json", cache_dir=tmp_path)
     assert p1.returncode == 1
     assert json.loads(p1.stdout)["pass_rate"] == 0.0
 
@@ -150,7 +150,7 @@ def test_cli_strict_json_combo(tmp_path: Path):
     )
     f = tmp_path / "one.md"
     f.write_text(f"Rust 1.75 was released on July 25, 2024. [c]({page.as_uri()})\n", encoding="utf-8")
-    proc = _run_cli("verify", str(f), "--strict", "--json", cache_dir=tmp_path)
+    proc = _run_cli("verify", str(f), "--no-nli", "--strict", "--json", cache_dir=tmp_path)
     # strict + ambiguous verdict → exit 1, but output must still be valid JSON.
     assert proc.returncode == 1
     data = json.loads(proc.stdout)
@@ -168,7 +168,7 @@ def test_cli_path_with_spaces(tmp_path: Path):
     )
     f = docs / "my doc.md"
     f.write_text(f"Rust 1.75 was released on July 25, 2024. [c]({page.as_uri()})\n", encoding="utf-8")
-    proc = _run_cli("verify", str(f), "--json", cache_dir=tmp_path)
+    proc = _run_cli("verify", str(f), "--no-nli", "--json", cache_dir=tmp_path)
     assert proc.returncode in (0, 1), proc.stderr
     data = json.loads(proc.stdout)
     assert data["total"] == 1

@@ -21,7 +21,7 @@ Design decisions (documented per the Phase-3 brief):
   overridable via ``CITECHECK_CACHE_DIR``.
 * **CPU-only** — torch is forced to CPU (the venv has the CPU build) and
   ``torch.set_num_threads`` is set to the physical core count (capped at 8)
-  for sensible multi-core inference without oversubscription.
+  for sensible multi-core inference without oversubscribing.
 * **Fail fast (D6)** — if the name/path does not resolve to a loadable
   cross-encoder (bad HF name, no network for the download, corrupt local
   path), :func:`get_nli_model` raises :class:`NLIError` with an actionable
@@ -59,6 +59,13 @@ unsupported                   0.3 <= s < 0.7      ambiguous   (upgrade)
 unsupported                   < 0.3               unsupported (confirm)
 unreachable / paywalled       (NLI not run)       unchanged (tier 1)
 ============================  ==================  ============================
+
+D3.1 extension (since 2026-09-09): if the model's contradiction probability
+is >= CONTRADICTION_THRESHOLD (0.5), the verdict is forced unsupported
+regardless of the entailment band. By 3-way softmax math, con >= 0.5
+implies ent < 0.5, so this override can only fire where the banding
+already gives ambiguous-or-worse — it can never touch an ent >= 0.7
+supported verdict.
 
 Rationale: NLI is the strongest signal we have (a trained entailment model
 on the actual claim-vs-best-passage pair), so it may move a verdict up OR
@@ -100,6 +107,13 @@ ENV_CACHE_DIR = "CITECHECK_CACHE_DIR"
 #: D3 NLI banding thresholds (pinned; tested in tests/test_nli.py).
 NLI_SUPPORTED_THRESHOLD = 0.7  # score >= this → supported
 NLI_AMBIGUOUS_THRESHOLD = 0.3  # [this, 0.7) → ambiguous; below → unsupported
+
+#: D3.1 contradiction override (since D3.1). When the model's contradiction
+#: probability >= this, the verdict is forced unsupported regardless of the
+#: entailment band. 3-way softmax math: con >= 0.5 implies ent < 0.5, so this
+#: can only fire where current banding already gives ambiguous-or-worse — it
+#: can never touch an ent >= 0.7 supported verdict.
+CONTRADICTION_THRESHOLD = 0.5
 
 #: Max sequence length fed to the tokenizer (claim + passage pairs).
 MAX_LENGTH = 512
@@ -148,16 +162,18 @@ def resolve_nli_model(model_name: str | None = None) -> str:
 
 def _cache_dir() -> Path:
     """HF cache root under ``~/.cache/citesure/`` (override: CITECHECK_CACHE_DIR)."""
-    override = os.environ.get(ENV_CACHE_DIR)
-    root = Path(override) if override else Path.home() / ".cache" / "citesure"
-    return root / "hf"
+    override = os.environ.get(ENV_CACHE_DIR, "").strip()
+    if override:
+        return Path(override)
+    return Path.home() / ".cache" / "citesure"
 
 
 # ---------------------------------------------------------------------------
 # Model loading (lazy, cached, fail-fast)
 # ---------------------------------------------------------------------------
 
-@dataclass(frozen=True)
+
+@dataclass
 class NLICrossEncoder:
     """A loaded cross-encoder: ``(model, tokenizer)`` plus its label mapping.
 
@@ -176,6 +192,16 @@ class NLICrossEncoder:
         """Entailment probability in ``[0, 1]`` for each (claim, passage) pair."""
         return _entailment_probs(self.model, self.tokenizer, self.id2label, pairs)
 
+    def predict_all(self, pairs: list[tuple[str, str]]) -> list[tuple[float, float]]:
+        """Entailment and contradiction probabilities per pair.
+
+        Returns ``(ent, con)`` for each pair. ``con`` is 0.0 for binary
+        (single-logit) models that have no contradiction column.
+        """
+        ent = _entailment_probs(self.model, self.tokenizer, self.id2label, pairs)
+        con = _contradiction_probs(self.model, self.tokenizer, self.id2label, pairs)
+        return list(zip(ent, con))
+
 
 _model_cache: dict[str, NLICrossEncoder] = {}
 _cache_lock = threading.Lock()
@@ -189,20 +215,15 @@ def _configure_threads() -> None:
         return
     import torch
 
-    try:
-        cores = os.cpu_count() or 1
-    except Exception:  # pragma: no cover - defensive
-        cores = 4
-    torch.set_num_threads(max(1, min(cores, _MAX_THREADS)))
+    cores = os.cpu_count() or 1
+    torch.set_num_threads(min(cores, _MAX_THREADS))
+    torch.set_num_interop_threads(1)
     _threads_configured = True
 
 
 def _is_local_path(name: str) -> bool:
-    """True when ``name`` looks like a filesystem path rather than an HF id."""
-    if name.startswith(("/", "./", "../", "~")):
-        return True
-    p = Path(name).expanduser()
-    return p.is_absolute() or p.exists()
+    """True if ``name`` looks like a local filesystem path (not an HF id)."""
+    return "/" in name or "\\" in name or name.startswith(".") or Path(name).exists()
 
 
 def get_nli_model(model_name: str | None = None) -> NLICrossEncoder:
@@ -232,6 +253,7 @@ def get_nli_model(model_name: str | None = None) -> NLICrossEncoder:
         # Cache dir is not writable (e.g. read-only filesystem). Fall back to
         # a temp dir so the model still loads; caching just won't persist.
         import tempfile
+
         cache_dir = Path(tempfile.mkdtemp(prefix="citesure-hf-"))
 
     local = _is_local_path(name)
@@ -276,7 +298,7 @@ def get_nli_model(model_name: str | None = None) -> NLICrossEncoder:
 
 
 def clear_nli_model_cache() -> None:
-    """Drop all cached models (used by tests)."""
+    """Clear the module-level model cache (tests)."""
     with _cache_lock:
         _model_cache.clear()
 
@@ -302,6 +324,58 @@ def _label_index(id2label: dict[int, str] | None) -> tuple[int | None, int | Non
         elif neu is None and _NEUTRAL_RE.search(low):
             neu = int(idx)
     return ent, neu
+
+
+def _contradiction_probs(
+    model: torch.nn.Module,
+    tokenizer: object,
+    id2label: dict[int, str] | None,
+    pairs: list[tuple[str, str]],
+) -> list[float]:
+    """Softmax over label logits → contradiction probability per pair.
+
+    Same argument order and pairing convention as :func:`_entailment_probs`.
+    Returns 0.0 for single-logit (binary) models that have no contradiction
+    column — the override simply never fires for those.
+    """
+    if not pairs:
+        return []
+
+    import torch
+
+    con_idx = None
+    if id2label:
+        for idx, label in id2label.items():
+            if _CONTRADICT_RE.search(str(label)):
+                con_idx = int(idx)
+                break
+
+    # Binary / single-logit model — no contradiction column.
+    num_labels = getattr(getattr(model, "config", None), "num_labels", None)
+    if con_idx is None or (num_labels is not None and num_labels < 3):
+        return [0.0] * len(pairs)
+
+    model.eval()
+    out: list[float] = []
+    with torch.no_grad():
+        for i in range(0, len(pairs), DEFAULT_BATCH_SIZE):
+            batch = pairs[i : i + DEFAULT_BATCH_SIZE]
+            enc = tokenizer(
+                [p[1] for p in batch],
+                [p[0] for p in batch],
+                padding=True,
+                truncation=True,
+                max_length=MAX_LENGTH,
+                return_tensors="pt",
+            )
+            inputs = {k: v.to(model.device) for k, v in enc.items()}
+            logits = model(**inputs).logits
+            probs = torch.softmax(logits, dim=-1)
+            if con_idx >= int(probs.shape[-1]):
+                out.extend([0.0] * len(batch))
+            else:
+                out.extend(float(x) for x in probs[:, con_idx].tolist())
+    return out
 
 
 def _entailment_probs(
@@ -388,6 +462,18 @@ def score_nli_batch(
     return [float(p) for p in model.predict(list(pairs))]
 
 
+def score_nli_batch_all(
+    model: NLICrossEncoder, pairs: list[tuple[str, str]]
+) -> list[tuple[float, float]]:
+    """Entailment + contradiction probabilities for many pairs.
+
+    Returns ``(ent, con)`` per pair; ``con`` is 0.0 for binary models.
+    """
+    if not pairs:
+        return []
+    return model.predict_all(list(pairs))
+
+
 # ---------------------------------------------------------------------------
 # D3 banding — pure functions (unit-testable without any model)
 # ---------------------------------------------------------------------------
@@ -403,7 +489,10 @@ def nli_band(score: float) -> Status:
 
 
 def status_for_nli(
-    overlap_status: Status, nli_score: float, marker_locatable: bool = True
+    overlap_status: Status,
+    nli_score: float | None,
+    marker_locatable: bool = True,
+    contradiction: float | None = None,
 ) -> Status:
     """Final D3 status given the tier-2 overlap status and the NLI score.
 
@@ -416,9 +505,16 @@ def status_for_nli(
       (supported→ambiguous/unsupported) relative to the lexical verdict.
     * Tier-1 statuses (unreachable/paywalled) never reach this function:
       NLI only runs on fetched pages.
+    * D3.1 contradiction override: if ``contradiction`` is not None and
+      ``>= CONTRADICTION_THRESHOLD``, the verdict is ``unsupported``
+      regardless of the entailment band (only fires where ent < 0.5).
     """
     if not marker_locatable:
         return Status.AMBIGUOUS
+    if nli_score is None:
+        return overlap_status
+    if contradiction is not None and contradiction >= CONTRADICTION_THRESHOLD:
+        return Status.UNSUPPORTED
     return nli_band(nli_score)
 
 
@@ -429,6 +525,7 @@ def apply_nli_tier(
     nli_score: float | None,
     marker_locatable: bool,
     evidence: str,
+    contradiction: float | None = None,
 ) -> tuple[Status, int, float | None, list[str]]:
     """Apply the NLI tier to a tier-2 verdict. Returns
     ``(final_status, tier_reached, score, notes)``.
@@ -438,6 +535,8 @@ def apply_nli_tier(
       ``tier_reached=2`` and an explanatory note.
     * Otherwise the D3 banding applies, ``tier_reached=3``, and the NLI score
       is recorded on the verdict.
+    * D3.1: if ``contradiction`` is not None and >= CONTRADICTION_THRESHOLD,
+      the verdict is forced unsupported regardless of the entailment band.
     """
     if nli_score is None:
         notes.append(
@@ -446,14 +545,21 @@ def apply_nli_tier(
         )
         return verdict, 2, None, notes
 
-    final = status_for_nli(verdict, nli_score, marker_locatable=marker_locatable)
+    final = status_for_nli(
+        verdict, nli_score, marker_locatable=marker_locatable, contradiction=contradiction
+    )
     notes.append(
         f"NLI tier: entailment {nli_score:.3f} "
         f"(bands: >= {NLI_SUPPORTED_THRESHOLD} supported, "
         f">= {NLI_AMBIGUOUS_THRESHOLD} ambiguous, below unsupported)"
     )
+    if contradiction is not None:
+        notes.append(f"NLI tier: contradiction {contradiction:.3f}")
+        if final is Status.UNSUPPORTED and verdict is not Status.UNSUPPORTED:
+            notes.append(
+                f"NLI tier: contradiction {contradiction:.3f} >= "
+                f"{CONTRADICTION_THRESHOLD} — source contradicts claim"
+            )
     if final is not verdict:
-        notes.append(
-            f"NLI moved verdict {verdict.value} → {final.value}"
-        )
+        notes.append(f"NLI moved verdict {verdict.value} → {final.value}")
     return final, 3, round(float(nli_score), 4), notes
