@@ -243,3 +243,51 @@ def test_load_input_missing_file_raises():
 def test_citation_dataclass_defaults():
     c = Citation(citation_id="1", url="https://e.example", claim="x")
     assert c.source_text is None
+
+
+# ---------------------------------------------------------------------------
+# Edge cases
+# ---------------------------------------------------------------------------
+
+
+def test_extract_empty_markdown():
+    assert extract_citations("") == []
+
+
+def test_extract_no_citations():
+    assert extract_citations("Just some prose without any markers.") == []
+
+
+def test_extract_unicode_claims():
+    text = "これはテストです [1]. 🎉 emoji [2].\n\n## Sources\n\n1. https://a.example\n2. https://b.example\n"
+    cits = extract_citations(text)
+    assert len(cits) == 2
+
+
+def test_json_citations_none(tmp_path: Path):
+    p = tmp_path / "in.json"
+    p.write_text(json.dumps({"citations": None}), encoding="utf-8")
+    cits, _ = load_input(str(p))
+    assert cits == []
+
+
+def test_json_sources_key(tmp_path: Path):
+    p = tmp_path / "in.json"
+    p.write_text(
+        json.dumps(
+            {
+                "citations": [{"claim": "C1", "citation": "src-a"}],
+                "sources": {"src-a": "https://mapped.example/a"},
+            }
+        ),
+        encoding="utf-8",
+    )
+    cits, _ = load_input(str(p))
+    assert cits[0].url == "https://mapped.example/a"
+
+
+def test_inline_link_unicode_label():
+    text = "[ドキュメント](https://docs.example/ja) を参照。"
+    cits = extract_citations(text)
+    assert len(cits) == 1
+    assert cits[0].citation_id == "ドキュメント"
