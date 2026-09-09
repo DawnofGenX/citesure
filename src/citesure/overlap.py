@@ -89,13 +89,18 @@ _STOPWORDS = frozenset(
     """
     a an and are as at be been being but by can could did do does doing down
     during each few for from further had has have having he her here hers
-    him his how i if in into is it its itself just me more most my myself no
-    nor not of off on once one only or other our ours out over own same she
+    him his how i if in into is it its itself just me more most my myself
+    of off on once one only or other our ours out over own same she
     should so some such than that the their theirs them then there these
     they this those through to too under until up very was we were what when
     where which while who whom why will with would you your yours
     """.split()
 )
+
+#: Negation words that must NOT be stripped — they carry the proposition.
+#: (IMP-5: "not", "no", "never", "nor" were stopwords, making negation-flips
+#: invisible to the overlap tier.)
+_NEGATION_WORDS = frozenset({"not", "no", "never", "nor"})
 
 #: Word token: letter-led (may contain digits/apostrophes/hyphens) or a
 #: number (optionally decimal, e.g. "3.12").
@@ -200,6 +205,55 @@ def segment_passages(text: str) -> list[str]:
         else:
             passages.append(buf)
     return passages
+
+
+def expand_context(
+    passage: str, sentences: list[str], passage_idx: int, radius: int = 1
+) -> str:
+    """Expand a passage to include adjacent sentences for pronoun resolution.
+
+    Takes the passage at ``passage_idx`` in ``sentences`` and prepends/appends
+    the ``radius`` surrounding sentences. Deterministic. Caps the result at
+    ~512 chars pre-tokenizer.
+    """
+    if radius <= 0:
+        return passage
+    start = max(0, passage_idx - radius)
+    end = min(len(sentences), passage_idx + radius + 1)
+    expanded = " ".join(sentences[start:end])
+    if len(expanded) > 512:
+        # Truncate from the ends, keeping the passage itself intact.
+        return passage
+    return expanded
+
+
+def expand_passage_in_text(passage: str, text: str, radius: int = 1) -> str:
+    """Expand a passage to include adjacent sentences from the original text.
+
+    Finds ``passage`` in ``text``, determines which sentence it belongs to,
+    and includes ``radius`` surrounding sentences. Falls back to the original
+    passage if expansion is not possible.
+    """
+    if radius <= 0 or not passage or not text:
+        return passage
+    # Split text into sentences
+    sentences = [s.strip() for s in _SENTENCE_BOUNDARY_RE.split(text) if s.strip()]
+    if not sentences:
+        return passage
+    # Find which sentence best matches the passage
+    best_idx = 0
+    best_overlap = 0
+    passage_lower = passage.lower()
+    for i, sent in enumerate(sentences):
+        # Check if this sentence is contained in the passage or vice versa
+        if sent.lower() in passage_lower or passage_lower in sent.lower():
+            overlap = len(sent)
+            if overlap > best_overlap:
+                best_overlap = overlap
+                best_idx = i
+    if best_overlap == 0:
+        return passage
+    return expand_context(passage, sentences, best_idx, radius)
 
 
 # ---------------------------------------------------------------------------
@@ -332,10 +386,13 @@ async def _verify_one(
             if ranked:
                 # Pass ALL top-k passages (full text, not clipped) to the NLI
                 # tier so it can score each and take the max entailment.
+                # Also pass the target text so the NLI tier can expand passages
+                # with surrounding sentences for pronoun resolution (IMP-2).
                 nli_context = {
                     "claim": clean_claim(citation.claim),
                     "passage": best_passage,  # best by term coverage (for evidence)
                     "passages": [p for _, p in ranked],  # all top-k full text
+                    "target_text": target,  # original text for context expansion
                     "marker_locatable": True,
                 }
 
@@ -390,8 +447,12 @@ async def verify_citations(
             flat_pairs = []
             pair_owner = []  # citation index for each pair
             for ci, ctx in eligible:
+                target_text = ctx.get("target_text", "")
                 for passage in ctx.get("passages", [ctx["passage"]]):
-                    flat_pairs.append((ctx["claim"], passage))
+                    # IMP-2: expand passage with adjacent sentences for
+                    # pronoun resolution ("It obtains SOTA" → "BERT ... It ...")
+                    expanded = expand_passage_in_text(passage, target_text, radius=1)
+                    flat_pairs.append((ctx["claim"], expanded))
                     pair_owner.append(ci)
 
             # Score all pairs in one batched pass
