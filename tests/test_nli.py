@@ -394,13 +394,13 @@ def test_tiny_local_model_loads_and_scores_offline(tiny_model_dir):
     # Determinism: same model + same input → identical score.
     assert score_nli(enc, "Python 3.12 was released on October 2023.",
                      "Python 3.12 was released on October 2023.") == s1
-    # Batch path agrees with the single-pair path.
+    # Batch path agrees with the single-pair path (within floating-point tolerance).
     batched = score_nli_batch(enc, [
         ("Python 3.12 was released on October 2023.",
          "Python 3.12 was released on October 2023."),
         ("The coffee harvest doubled.", "Beans were traded in markets."),
     ])
-    assert batched == [s1, s2]
+    assert batched == pytest.approx([s1, s2], abs=1e-5)
 
 
 def test_tiny_local_model_swap_via_nli_model_param(tmp_path, tiny_model_dir):
