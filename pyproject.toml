@@ -27,6 +27,12 @@ classifiers = [
 dependencies = [
     "httpx>=0.27",
     "trafilatura>=1.9",
+    # trafilatura imports ``lxml.html.clean``; since lxml 5.x that module is a
+    # separate distribution. Without it a fresh install (esp. on Python 3.10,
+    # where the resolver does not pull it transitively) crashes at import time
+    # with ``ImportError: lxml.html.clean ... is now a separate project``.
+    # See BUG-8 / evals/INSTALL_MATRIX.md.
+    "lxml_html_clean>=0.1",
     "mcp>=1.0",
     "transformers>=4.40",
     "torch>=2.0",
