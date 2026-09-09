@@ -63,7 +63,14 @@ def render_human(
     lines.append("")
     for v in report.verdicts:
         symbol = _STATUS_SYMBOLS.get(v.status, "•")
-        score_part = f" score={v.score:.3f}" if v.score is not None else ""
+        # A foreign/hand-built payload may carry a non-numeric score; never
+        # let that crash rendering (BUG-3). Coerce to float; skip on failure.
+        score_part = ""
+        if v.score is not None:
+            try:
+                score_part = f" score={float(v.score):.3f}"
+            except (TypeError, ValueError):
+                score_part = ""
         tier_part = f" tier={v.tier_reached}"
         lines.append(
             f"- {symbol} **[{v.citation_id}]** {_verdict_label(v, strict)}"
