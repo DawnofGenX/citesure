@@ -59,3 +59,44 @@ NLI is a net win on SAFETY (the asymmetric cost that matters most) but regresses
 supported-recall via the passage-selection bug above. Both tiers share the same
 passage-selection weakness; fixing it should lift NLI-ON supported recall without
 sacrificing the safety gains.
+
+## Q2 addendum — full 3-label distribution (contradiction column)
+
+Date: 2026-09-09 · Method: re-ran the NLI-on pipeline over all 41 items, then pulled the
+FULL softmax (entailment / neutral / contradiction) per selected (passage, claim) pair.
+Raw table: `evals/results/q2_con_probs.tsv`. Label map: `{0: contradiction, 1: entailment, 2: neutral}`.
+
+**The contradiction column is perfectly separated on this set:**
+
+```
+expected=supported   : con max = 0.064   (ind-002; all others <= 0.003)
+expected=unsupported : con min = 0.349   (ind-034); 13 items >= 0.5, most >= 0.96
+```
+
+Gap between 0.064 and 0.349 → any threshold T ∈ [0.2, 0.8] yields the identical flip set
+(13 items, all genuinely unsupported). Threshold choice is therefore not fragile.
+
+**Sweep `con >= T → force unsupported`:**
+
+| T | flipped | of which exp=unsupported | false-unsupported (exp=supported) |
+|---|---------|--------------------------|-----------------------------------|
+| 0.3–0.7 | 13 | 13 | **0** |
+| 0.8–0.9 | 12 | 12 | **0** |
+
+**Consequences:**
+1. On today's set the override is a *no-op* — all 13 high-con items already predict
+   `unsupported` via the entailment band (ent < 0.05). It adds no accuracy now.
+2. It IS a genuine safety net for the banding gap: any future pair with ent ∈ [0.3, 0.7)
+   AND con ≥ 0.5 would currently be `ambiguous`; the override makes it `unsupported`.
+   By the 3-way softmax sum, con ≥ 0.5 ⇒ ent ≤ 0.5, so the override can never touch an
+   ent ≥ 0.7 supported verdict (verified empirically: 0 rows with con ≥ 0.5 ∧ ent ≥ 0.7).
+3. It does NOT fix the remaining false-supported (ind-026, Apollo negation-flip): that
+   item's *selected passage* is a different sentence (ent 0.914, con 0.026) — a
+   passage-selection failure, not a label-mapping failure. Only Tasks 1/2 (top-k max +
+   context expansion) address it.
+4. Calibration caveat: n=41, single model, single domain mix. The clean separation may
+   partly reflect that our "unsupported" cases are strong contradictions (false claims,
+   direct negations), not subtle ones. Re-measure when the eval set grows to ≥ 80.
+
+**Decision input:** hard-`unsupported` at con ≥ 0.5 is empirically safe (zero collateral
+on true supports) and costs nothing on current accuracy; its value is defensive.

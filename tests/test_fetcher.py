@@ -311,3 +311,23 @@ def test_fetched_page_defaults():
     assert p.retraction_detected is False
     assert p.fetched_from_cache is False
     assert p.notes == []
+
+
+# ---------------------------------------------------------------------------
+# Concurrency
+# ---------------------------------------------------------------------------
+
+
+def test_concurrent_fetches_are_isolated(tmp_path: Path, monkeypatch: pytest.MonkeyPatch):
+    """Multiple concurrent fetches don't share state."""
+    monkeypatch.setenv("CITECHECK_CACHE_DIR", str(tmp_path / "cache"))
+    urls = [f"file://{FIXTURES / 'pages' / f'page{i}.html'}" for i in range(1, 4)]
+
+    async def run():
+        return await asyncio.gather(*(fetch(u) for u in urls))
+
+    results = asyncio.run(run())
+    assert all(r.ok for r in results)
+    # Each URL should have its own cache entry
+    cache_entries = list((tmp_path / "cache").glob("*.json"))
+    assert len(cache_entries) == 3

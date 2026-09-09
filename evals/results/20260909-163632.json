@@ -1,0 +1,702 @@
+{
+  "generated_utc": "20260909-163632",
+  "set": "evals/independent_set.json",
+  "nli": true,
+  "cache_dir": "/home/hermes/.cache/citesure",
+  "total": 41,
+  "matched": 0,
+  "agreement_pct": 0.0,
+  "confusion_matrix": {
+    "supported": {
+      "supported": 0,
+      "unsupported": 0,
+      "unreachable": 0,
+      "paywalled": 0,
+      "ambiguous": 0,
+      "error": 16
+    },
+    "unsupported": {
+      "supported": 0,
+      "unsupported": 0,
+      "unreachable": 0,
+      "paywalled": 0,
+      "ambiguous": 0,
+      "error": 16
+    },
+    "unreachable": {
+      "supported": 0,
+      "unsupported": 0,
+      "unreachable": 0,
+      "paywalled": 0,
+      "ambiguous": 0,
+      "error": 3
+    },
+    "paywalled": {
+      "supported": 0,
+      "unsupported": 0,
+      "unreachable": 0,
+      "paywalled": 0,
+      "ambiguous": 0,
+      "error": 2
+    },
+    "ambiguous": {
+      "supported": 0,
+      "unsupported": 0,
+      "unreachable": 0,
+      "paywalled": 0,
+      "ambiguous": 0,
+      "error": 4
+    },
+    "error": {
+      "supported": 0,
+      "unsupported": 0,
+      "unreachable": 0,
+      "paywalled": 0,
+      "ambiguous": 0,
+      "error": 0
+    }
+  },
+  "per_category_recall": {
+    "dead-link": {
+      "canonical_status": "unreachable",
+      "total": 3,
+      "correct": 0,
+      "recall": 0.0
+    },
+    "entity-swap": {
+      "canonical_status": "unsupported",
+      "total": 5,
+      "correct": 0,
+      "recall": 0.0
+    },
+    "false-claim": {
+      "canonical_status": "unsupported",
+      "total": 6,
+      "correct": 0,
+      "recall": 0.0
+    },
+    "negation-flip": {
+      "canonical_status": "unsupported",
+      "total": 5,
+      "correct": 0,
+      "recall": 0.0
+    },
+    "numeric-detail-supported": {
+      "canonical_status": "supported",
+      "total": 4,
+      "correct": 0,
+      "recall": 0.0
+    },
+    "paraphrase-supported": {
+      "canonical_status": "supported",
+      "total": 6,
+      "correct": 0,
+      "recall": 0.0
+    },
+    "partially-true-ambiguous": {
+      "canonical_status": "ambiguous",
+      "total": 4,
+      "correct": 0,
+      "recall": 0.0
+    },
+    "paywalled": {
+      "canonical_status": "paywalled",
+      "total": 2,
+      "correct": 0,
+      "recall": 0.0
+    },
+    "verbatim-supported": {
+      "canonical_status": "supported",
+      "total": 6,
+      "correct": 0,
+      "recall": 0.0
+    }
+  },
+  "per_status_pr": {
+    "supported": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 16,
+      "precision": NaN,
+      "recall": 0.0
+    },
+    "unsupported": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 16,
+      "precision": NaN,
+      "recall": 0.0
+    },
+    "unreachable": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 3,
+      "precision": NaN,
+      "recall": 0.0
+    },
+    "paywalled": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 2,
+      "precision": NaN,
+      "recall": 0.0
+    },
+    "ambiguous": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 4,
+      "precision": NaN,
+      "recall": 0.0
+    },
+    "error": {
+      "tp": 0,
+      "fp": 41,
+      "fn": 0,
+      "precision": 0.0,
+      "recall": NaN
+    }
+  },
+  "safety": {
+    "negation_flip_false_supported": 0,
+    "negation_flip_total": 5,
+    "negation_flip_rate": 0.0,
+    "entity_swap_false_supported": 0,
+    "entity_swap_total": 5,
+    "entity_swap_rate": 0.0
+  },
+  "records": [
+    {
+      "id": "ind-001",
+      "category": "verbatim-supported",
+      "expected": "supported",
+      "predicted": "error:NLIError: could not load NLI model 'cross-encoder/nli-deberta-v3-base': OSError: We couldn't connect to 'https://huggingface.co' to load the files, and couldn't find them in the cached files.\nCheck your internet connection or see how to run the library in offline mode at 'https://huggingface.co/docs/transformers/installation#offline-mode'.\n  - check the name/path is a valid Hugging Face cross-encoder (e.g. 'cross-encoder/nli-deberta-v3-base') or an existing local model directory\n  - if it is an HF name, check network access to huggingface.co (first use downloads ~425 MB into /home/hermes/.cache/citesure)\n  - override with --nli-model NAME or CITECHECK_NLI_MODEL=NAME\ncitesure fails fast on unloadable NLI models (D6) — it will not silently fall back to another model.",
+      "score": null,
+      "tier_reached": 0,
+      "match": false,
+      "evidence": "",
+      "notes": [
+        "runner exception: NLIError: could not load NLI model 'cross-encoder/nli-deberta-v3-base': OSError: We couldn't connect to 'https://huggingface.co' to load the files, and couldn't find them in the cached files.\nCheck your internet connection or see how to run the library in offline mode at 'https://huggingface.co/docs/transformers/installation#offline-mode'.\n  - check the name/path is a valid Hugging Face cross-encoder (e.g. 'cross-encoder/nli-deberta-v3-base') or an existing local model directory\n  - if it is an HF name, check network access to huggingface.co (first use downloads ~425 MB into /home/hermes/.cache/citesure)\n  - override with --nli-model NAME or CITECHECK_NLI_MODEL=NAME\ncitesure fails fast on unloadable NLI models (D6) — it will not silently fall back to another model."
+      ]
+    },
+    {
+      "id": "ind-002",
+      "category": "verbatim-supported",
+      "expected": "supported",
+      "predicted": "error:NLIError: could not load NLI model 'cross-encoder/nli-deberta-v3-base': OSError: We couldn't connect to 'https://huggingface.co' to load the files, and couldn't find them in the cached files.\nCheck your internet connection or see how to run the library in offline mode at 'https://huggingface.co/docs/transformers/installation#offline-mode'.\n  - check the name/path is a valid Hugging Face cross-encoder (e.g. 'cross-encoder/nli-deberta-v3-base') or an existing local model directory\n  - if it is an HF name, check network access to huggingface.co (first use downloads ~425 MB into /home/hermes/.cache/citesure)\n  - override with --nli-model NAME or CITECHECK_NLI_MODEL=NAME\ncitesure fails fast on unloadable NLI models (D6) — it will not silently fall back to another model.",
+      "score": null,
+      "tier_reached": 0,
+      "match": false,
+      "evidence": "",
+      "notes": [
+        "runner exception: NLIError: could not load NLI model 'cross-encoder/nli-deberta-v3-base': OSError: We couldn't connect to 'https://huggingface.co' to load the files, and couldn't find them in the cached files.\nCheck your internet connection or see how to run the library in offline mode at 'https://huggingface.co/docs/transformers/installation#offline-mode'.\n  - check the name/path is a valid Hugging Face cross-encoder (e.g. 'cross-encoder/nli-deberta-v3-base') or an existing local model directory\n  - if it is an HF name, check network access to huggingface.co (first use downloads ~425 MB into /home/hermes/.cache/citesure)\n  - override with --nli-model NAME or CITECHECK_NLI_MODEL=NAME\ncitesure fails fast on unloadable NLI models (D6) — it will not silently fall back to another model."
+      ]
+    },
+    {
+      "id": "ind-003",
+      "category": "verbatim-supported",
+      "expected": "supported",
+      "predicted": "error:NLIError: could not load NLI model 'cross-encoder/nli-deberta-v3-base': OSError: We couldn't connect to 'https://huggingface.co' to load the files, and couldn't find them in the cached files.\nCheck your internet connection or see how to run the library in offline mode at 'https://huggingface.co/docs/transformers/installation#offline-mode'.\n  - check the name/path is a valid Hugging Face cross-encoder (e.g. 'cross-encoder/nli-deberta-v3-base') or an existing local model directory\n  - if it is an HF name, check network access to huggingface.co (first use downloads ~425 MB into /home/hermes/.cache/citesure)\n  - override with --nli-model NAME or CITECHECK_NLI_MODEL=NAME\ncitesure fails fast on unloadable NLI models (D6) — it will not silently fall back to another model.",
+      "score": null,
+      "tier_reached": 0,
+      "match": false,
+      "evidence": "",
+      "notes": [
+        "runner exception: NLIError: could not load NLI model 'cross-encoder/nli-deberta-v3-base': OSError: We couldn't connect to 'https://huggingface.co' to load the files, and couldn't find them in the cached files.\nCheck your internet connection or see how to run the library in offline mode at 'https://huggingface.co/docs/transformers/installation#offline-mode'.\n  - check the name/path is a valid Hugging Face cross-encoder (e.g. 'cross-encoder/nli-deberta-v3-base') or an existing local model directory\n  - if it is an HF name, check network access to huggingface.co (first use downloads ~425 MB into /home/hermes/.cache/citesure)\n  - override with --nli-model NAME or CITECHECK_NLI_MODEL=NAME\ncitesure fails fast on unloadable NLI models (D6) — it will not silently fall back to another model."
+      ]
+    },
+    {
+      "id": "ind-004",
+      "category": "verbatim-supported",
+      "expected": "supported",
+      "predicted": "error:NLIError: could not load NLI model 'cross-encoder/nli-deberta-v3-base': OSError: We couldn't connect to 'https://huggingface.co' to load the files, and couldn't find them in the cached files.\nCheck your internet connection or see how to run the library in offline mode at 'https://huggingface.co/docs/transformers/installation#offline-mode'.\n  - check the name/path is a valid Hugging Face cross-encoder (e.g. 'cross-encoder/nli-deberta-v3-base') or an existing local model directory\n  - if it is an HF name, check network access to huggingface.co (first use downloads ~425 MB into /home/hermes/.cache/citesure)\n  - override with --nli-model NAME or CITECHECK_NLI_MODEL=NAME\ncitesure fails fast on unloadable NLI models (D6) — it will not silently fall back to another model.",
+      "score": null,
+      "tier_reached": 0,
+      "match": false,
+      "evidence": "",
+      "notes": [
+        "runner exception: NLIError: could not load NLI model 'cross-encoder/nli-deberta-v3-base': OSError: We couldn't connect to 'https://huggingface.co' to load the files, and couldn't find them in the cached files.\nCheck your internet connection or see how to run the library in offline mode at 'https://huggingface.co/docs/transformers/installation#offline-mode'.\n  - check the name/path is a valid Hugging Face cross-encoder (e.g. 'cross-encoder/nli-deberta-v3-base') or an existing local model directory\n  - if it is an HF name, check network access to huggingface.co (first use downloads ~425 MB into /home/hermes/.cache/citesure)\n  - override with --nli-model NAME or CITECHECK_NLI_MODEL=NAME\ncitesure fails fast on unloadable NLI models (D6) — it will not silently fall back to another model."
+      ]
+    },
+    {
+      "id": "ind-005",
+      "category": "verbatim-supported",
+      "expected": "supported",
+      "predicted": "error:NLIError: could not load NLI model 'cross-encoder/nli-deberta-v3-base': OSError: We couldn't connect to 'https://huggingface.co' to load the files, and couldn't find them in the cached files.\nCheck your internet connection or see how to run the library in offline mode at 'https://huggingface.co/docs/transformers/installation#offline-mode'.\n  - check the name/path is a valid Hugging Face cross-encoder (e.g. 'cross-encoder/nli-deberta-v3-base') or an existing local model directory\n  - if it is an HF name, check network access to huggingface.co (first use downloads ~425 MB into /home/hermes/.cache/citesure)\n  - override with --nli-model NAME or CITECHECK_NLI_MODEL=NAME\ncitesure fails fast on unloadable NLI models (D6) — it will not silently fall back to another model.",
+      "score": null,
+      "tier_reached": 0,
+      "match": false,
+      "evidence": "",
+      "notes": [
+        "runner exception: NLIError: could not load NLI model 'cross-encoder/nli-deberta-v3-base': OSError: We couldn't connect to 'https://huggingface.co' to load the files, and couldn't find them in the cached files.\nCheck your internet connection or see how to run the library in offline mode at 'https://huggingface.co/docs/transformers/installation#offline-mode'.\n  - check the name/path is a valid Hugging Face cross-encoder (e.g. 'cross-encoder/nli-deberta-v3-base') or an existing local model directory\n  - if it is an HF name, check network access to huggingface.co (first use downloads ~425 MB into /home/hermes/.cache/citesure)\n  - override with --nli-model NAME or CITECHECK_NLI_MODEL=NAME\ncitesure fails fast on unloadable NLI models (D6) — it will not silently fall back to another model."
+      ]
+    },
+    {
+      "id": "ind-006",
+      "category": "verbatim-supported",
+      "expected": "supported",
+      "predicted": "error:NLIError: could not load NLI model 'cross-encoder/nli-deberta-v3-base': OSError: We couldn't connect to 'https://huggingface.co' to load the files, and couldn't find them in the cached files.\nCheck your internet connection or see how to run the library in offline mode at 'https://huggingface.co/docs/transformers/installation#offline-mode'.\n  - check the name/path is a valid Hugging Face cross-encoder (e.g. 'cross-encoder/nli-deberta-v3-base') or an existing local model directory\n  - if it is an HF name, check network access to huggingface.co (first use downloads ~425 MB into /home/hermes/.cache/citesure)\n  - override with --nli-model NAME or CITECHECK_NLI_MODEL=NAME\ncitesure fails fast on unloadable NLI models (D6) — it will not silently fall back to another model.",
+      "score": null,
+      "tier_reached": 0,
+      "match": false,
+      "evidence": "",
+      "notes": [
+        "runner exception: NLIError: could not load NLI model 'cross-encoder/nli-deberta-v3-base': OSError: We couldn't connect to 'https://huggingface.co' to load the files, and couldn't find them in the cached files.\nCheck your internet connection or see how to run the library in offline mode at 'https://huggingface.co/docs/transformers/installation#offline-mode'.\n  - check the name/path is a valid Hugging Face cross-encoder (e.g. 'cross-encoder/nli-deberta-v3-base') or an existing local model directory\n  - if it is an HF name, check network access to huggingface.co (first use downloads ~425 MB into /home/hermes/.cache/citesure)\n  - override with --nli-model NAME or CITECHECK_NLI_MODEL=NAME\ncitesure fails fast on unloadable NLI models (D6) — it will not silently fall back to another model."
+      ]
+    },
+    {
+      "id": "ind-007",
+      "category": "paraphrase-supported",
+      "expected": "supported",
+      "predicted": "error:NLIError: could not load NLI model 'cross-encoder/nli-deberta-v3-base': OSError: We couldn't connect to 'https://huggingface.co' to load the files, and couldn't find them in the cached files.\nCheck your internet connection or see how to run the library in offline mode at 'https://huggingface.co/docs/transformers/installation#offline-mode'.\n  - check the name/path is a valid Hugging Face cross-encoder (e.g. 'cross-encoder/nli-deberta-v3-base') or an existing local model directory\n  - if it is an HF name, check network access to huggingface.co (first use downloads ~425 MB into /home/hermes/.cache/citesure)\n  - override with --nli-model NAME or CITECHECK_NLI_MODEL=NAME\ncitesure fails fast on unloadable NLI models (D6) — it will not silently fall back to another model.",
+      "score": null,
+      "tier_reached": 0,
+      "match": false,
+      "evidence": "",
+      "notes": [
+        "runner exception: NLIError: could not load NLI model 'cross-encoder/nli-deberta-v3-base': OSError: We couldn't connect to 'https://huggingface.co' to load the files, and couldn't find them in the cached files.\nCheck your internet connection or see how to run the library in offline mode at 'https://huggingface.co/docs/transformers/installation#offline-mode'.\n  - check the name/path is a valid Hugging Face cross-encoder (e.g. 'cross-encoder/nli-deberta-v3-base') or an existing local model directory\n  - if it is an HF name, check network access to huggingface.co (first use downloads ~425 MB into /home/hermes/.cache/citesure)\n  - override with --nli-model NAME or CITECHECK_NLI_MODEL=NAME\ncitesure fails fast on unloadable NLI models (D6) — it will not silently fall back to another model."
+      ]
+    },
+    {
+      "id": "ind-008",
+      "category": "paraphrase-supported",
+      "expected": "supported",
+      "predicted": "error:NLIError: could not load NLI model 'cross-encoder/nli-deberta-v3-base': OSError: We couldn't connect to 'https://huggingface.co' to load the files, and couldn't find them in the cached files.\nCheck your internet connection or see how to run the library in offline mode at 'https://huggingface.co/docs/transformers/installation#offline-mode'.\n  - check the name/path is a valid Hugging Face cross-encoder (e.g. 'cross-encoder/nli-deberta-v3-base') or an existing local model directory\n  - if it is an HF name, check network access to huggingface.co (first use downloads ~425 MB into /home/hermes/.cache/citesure)\n  - override with --nli-model NAME or CITECHECK_NLI_MODEL=NAME\ncitesure fails fast on unloadable NLI models (D6) — it will not silently fall back to another model.",
+      "score": null,
+      "tier_reached": 0,
+      "match": false,
+      "evidence": "",
+      "notes": [
+        "runner exception: NLIError: could not load NLI model 'cross-encoder/nli-deberta-v3-base': OSError: We couldn't connect to 'https://huggingface.co' to load the files, and couldn't find them in the cached files.\nCheck your internet connection or see how to run the library in offline mode at 'https://huggingface.co/docs/transformers/installation#offline-mode'.\n  - check the name/path is a valid Hugging Face cross-encoder (e.g. 'cross-encoder/nli-deberta-v3-base') or an existing local model directory\n  - if it is an HF name, check network access to huggingface.co (first use downloads ~425 MB into /home/hermes/.cache/citesure)\n  - override with --nli-model NAME or CITECHECK_NLI_MODEL=NAME\ncitesure fails fast on unloadable NLI models (D6) — it will not silently fall back to another model."
+      ]
+    },
+    {
+      "id": "ind-009",
+      "category": "paraphrase-supported",
+      "expected": "supported",
+      "predicted": "error:NLIError: could not load NLI model 'cross-encoder/nli-deberta-v3-base': OSError: We couldn't connect to 'https://huggingface.co' to load the files, and couldn't find them in the cached files.\nCheck your internet connection or see how to run the library in offline mode at 'https://huggingface.co/docs/transformers/installation#offline-mode'.\n  - check the name/path is a valid Hugging Face cross-encoder (e.g. 'cross-encoder/nli-deberta-v3-base') or an existing local model directory\n  - if it is an HF name, check network access to huggingface.co (first use downloads ~425 MB into /home/hermes/.cache/citesure)\n  - override with --nli-model NAME or CITECHECK_NLI_MODEL=NAME\ncitesure fails fast on unloadable NLI models (D6) — it will not silently fall back to another model.",
+      "score": null,
+      "tier_reached": 0,
+      "match": false,
+      "evidence": "",
+      "notes": [
+        "runner exception: NLIError: could not load NLI model 'cross-encoder/nli-deberta-v3-base': OSError: We couldn't connect to 'https://huggingface.co' to load the files, and couldn't find them in the cached files.\nCheck your internet connection or see how to run the library in offline mode at 'https://huggingface.co/docs/transformers/installation#offline-mode'.\n  - check the name/path is a valid Hugging Face cross-encoder (e.g. 'cross-encoder/nli-deberta-v3-base') or an existing local model directory\n  - if it is an HF name, check network access to huggingface.co (first use downloads ~425 MB into /home/hermes/.cache/citesure)\n  - override with --nli-model NAME or CITECHECK_NLI_MODEL=NAME\ncitesure fails fast on unloadable NLI models (D6) — it will not silently fall back to another model."
+      ]
+    },
+    {
+      "id": "ind-010",
+      "category": "paraphrase-supported",
+      "expected": "supported",
+      "predicted": "error:NLIError: could not load NLI model 'cross-encoder/nli-deberta-v3-base': OSError: We couldn't connect to 'https://huggingface.co' to load the files, and couldn't find them in the cached files.\nCheck your internet connection or see how to run the library in offline mode at 'https://huggingface.co/docs/transformers/installation#offline-mode'.\n  - check the name/path is a valid Hugging Face cross-encoder (e.g. 'cross-encoder/nli-deberta-v3-base') or an existing local model directory\n  - if it is an HF name, check network access to huggingface.co (first use downloads ~425 MB into /home/hermes/.cache/citesure)\n  - override with --nli-model NAME or CITECHECK_NLI_MODEL=NAME\ncitesure fails fast on unloadable NLI models (D6) — it will not silently fall back to another model.",
+      "score": null,
+      "tier_reached": 0,
+      "match": false,
+      "evidence": "",
+      "notes": [
+        "runner exception: NLIError: could not load NLI model 'cross-encoder/nli-deberta-v3-base': OSError: We couldn't connect to 'https://huggingface.co' to load the files, and couldn't find them in the cached files.\nCheck your internet connection or see how to run the library in offline mode at 'https://huggingface.co/docs/transformers/installation#offline-mode'.\n  - check the name/path is a valid Hugging Face cross-encoder (e.g. 'cross-encoder/nli-deberta-v3-base') or an existing local model directory\n  - if it is an HF name, check network access to huggingface.co (first use downloads ~425 MB into /home/hermes/.cache/citesure)\n  - override with --nli-model NAME or CITECHECK_NLI_MODEL=NAME\ncitesure fails fast on unloadable NLI models (D6) — it will not silently fall back to another model."
+      ]
+    },
+    {
+      "id": "ind-011",
+      "category": "paraphrase-supported",
+      "expected": "supported",
+      "predicted": "error:NLIError: could not load NLI model 'cross-encoder/nli-deberta-v3-base': OSError: We couldn't connect to 'https://huggingface.co' to load the files, and couldn't find them in the cached files.\nCheck your internet connection or see how to run the library in offline mode at 'https://huggingface.co/docs/transformers/installation#offline-mode'.\n  - check the name/path is a valid Hugging Face cross-encoder (e.g. 'cross-encoder/nli-deberta-v3-base') or an existing local model directory\n  - if it is an HF name, check network access to huggingface.co (first use downloads ~425 MB into /home/hermes/.cache/citesure)\n  - override with --nli-model NAME or CITECHECK_NLI_MODEL=NAME\ncitesure fails fast on unloadable NLI models (D6) — it will not silently fall back to another model.",
+      "score": null,
+      "tier_reached": 0,
+      "match": false,
+      "evidence": "",
+      "notes": [
+        "runner exception: NLIError: could not load NLI model 'cross-encoder/nli-deberta-v3-base': OSError: We couldn't connect to 'https://huggingface.co' to load the files, and couldn't find them in the cached files.\nCheck your internet connection or see how to run the library in offline mode at 'https://huggingface.co/docs/transformers/installation#offline-mode'.\n  - check the name/path is a valid Hugging Face cross-encoder (e.g. 'cross-encoder/nli-deberta-v3-base') or an existing local model directory\n  - if it is an HF name, check network access to huggingface.co (first use downloads ~425 MB into /home/hermes/.cache/citesure)\n  - override with --nli-model NAME or CITECHECK_NLI_MODEL=NAME\ncitesure fails fast on unloadable NLI models (D6) — it will not silently fall back to another model."
+      ]
+    },
+    {
+      "id": "ind-012",
+      "category": "paraphrase-supported",
+      "expected": "supported",
+      "predicted": "error:NLIError: could not load NLI model 'cross-encoder/nli-deberta-v3-base': OSError: We couldn't connect to 'https://huggingface.co' to load the files, and couldn't find them in the cached files.\nCheck your internet connection or see how to run the library in offline mode at 'https://huggingface.co/docs/transformers/installation#offline-mode'.\n  - check the name/path is a valid Hugging Face cross-encoder (e.g. 'cross-encoder/nli-deberta-v3-base') or an existing local model directory\n  - if it is an HF name, check network access to huggingface.co (first use downloads ~425 MB into /home/hermes/.cache/citesure)\n  - override with --nli-model NAME or CITECHECK_NLI_MODEL=NAME\ncitesure fails fast on unloadable NLI models (D6) — it will not silently fall back to another model.",
+      "score": null,
+      "tier_reached": 0,
+      "match": false,
+      "evidence": "",
+      "notes": [
+        "runner exception: NLIError: could not load NLI model 'cross-encoder/nli-deberta-v3-base': OSError: We couldn't connect to 'https://huggingface.co' to load the files, and couldn't find them in the cached files.\nCheck your internet connection or see how to run the library in offline mode at 'https://huggingface.co/docs/transformers/installation#offline-mode'.\n  - check the name/path is a valid Hugging Face cross-encoder (e.g. 'cross-encoder/nli-deberta-v3-base') or an existing local model directory\n  - if it is an HF name, check network access to huggingface.co (first use downloads ~425 MB into /home/hermes/.cache/citesure)\n  - override with --nli-model NAME or CITECHECK_NLI_MODEL=NAME\ncitesure fails fast on unloadable NLI models (D6) — it will not silently fall back to another model."
+      ]
+    },
+    {
+      "id": "ind-013",
+      "category": "numeric-detail-supported",
+      "expected": "supported",
+      "predicted": "error:NLIError: could not load NLI model 'cross-encoder/nli-deberta-v3-base': OSError: We couldn't connect to 'https://huggingface.co' to load the files, and couldn't find them in the cached files.\nCheck your internet connection or see how to run the library in offline mode at 'https://huggingface.co/docs/transformers/installation#offline-mode'.\n  - check the name/path is a valid Hugging Face cross-encoder (e.g. 'cross-encoder/nli-deberta-v3-base') or an existing local model directory\n  - if it is an HF name, check network access to huggingface.co (first use downloads ~425 MB into /home/hermes/.cache/citesure)\n  - override with --nli-model NAME or CITECHECK_NLI_MODEL=NAME\ncitesure fails fast on unloadable NLI models (D6) — it will not silently fall back to another model.",
+      "score": null,
+      "tier_reached": 0,
+      "match": false,
+      "evidence": "",
+      "notes": [
+        "runner exception: NLIError: could not load NLI model 'cross-encoder/nli-deberta-v3-base': OSError: We couldn't connect to 'https://huggingface.co' to load the files, and couldn't find them in the cached files.\nCheck your internet connection or see how to run the library in offline mode at 'https://huggingface.co/docs/transformers/installation#offline-mode'.\n  - check the name/path is a valid Hugging Face cross-encoder (e.g. 'cross-encoder/nli-deberta-v3-base') or an existing local model directory\n  - if it is an HF name, check network access to huggingface.co (first use downloads ~425 MB into /home/hermes/.cache/citesure)\n  - override with --nli-model NAME or CITECHECK_NLI_MODEL=NAME\ncitesure fails fast on unloadable NLI models (D6) — it will not silently fall back to another model."
+      ]
+    },
+    {
+      "id": "ind-014",
+      "category": "numeric-detail-supported",
+      "expected": "supported",
+      "predicted": "error:NLIError: could not load NLI model 'cross-encoder/nli-deberta-v3-base': OSError: We couldn't connect to 'https://huggingface.co' to load the files, and couldn't find them in the cached files.\nCheck your internet connection or see how to run the library in offline mode at 'https://huggingface.co/docs/transformers/installation#offline-mode'.\n  - check the name/path is a valid Hugging Face cross-encoder (e.g. 'cross-encoder/nli-deberta-v3-base') or an existing local model directory\n  - if it is an HF name, check network access to huggingface.co (first use downloads ~425 MB into /home/hermes/.cache/citesure)\n  - override with --nli-model NAME or CITECHECK_NLI_MODEL=NAME\ncitesure fails fast on unloadable NLI models (D6) — it will not silently fall back to another model.",
+      "score": null,
+      "tier_reached": 0,
+      "match": false,
+      "evidence": "",
+      "notes": [
+        "runner exception: NLIError: could not load NLI model 'cross-encoder/nli-deberta-v3-base': OSError: We couldn't connect to 'https://huggingface.co' to load the files, and couldn't find them in the cached files.\nCheck your internet connection or see how to run the library in offline mode at 'https://huggingface.co/docs/transformers/installation#offline-mode'.\n  - check the name/path is a valid Hugging Face cross-encoder (e.g. 'cross-encoder/nli-deberta-v3-base') or an existing local model directory\n  - if it is an HF name, check network access to huggingface.co (first use downloads ~425 MB into /home/hermes/.cache/citesure)\n  - override with --nli-model NAME or CITECHECK_NLI_MODEL=NAME\ncitesure fails fast on unloadable NLI models (D6) — it will not silently fall back to another model."
+      ]
+    },
+    {
+      "id": "ind-015",
+      "category": "numeric-detail-supported",
+      "expected": "supported",
+      "predicted": "error:NLIError: could not load NLI model 'cross-encoder/nli-deberta-v3-base': OSError: We couldn't connect to 'https://huggingface.co' to load the files, and couldn't find them in the cached files.\nCheck your internet connection or see how to run the library in offline mode at 'https://huggingface.co/docs/transformers/installation#offline-mode'.\n  - check the name/path is a valid Hugging Face cross-encoder (e.g. 'cross-encoder/nli-deberta-v3-base') or an existing local model directory\n  - if it is an HF name, check network access to huggingface.co (first use downloads ~425 MB into /home/hermes/.cache/citesure)\n  - override with --nli-model NAME or CITECHECK_NLI_MODEL=NAME\ncitesure fails fast on unloadable NLI models (D6) — it will not silently fall back to another model.",
+      "score": null,
+      "tier_reached": 0,
+      "match": false,
+      "evidence": "",
+      "notes": [
+        "runner exception: NLIError: could not load NLI model 'cross-encoder/nli-deberta-v3-base': OSError: We couldn't connect to 'https://huggingface.co' to load the files, and couldn't find them in the cached files.\nCheck your internet connection or see how to run the library in offline mode at 'https://huggingface.co/docs/transformers/installation#offline-mode'.\n  - check the name/path is a valid Hugging Face cross-encoder (e.g. 'cross-encoder/nli-deberta-v3-base') or an existing local model directory\n  - if it is an HF name, check network access to huggingface.co (first use downloads ~425 MB into /home/hermes/.cache/citesure)\n  - override with --nli-model NAME or CITECHECK_NLI_MODEL=NAME\ncitesure fails fast on unloadable NLI models (D6) — it will not silently fall back to another model."
+      ]
+    },
+    {
+      "id": "ind-016",
+      "category": "numeric-detail-supported",
+      "expected": "supported",
+      "predicted": "error:NLIError: could not load NLI model 'cross-encoder/nli-deberta-v3-base': OSError: We couldn't connect to 'https://huggingface.co' to load the files, and couldn't find them in the cached files.\nCheck your internet connection or see how to run the library in offline mode at 'https://huggingface.co/docs/transformers/installation#offline-mode'.\n  - check the name/path is a valid Hugging Face cross-encoder (e.g. 'cross-encoder/nli-deberta-v3-base') or an existing local model directory\n  - if it is an HF name, check network access to huggingface.co (first use downloads ~425 MB into /home/hermes/.cache/citesure)\n  - override with --nli-model NAME or CITECHECK_NLI_MODEL=NAME\ncitesure fails fast on unloadable NLI models (D6) — it will not silently fall back to another model.",
+      "score": null,
+      "tier_reached": 0,
+      "match": false,
+      "evidence": "",
+      "notes": [
+        "runner exception: NLIError: could not load NLI model 'cross-encoder/nli-deberta-v3-base': OSError: We couldn't connect to 'https://huggingface.co' to load the files, and couldn't find them in the cached files.\nCheck your internet connection or see how to run the library in offline mode at 'https://huggingface.co/docs/transformers/installation#offline-mode'.\n  - check the name/path is a valid Hugging Face cross-encoder (e.g. 'cross-encoder/nli-deberta-v3-base') or an existing local model directory\n  - if it is an HF name, check network access to huggingface.co (first use downloads ~425 MB into /home/hermes/.cache/citesure)\n  - override with --nli-model NAME or CITECHECK_NLI_MODEL=NAME\ncitesure fails fast on unloadable NLI models (D6) — it will not silently fall back to another model."
+      ]
+    },
+    {
+      "id": "ind-017",
+      "category": "false-claim",
+      "expected": "unsupported",
+      "predicted": "error:NLIError: could not load NLI model 'cross-encoder/nli-deberta-v3-base': OSError: We couldn't connect to 'https://huggingface.co' to load the files, and couldn't find them in the cached files.\nCheck your internet connection or see how to run the library in offline mode at 'https://huggingface.co/docs/transformers/installation#offline-mode'.\n  - check the name/path is a valid Hugging Face cross-encoder (e.g. 'cross-encoder/nli-deberta-v3-base') or an existing local model directory\n  - if it is an HF name, check network access to huggingface.co (first use downloads ~425 MB into /home/hermes/.cache/citesure)\n  - override with --nli-model NAME or CITECHECK_NLI_MODEL=NAME\ncitesure fails fast on unloadable NLI models (D6) — it will not silently fall back to another model.",
+      "score": null,
+      "tier_reached": 0,
+      "match": false,
+      "evidence": "",
+      "notes": [
+        "runner exception: NLIError: could not load NLI model 'cross-encoder/nli-deberta-v3-base': OSError: We couldn't connect to 'https://huggingface.co' to load the files, and couldn't find them in the cached files.\nCheck your internet connection or see how to run the library in offline mode at 'https://huggingface.co/docs/transformers/installation#offline-mode'.\n  - check the name/path is a valid Hugging Face cross-encoder (e.g. 'cross-encoder/nli-deberta-v3-base') or an existing local model directory\n  - if it is an HF name, check network access to huggingface.co (first use downloads ~425 MB into /home/hermes/.cache/citesure)\n  - override with --nli-model NAME or CITECHECK_NLI_MODEL=NAME\ncitesure fails fast on unloadable NLI models (D6) — it will not silently fall back to another model."
+      ]
+    },
+    {
+      "id": "ind-018",
+      "category": "false-claim",
+      "expected": "unsupported",
+      "predicted": "error:NLIError: could not load NLI model 'cross-encoder/nli-deberta-v3-base': OSError: We couldn't connect to 'https://huggingface.co' to load the files, and couldn't find them in the cached files.\nCheck your internet connection or see how to run the library in offline mode at 'https://huggingface.co/docs/transformers/installation#offline-mode'.\n  - check the name/path is a valid Hugging Face cross-encoder (e.g. 'cross-encoder/nli-deberta-v3-base') or an existing local model directory\n  - if it is an HF name, check network access to huggingface.co (first use downloads ~425 MB into /home/hermes/.cache/citesure)\n  - override with --nli-model NAME or CITECHECK_NLI_MODEL=NAME\ncitesure fails fast on unloadable NLI models (D6) — it will not silently fall back to another model.",
+      "score": null,
+      "tier_reached": 0,
+      "match": false,
+      "evidence": "",
+      "notes": [
+        "runner exception: NLIError: could not load NLI model 'cross-encoder/nli-deberta-v3-base': OSError: We couldn't connect to 'https://huggingface.co' to load the files, and couldn't find them in the cached files.\nCheck your internet connection or see how to run the library in offline mode at 'https://huggingface.co/docs/transformers/installation#offline-mode'.\n  - check the name/path is a valid Hugging Face cross-encoder (e.g. 'cross-encoder/nli-deberta-v3-base') or an existing local model directory\n  - if it is an HF name, check network access to huggingface.co (first use downloads ~425 MB into /home/hermes/.cache/citesure)\n  - override with --nli-model NAME or CITECHECK_NLI_MODEL=NAME\ncitesure fails fast on unloadable NLI models (D6) — it will not silently fall back to another model."
+      ]
+    },
+    {
+      "id": "ind-019",
+      "category": "false-claim",
+      "expected": "unsupported",
+      "predicted": "error:NLIError: could not load NLI model 'cross-encoder/nli-deberta-v3-base': OSError: We couldn't connect to 'https://huggingface.co' to load the files, and couldn't find them in the cached files.\nCheck your internet connection or see how to run the library in offline mode at 'https://huggingface.co/docs/transformers/installation#offline-mode'.\n  - check the name/path is a valid Hugging Face cross-encoder (e.g. 'cross-encoder/nli-deberta-v3-base') or an existing local model directory\n  - if it is an HF name, check network access to huggingface.co (first use downloads ~425 MB into /home/hermes/.cache/citesure)\n  - override with --nli-model NAME or CITECHECK_NLI_MODEL=NAME\ncitesure fails fast on unloadable NLI models (D6) — it will not silently fall back to another model.",
+      "score": null,
+      "tier_reached": 0,
+      "match": false,
+      "evidence": "",
+      "notes": [
+        "runner exception: NLIError: could not load NLI model 'cross-encoder/nli-deberta-v3-base': OSError: We couldn't connect to 'https://huggingface.co' to load the files, and couldn't find them in the cached files.\nCheck your internet connection or see how to run the library in offline mode at 'https://huggingface.co/docs/transformers/installation#offline-mode'.\n  - check the name/path is a valid Hugging Face cross-encoder (e.g. 'cross-encoder/nli-deberta-v3-base') or an existing local model directory\n  - if it is an HF name, check network access to huggingface.co (first use downloads ~425 MB into /home/hermes/.cache/citesure)\n  - override with --nli-model NAME or CITECHECK_NLI_MODEL=NAME\ncitesure fails fast on unloadable NLI models (D6) — it will not silently fall back to another model."
+      ]
+    },
+    {
+      "id": "ind-020",
+      "category": "false-claim",
+      "expected": "unsupported",
+      "predicted": "error:NLIError: could not load NLI model 'cross-encoder/nli-deberta-v3-base': OSError: We couldn't connect to 'https://huggingface.co' to load the files, and couldn't find them in the cached files.\nCheck your internet connection or see how to run the library in offline mode at 'https://huggingface.co/docs/transformers/installation#offline-mode'.\n  - check the name/path is a valid Hugging Face cross-encoder (e.g. 'cross-encoder/nli-deberta-v3-base') or an existing local model directory\n  - if it is an HF name, check network access to huggingface.co (first use downloads ~425 MB into /home/hermes/.cache/citesure)\n  - override with --nli-model NAME or CITECHECK_NLI_MODEL=NAME\ncitesure fails fast on unloadable NLI models (D6) — it will not silently fall back to another model.",
+      "score": null,
+      "tier_reached": 0,
+      "match": false,
+      "evidence": "",
+      "notes": [
+        "runner exception: NLIError: could not load NLI model 'cross-encoder/nli-deberta-v3-base': OSError: We couldn't connect to 'https://huggingface.co' to load the files, and couldn't find them in the cached files.\nCheck your internet connection or see how to run the library in offline mode at 'https://huggingface.co/docs/transformers/installation#offline-mode'.\n  - check the name/path is a valid Hugging Face cross-encoder (e.g. 'cross-encoder/nli-deberta-v3-base') or an existing local model directory\n  - if it is an HF name, check network access to huggingface.co (first use downloads ~425 MB into /home/hermes/.cache/citesure)\n  - override with --nli-model NAME or CITECHECK_NLI_MODEL=NAME\ncitesure fails fast on unloadable NLI models (D6) — it will not silently fall back to another model."
+      ]
+    },
+    {
+      "id": "ind-021",
+      "category": "false-claim",
+      "expected": "unsupported",
+      "predicted": "error:NLIError: could not load NLI model 'cross-encoder/nli-deberta-v3-base': OSError: We couldn't connect to 'https://huggingface.co' to load the files, and couldn't find them in the cached files.\nCheck your internet connection or see how to run the library in offline mode at 'https://huggingface.co/docs/transformers/installation#offline-mode'.\n  - check the name/path is a valid Hugging Face cross-encoder (e.g. 'cross-encoder/nli-deberta-v3-base') or an existing local model directory\n  - if it is an HF name, check network access to huggingface.co (first use downloads ~425 MB into /home/hermes/.cache/citesure)\n  - override with --nli-model NAME or CITECHECK_NLI_MODEL=NAME\ncitesure fails fast on unloadable NLI models (D6) — it will not silently fall back to another model.",
+      "score": null,
+      "tier_reached": 0,
+      "match": false,
+      "evidence": "",
+      "notes": [
+        "runner exception: NLIError: could not load NLI model 'cross-encoder/nli-deberta-v3-base': OSError: We couldn't connect to 'https://huggingface.co' to load the files, and couldn't find them in the cached files.\nCheck your internet connection or see how to run the library in offline mode at 'https://huggingface.co/docs/transformers/installation#offline-mode'.\n  - check the name/path is a valid Hugging Face cross-encoder (e.g. 'cross-encoder/nli-deberta-v3-base') or an existing local model directory\n  - if it is an HF name, check network access to huggingface.co (first use downloads ~425 MB into /home/hermes/.cache/citesure)\n  - override with --nli-model NAME or CITECHECK_NLI_MODEL=NAME\ncitesure fails fast on unloadable NLI models (D6) — it will not silently fall back to another model."
+      ]
+    },
+    {
+      "id": "ind-022",
+      "category": "false-claim",
+      "expected": "unsupported",
+      "predicted": "error:NLIError: could not load NLI model 'cross-encoder/nli-deberta-v3-base': OSError: We couldn't connect to 'https://huggingface.co' to load the files, and couldn't find them in the cached files.\nCheck your internet connection or see how to run the library in offline mode at 'https://huggingface.co/docs/transformers/installation#offline-mode'.\n  - check the name/path is a valid Hugging Face cross-encoder (e.g. 'cross-encoder/nli-deberta-v3-base') or an existing local model directory\n  - if it is an HF name, check network access to huggingface.co (first use downloads ~425 MB into /home/hermes/.cache/citesure)\n  - override with --nli-model NAME or CITECHECK_NLI_MODEL=NAME\ncitesure fails fast on unloadable NLI models (D6) — it will not silently fall back to another model.",
+      "score": null,
+      "tier_reached": 0,
+      "match": false,
+      "evidence": "",
+      "notes": [
+        "runner exception: NLIError: could not load NLI model 'cross-encoder/nli-deberta-v3-base': OSError: We couldn't connect to 'https://huggingface.co' to load the files, and couldn't find them in the cached files.\nCheck your internet connection or see how to run the library in offline mode at 'https://huggingface.co/docs/transformers/installation#offline-mode'.\n  - check the name/path is a valid Hugging Face cross-encoder (e.g. 'cross-encoder/nli-deberta-v3-base') or an existing local model directory\n  - if it is an HF name, check network access to huggingface.co (first use downloads ~425 MB into /home/hermes/.cache/citesure)\n  - override with --nli-model NAME or CITECHECK_NLI_MODEL=NAME\ncitesure fails fast on unloadable NLI models (D6) — it will not silently fall back to another model."
+      ]
+    },
+    {
+      "id": "ind-023",
+      "category": "negation-flip",
+      "expected": "unsupported",
+      "predicted": "error:NLIError: could not load NLI model 'cross-encoder/nli-deberta-v3-base': OSError: We couldn't connect to 'https://huggingface.co' to load the files, and couldn't find them in the cached files.\nCheck your internet connection or see how to run the library in offline mode at 'https://huggingface.co/docs/transformers/installation#offline-mode'.\n  - check the name/path is a valid Hugging Face cross-encoder (e.g. 'cross-encoder/nli-deberta-v3-base') or an existing local model directory\n  - if it is an HF name, check network access to huggingface.co (first use downloads ~425 MB into /home/hermes/.cache/citesure)\n  - override with --nli-model NAME or CITECHECK_NLI_MODEL=NAME\ncitesure fails fast on unloadable NLI models (D6) — it will not silently fall back to another model.",
+      "score": null,
+      "tier_reached": 0,
+      "match": false,
+      "evidence": "",
+      "notes": [
+        "runner exception: NLIError: could not load NLI model 'cross-encoder/nli-deberta-v3-base': OSError: We couldn't connect to 'https://huggingface.co' to load the files, and couldn't find them in the cached files.\nCheck your internet connection or see how to run the library in offline mode at 'https://huggingface.co/docs/transformers/installation#offline-mode'.\n  - check the name/path is a valid Hugging Face cross-encoder (e.g. 'cross-encoder/nli-deberta-v3-base') or an existing local model directory\n  - if it is an HF name, check network access to huggingface.co (first use downloads ~425 MB into /home/hermes/.cache/citesure)\n  - override with --nli-model NAME or CITECHECK_NLI_MODEL=NAME\ncitesure fails fast on unloadable NLI models (D6) — it will not silently fall back to another model."
+      ]
+    },
+    {
+      "id": "ind-024",
+      "category": "negation-flip",
+      "expected": "unsupported",
+      "predicted": "error:NLIError: could not load NLI model 'cross-encoder/nli-deberta-v3-base': OSError: We couldn't connect to 'https://huggingface.co' to load the files, and couldn't find them in the cached files.\nCheck your internet connection or see how to run the library in offline mode at 'https://huggingface.co/docs/transformers/installation#offline-mode'.\n  - check the name/path is a valid Hugging Face cross-encoder (e.g. 'cross-encoder/nli-deberta-v3-base') or an existing local model directory\n  - if it is an HF name, check network access to huggingface.co (first use downloads ~425 MB into /home/hermes/.cache/citesure)\n  - override with --nli-model NAME or CITECHECK_NLI_MODEL=NAME\ncitesure fails fast on unloadable NLI models (D6) — it will not silently fall back to another model.",
+      "score": null,
+      "tier_reached": 0,
+      "match": false,
+      "evidence": "",
+      "notes": [
+        "runner exception: NLIError: could not load NLI model 'cross-encoder/nli-deberta-v3-base': OSError: We couldn't connect to 'https://huggingface.co' to load the files, and couldn't find them in the cached files.\nCheck your internet connection or see how to run the library in offline mode at 'https://huggingface.co/docs/transformers/installation#offline-mode'.\n  - check the name/path is a valid Hugging Face cross-encoder (e.g. 'cross-encoder/nli-deberta-v3-base') or an existing local model directory\n  - if it is an HF name, check network access to huggingface.co (first use downloads ~425 MB into /home/hermes/.cache/citesure)\n  - override with --nli-model NAME or CITECHECK_NLI_MODEL=NAME\ncitesure fails fast on unloadable NLI models (D6) — it will not silently fall back to another model."
+      ]
+    },
+    {
+      "id": "ind-025",
+      "category": "negation-flip",
+      "expected": "unsupported",
+      "predicted": "error:NLIError: could not load NLI model 'cross-encoder/nli-deberta-v3-base': OSError: We couldn't connect to 'https://huggingface.co' to load the files, and couldn't find them in the cached files.\nCheck your internet connection or see how to run the library in offline mode at 'https://huggingface.co/docs/transformers/installation#offline-mode'.\n  - check the name/path is a valid Hugging Face cross-encoder (e.g. 'cross-encoder/nli-deberta-v3-base') or an existing local model directory\n  - if it is an HF name, check network access to huggingface.co (first use downloads ~425 MB into /home/hermes/.cache/citesure)\n  - override with --nli-model NAME or CITECHECK_NLI_MODEL=NAME\ncitesure fails fast on unloadable NLI models (D6) — it will not silently fall back to another model.",
+      "score": null,
+      "tier_reached": 0,
+      "match": false,
+      "evidence": "",
+      "notes": [
+        "runner exception: NLIError: could not load NLI model 'cross-encoder/nli-deberta-v3-base': OSError: We couldn't connect to 'https://huggingface.co' to load the files, and couldn't find them in the cached files.\nCheck your internet connection or see how to run the library in offline mode at 'https://huggingface.co/docs/transformers/installation#offline-mode'.\n  - check the name/path is a valid Hugging Face cross-encoder (e.g. 'cross-encoder/nli-deberta-v3-base') or an existing local model directory\n  - if it is an HF name, check network access to huggingface.co (first use downloads ~425 MB into /home/hermes/.cache/citesure)\n  - override with --nli-model NAME or CITECHECK_NLI_MODEL=NAME\ncitesure fails fast on unloadable NLI models (D6) — it will not silently fall back to another model."
+      ]
+    },
+    {
+      "id": "ind-026",
+      "category": "negation-flip",
+      "expected": "unsupported",
+      "predicted": "error:NLIError: could not load NLI model 'cross-encoder/nli-deberta-v3-base': OSError: We couldn't connect to 'https://huggingface.co' to load the files, and couldn't find them in the cached files.\nCheck your internet connection or see how to run the library in offline mode at 'https://huggingface.co/docs/transformers/installation#offline-mode'.\n  - check the name/path is a valid Hugging Face cross-encoder (e.g. 'cross-encoder/nli-deberta-v3-base') or an existing local model directory\n  - if it is an HF name, check network access to huggingface.co (first use downloads ~425 MB into /home/hermes/.cache/citesure)\n  - override with --nli-model NAME or CITECHECK_NLI_MODEL=NAME\ncitesure fails fast on unloadable NLI models (D6) — it will not silently fall back to another model.",
+      "score": null,
+      "tier_reached": 0,
+      "match": false,
+      "evidence": "",
+      "notes": [
+        "runner exception: NLIError: could not load NLI model 'cross-encoder/nli-deberta-v3-base': OSError: We couldn't connect to 'https://huggingface.co' to load the files, and couldn't find them in the cached files.\nCheck your internet connection or see how to run the library in offline mode at 'https://huggingface.co/docs/transformers/installation#offline-mode'.\n  - check the name/path is a valid Hugging Face cross-encoder (e.g. 'cross-encoder/nli-deberta-v3-base') or an existing local model directory\n  - if it is an HF name, check network access to huggingface.co (first use downloads ~425 MB into /home/hermes/.cache/citesure)\n  - override with --nli-model NAME or CITECHECK_NLI_MODEL=NAME\ncitesure fails fast on unloadable NLI models (D6) — it will not silently fall back to another model."
+      ]
+    },
+    {
+      "id": "ind-027",
+      "category": "negation-flip",
+      "expected": "unsupported",
+      "predicted": "error:NLIError: could not load NLI model 'cross-encoder/nli-deberta-v3-base': OSError: We couldn't connect to 'https://huggingface.co' to load the files, and couldn't find them in the cached files.\nCheck your internet connection or see how to run the library in offline mode at 'https://huggingface.co/docs/transformers/installation#offline-mode'.\n  - check the name/path is a valid Hugging Face cross-encoder (e.g. 'cross-encoder/nli-deberta-v3-base') or an existing local model directory\n  - if it is an HF name, check network access to huggingface.co (first use downloads ~425 MB into /home/hermes/.cache/citesure)\n  - override with --nli-model NAME or CITECHECK_NLI_MODEL=NAME\ncitesure fails fast on unloadable NLI models (D6) — it will not silently fall back to another model.",
+      "score": null,
+      "tier_reached": 0,
+      "match": false,
+      "evidence": "",
+      "notes": [
+        "runner exception: NLIError: could not load NLI model 'cross-encoder/nli-deberta-v3-base': OSError: We couldn't connect to 'https://huggingface.co' to load the files, and couldn't find them in the cached files.\nCheck your internet connection or see how to run the library in offline mode at 'https://huggingface.co/docs/transformers/installation#offline-mode'.\n  - check the name/path is a valid Hugging Face cross-encoder (e.g. 'cross-encoder/nli-deberta-v3-base') or an existing local model directory\n  - if it is an HF name, check network access to huggingface.co (first use downloads ~425 MB into /home/hermes/.cache/citesure)\n  - override with --nli-model NAME or CITECHECK_NLI_MODEL=NAME\ncitesure fails fast on unloadable NLI models (D6) — it will not silently fall back to another model."
+      ]
+    },
+    {
+      "id": "ind-028",
+      "category": "entity-swap",
+      "expected": "unsupported",
+      "predicted": "error:NLIError: could not load NLI model 'cross-encoder/nli-deberta-v3-base': OSError: We couldn't connect to 'https://huggingface.co' to load the files, and couldn't find them in the cached files.\nCheck your internet connection or see how to run the library in offline mode at 'https://huggingface.co/docs/transformers/installation#offline-mode'.\n  - check the name/path is a valid Hugging Face cross-encoder (e.g. 'cross-encoder/nli-deberta-v3-base') or an existing local model directory\n  - if it is an HF name, check network access to huggingface.co (first use downloads ~425 MB into /home/hermes/.cache/citesure)\n  - override with --nli-model NAME or CITECHECK_NLI_MODEL=NAME\ncitesure fails fast on unloadable NLI models (D6) — it will not silently fall back to another model.",
+      "score": null,
+      "tier_reached": 0,
+      "match": false,
+      "evidence": "",
+      "notes": [
+        "runner exception: NLIError: could not load NLI model 'cross-encoder/nli-deberta-v3-base': OSError: We couldn't connect to 'https://huggingface.co' to load the files, and couldn't find them in the cached files.\nCheck your internet connection or see how to run the library in offline mode at 'https://huggingface.co/docs/transformers/installation#offline-mode'.\n  - check the name/path is a valid Hugging Face cross-encoder (e.g. 'cross-encoder/nli-deberta-v3-base') or an existing local model directory\n  - if it is an HF name, check network access to huggingface.co (first use downloads ~425 MB into /home/hermes/.cache/citesure)\n  - override with --nli-model NAME or CITECHECK_NLI_MODEL=NAME\ncitesure fails fast on unloadable NLI models (D6) — it will not silently fall back to another model."
+      ]
+    },
+    {
+      "id": "ind-029",
+      "category": "entity-swap",
+      "expected": "unsupported",
+      "predicted": "error:NLIError: could not load NLI model 'cross-encoder/nli-deberta-v3-base': OSError: We couldn't connect to 'https://huggingface.co' to load the files, and couldn't find them in the cached files.\nCheck your internet connection or see how to run the library in offline mode at 'https://huggingface.co/docs/transformers/installation#offline-mode'.\n  - check the name/path is a valid Hugging Face cross-encoder (e.g. 'cross-encoder/nli-deberta-v3-base') or an existing local model directory\n  - if it is an HF name, check network access to huggingface.co (first use downloads ~425 MB into /home/hermes/.cache/citesure)\n  - override with --nli-model NAME or CITECHECK_NLI_MODEL=NAME\ncitesure fails fast on unloadable NLI models (D6) — it will not silently fall back to another model.",
+      "score": null,
+      "tier_reached": 0,
+      "match": false,
+      "evidence": "",
+      "notes": [
+        "runner exception: NLIError: could not load NLI model 'cross-encoder/nli-deberta-v3-base': OSError: We couldn't connect to 'https://huggingface.co' to load the files, and couldn't find them in the cached files.\nCheck your internet connection or see how to run the library in offline mode at 'https://huggingface.co/docs/transformers/installation#offline-mode'.\n  - check the name/path is a valid Hugging Face cross-encoder (e.g. 'cross-encoder/nli-deberta-v3-base') or an existing local model directory\n  - if it is an HF name, check network access to huggingface.co (first use downloads ~425 MB into /home/hermes/.cache/citesure)\n  - override with --nli-model NAME or CITECHECK_NLI_MODEL=NAME\ncitesure fails fast on unloadable NLI models (D6) — it will not silently fall back to another model."
+      ]
+    },
+    {
+      "id": "ind-030",
+      "category": "entity-swap",
+      "expected": "unsupported",
+      "predicted": "error:NLIError: could not load NLI model 'cross-encoder/nli-deberta-v3-base': OSError: We couldn't connect to 'https://huggingface.co' to load the files, and couldn't find them in the cached files.\nCheck your internet connection or see how to run the library in offline mode at 'https://huggingface.co/docs/transformers/installation#offline-mode'.\n  - check the name/path is a valid Hugging Face cross-encoder (e.g. 'cross-encoder/nli-deberta-v3-base') or an existing local model directory\n  - if it is an HF name, check network access to huggingface.co (first use downloads ~425 MB into /home/hermes/.cache/citesure)\n  - override with --nli-model NAME or CITECHECK_NLI_MODEL=NAME\ncitesure fails fast on unloadable NLI models (D6) — it will not silently fall back to another model.",
+      "score": null,
+      "tier_reached": 0,
+      "match": false,
+      "evidence": "",
+      "notes": [
+        "runner exception: NLIError: could not load NLI model 'cross-encoder/nli-deberta-v3-base': OSError: We couldn't connect to 'https://huggingface.co' to load the files, and couldn't find them in the cached files.\nCheck your internet connection or see how to run the library in offline mode at 'https://huggingface.co/docs/transformers/installation#offline-mode'.\n  - check the name/path is a valid Hugging Face cross-encoder (e.g. 'cross-encoder/nli-deberta-v3-base') or an existing local model directory\n  - if it is an HF name, check network access to huggingface.co (first use downloads ~425 MB into /home/hermes/.cache/citesure)\n  - override with --nli-model NAME or CITECHECK_NLI_MODEL=NAME\ncitesure fails fast on unloadable NLI models (D6) — it will not silently fall back to another model."
+      ]
+    },
+    {
+      "id": "ind-031",
+      "category": "entity-swap",
+      "expected": "unsupported",
+      "predicted": "error:NLIError: could not load NLI model 'cross-encoder/nli-deberta-v3-base': OSError: We couldn't connect to 'https://huggingface.co' to load the files, and couldn't find them in the cached files.\nCheck your internet connection or see how to run the library in offline mode at 'https://huggingface.co/docs/transformers/installation#offline-mode'.\n  - check the name/path is a valid Hugging Face cross-encoder (e.g. 'cross-encoder/nli-deberta-v3-base') or an existing local model directory\n  - if it is an HF name, check network access to huggingface.co (first use downloads ~425 MB into /home/hermes/.cache/citesure)\n  - override with --nli-model NAME or CITECHECK_NLI_MODEL=NAME\ncitesure fails fast on unloadable NLI models (D6) — it will not silently fall back to another model.",
+      "score": null,
+      "tier_reached": 0,
+      "match": false,
+      "evidence": "",
+      "notes": [
+        "runner exception: NLIError: could not load NLI model 'cross-encoder/nli-deberta-v3-base': OSError: We couldn't connect to 'https://huggingface.co' to load the files, and couldn't find them in the cached files.\nCheck your internet connection or see how to run the library in offline mode at 'https://huggingface.co/docs/transformers/installation#offline-mode'.\n  - check the name/path is a valid Hugging Face cross-encoder (e.g. 'cross-encoder/nli-deberta-v3-base') or an existing local model directory\n  - if it is an HF name, check network access to huggingface.co (first use downloads ~425 MB into /home/hermes/.cache/citesure)\n  - override with --nli-model NAME or CITECHECK_NLI_MODEL=NAME\ncitesure fails fast on unloadable NLI models (D6) — it will not silently fall back to another model."
+      ]
+    },
+    {
+      "id": "ind-032",
+      "category": "entity-swap",
+      "expected": "unsupported",
+      "predicted": "error:NLIError: could not load NLI model 'cross-encoder/nli-deberta-v3-base': OSError: We couldn't connect to 'https://huggingface.co' to load the files, and couldn't find them in the cached files.\nCheck your internet connection or see how to run the library in offline mode at 'https://huggingface.co/docs/transformers/installation#offline-mode'.\n  - check the name/path is a valid Hugging Face cross-encoder (e.g. 'cross-encoder/nli-deberta-v3-base') or an existing local model directory\n  - if it is an HF name, check network access to huggingface.co (first use downloads ~425 MB into /home/hermes/.cache/citesure)\n  - override with --nli-model NAME or CITECHECK_NLI_MODEL=NAME\ncitesure fails fast on unloadable NLI models (D6) — it will not silently fall back to another model.",
+      "score": null,
+      "tier_reached": 0,
+      "match": false,
+      "evidence": "",
+      "notes": [
+        "runner exception: NLIError: could not load NLI model 'cross-encoder/nli-deberta-v3-base': OSError: We couldn't connect to 'https://huggingface.co' to load the files, and couldn't find them in the cached files.\nCheck your internet connection or see how to run the library in offline mode at 'https://huggingface.co/docs/transformers/installation#offline-mode'.\n  - check the name/path is a valid Hugging Face cross-encoder (e.g. 'cross-encoder/nli-deberta-v3-base') or an existing local model directory\n  - if it is an HF name, check network access to huggingface.co (first use downloads ~425 MB into /home/hermes/.cache/citesure)\n  - override with --nli-model NAME or CITECHECK_NLI_MODEL=NAME\ncitesure fails fast on unloadable NLI models (D6) — it will not silently fall back to another model."
+      ]
+    },
+    {
+      "id": "ind-033",
+      "category": "partially-true-ambiguous",
+      "expected": "ambiguous",
+      "predicted": "error:NLIError: could not load NLI model 'cross-encoder/nli-deberta-v3-base': OSError: We couldn't connect to 'https://huggingface.co' to load the files, and couldn't find them in the cached files.\nCheck your internet connection or see how to run the library in offline mode at 'https://huggingface.co/docs/transformers/installation#offline-mode'.\n  - check the name/path is a valid Hugging Face cross-encoder (e.g. 'cross-encoder/nli-deberta-v3-base') or an existing local model directory\n  - if it is an HF name, check network access to huggingface.co (first use downloads ~425 MB into /home/hermes/.cache/citesure)\n  - override with --nli-model NAME or CITECHECK_NLI_MODEL=NAME\ncitesure fails fast on unloadable NLI models (D6) — it will not silently fall back to another model.",
+      "score": null,
+      "tier_reached": 0,
+      "match": false,
+      "evidence": "",
+      "notes": [
+        "runner exception: NLIError: could not load NLI model 'cross-encoder/nli-deberta-v3-base': OSError: We couldn't connect to 'https://huggingface.co' to load the files, and couldn't find them in the cached files.\nCheck your internet connection or see how to run the library in offline mode at 'https://huggingface.co/docs/transformers/installation#offline-mode'.\n  - check the name/path is a valid Hugging Face cross-encoder (e.g. 'cross-encoder/nli-deberta-v3-base') or an existing local model directory\n  - if it is an HF name, check network access to huggingface.co (first use downloads ~425 MB into /home/hermes/.cache/citesure)\n  - override with --nli-model NAME or CITECHECK_NLI_MODEL=NAME\ncitesure fails fast on unloadable NLI models (D6) — it will not silently fall back to another model."
+      ]
+    },
+    {
+      "id": "ind-034",
+      "category": "partially-true-ambiguous",
+      "expected": "ambiguous",
+      "predicted": "error:NLIError: could not load NLI model 'cross-encoder/nli-deberta-v3-base': OSError: We couldn't connect to 'https://huggingface.co' to load the files, and couldn't find them in the cached files.\nCheck your internet connection or see how to run the library in offline mode at 'https://huggingface.co/docs/transformers/installation#offline-mode'.\n  - check the name/path is a valid Hugging Face cross-encoder (e.g. 'cross-encoder/nli-deberta-v3-base') or an existing local model directory\n  - if it is an HF name, check network access to huggingface.co (first use downloads ~425 MB into /home/hermes/.cache/citesure)\n  - override with --nli-model NAME or CITECHECK_NLI_MODEL=NAME\ncitesure fails fast on unloadable NLI models (D6) — it will not silently fall back to another model.",
+      "score": null,
+      "tier_reached": 0,
+      "match": false,
+      "evidence": "",
+      "notes": [
+        "runner exception: NLIError: could not load NLI model 'cross-encoder/nli-deberta-v3-base': OSError: We couldn't connect to 'https://huggingface.co' to load the files, and couldn't find them in the cached files.\nCheck your internet connection or see how to run the library in offline mode at 'https://huggingface.co/docs/transformers/installation#offline-mode'.\n  - check the name/path is a valid Hugging Face cross-encoder (e.g. 'cross-encoder/nli-deberta-v3-base') or an existing local model directory\n  - if it is an HF name, check network access to huggingface.co (first use downloads ~425 MB into /home/hermes/.cache/citesure)\n  - override with --nli-model NAME or CITECHECK_NLI_MODEL=NAME\ncitesure fails fast on unloadable NLI models (D6) — it will not silently fall back to another model."
+      ]
+    },
+    {
+      "id": "ind-035",
+      "category": "partially-true-ambiguous",
+      "expected": "ambiguous",
+      "predicted": "error:NLIError: could not load NLI model 'cross-encoder/nli-deberta-v3-base': OSError: We couldn't connect to 'https://huggingface.co' to load the files, and couldn't find them in the cached files.\nCheck your internet connection or see how to run the library in offline mode at 'https://huggingface.co/docs/transformers/installation#offline-mode'.\n  - check the name/path is a valid Hugging Face cross-encoder (e.g. 'cross-encoder/nli-deberta-v3-base') or an existing local model directory\n  - if it is an HF name, check network access to huggingface.co (first use downloads ~425 MB into /home/hermes/.cache/citesure)\n  - override with --nli-model NAME or CITECHECK_NLI_MODEL=NAME\ncitesure fails fast on unloadable NLI models (D6) — it will not silently fall back to another model.",
+      "score": null,
+      "tier_reached": 0,
+      "match": false,
+      "evidence": "",
+      "notes": [
+        "runner exception: NLIError: could not load NLI model 'cross-encoder/nli-deberta-v3-base': OSError: We couldn't connect to 'https://huggingface.co' to load the files, and couldn't find them in the cached files.\nCheck your internet connection or see how to run the library in offline mode at 'https://huggingface.co/docs/transformers/installation#offline-mode'.\n  - check the name/path is a valid Hugging Face cross-encoder (e.g. 'cross-encoder/nli-deberta-v3-base') or an existing local model directory\n  - if it is an HF name, check network access to huggingface.co (first use downloads ~425 MB into /home/hermes/.cache/citesure)\n  - override with --nli-model NAME or CITECHECK_NLI_MODEL=NAME\ncitesure fails fast on unloadable NLI models (D6) — it will not silently fall back to another model."
+      ]
+    },
+    {
+      "id": "ind-036",
+      "category": "partially-true-ambiguous",
+      "expected": "ambiguous",
+      "predicted": "error:NLIError: could not load NLI model 'cross-encoder/nli-deberta-v3-base': OSError: We couldn't connect to 'https://huggingface.co' to load the files, and couldn't find them in the cached files.\nCheck your internet connection or see how to run the library in offline mode at 'https://huggingface.co/docs/transformers/installation#offline-mode'.\n  - check the name/path is a valid Hugging Face cross-encoder (e.g. 'cross-encoder/nli-deberta-v3-base') or an existing local model directory\n  - if it is an HF name, check network access to huggingface.co (first use downloads ~425 MB into /home/hermes/.cache/citesure)\n  - override with --nli-model NAME or CITECHECK_NLI_MODEL=NAME\ncitesure fails fast on unloadable NLI models (D6) — it will not silently fall back to another model.",
+      "score": null,
+      "tier_reached": 0,
+      "match": false,
+      "evidence": "",
+      "notes": [
+        "runner exception: NLIError: could not load NLI model 'cross-encoder/nli-deberta-v3-base': OSError: We couldn't connect to 'https://huggingface.co' to load the files, and couldn't find them in the cached files.\nCheck your internet connection or see how to run the library in offline mode at 'https://huggingface.co/docs/transformers/installation#offline-mode'.\n  - check the name/path is a valid Hugging Face cross-encoder (e.g. 'cross-encoder/nli-deberta-v3-base') or an existing local model directory\n  - if it is an HF name, check network access to huggingface.co (first use downloads ~425 MB into /home/hermes/.cache/citesure)\n  - override with --nli-model NAME or CITECHECK_NLI_MODEL=NAME\ncitesure fails fast on unloadable NLI models (D6) — it will not silently fall back to another model."
+      ]
+    },
+    {
+      "id": "ind-037",
+      "category": "dead-link",
+      "expected": "unreachable",
+      "predicted": "error:NLIError: could not load NLI model 'cross-encoder/nli-deberta-v3-base': OSError: We couldn't connect to 'https://huggingface.co' to load the files, and couldn't find them in the cached files.\nCheck your internet connection or see how to run the library in offline mode at 'https://huggingface.co/docs/transformers/installation#offline-mode'.\n  - check the name/path is a valid Hugging Face cross-encoder (e.g. 'cross-encoder/nli-deberta-v3-base') or an existing local model directory\n  - if it is an HF name, check network access to huggingface.co (first use downloads ~425 MB into /home/hermes/.cache/citesure)\n  - override with --nli-model NAME or CITECHECK_NLI_MODEL=NAME\ncitesure fails fast on unloadable NLI models (D6) — it will not silently fall back to another model.",
+      "score": null,
+      "tier_reached": 0,
+      "match": false,
+      "evidence": "",
+      "notes": [
+        "runner exception: NLIError: could not load NLI model 'cross-encoder/nli-deberta-v3-base': OSError: We couldn't connect to 'https://huggingface.co' to load the files, and couldn't find them in the cached files.\nCheck your internet connection or see how to run the library in offline mode at 'https://huggingface.co/docs/transformers/installation#offline-mode'.\n  - check the name/path is a valid Hugging Face cross-encoder (e.g. 'cross-encoder/nli-deberta-v3-base') or an existing local model directory\n  - if it is an HF name, check network access to huggingface.co (first use downloads ~425 MB into /home/hermes/.cache/citesure)\n  - override with --nli-model NAME or CITECHECK_NLI_MODEL=NAME\ncitesure fails fast on unloadable NLI models (D6) — it will not silently fall back to another model."
+      ]
+    },
+    {
+      "id": "ind-038",
+      "category": "dead-link",
+      "expected": "unreachable",
+      "predicted": "error:NLIError: could not load NLI model 'cross-encoder/nli-deberta-v3-base': OSError: We couldn't connect to 'https://huggingface.co' to load the files, and couldn't find them in the cached files.\nCheck your internet connection or see how to run the library in offline mode at 'https://huggingface.co/docs/transformers/installation#offline-mode'.\n  - check the name/path is a valid Hugging Face cross-encoder (e.g. 'cross-encoder/nli-deberta-v3-base') or an existing local model directory\n  - if it is an HF name, check network access to huggingface.co (first use downloads ~425 MB into /home/hermes/.cache/citesure)\n  - override with --nli-model NAME or CITECHECK_NLI_MODEL=NAME\ncitesure fails fast on unloadable NLI models (D6) — it will not silently fall back to another model.",
+      "score": null,
+      "tier_reached": 0,
+      "match": false,
+      "evidence": "",
+      "notes": [
+        "runner exception: NLIError: could not load NLI model 'cross-encoder/nli-deberta-v3-base': OSError: We couldn't connect to 'https://huggingface.co' to load the files, and couldn't find them in the cached files.\nCheck your internet connection or see how to run the library in offline mode at 'https://huggingface.co/docs/transformers/installation#offline-mode'.\n  - check the name/path is a valid Hugging Face cross-encoder (e.g. 'cross-encoder/nli-deberta-v3-base') or an existing local model directory\n  - if it is an HF name, check network access to huggingface.co (first use downloads ~425 MB into /home/hermes/.cache/citesure)\n  - override with --nli-model NAME or CITECHECK_NLI_MODEL=NAME\ncitesure fails fast on unloadable NLI models (D6) — it will not silently fall back to another model."
+      ]
+    },
+    {
+      "id": "ind-039",
+      "category": "dead-link",
+      "expected": "unreachable",
+      "predicted": "error:NLIError: could not load NLI model 'cross-encoder/nli-deberta-v3-base': OSError: We couldn't connect to 'https://huggingface.co' to load the files, and couldn't find them in the cached files.\nCheck your internet connection or see how to run the library in offline mode at 'https://huggingface.co/docs/transformers/installation#offline-mode'.\n  - check the name/path is a valid Hugging Face cross-encoder (e.g. 'cross-encoder/nli-deberta-v3-base') or an existing local model directory\n  - if it is an HF name, check network access to huggingface.co (first use downloads ~425 MB into /home/hermes/.cache/citesure)\n  - override with --nli-model NAME or CITECHECK_NLI_MODEL=NAME\ncitesure fails fast on unloadable NLI models (D6) — it will not silently fall back to another model.",
+      "score": null,
+      "tier_reached": 0,
+      "match": false,
+      "evidence": "",
+      "notes": [
+        "runner exception: NLIError: could not load NLI model 'cross-encoder/nli-deberta-v3-base': OSError: We couldn't connect to 'https://huggingface.co' to load the files, and couldn't find them in the cached files.\nCheck your internet connection or see how to run the library in offline mode at 'https://huggingface.co/docs/transformers/installation#offline-mode'.\n  - check the name/path is a valid Hugging Face cross-encoder (e.g. 'cross-encoder/nli-deberta-v3-base') or an existing local model directory\n  - if it is an HF name, check network access to huggingface.co (first use downloads ~425 MB into /home/hermes/.cache/citesure)\n  - override with --nli-model NAME or CITECHECK_NLI_MODEL=NAME\ncitesure fails fast on unloadable NLI models (D6) — it will not silently fall back to another model."
+      ]
+    },
+    {
+      "id": "ind-040",
+      "category": "paywalled",
+      "expected": "paywalled",
+      "predicted": "error:NLIError: could not load NLI model 'cross-encoder/nli-deberta-v3-base': OSError: We couldn't connect to 'https://huggingface.co' to load the files, and couldn't find them in the cached files.\nCheck your internet connection or see how to run the library in offline mode at 'https://huggingface.co/docs/transformers/installation#offline-mode'.\n  - check the name/path is a valid Hugging Face cross-encoder (e.g. 'cross-encoder/nli-deberta-v3-base') or an existing local model directory\n  - if it is an HF name, check network access to huggingface.co (first use downloads ~425 MB into /home/hermes/.cache/citesure)\n  - override with --nli-model NAME or CITECHECK_NLI_MODEL=NAME\ncitesure fails fast on unloadable NLI models (D6) — it will not silently fall back to another model.",
+      "score": null,
+      "tier_reached": 0,
+      "match": false,
+      "evidence": "",
+      "notes": [
+        "runner exception: NLIError: could not load NLI model 'cross-encoder/nli-deberta-v3-base': OSError: We couldn't connect to 'https://huggingface.co' to load the files, and couldn't find them in the cached files.\nCheck your internet connection or see how to run the library in offline mode at 'https://huggingface.co/docs/transformers/installation#offline-mode'.\n  - check the name/path is a valid Hugging Face cross-encoder (e.g. 'cross-encoder/nli-deberta-v3-base') or an existing local model directory\n  - if it is an HF name, check network access to huggingface.co (first use downloads ~425 MB into /home/hermes/.cache/citesure)\n  - override with --nli-model NAME or CITECHECK_NLI_MODEL=NAME\ncitesure fails fast on unloadable NLI models (D6) — it will not silently fall back to another model."
+      ]
+    },
+    {
+      "id": "ind-041",
+      "category": "paywalled",
+      "expected": "paywalled",
+      "predicted": "error:NLIError: could not load NLI model 'cross-encoder/nli-deberta-v3-base': OSError: We couldn't connect to 'https://huggingface.co' to load the files, and couldn't find them in the cached files.\nCheck your internet connection or see how to run the library in offline mode at 'https://huggingface.co/docs/transformers/installation#offline-mode'.\n  - check the name/path is a valid Hugging Face cross-encoder (e.g. 'cross-encoder/nli-deberta-v3-base') or an existing local model directory\n  - if it is an HF name, check network access to huggingface.co (first use downloads ~425 MB into /home/hermes/.cache/citesure)\n  - override with --nli-model NAME or CITECHECK_NLI_MODEL=NAME\ncitesure fails fast on unloadable NLI models (D6) — it will not silently fall back to another model.",
+      "score": null,
+      "tier_reached": 0,
+      "match": false,
+      "evidence": "",
+      "notes": [
+        "runner exception: NLIError: could not load NLI model 'cross-encoder/nli-deberta-v3-base': OSError: We couldn't connect to 'https://huggingface.co' to load the files, and couldn't find them in the cached files.\nCheck your internet connection or see how to run the library in offline mode at 'https://huggingface.co/docs/transformers/installation#offline-mode'.\n  - check the name/path is a valid Hugging Face cross-encoder (e.g. 'cross-encoder/nli-deberta-v3-base') or an existing local model directory\n  - if it is an HF name, check network access to huggingface.co (first use downloads ~425 MB into /home/hermes/.cache/citesure)\n  - override with --nli-model NAME or CITECHECK_NLI_MODEL=NAME\ncitesure fails fast on unloadable NLI models (D6) — it will not silently fall back to another model."
+      ]
+    }
+  ]
+}

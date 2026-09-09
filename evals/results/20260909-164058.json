@@ -1,0 +1,861 @@
+{
+  "generated_utc": "20260909-164058",
+  "set": "evals/independent_set.json",
+  "nli": true,
+  "cache_dir": "/home/hermes/.cache/citesure/hf",
+  "total": 41,
+  "matched": 29,
+  "agreement_pct": 70.73,
+  "confusion_matrix": {
+    "supported": {
+      "supported": 9,
+      "unsupported": 6,
+      "unreachable": 0,
+      "paywalled": 0,
+      "ambiguous": 1,
+      "error": 0
+    },
+    "unsupported": {
+      "supported": 1,
+      "unsupported": 15,
+      "unreachable": 0,
+      "paywalled": 0,
+      "ambiguous": 0,
+      "error": 0
+    },
+    "unreachable": {
+      "supported": 0,
+      "unsupported": 0,
+      "unreachable": 3,
+      "paywalled": 0,
+      "ambiguous": 0,
+      "error": 0
+    },
+    "paywalled": {
+      "supported": 0,
+      "unsupported": 0,
+      "unreachable": 0,
+      "paywalled": 2,
+      "ambiguous": 0,
+      "error": 0
+    },
+    "ambiguous": {
+      "supported": 0,
+      "unsupported": 4,
+      "unreachable": 0,
+      "paywalled": 0,
+      "ambiguous": 0,
+      "error": 0
+    },
+    "error": {
+      "supported": 0,
+      "unsupported": 0,
+      "unreachable": 0,
+      "paywalled": 0,
+      "ambiguous": 0,
+      "error": 0
+    }
+  },
+  "per_category_recall": {
+    "dead-link": {
+      "canonical_status": "unreachable",
+      "total": 3,
+      "correct": 3,
+      "recall": 1.0
+    },
+    "entity-swap": {
+      "canonical_status": "unsupported",
+      "total": 5,
+      "correct": 5,
+      "recall": 1.0
+    },
+    "false-claim": {
+      "canonical_status": "unsupported",
+      "total": 6,
+      "correct": 6,
+      "recall": 1.0
+    },
+    "negation-flip": {
+      "canonical_status": "unsupported",
+      "total": 5,
+      "correct": 4,
+      "recall": 0.8
+    },
+    "numeric-detail-supported": {
+      "canonical_status": "supported",
+      "total": 4,
+      "correct": 1,
+      "recall": 0.25
+    },
+    "paraphrase-supported": {
+      "canonical_status": "supported",
+      "total": 6,
+      "correct": 5,
+      "recall": 0.8333333333333334
+    },
+    "partially-true-ambiguous": {
+      "canonical_status": "ambiguous",
+      "total": 4,
+      "correct": 0,
+      "recall": 0.0
+    },
+    "paywalled": {
+      "canonical_status": "paywalled",
+      "total": 2,
+      "correct": 2,
+      "recall": 1.0
+    },
+    "verbatim-supported": {
+      "canonical_status": "supported",
+      "total": 6,
+      "correct": 3,
+      "recall": 0.5
+    }
+  },
+  "per_status_pr": {
+    "supported": {
+      "tp": 9,
+      "fp": 1,
+      "fn": 7,
+      "precision": 0.9,
+      "recall": 0.5625
+    },
+    "unsupported": {
+      "tp": 15,
+      "fp": 10,
+      "fn": 1,
+      "precision": 0.6,
+      "recall": 0.9375
+    },
+    "unreachable": {
+      "tp": 3,
+      "fp": 0,
+      "fn": 0,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    "paywalled": {
+      "tp": 2,
+      "fp": 0,
+      "fn": 0,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    "ambiguous": {
+      "tp": 0,
+      "fp": 1,
+      "fn": 4,
+      "precision": 0.0,
+      "recall": 0.0
+    },
+    "error": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 0,
+      "precision": NaN,
+      "recall": NaN
+    }
+  },
+  "safety": {
+    "negation_flip_false_supported": 1,
+    "negation_flip_total": 5,
+    "negation_flip_rate": 0.2,
+    "entity_swap_false_supported": 0,
+    "entity_swap_total": 5,
+    "entity_swap_rate": 0.0
+  },
+  "records": [
+    {
+      "id": "ind-001",
+      "category": "verbatim-supported",
+      "expected": "supported",
+      "predicted": "unsupported",
+      "score": 0.0028,
+      "tier_reached": 3,
+      "match": false,
+      "evidence": "What’s New In Python 3.12¶ - Editor: - Adam Turner This article explains the new features in Python 3.12, compared to 3.11. Python 3.12 was released on October 2, 2023. For full details, see the changelog.",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 1.000 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported",
+        "NLI tier: entailment 0.003 (bands: >= 0.7 supported, >= 0.3 ambiguous, below unsupported)",
+        "NLI tier: contradiction 0.000",
+        "NLI tier: contradiction 0.000 >= 0.5 — source contradicts claim",
+        "NLI moved verdict supported → unsupported"
+      ]
+    },
+    {
+      "id": "ind-002",
+      "category": "verbatim-supported",
+      "expected": "supported",
+      "predicted": "ambiguous",
+      "score": 0.524,
+      "tier_reached": 3,
+      "match": false,
+      "evidence": "Many of the examples in this manual, even those entered at the interactive prompt, include comments. Comments in Python start with the hash character, #, and extend to the end of the physical line. A comment may appear at the start of a line or following whitespace or code, but not within a string…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 1.000 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported",
+        "NLI tier: entailment 0.524 (bands: >= 0.7 supported, >= 0.3 ambiguous, below unsupported)",
+        "NLI tier: contradiction 0.445",
+        "NLI moved verdict supported → ambiguous"
+      ]
+    },
+    {
+      "id": "ind-003",
+      "category": "verbatim-supported",
+      "expected": "supported",
+      "predicted": "supported",
+      "score": 0.9962,
+      "tier_reached": 3,
+      "match": true,
+      "evidence": "Fetch API The Fetch API provides an interface for fetching resources (including across the network). It is a more powerful and flexible replacement for XMLHttpRequest. Concepts and usage The Fetch API uses Request and Response objects (and other things involved with network requests), as well as re…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 1.000 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported",
+        "NLI tier: entailment 0.996 (bands: >= 0.7 supported, >= 0.3 ambiguous, below unsupported)",
+        "NLI tier: contradiction 0.000"
+      ]
+    },
+    {
+      "id": "ind-004",
+      "category": "verbatim-supported",
+      "expected": "supported",
+      "predicted": "supported",
+      "score": 0.9897,
+      "tier_reached": 3,
+      "match": true,
+      "evidence": "Static methods - JSON.isRawJSON() - Tests whether a value is an object returned by JSON.rawJSON() . - JSON.parse() - Parse a piece of string text as JSON, optionally transforming the produced value and its properties, and return the value. - JSON.rawJSON() - Creates a \"raw JSON\" object containing a…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 0.846 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported",
+        "NLI tier: entailment 0.990 (bands: >= 0.7 supported, >= 0.3 ambiguous, below unsupported)",
+        "NLI tier: contradiction 0.000"
+      ]
+    },
+    {
+      "id": "ind-005",
+      "category": "verbatim-supported",
+      "expected": "supported",
+      "predicted": "supported",
+      "score": 0.9945,
+      "tier_reached": 3,
+      "match": true,
+      "evidence": "Watch on NASA+ Apollo 11 Mission Overview Apollo 11 launched on July 16, 1969, carrying Neil Armstrong, Michael Collins and Edwin “Buzz” Aldrin for the first crewed… Read the Story July 20, 1969: One Giant Leap For Mankind July 1969.",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 1.000 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported",
+        "NLI tier: entailment 0.994 (bands: >= 0.7 supported, >= 0.3 ambiguous, below unsupported)",
+        "NLI tier: contradiction 0.000"
+      ]
+    },
+    {
+      "id": "ind-006",
+      "category": "verbatim-supported",
+      "expected": "supported",
+      "predicted": "unsupported",
+      "score": 0.0249,
+      "tier_reached": 3,
+      "match": false,
+      "evidence": "It obtains new state-of-the-art results on eleven natural language processing tasks, including pushing the GLUE score to 80.5% (7.7% point absolute improvement), MultiNLI accuracy to 86.7% (4.6% absolute improvement), SQuAD v1.1 question answering Test F1 to 93.2 (1.5 point absolute improvement) an…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 0.818 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported",
+        "NLI tier: entailment 0.025 (bands: >= 0.7 supported, >= 0.3 ambiguous, below unsupported)",
+        "NLI tier: contradiction 0.008",
+        "NLI tier: contradiction 0.008 >= 0.5 — source contradicts claim",
+        "NLI moved verdict supported → unsupported"
+      ]
+    },
+    {
+      "id": "ind-007",
+      "category": "paraphrase-supported",
+      "expected": "supported",
+      "predicted": "supported",
+      "score": 0.9959,
+      "tier_reached": 3,
+      "match": true,
+      "evidence": "See also PEP 693 – Python 3.12 Release Schedule Summary – Release highlights¶ Python 3.12 is a stable release of the Python programming language, with a mix of changes to the language and the standard library. The library changes focus on cleaning up deprecated APIs, usability, and correctness. Of…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 1.000 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported",
+        "NLI tier: entailment 0.996 (bands: >= 0.7 supported, >= 0.3 ambiguous, below unsupported)",
+        "NLI tier: contradiction 0.000"
+      ]
+    },
+    {
+      "id": "ind-008",
+      "category": "paraphrase-supported",
+      "expected": "supported",
+      "predicted": "supported",
+      "score": 0.9983,
+      "tier_reached": 3,
+      "match": true,
+      "evidence": "The best performing models also connect the encoder and decoder through an attention mechanism. We propose a new simple network architecture, the Transformer, based solely on attention mechanisms, dispensing with recurrence and convolutions entirely.",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 0.727 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported",
+        "NLI tier: entailment 0.998 (bands: >= 0.7 supported, >= 0.3 ambiguous, below unsupported)",
+        "NLI tier: contradiction 0.000"
+      ]
+    },
+    {
+      "id": "ind-009",
+      "category": "paraphrase-supported",
+      "expected": "supported",
+      "predicted": "supported",
+      "score": 0.9943,
+      "tier_reached": 3,
+      "match": true,
+      "evidence": "After a three-day transit, Armstrong and Aldrin descended to the surface aboard the LM Eagle, landing in the Sea of Tranquility (Mare Tranquillitatis) on July 20 at 20:17 UTC while Collins remained in lunar orbit aboard the CM Columbia. Armstrong became the first human to walk on the Moon approxima…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 0.808 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported",
+        "NLI tier: entailment 0.994 (bands: >= 0.7 supported, >= 0.3 ambiguous, below unsupported)",
+        "NLI tier: contradiction 0.000"
+      ]
+    },
+    {
+      "id": "ind-010",
+      "category": "paraphrase-supported",
+      "expected": "supported",
+      "predicted": "unsupported",
+      "score": 0.0017,
+      "tier_reached": 3,
+      "match": false,
+      "evidence": "This function can raise OSError and subclasses such asFileNotFoundError ,PermissionError , andNotADirectoryError .Raises an auditing event os.chdir with argumentpath .See also The contextlib.chdir() context manager, which changes the current working directory on entering and restores the previous o…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 0.875 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported",
+        "NLI tier: entailment 0.002 (bands: >= 0.7 supported, >= 0.3 ambiguous, below unsupported)",
+        "NLI tier: contradiction 0.000",
+        "NLI tier: contradiction 0.000 >= 0.5 — source contradicts claim",
+        "NLI moved verdict supported → unsupported"
+      ]
+    },
+    {
+      "id": "ind-011",
+      "category": "paraphrase-supported",
+      "expected": "supported",
+      "predicted": "supported",
+      "score": 0.9959,
+      "tier_reached": 3,
+      "match": true,
+      "evidence": "Internet | Internet | |---| | Internet portal | | Computer network types by scale | |---| The Internet (or internet)[a] is the global system of interconnected computer networks that uses the Internet protocol suite (TCP/IP)[b] to communicate between networks and devices.",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 0.933 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported",
+        "NLI tier: entailment 0.996 (bands: >= 0.7 supported, >= 0.3 ambiguous, below unsupported)",
+        "NLI tier: contradiction 0.000"
+      ]
+    },
+    {
+      "id": "ind-012",
+      "category": "paraphrase-supported",
+      "expected": "supported",
+      "predicted": "supported",
+      "score": 0.9826,
+      "tier_reached": 3,
+      "match": true,
+      "evidence": "Python is widely taught as an introductory programming language.[42] History Python was conceived in the late 1980s[11] by Guido van Rossum at Centrum Wiskunde & Informatica (CWI) in the Netherlands.[43] It was designed as a successor to the ABC programming language, which was inspired by SETL,[44]…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 0.750 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported",
+        "NLI tier: entailment 0.983 (bands: >= 0.7 supported, >= 0.3 ambiguous, below unsupported)",
+        "NLI tier: contradiction 0.001"
+      ]
+    },
+    {
+      "id": "ind-013",
+      "category": "numeric-detail-supported",
+      "expected": "supported",
+      "predicted": "unsupported",
+      "score": 0.0152,
+      "tier_reached": 3,
+      "match": false,
+      "evidence": "Experiments on two machine translation tasks show these models to be superior in quality while being more parallelizable and requiring significantly less time to train. Our model achieves 28.4 BLEU on the WMT 2014 English-to-German translation task, improving over the existing best results, includi…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 0.750 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported",
+        "NLI tier: entailment 0.015 (bands: >= 0.7 supported, >= 0.3 ambiguous, below unsupported)",
+        "NLI tier: contradiction 0.002",
+        "NLI tier: contradiction 0.002 >= 0.5 — source contradicts claim",
+        "NLI moved verdict supported → unsupported"
+      ]
+    },
+    {
+      "id": "ind-014",
+      "category": "numeric-detail-supported",
+      "expected": "supported",
+      "predicted": "supported",
+      "score": 0.9601,
+      "tier_reached": 3,
+      "match": true,
+      "evidence": "On the WMT 2014 English-to-French translation task, our model establishes a new single-model state-of-the-art BLEU score of 41.8 after training for 3.5 days on eight GPUs, a small fraction of the training costs of the best models from the literature.",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 0.870 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported",
+        "NLI tier: entailment 0.960 (bands: >= 0.7 supported, >= 0.3 ambiguous, below unsupported)",
+        "NLI tier: contradiction 0.003"
+      ]
+    },
+    {
+      "id": "ind-015",
+      "category": "numeric-detail-supported",
+      "expected": "supported",
+      "predicted": "unsupported",
+      "score": 0.0028,
+      "tier_reached": 3,
+      "match": false,
+      "evidence": "It obtains new state-of-the-art results on eleven natural language processing tasks, including pushing the GLUE score to 80.5% (7.7% point absolute improvement), MultiNLI accuracy to 86.7% (4.6% absolute improvement), SQuAD v1.1 question answering Test F1 to 93.2 (1.5 point absolute improvement) an…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 0.643 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported",
+        "NLI tier: entailment 0.003 (bands: >= 0.7 supported, >= 0.3 ambiguous, below unsupported)",
+        "NLI tier: contradiction 0.000",
+        "NLI tier: contradiction 0.000 >= 0.5 — source contradicts claim",
+        "NLI moved verdict supported → unsupported"
+      ]
+    },
+    {
+      "id": "ind-016",
+      "category": "numeric-detail-supported",
+      "expected": "supported",
+      "predicted": "unsupported",
+      "score": 0.05,
+      "tier_reached": 3,
+      "match": false,
+      "evidence": "| | | Mission duration | 8 days, 3 hours, 18 minutes, 35 seconds | | Spacecraft properties | | | Spacecraft | | | Manufacturer | | | Launch mass | 109,646 lb (49,735 kg)[5] | | Landing mass | 10,873 lb (4,932 kg) | | Crew | | | Crew size | 3 | | Members | | | Callsign | | | Start of mission | | | L…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 0.941 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported",
+        "NLI tier: entailment 0.050 (bands: >= 0.7 supported, >= 0.3 ambiguous, below unsupported)",
+        "NLI tier: contradiction 0.022",
+        "NLI tier: contradiction 0.022 >= 0.5 — source contradicts claim",
+        "NLI moved verdict supported → unsupported"
+      ]
+    },
+    {
+      "id": "ind-017",
+      "category": "false-claim",
+      "expected": "unsupported",
+      "predicted": "unsupported",
+      "score": 0.0,
+      "tier_reached": 3,
+      "match": true,
+      "evidence": "What’s New In Python 3.12¶ - Editor: - Adam Turner This article explains the new features in Python 3.12, compared to 3.11. Python 3.12 was released on October 2, 2023. For full details, see the changelog.",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 0.455 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported",
+        "NLI tier: entailment 0.000 (bands: >= 0.7 supported, >= 0.3 ambiguous, below unsupported)",
+        "NLI tier: contradiction 0.999",
+        "NLI tier: contradiction 0.999 >= 0.5 — source contradicts claim",
+        "NLI moved verdict ambiguous → unsupported"
+      ]
+    },
+    {
+      "id": "ind-018",
+      "category": "false-claim",
+      "expected": "unsupported",
+      "predicted": "unsupported",
+      "score": 0.0,
+      "tier_reached": 3,
+      "match": true,
+      "evidence": "Fetch API The Fetch API provides an interface for fetching resources (including across the network). It is a more powerful and flexible replacement for XMLHttpRequest. Concepts and usage The Fetch API uses Request and Response objects (and other things involved with network requests), as well as re…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 0.700 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported",
+        "NLI tier: entailment 0.000 (bands: >= 0.7 supported, >= 0.3 ambiguous, below unsupported)",
+        "NLI tier: contradiction 0.996",
+        "NLI tier: contradiction 0.996 >= 0.5 — source contradicts claim",
+        "NLI moved verdict supported → unsupported"
+      ]
+    },
+    {
+      "id": "ind-019",
+      "category": "false-claim",
+      "expected": "unsupported",
+      "predicted": "unsupported",
+      "score": 0.0,
+      "tier_reached": 3,
+      "match": true,
+      "evidence": "The best performing models also connect the encoder and decoder through an attention mechanism. We propose a new simple network architecture, the Transformer, based solely on attention mechanisms, dispensing with recurrence and convolutions entirely.",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 0.300 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported",
+        "NLI tier: entailment 0.000 (bands: >= 0.7 supported, >= 0.3 ambiguous, below unsupported)",
+        "NLI tier: contradiction 1.000",
+        "NLI tier: contradiction 1.000 >= 0.5 — source contradicts claim",
+        "NLI moved verdict ambiguous → unsupported"
+      ]
+    },
+    {
+      "id": "ind-020",
+      "category": "false-claim",
+      "expected": "unsupported",
+      "predicted": "unsupported",
+      "score": 0.0002,
+      "tier_reached": 3,
+      "match": true,
+      "evidence": "Python (programming language) | Python | | |---|---| | Paradigm | Multi-paradigm: object-oriented,[1] procedural (imperative), functional, structured, reflective | | Designed by | Guido van Rossum | | Developer | Python Software Foundation | | First appeared | 20 February 1991[2] | | Stable release…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 0.455 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported",
+        "NLI tier: entailment 0.000 (bands: >= 0.7 supported, >= 0.3 ambiguous, below unsupported)",
+        "NLI tier: contradiction 0.999",
+        "NLI tier: contradiction 0.999 >= 0.5 — source contradicts claim",
+        "NLI moved verdict ambiguous → unsupported"
+      ]
+    },
+    {
+      "id": "ind-021",
+      "category": "false-claim",
+      "expected": "unsupported",
+      "predicted": "unsupported",
+      "score": 0.0,
+      "tier_reached": 3,
+      "match": true,
+      "evidence": "Apollo 11 The primary objective of Apollo 11 was to complete a national goal set by President John F. Kennedy on May 25, 1961: perform a crewed lunar landing and return to Earth. Mission Type astronauts Launch SPLASHDOWN Neil Armstrong First human to set foot on the Moon. Neil A. Armstrong is proba…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 0.750 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported",
+        "NLI tier: entailment 0.000 (bands: >= 0.7 supported, >= 0.3 ambiguous, below unsupported)",
+        "NLI tier: contradiction 0.999",
+        "NLI tier: contradiction 0.999 >= 0.5 — source contradicts claim",
+        "NLI moved verdict supported → unsupported"
+      ]
+    },
+    {
+      "id": "ind-022",
+      "category": "false-claim",
+      "expected": "unsupported",
+      "predicted": "unsupported",
+      "score": 0.0008,
+      "tier_reached": 3,
+      "match": true,
+      "evidence": "Description Unlike most global objects, JSON is not a constructor. You cannot use it with the new operator or invoke the JSON object as a function. All properties and methods of JSON are static (just like the Math object). JavaScript and JSON differences JSON is a syntax for serializing objects, ar…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 0.875 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported",
+        "NLI tier: entailment 0.001 (bands: >= 0.7 supported, >= 0.3 ambiguous, below unsupported)",
+        "NLI tier: contradiction 0.997",
+        "NLI tier: contradiction 0.997 >= 0.5 — source contradicts claim",
+        "NLI moved verdict supported → unsupported"
+      ]
+    },
+    {
+      "id": "ind-023",
+      "category": "negation-flip",
+      "expected": "unsupported",
+      "predicted": "unsupported",
+      "score": 0.0001,
+      "tier_reached": 3,
+      "match": true,
+      "evidence": "See also PEP 693 – Python 3.12 Release Schedule Summary – Release highlights¶ Python 3.12 is a stable release of the Python programming language, with a mix of changes to the language and the standard library. The library changes focus on cleaning up deprecated APIs, usability, and correctness. Of…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 0.889 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported",
+        "NLI tier: entailment 0.000 (bands: >= 0.7 supported, >= 0.3 ambiguous, below unsupported)",
+        "NLI tier: contradiction 1.000",
+        "NLI tier: contradiction 1.000 >= 0.5 — source contradicts claim",
+        "NLI moved verdict supported → unsupported"
+      ]
+    },
+    {
+      "id": "ind-024",
+      "category": "negation-flip",
+      "expected": "unsupported",
+      "predicted": "unsupported",
+      "score": 0.0008,
+      "tier_reached": 3,
+      "match": true,
+      "evidence": "The best performing models also connect the encoder and decoder through an attention mechanism. We propose a new simple network architecture, the Transformer, based solely on attention mechanisms, dispensing with recurrence and convolutions entirely.",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 0.833 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported",
+        "NLI tier: entailment 0.001 (bands: >= 0.7 supported, >= 0.3 ambiguous, below unsupported)",
+        "NLI tier: contradiction 0.997",
+        "NLI tier: contradiction 0.997 >= 0.5 — source contradicts claim",
+        "NLI moved verdict supported → unsupported"
+      ]
+    },
+    {
+      "id": "ind-025",
+      "category": "negation-flip",
+      "expected": "unsupported",
+      "predicted": "unsupported",
+      "score": 0.0,
+      "tier_reached": 3,
+      "match": true,
+      "evidence": "He logged over 266 hours in space. Apollo 11 on NASA+ Watch highlights from the Apollo 11 mission including the launch on July 16, 1969, the landing of the lunar module, Neil Armstrong’s first steps on the Moon, splashdown, and more.",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 1.000 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported",
+        "NLI tier: entailment 0.000 (bands: >= 0.7 supported, >= 0.3 ambiguous, below unsupported)",
+        "NLI tier: contradiction 1.000",
+        "NLI tier: contradiction 1.000 >= 0.5 — source contradicts claim",
+        "NLI moved verdict supported → unsupported"
+      ]
+    },
+    {
+      "id": "ind-026",
+      "category": "negation-flip",
+      "expected": "unsupported",
+      "predicted": "supported",
+      "score": 0.9138,
+      "tier_reached": 3,
+      "match": false,
+      "evidence": "In May 1969, Apollo 10's lunar module flew to within 15 kilometers (9.3 mi) of Site 2, and reported it was acceptable.[86][87] First-step decision During the first press conference after the Apollo 11 crew was announced, the first question was, \"Which one of you gentlemen will be the first man to s…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 0.833 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported",
+        "NLI tier: entailment 0.914 (bands: >= 0.7 supported, >= 0.3 ambiguous, below unsupported)",
+        "NLI tier: contradiction 0.016"
+      ]
+    },
+    {
+      "id": "ind-027",
+      "category": "negation-flip",
+      "expected": "unsupported",
+      "predicted": "unsupported",
+      "score": 0.0001,
+      "tier_reached": 3,
+      "match": true,
+      "evidence": "It obtains new state-of-the-art results on eleven natural language processing tasks, including pushing the GLUE score to 80.5% (7.7% point absolute improvement), MultiNLI accuracy to 86.7% (4.6% absolute improvement), SQuAD v1.1 question answering Test F1 to 93.2 (1.5 point absolute improvement) an…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 0.727 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported",
+        "NLI tier: entailment 0.000 (bands: >= 0.7 supported, >= 0.3 ambiguous, below unsupported)",
+        "NLI tier: contradiction 1.000",
+        "NLI tier: contradiction 1.000 >= 0.5 — source contradicts claim",
+        "NLI moved verdict supported → unsupported"
+      ]
+    },
+    {
+      "id": "ind-028",
+      "category": "entity-swap",
+      "expected": "unsupported",
+      "predicted": "unsupported",
+      "score": 0.004,
+      "tier_reached": 3,
+      "match": true,
+      "evidence": "What’s New In Python 3.12¶ - Editor: - Adam Turner This article explains the new features in Python 3.12, compared to 3.11. Python 3.12 was released on October 2, 2023. For full details, see the changelog.",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 1.000 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported",
+        "NLI tier: entailment 0.004 (bands: >= 0.7 supported, >= 0.3 ambiguous, below unsupported)",
+        "NLI tier: contradiction 0.743",
+        "NLI tier: contradiction 0.743 >= 0.5 — source contradicts claim",
+        "NLI moved verdict supported → unsupported"
+      ]
+    },
+    {
+      "id": "ind-029",
+      "category": "entity-swap",
+      "expected": "unsupported",
+      "predicted": "unsupported",
+      "score": 0.0013,
+      "tier_reached": 3,
+      "match": true,
+      "evidence": "After a three-day transit, Armstrong and Aldrin descended to the surface aboard the LM Eagle, landing in the Sea of Tranquility (Mare Tranquillitatis) on July 20 at 20:17 UTC while Collins remained in lunar orbit aboard the CM Columbia. Armstrong became the first human to walk on the Moon approxima…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 1.000 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported",
+        "NLI tier: entailment 0.001 (bands: >= 0.7 supported, >= 0.3 ambiguous, below unsupported)",
+        "NLI tier: contradiction 0.996",
+        "NLI tier: contradiction 0.996 >= 0.5 — source contradicts claim",
+        "NLI moved verdict supported → unsupported"
+      ]
+    },
+    {
+      "id": "ind-030",
+      "category": "entity-swap",
+      "expected": "unsupported",
+      "predicted": "unsupported",
+      "score": 0.0051,
+      "tier_reached": 3,
+      "match": true,
+      "evidence": "He joined NASA’s predecessor, the NACA, as an aeronautical research scientist and pilot in 1955. Armstrong was one of nine men chosen of NASA’s second astronaut group in 1962, and flew to space on the Gemini 8 mission in 1966 before being assigned to the Apollo 11 mission. Edwin “Buzz” Aldrin The s…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 0.625 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported",
+        "NLI tier: entailment 0.005 (bands: >= 0.7 supported, >= 0.3 ambiguous, below unsupported)",
+        "NLI tier: contradiction 0.985",
+        "NLI tier: contradiction 0.985 >= 0.5 — source contradicts claim",
+        "NLI moved verdict supported → unsupported"
+      ]
+    },
+    {
+      "id": "ind-031",
+      "category": "entity-swap",
+      "expected": "unsupported",
+      "predicted": "unsupported",
+      "score": 0.0004,
+      "tier_reached": 3,
+      "match": true,
+      "evidence": "Experiments on two machine translation tasks show these models to be superior in quality while being more parallelizable and requiring significantly less time to train. Our model achieves 28.4 BLEU on the WMT 2014 English-to-German translation task, improving over the existing best results, includi…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 0.857 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported",
+        "NLI tier: entailment 0.000 (bands: >= 0.7 supported, >= 0.3 ambiguous, below unsupported)",
+        "NLI tier: contradiction 0.959",
+        "NLI tier: contradiction 0.959 >= 0.5 — source contradicts claim",
+        "NLI moved verdict supported → unsupported"
+      ]
+    },
+    {
+      "id": "ind-032",
+      "category": "entity-swap",
+      "expected": "unsupported",
+      "predicted": "unsupported",
+      "score": 0.0166,
+      "tier_reached": 3,
+      "match": true,
+      "evidence": "Python is widely taught as an introductory programming language.[42] History Python was conceived in the late 1980s[11] by Guido van Rossum at Centrum Wiskunde & Informatica (CWI) in the Netherlands.[43] It was designed as a successor to the ABC programming language, which was inspired by SETL,[44]…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 0.769 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported",
+        "NLI tier: entailment 0.017 (bands: >= 0.7 supported, >= 0.3 ambiguous, below unsupported)",
+        "NLI tier: contradiction 0.128",
+        "NLI tier: contradiction 0.128 >= 0.5 — source contradicts claim",
+        "NLI moved verdict supported → unsupported"
+      ]
+    },
+    {
+      "id": "ind-033",
+      "category": "partially-true-ambiguous",
+      "expected": "ambiguous",
+      "predicted": "unsupported",
+      "score": 0.0001,
+      "tier_reached": 3,
+      "match": false,
+      "evidence": "What’s New In Python 3.12¶ - Editor: - Adam Turner This article explains the new features in Python 3.12, compared to 3.11. Python 3.12 was released on October 2, 2023. For full details, see the changelog.",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 0.611 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported",
+        "NLI tier: entailment 0.000 (bands: >= 0.7 supported, >= 0.3 ambiguous, below unsupported)",
+        "NLI tier: contradiction 0.000",
+        "NLI tier: contradiction 0.000 >= 0.5 — source contradicts claim",
+        "NLI moved verdict supported → unsupported"
+      ]
+    },
+    {
+      "id": "ind-034",
+      "category": "partially-true-ambiguous",
+      "expected": "ambiguous",
+      "predicted": "unsupported",
+      "score": 0.0029,
+      "tier_reached": 3,
+      "match": false,
+      "evidence": "| | | Mission duration | 8 days, 3 hours, 18 minutes, 35 seconds | | Spacecraft properties | | | Spacecraft | | | Manufacturer | | | Launch mass | 109,646 lb (49,735 kg)[5] | | Landing mass | 10,873 lb (4,932 kg) | | Crew | | | Crew size | 3 | | Members | | | Callsign | | | Start of mission | | | L…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 0.609 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported",
+        "NLI tier: entailment 0.003 (bands: >= 0.7 supported, >= 0.3 ambiguous, below unsupported)",
+        "NLI tier: contradiction 0.990",
+        "NLI tier: contradiction 0.990 >= 0.5 — source contradicts claim",
+        "NLI moved verdict supported → unsupported"
+      ]
+    },
+    {
+      "id": "ind-035",
+      "category": "partially-true-ambiguous",
+      "expected": "ambiguous",
+      "predicted": "unsupported",
+      "score": 0.0,
+      "tier_reached": 3,
+      "match": false,
+      "evidence": "Unlike recent language representation models, BERT is designed to pre-train deep bidirectional representations from unlabeled text by jointly conditioning on both left and right context in all layers.",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 0.385 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported",
+        "NLI tier: entailment 0.000 (bands: >= 0.7 supported, >= 0.3 ambiguous, below unsupported)",
+        "NLI tier: contradiction 0.001",
+        "NLI tier: contradiction 0.001 >= 0.5 — source contradicts claim",
+        "NLI moved verdict ambiguous → unsupported"
+      ]
+    },
+    {
+      "id": "ind-036",
+      "category": "partially-true-ambiguous",
+      "expected": "ambiguous",
+      "predicted": "unsupported",
+      "score": 0.0,
+      "tier_reached": 3,
+      "match": false,
+      "evidence": "Fetch API The Fetch API provides an interface for fetching resources (including across the network). It is a more powerful and flexible replacement for XMLHttpRequest. Concepts and usage The Fetch API uses Request and Response objects (and other things involved with network requests), as well as re…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 0.714 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported",
+        "NLI tier: entailment 0.000 (bands: >= 0.7 supported, >= 0.3 ambiguous, below unsupported)",
+        "NLI tier: contradiction 0.001",
+        "NLI tier: contradiction 0.001 >= 0.5 — source contradicts claim",
+        "NLI moved verdict supported → unsupported"
+      ]
+    },
+    {
+      "id": "ind-037",
+      "category": "dead-link",
+      "expected": "unreachable",
+      "predicted": "unreachable",
+      "score": null,
+      "tier_reached": 1,
+      "match": true,
+      "evidence": "Theme\nAuto\nLight\nDark\nNavigation\nindex\nmodules\n|\nPython\n»\n3.14.7 Documentation\n»\nPage not found\n|\nTheme\nAuto\nLight\nDark\n|\nPage not found\nUnfortunately we couldn't find the content you were looking for.\n«\nNavigation\nindex\nmodules\n|\nPython\n»\n3.14.7 Documentation\n»\nPage not found\n|\nTheme\nAuto\nLight\nDa…",
+      "notes": [
+        "HTTP 404"
+      ]
+    },
+    {
+      "id": "ind-038",
+      "category": "dead-link",
+      "expected": "unreachable",
+      "predicted": "unreachable",
+      "score": null,
+      "tier_reached": 1,
+      "match": true,
+      "evidence": "",
+      "notes": [
+        "ConnectError: [Errno -2] Name or service not known"
+      ]
+    },
+    {
+      "id": "ind-039",
+      "category": "dead-link",
+      "expected": "unreachable",
+      "predicted": "unreachable",
+      "score": null,
+      "tier_reached": 1,
+      "match": true,
+      "evidence": "",
+      "notes": [
+        "ConnectError: [Errno -2] Name or service not known"
+      ]
+    },
+    {
+      "id": "ind-040",
+      "category": "paywalled",
+      "expected": "paywalled",
+      "predicted": "paywalled",
+      "score": null,
+      "tier_reached": 1,
+      "match": true,
+      "evidence": "Chinese firms’ overseas expansion fuelled by government subsidies: OECD report\nWhile OECD figures suggest subsidies have driven Chinese firms’ rapid growth abroad, a Chinese chamber of commerce questioned the report’s standards\nThe report, published on Monday by the Organisation for Economic Co-ope…",
+      "notes": [
+        "paywall/login wall detected on the cited page"
+      ]
+    },
+    {
+      "id": "ind-041",
+      "category": "paywalled",
+      "expected": "paywalled",
+      "predicted": "paywalled",
+      "score": null,
+      "tier_reached": 1,
+      "match": true,
+      "evidence": "China hit record trade barriers in 2024 as overcapacity fears spread to developing world\nMore developing countries initiated investigations targeting Chinese goods last year, and analyst says these included pre-emptive measures to prevent an import surge\nIts trading partners announced a total of 16…",
+      "notes": [
+        "paywall/login wall detected on the cited page"
+      ]
+    }
+  ]
+}

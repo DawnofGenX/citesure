@@ -1,0 +1,55 @@
+id       cat                    exp          pred         ent_pipe  ent_re    neu    con
+ind-001  verbatim-supported     supported    unsupported     0.003   0.003  0.997  0.000
+ind-002  verbatim-supported     supported    ambiguous       0.524   0.273  0.663  0.064 *
+ind-003  verbatim-supported     supported    supported       0.996   0.996  0.004  0.000
+ind-004  verbatim-supported     supported    supported       0.990   0.990  0.010  0.000
+ind-005  verbatim-supported     supported    supported       0.995   0.994  0.005  0.000
+ind-006  verbatim-supported     supported    unsupported     0.025   0.036  0.942  0.022
+ind-007  paraphrase-supported   supported    supported       0.996   0.000  1.000  0.000 *
+ind-008  paraphrase-supported   supported    supported       0.998   0.998  0.002  0.000
+ind-009  paraphrase-supported   supported    supported       0.994   0.949  0.051  0.000
+ind-010  paraphrase-supported   supported    unsupported     0.002   0.039  0.961  0.000
+ind-011  paraphrase-supported   supported    supported       0.996   0.996  0.004  0.000
+ind-012  paraphrase-supported   supported    supported       0.983   0.000  0.999  0.001 *
+ind-013  numeric-detail-supported supported    unsupported     0.015   0.017  0.982  0.001
+ind-014  numeric-detail-supported supported    supported       0.960   0.960  0.037  0.003
+ind-015  numeric-detail-supported supported    unsupported     0.003   0.013  0.984  0.003
+ind-016  numeric-detail-supported supported    unsupported     0.050   0.001  0.993  0.006
+ind-017  false-claim            unsupported  unsupported     0.000   0.000  0.001  0.999
+ind-018  false-claim            unsupported  unsupported     0.000   0.000  0.011  0.989
+ind-019  false-claim            unsupported  unsupported     0.000   0.000  0.000  1.000
+ind-020  false-claim            unsupported  unsupported     0.000   0.000  0.000  1.000
+ind-021  false-claim            unsupported  unsupported     0.000   0.000  0.001  0.999
+ind-022  false-claim            unsupported  unsupported     0.001   0.001  0.002  0.997
+ind-023  negation-flip          unsupported  unsupported     0.000   0.000  0.999  0.000
+ind-024  negation-flip          unsupported  unsupported     0.001   0.001  0.002  0.997
+ind-025  negation-flip          unsupported  unsupported     0.000   0.000  0.000  1.000
+ind-026  negation-flip          unsupported  supported       0.914   0.012  0.963  0.026 *
+ind-027  negation-flip          unsupported  unsupported     0.000   0.000  0.001  0.999
+ind-028  entity-swap            unsupported  unsupported     0.004   0.004  0.253  0.743
+ind-029  entity-swap            unsupported  unsupported     0.001   0.002  0.007  0.990
+ind-030  entity-swap            unsupported  unsupported     0.005   0.012  0.023  0.965
+ind-031  entity-swap            unsupported  unsupported     0.000   0.000  0.027  0.973
+ind-032  entity-swap            unsupported  unsupported     0.017   0.000  0.999  0.000
+ind-033  partially-true-ambiguous ambiguous    unsupported     0.000   0.000  1.000  0.000
+ind-034  partially-true-ambiguous ambiguous    unsupported     0.003   0.004  0.647  0.349
+ind-035  partially-true-ambiguous ambiguous    unsupported     0.000   0.000  0.999  0.001
+ind-036  partially-true-ambiguous ambiguous    unsupported     0.000   0.000  0.999  0.001
+ind-037  dead-link              unreachable  unreachable       nan   0.001  0.998  0.001
+ind-038  dead-link              unreachable  unreachable       nan   0.018  0.968  0.015
+ind-039  dead-link              unreachable  unreachable       nan   0.014  0.843  0.143
+ind-040  paywalled              paywalled    paywalled         nan   0.001  0.999  0.000
+ind-041  paywalled              paywalled    paywalled         nan   0.989  0.011  0.000 *
+(* = pipeline score vs re-scored-clipped-evidence diverge >0.05)
+
+--- sweep: con >= T -> force unsupported ---
+    T  flipped exp=unsupported   exp=supported (BAD)  ids
+  0.3       14              13                     0  [017,018,019,020,021,022,024,025,027,028,029,030,031,034]
+  0.4       13              13                     0  [017,018,019,020,021,022,024,025,027,028,029,030,031]
+  0.5       13              13                     0  [017,018,019,020,021,022,024,025,027,028,029,030,031]
+  0.6       13              13                     0  [017,018,019,020,021,022,024,025,027,028,029,030,031]
+  0.7       13              13                     0  [017,018,019,020,021,022,024,025,027,028,029,030,031]
+  0.8       12              12                     0  [017,018,019,020,021,022,024,025,027,029,030,031]
+  0.9       12              12                     0  [017,018,019,020,021,022,024,025,027,029,030,031]
+
+rows with con>=0.5 AND ent>=0.7: 0 (expect 0 by softmax sum)
