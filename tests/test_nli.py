@@ -596,3 +596,19 @@ def test_cli_nli_flag_end_to_end(tmp_path):
     ])
     # rc may be 0 or 1 depending on verdicts — what matters: it RAN (not 2).
     assert rc in (0, 1)
+
+
+# ---------------------------------------------------------------------------
+# Additional edge cases
+# ---------------------------------------------------------------------------
+
+
+def test_contradiction_threshold_boundary():
+    """con=0.499 doesn't trigger override; con=0.500 does."""
+    from citesure.nli import status_for_nli
+    # Just below threshold
+    result = status_for_nli(Status.SUPPORTED, nli_score=0.9, contradiction=0.499)
+    assert result is Status.SUPPORTED
+    # At threshold
+    result = status_for_nli(Status.SUPPORTED, nli_score=0.9, contradiction=0.500)
+    assert result is Status.UNSUPPORTED

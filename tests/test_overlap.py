@@ -24,6 +24,7 @@ from citesure.overlap import (
     clean_claim,
     content_terms,
     entity_terms,
+    expand_context,
     rank_passages,
     score_overlap,
     segment_passages,
@@ -337,3 +338,47 @@ def test_min_extractable_chars_constant_sane():
     assert len(js_text) < MIN_EXTRACTABLE_CHARS
     real = (FIXTURES / "pages" / "page1.html").read_text(encoding="utf-8")
     assert len(real) > MIN_EXTRACTABLE_CHARS
+
+
+# ---------------------------------------------------------------------------
+# Additional edge cases
+# ---------------------------------------------------------------------------
+
+
+def test_score_overlap_empty_passages():
+    score, passage = score_overlap("test claim", [])
+    assert score == 0.0
+    assert passage == ""
+
+
+def test_score_overlap_single_passage():
+    score, passage = score_overlap("Python 3.12", ["Python 3.12 was released."])
+    assert score > 0.0
+    assert passage == "Python 3.12 was released."
+
+
+def test_score_overlap_unicode():
+    score, passage = score_overlap("テスト", ["これはテストです。"])
+    assert score >= 0.0  # shouldn't crash
+
+
+def test_negation_word_not_stripped():
+    assert "not" in content_terms("Apollo 11 did not launch")
+
+
+def test_context_expansion_includes_adjacent():
+    sentences = ["BERT was trained on a corpus.", "It obtains SOTA on 11 tasks."]
+    result = expand_context(sentences[1], sentences, passage_idx=1, radius=1)
+    assert "BERT was trained" in result
+
+
+def test_context_expansion_caps_at_512():
+    # When expansion would exceed 512 chars, the original passage is returned.
+    # Use a passage that's < 512 chars itself, but with adjacent sentences
+    # that would push the total over 512.
+    long_prefix = "A" * 300
+    passage = "B" * 200  # < 512 chars itself
+    sentences = [long_prefix, passage, long_prefix]
+    result = expand_context(passage, sentences, passage_idx=1, radius=1)
+    # Expansion would be 300+200+300 = 800 > 512, so returns original passage
+    assert result == passage
