@@ -329,10 +329,13 @@ async def _verify_one(
                 f">= {LOW_OVERLAP_THRESHOLD} ambiguous, below unsupported"
             )
             evidence = _clip_snippet(best_passage)
-            if best_passage:
+            if ranked:
+                # Pass ALL top-k passages (full text, not clipped) to the NLI
+                # tier so it can score each and take the max entailment.
                 nli_context = {
                     "claim": clean_claim(citation.claim),
-                    "passage": best_passage,
+                    "passage": best_passage,  # best by term coverage (for evidence)
+                    "passages": [p for _, p in ranked],  # all top-k full text
                     "marker_locatable": True,
                 }
 
@@ -382,26 +385,45 @@ async def verify_citations(
         encoder = get_nli_model(nli_model)
         eligible = [(i, ctx) for i, (_, ctx) in enumerate(results) if ctx]
         if eligible:
-            pairs = [(ctx["claim"], ctx["passage"]) for _, ctx in eligible]
-            scores = score_nli_batch_all(encoder, pairs)
-            for (i, ctx), (ent, con) in zip(eligible, scores):
-                verdict = verdicts[i]
-                final, tier, new_score, notes = apply_nli_tier(
-                    verdict.status,
-                    list(verdict.notes),
-                    nli_score=ent,
-                    marker_locatable=ctx["marker_locatable"],
-                    evidence=verdict.evidence,
-                    contradiction=con,
-                )
-                verdicts[i] = Verdict(
-                    citation_id=verdict.citation_id,
-                    url=verdict.url,
-                    status=final,
-                    tier_reached=tier,
-                    score=new_score,
-                    evidence=verdict.evidence,
-                    notes=notes,
-                )
+            # Build a flat list of (claim, passage) pairs for ALL top-k passages
+            # across all citations. Track which citation each pair belongs to.
+            flat_pairs = []
+            pair_owner = []  # citation index for each pair
+            for ci, ctx in eligible:
+                for passage in ctx.get("passages", [ctx["passage"]]):
+                    flat_pairs.append((ctx["claim"], passage))
+                    pair_owner.append(ci)
+
+            # Score all pairs in one batched pass
+            all_scores = score_nli_batch_all(encoder, flat_pairs)
+
+            # Group by citation and take the max entailment (and its contradiction)
+            best_for_citation = {}
+            for ci, (ent, con) in zip(pair_owner, all_scores):
+                if ci not in best_for_citation or ent > best_for_citation[ci][0]:
+                    best_for_citation[ci] = (ent, con)
+
+            # Apply the NLI tier with the best score per citation
+            for ci, ctx in eligible:
+                if ci in best_for_citation:
+                    best_ent, best_con = best_for_citation[ci]
+                    verdict = verdicts[ci]
+                    final, tier, new_score, notes = apply_nli_tier(
+                        verdict.status,
+                        list(verdict.notes),
+                        nli_score=best_ent,
+                        marker_locatable=ctx["marker_locatable"],
+                        evidence=verdict.evidence,
+                        contradiction=best_con,
+                    )
+                    verdicts[ci] = Verdict(
+                        citation_id=verdict.citation_id,
+                        url=verdict.url,
+                        status=final,
+                        tier_reached=tier,
+                        score=new_score,
+                        evidence=verdict.evidence,
+                        notes=notes,
+                    )
 
     return Report.from_verdicts(verdicts)
