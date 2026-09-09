@@ -1,0 +1,12 @@
+python	artifact	install	verify	result
+py3.10	wheel	0	FAIL	FAIL
+py3.11	wheel	0	PASS	PASS
+py3.12	wheel	0	PASS	PASS
+py3.10	sdist	0	FAIL	FAIL
+py3.11	sdist	0	PASS	PASS
+py3.12	sdist	0	PASS	PASS
+py3.11	wheel	0	PASS	PASS
+py3.12	wheel	0	PASS	PASS
+py3.10	sdist	0	PASS	PASS
+py3.11	sdist	0	PASS	PASS
+py3.12	sdist	0	PASS	PASS

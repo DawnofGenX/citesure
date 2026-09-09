@@ -1,0 +1,23 @@
+{
+  "n": 5,
+  "rows": [
+    {
+      "tier": "reachability-only",
+      "seconds": 0.062,
+      "delta_rss_mb": 0.0,
+      "verdicts": 5
+    },
+    {
+      "tier": "+overlap (tier2)",
+      "seconds": 0.092,
+      "delta_rss_mb": 0.0,
+      "verdicts": 5
+    },
+    {
+      "tier": "+NLI (tier3)",
+      "seconds": 0.433,
+      "delta_rss_mb": 21.2,
+      "verdicts": 5
+    }
+  ]
+}

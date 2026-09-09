@@ -1,0 +1,371 @@
+[
+  {
+    "id": "ind-001",
+    "category": "verbatim-supported",
+    "expected_status": "supported",
+    "labeler_confidence": "high",
+    "url": "https://docs.python.org/3/whatsnew/3.12.html",
+    "claim": "Python 3.12 was released on October 2, 2023.",
+    "notes": "Verbatim sentence from page intro. curl: HTTP 200; snippet 'Python 3.12 was released on October 2, 2023. For full details, see the changelog.'"
+  },
+  {
+    "id": "ind-002",
+    "category": "verbatim-supported",
+    "expected_status": "supported",
+    "labeler_confidence": "high",
+    "url": "https://docs.python.org/3/tutorial/introduction.html",
+    "claim": "Comments in Python start with the hash character, #, and extend to the end of the physical line.",
+    "notes": "Verbatim sentence from section 3 intro. curl: HTTP 200; snippet 'Comments in Python start with the hash character, #, and extend to the end of the physical line.'"
+  },
+  {
+    "id": "ind-003",
+    "category": "verbatim-supported",
+    "expected_status": "supported",
+    "labeler_confidence": "high",
+    "url": "https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API",
+    "claim": "The Fetch API provides an interface for fetching resources (including across the network).",
+    "notes": "Verbatim first sentence of MDN Fetch API page. curl: HTTP 200; snippet 'The Fetch API provides an interface for fetching resources (including across the network).'"
+  },
+  {
+    "id": "ind-004",
+    "category": "verbatim-supported",
+    "expected_status": "supported",
+    "labeler_confidence": "high",
+    "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON",
+    "claim": "JSON.parse() parses a piece of string text as JSON, optionally transforming the produced value and its properties, and returns the value.",
+    "notes": "Near-verbatim of MDN JSON.parse() description ('Parse a piece of string text as JSON, optionally transforming the produced value and its properties, and return the value'). curl: HTTP 200; snippet 'JSON.parse() - Parse a piece of string text as JSON'."
+  },
+  {
+    "id": "ind-005",
+    "category": "verbatim-supported",
+    "expected_status": "supported",
+    "labeler_confidence": "high",
+    "url": "https://www.nasa.gov/mission/apollo-11/",
+    "claim": "Apollo 11 launched on July 16, 1969, carrying Neil Armstrong, Michael Collins and Edwin \"Buzz\" Aldrin.",
+    "notes": "Verbatim from Mission Overview paragraph. curl: HTTP 200; snippet 'Apollo 11 launched on July 16, 1969, carrying Neil Armstrong, Michael Collins and Edwin \"Buzz\" Aldrin for the first crewed...'"
+  },
+  {
+    "id": "ind-006",
+    "category": "verbatim-supported",
+    "expected_status": "supported",
+    "labeler_confidence": "high",
+    "url": "https://arxiv.org/abs/1810.04805",
+    "claim": "BERT obtains new state-of-the-art results on eleven natural language processing tasks.",
+    "notes": "Verbatim clause from BERT abstract. curl: HTTP 200; snippet 'It obtains new state-of-the-art results on eleven natural language processing tasks'."
+  },
+  {
+    "id": "ind-007",
+    "category": "paraphrase-supported",
+    "expected_status": "supported",
+    "labeler_confidence": "high",
+    "url": "https://docs.python.org/3/whatsnew/3.12.html",
+    "claim": "The distutils package was removed from the standard library in Python 3.12.",
+    "notes": "Paraphrase of 'Of note, the distutils package has been removed from the standard library.' Same entities, different voice/tense. curl: HTTP 200."
+  },
+  {
+    "id": "ind-008",
+    "category": "paraphrase-supported",
+    "expected_status": "supported",
+    "labeler_confidence": "high",
+    "url": "https://arxiv.org/abs/1706.03762",
+    "claim": "The Transformer architecture relies entirely on attention mechanisms and drops recurrence and convolutions completely.",
+    "notes": "Paraphrase of 'based solely on attention mechanisms, dispensing with recurrence and convolutions entirely.' curl: HTTP 200."
+  },
+  {
+    "id": "ind-009",
+    "category": "paraphrase-supported",
+    "expected_status": "supported",
+    "labeler_confidence": "medium",
+    "url": "https://en.wikipedia.org/wiki/Apollo_11",
+    "claim": "Armstrong and Aldrin landed the lunar module Eagle in the Sea of Tranquility on July 20, 1969, while Collins stayed in lunar orbit aboard Columbia.",
+    "notes": "Paraphrase of 'descended to the surface aboard the LM Eagle, landing in the Sea of Tranquility ... on July 20 at 20:17 UTC while Collins remained in lunar orbit aboard the CM Columbia.' Medium confidence: long claim, some wording divergence."
+  },
+  {
+    "id": "ind-010",
+    "category": "paraphrase-supported",
+    "expected_status": "supported",
+    "labeler_confidence": "high",
+    "url": "https://docs.python.org/3/library/os.html",
+    "claim": "os.chdir changes the current working directory to the given path.",
+    "notes": "Paraphrase of 'os.chdir(path) - Change the current working directory to path.' curl: HTTP 200."
+  },
+  {
+    "id": "ind-011",
+    "category": "paraphrase-supported",
+    "expected_status": "supported",
+    "labeler_confidence": "medium",
+    "url": "https://en.wikipedia.org/wiki/Internet",
+    "claim": "The Internet is a global network of interconnected computer networks that communicate using the TCP/IP protocol suite.",
+    "notes": "Paraphrase of 'a system of globally connected computer networks that uses the Internet protocol suite (TCP/IP) to communicate between networks and devices.' Medium: wording diverges ('global network of networks')."
+  },
+  {
+    "id": "ind-012",
+    "category": "paraphrase-supported",
+    "expected_status": "supported",
+    "labeler_confidence": "high",
+    "url": "https://en.wikipedia.org/wiki/Python_(programming_language)",
+    "claim": "Guido van Rossum stepped back from leading Python in July 2018, announcing a permanent vacation from his role as BDFL.",
+    "notes": "Paraphrase of 'until 12 July 2018, when he announced his \"permanent vacation\" from responsibilities as Python's \"benevolent dictator for life\" (BDFL).' curl: HTTP 200."
+  },
+  {
+    "id": "ind-013",
+    "category": "numeric-detail-supported",
+    "expected_status": "supported",
+    "labeler_confidence": "high",
+    "url": "https://arxiv.org/abs/1706.03762",
+    "claim": "The Transformer achieved a BLEU score of 28.4 on the WMT 2014 English-to-German translation task.",
+    "notes": "Numeric detail from abstract: 'Our model achieves 28.4 BLEU on the WMT 2014 English-to-German translation task'. curl: HTTP 200."
+  },
+  {
+    "id": "ind-014",
+    "category": "numeric-detail-supported",
+    "expected_status": "supported",
+    "labeler_confidence": "high",
+    "url": "https://arxiv.org/abs/1706.03762",
+    "claim": "On WMT 2014 English-to-French, the Transformer set a single-model state-of-the-art BLEU of 41.8 after training for 3.5 days on eight GPUs.",
+    "notes": "Numeric detail from abstract: 'new single-model state-of-the-art BLEU score of 41.8 after training for 3.5 days on eight GPUs'. curl: HTTP 200."
+  },
+  {
+    "id": "ind-015",
+    "category": "numeric-detail-supported",
+    "expected_status": "supported",
+    "labeler_confidence": "high",
+    "url": "https://arxiv.org/abs/1810.04805",
+    "claim": "BERT pushed the GLUE score to 80.5%, an absolute improvement of 7.7 percentage points.",
+    "notes": "Numeric detail from abstract: 'pushing the GLUE score to 80.5% (7.7% point absolute improvement)'. curl: HTTP 200."
+  },
+  {
+    "id": "ind-016",
+    "category": "numeric-detail-supported",
+    "expected_status": "supported",
+    "labeler_confidence": "high",
+    "url": "https://en.wikipedia.org/wiki/Apollo_11",
+    "claim": "The Apollo 11 lunar EVA lasted 2 hours, 31 minutes, and 40 seconds.",
+    "notes": "Numeric detail from infobox: 'EVA duration | 2 hours, 31 minutes, 40 seconds'. curl: HTTP 200."
+  },
+  {
+    "id": "ind-017",
+    "category": "false-claim",
+    "expected_status": "unsupported",
+    "labeler_confidence": "high",
+    "url": "https://docs.python.org/3/whatsnew/3.12.html",
+    "claim": "Python 3.12 was released on March 15, 2024.",
+    "notes": "Page says released October 2, 2023; claim contradicts it. curl: HTTP 200."
+  },
+  {
+    "id": "ind-018",
+    "category": "false-claim",
+    "expected_status": "unsupported",
+    "labeler_confidence": "high",
+    "url": "https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API",
+    "claim": "The Fetch API is a deprecated replacement for XMLHttpRequest that browsers are removing.",
+    "notes": "Page says the opposite: 'a more powerful and flexible replacement for XMLHttpRequest' (i.e. the modern replacement, not deprecated). curl: HTTP 200."
+  },
+  {
+    "id": "ind-019",
+    "category": "false-claim",
+    "expected_status": "unsupported",
+    "labeler_confidence": "high",
+    "url": "https://arxiv.org/abs/1706.03762",
+    "claim": "The Transformer paper shows that recurrence is essential for state-of-the-art machine translation quality.",
+    "notes": "Abstract says the opposite: 'dispensing with recurrence and convolutions entirely'. curl: HTTP 200."
+  },
+  {
+    "id": "ind-020",
+    "category": "false-claim",
+    "expected_status": "unsupported",
+    "labeler_confidence": "high",
+    "url": "https://en.wikipedia.org/wiki/Python_(programming_language)",
+    "claim": "Python was designed by James Gosling and first appeared in 1995.",
+    "notes": "Page says designed by Guido van Rossum, first appeared 20 February 1991. Both name and date wrong. curl: HTTP 200."
+  },
+  {
+    "id": "ind-021",
+    "category": "false-claim",
+    "expected_status": "unsupported",
+    "labeler_confidence": "high",
+    "url": "https://www.nasa.gov/mission/apollo-11/",
+    "claim": "The primary objective of Apollo 11 was to build a permanent crewed base on the Moon.",
+    "notes": "Page says the objective was 'perform a crewed lunar landing and return to Earth'. curl: HTTP 200."
+  },
+  {
+    "id": "ind-022",
+    "category": "false-claim",
+    "expected_status": "unsupported",
+    "labeler_confidence": "medium",
+    "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON",
+    "claim": "JSON can be used as a constructor with the new operator in JavaScript.",
+    "notes": "Page says 'Unlike most global objects, JSON is not a constructor. You cannot use it with the new operator'. Medium: claim is a direct contradiction but shares many terms with the page."
+  },
+  {
+    "id": "ind-023",
+    "category": "negation-flip",
+    "expected_status": "unsupported",
+    "labeler_confidence": "high",
+    "url": "https://docs.python.org/3/whatsnew/3.12.html",
+    "claim": "Python 3.12 did not remove the distutils package from the standard library.",
+    "notes": "Negation flip of 'the distutils package has been removed from the standard library'. curl: HTTP 200."
+  },
+  {
+    "id": "ind-024",
+    "category": "negation-flip",
+    "expected_status": "unsupported",
+    "labeler_confidence": "high",
+    "url": "https://arxiv.org/abs/1706.03762",
+    "claim": "The Transformer does not dispense with recurrence and convolutions entirely.",
+    "notes": "Negation flip of 'dispensing with recurrence and convolutions entirely'. curl: HTTP 200."
+  },
+  {
+    "id": "ind-025",
+    "category": "negation-flip",
+    "expected_status": "unsupported",
+    "labeler_confidence": "high",
+    "url": "https://www.nasa.gov/mission/apollo-11/",
+    "claim": "Apollo 11 did not launch on July 16, 1969.",
+    "notes": "Negation flip of 'Apollo 11 launched on July 16, 1969'. curl: HTTP 200."
+  },
+  {
+    "id": "ind-026",
+    "category": "negation-flip",
+    "expected_status": "unsupported",
+    "labeler_confidence": "high",
+    "url": "https://en.wikipedia.org/wiki/Apollo_11",
+    "claim": "Armstrong did not become the first human to walk on the Moon during Apollo 11.",
+    "notes": "Negation flip of 'Armstrong became the first human to walk on the Moon approximately six hours after landing'. curl: HTTP 200."
+  },
+  {
+    "id": "ind-027",
+    "category": "negation-flip",
+    "expected_status": "unsupported",
+    "labeler_confidence": "high",
+    "url": "https://arxiv.org/abs/1810.04805",
+    "claim": "BERT does not obtain new state-of-the-art results on eleven natural language processing tasks.",
+    "notes": "Negation flip of 'It obtains new state-of-the-art results on eleven natural language processing tasks'. curl: HTTP 200."
+  },
+  {
+    "id": "ind-028",
+    "category": "entity-swap",
+    "expected_status": "unsupported",
+    "labeler_confidence": "high",
+    "url": "https://docs.python.org/3/whatsnew/3.12.html",
+    "claim": "Python 3.11 was released on October 2, 2023.",
+    "notes": "Entity swap: page says Python 3.12 was released October 2, 2023 (3.11 was Oct 2022). Right fact, wrong version number. curl: HTTP 200."
+  },
+  {
+    "id": "ind-029",
+    "category": "entity-swap",
+    "expected_status": "unsupported",
+    "labeler_confidence": "high",
+    "url": "https://en.wikipedia.org/wiki/Apollo_11",
+    "claim": "Armstrong and Aldrin descended to the surface aboard the LM Columbia, landing in the Sea of Tranquility on July 20 at 20:17 UTC.",
+    "notes": "Entity swap: LM was Eagle; Columbia was the command module. Page: 'descended to the surface aboard the LM Eagle ... while Collins remained in lunar orbit aboard the CM Columbia'. curl: HTTP 200."
+  },
+  {
+    "id": "ind-030",
+    "category": "entity-swap",
+    "expected_status": "unsupported",
+    "labeler_confidence": "high",
+    "url": "https://www.nasa.gov/mission/apollo-11/",
+    "claim": "Neil Armstrong joined NASA's predecessor, the NACA, as an aeronautical research scientist and pilot in 1965.",
+    "notes": "Entity swap (year): page says he joined NACA in 1955. curl: HTTP 200."
+  },
+  {
+    "id": "ind-031",
+    "category": "entity-swap",
+    "expected_status": "unsupported",
+    "labeler_confidence": "high",
+    "url": "https://arxiv.org/abs/1706.03762",
+    "claim": "Our model achieves 28.4 BLEU on the WMT 2014 English-to-French translation task.",
+    "notes": "Entity swap (task): 28.4 BLEU was English-to-German; English-to-French was 41.8. curl: HTTP 200."
+  },
+  {
+    "id": "ind-032",
+    "category": "entity-swap",
+    "expected_status": "unsupported",
+    "labeler_confidence": "high",
+    "url": "https://en.wikipedia.org/wiki/Python_(programming_language)",
+    "claim": "Van Rossum first released Python in 1991 as version 1.0.",
+    "notes": "Entity swap (version): page says 'first released it in 1991 as Python 0.9.0'. curl: HTTP 200."
+  },
+  {
+    "id": "ind-033",
+    "category": "partially-true-ambiguous",
+    "expected_status": "ambiguous",
+    "labeler_confidence": "medium",
+    "url": "https://docs.python.org/3/whatsnew/3.12.html",
+    "claim": "Python 3.12 was released on October 2, 2023, and it introduced a brand-new garbage collector written in Rust.",
+    "notes": "Partially true: release date is correct, but the 'garbage collector written in Rust' clause is fabricated (page never says this). A human reviewer would call this 'partially supported / cannot confirm' -> ambiguous. Medium confidence: depends on how much the fabricated clause dilutes overlap."
+  },
+  {
+    "id": "ind-034",
+    "category": "partially-true-ambiguous",
+    "expected_status": "ambiguous",
+    "labeler_confidence": "medium",
+    "url": "https://en.wikipedia.org/wiki/Apollo_11",
+    "claim": "Apollo 11 landed in the Sea of Tranquility on July 20, 1969, and the crew spent three full weeks walking on the lunar surface.",
+    "notes": "Partially true: landing site/date correct, but 'three full weeks' is false (surface time was ~2.5 hours). Mixed support -> ambiguous. Medium confidence."
+  },
+  {
+    "id": "ind-035",
+    "category": "partially-true-ambiguous",
+    "expected_status": "ambiguous",
+    "labeler_confidence": "medium",
+    "url": "https://arxiv.org/abs/1810.04805",
+    "claim": "BERT is a bidirectional encoder pre-trained on unlabeled text, and it was trained exclusively on Shakespeare's complete works.",
+    "notes": "Partially true: bidirectional/pre-trained/unlabeled-text all correct, but 'trained exclusively on Shakespeare's works' is fabricated. Mixed -> ambiguous. Medium confidence."
+  },
+  {
+    "id": "ind-036",
+    "category": "partially-true-ambiguous",
+    "expected_status": "ambiguous",
+    "labeler_confidence": "medium",
+    "url": "https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API",
+    "claim": "The Fetch API provides an interface for fetching resources across the network, and it requires a paid subscription to use.",
+    "notes": "Partially true: the fetching-interface clause is verbatim-correct, but 'requires a paid subscription' is fabricated. Mixed -> ambiguous. Medium confidence."
+  },
+  {
+    "id": "ind-037",
+    "category": "dead-link",
+    "expected_status": "unreachable",
+    "labeler_confidence": "high",
+    "url": "https://docs.python.org/3/library/nonexistent_module_zzz.html",
+    "claim": "The nonexistent_module_zzZ module provides utilities for quantum-safe hashing.",
+    "notes": "INTENTIONAL dead link: stable domain returns HTTP 404 for this path. curl: HTTP 404."
+  },
+  {
+    "id": "ind-038",
+    "category": "dead-link",
+    "expected_status": "unreachable",
+    "labeler_confidence": "high",
+    "url": "https://nonexistent-citesure-test-9x7q2z.com/dead-page",
+    "claim": "This test domain documents the history of the citesure citation verifier.",
+    "notes": "INTENTIONAL dead link: random unregistered domain, DNS resolution fails (NXDOMAIN). curl: exit 6 / 'Name or service not known'."
+  },
+  {
+    "id": "ind-039",
+    "category": "dead-link",
+    "expected_status": "unreachable",
+    "labeler_confidence": "high",
+    "url": "https://example.invalid/citesure-dead-link-1",
+    "claim": "The example.invalid host publishes RFC 2606 reserved-domain usage notes.",
+    "notes": "INTENTIONAL dead link: .invalid is a reserved TLD that never resolves (RFC 2606). curl: 'Name or service not known'."
+  },
+  {
+    "id": "ind-040",
+    "category": "paywalled",
+    "expected_status": "paywalled",
+    "labeler_confidence": "medium",
+    "url": "https://www.scmp.com/economy/china-economy/article/3355630/chinese-firms-overseas-expansion-fuelled-huge-government-subsidies-oecd-report",
+    "claim": "An OECD report found that huge government subsidies fuelled Chinese firms' overseas expansion.",
+    "notes": "SCMP metered-paywall article. curl: HTTP 200 + paywall marker ('isAccessibleForFree':False, .piano-metering__paywall-container); only lede extractable. Medium confidence: metered (not hard) paywall, and NOT NYT/WSJ (those bot-block our UA with 403/robots, so could not be honestly labeled paywalled)."
+  },
+  {
+    "id": "ind-041",
+    "category": "paywalled",
+    "expected_status": "paywalled",
+    "labeler_confidence": "medium",
+    "url": "https://www.scmp.com/economy/global-economy/article/3294204/china-hit-record-trade-barriers-2024-overcapacity-fears-spread-developing-world",
+    "claim": "China hit a record number of trade barriers in 2024 as overcapacity fears spread to the developing world.",
+    "notes": "SCMP metered-paywall article. curl: HTTP 200 + paywall marker ('isAccessibleForFree':False). Medium confidence: same caveats as ind-040."
+  }
+]
