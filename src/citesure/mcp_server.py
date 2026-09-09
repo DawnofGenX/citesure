@@ -66,11 +66,18 @@ ENV_NLI_ENABLED = "CITECHECK_NLI"
 ENV_NLI_MODEL = "CITECHECK_NLI_MODEL"
 
 
-def _nli_enabled() -> bool:
-    """True when the server was started with ``CITECHECK_NLI`` set truthy."""
-    return os.environ.get(ENV_NLI_ENABLED, "").strip().lower() in (
-        "1", "true", "yes", "on",
-    )
+def _nli_default() -> bool:
+    """Default NLI-tier state for the MCP server.
+
+    Returns True unless ``CITECHECK_NLI`` is explicitly set to a falsy
+    value (``0/false/no/off``). This makes NLI-on the safe default; the
+    env var is an explicit opt-out, and per-call ``use_nli`` can still
+    override.
+    """
+    val = os.environ.get(ENV_NLI_ENABLED, "").strip().lower()
+    if val in ("0", "false", "no", "off"):
+        return False
+    return True
 
 
 def _nli_model_name() -> str | None:
@@ -79,13 +86,15 @@ def _nli_model_name() -> str | None:
     return name or None
 
 
-async def _run_pipeline(citations: list[Any]) -> dict[str, Any]:
+async def _run_pipeline(
+    citations: list[Any], use_nli: bool = True
+) -> dict[str, Any]:
     """Run the full library pipeline and return the D3 report as a dict.
 
-    Tiers 1+2 always run; tier 3 (NLI) only when the server was started with
-    ``CITECHECK_NLI`` enabled. The NLI stack is imported lazily inside the
-    pipeline (see :mod:`citesure.nli`) — nothing heavy happens here unless
-    the tier is on.
+    Tiers 1+2 always run; tier 3 (NLI) only when ``use_nli`` is True
+    (per-call override; server-wide ``CITECHECK_NLI`` still governs the
+    default). The NLI stack is imported lazily inside the pipeline — nothing
+    heavy happens here unless the tier is on.
     """
     from .nli import NLIError
     from .reachability import verify_citations
@@ -94,7 +103,7 @@ async def _run_pipeline(citations: list[Any]) -> dict[str, Any]:
         report = await verify_citations(
             citations,
             use_overlap=True,
-            use_nli=_nli_enabled(),
+            use_nli=use_nli,
             nli_model=_nli_model_name(),
         )
     except NLIError as exc:
@@ -132,7 +141,9 @@ def build_server():
             "pass_rate, verdicts[]}. Bad input returns {'error': ...}."
         )
     )
-    async def verify_citations(citations: list[dict]) -> dict:
+    async def verify_citations(
+        citations: list[dict], use_nli: bool | None = None
+    ) -> dict:
         # Defensive: some clients send the list as a JSON string.
         data = citations
         if isinstance(data, str):
@@ -147,7 +158,7 @@ def build_server():
         if not cits:
             return {"error": "no citations to verify"}
         try:
-            return await _run_pipeline(cits)
+            return await _run_pipeline(cits, use_nli=use_nli if use_nli is not None else _nli_default())
         except Exception as exc:  # noqa: BLE001 - never crash the session
             return {"error": f"{type(exc).__name__}: {exc}"}
 
@@ -161,7 +172,9 @@ def build_server():
         )
     )
     async def verify_markdown(
-        markdown: str, url_map: dict[str, str] | None = None
+        markdown: str,
+        url_map: dict[str, str] | None = None,
+        use_nli: bool | None = None,
     ) -> dict:
         if not isinstance(markdown, str) or not markdown.strip():
             return {"error": "'markdown' must be a non-empty string"}
@@ -175,7 +188,7 @@ def build_server():
                 )
             }
         try:
-            return await _run_pipeline(cits)
+            return await _run_pipeline(cits, use_nli=use_nli if use_nli is not None else _nli_default())
         except Exception as exc:  # noqa: BLE001 - never crash the session
             return {"error": f"{type(exc).__name__}: {exc}"}
 

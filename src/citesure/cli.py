@@ -97,10 +97,21 @@ def _build_parser() -> argparse.ArgumentParser:
     v.add_argument(
         "--nli",
         action="store_true",
+        default=True,
         help=(
             "enable the NLI entailment tier (tier 3): a local cross-encoder "
             "scores each (claim, best-passage) pair. Lazy-downloads the "
-            "default model (~425 MB) into ~/.cache/citesure/ on first use."
+            "default model (~425 MB) into ~/.cache/citesure/ on first use. "
+            "(default: on; use --no-nli to disable)"
+        ),
+    )
+    v.add_argument(
+        "--no-nli",
+        action="store_false",
+        dest="nli",
+        help=(
+            "disable the NLI entailment tier; overlap-only verdicts cannot "
+            "detect negation or entity-swap claims."
         ),
     )
     v.add_argument(
@@ -132,6 +143,13 @@ def _cmd_verify(args: argparse.Namespace) -> int:
         )
     # --nli-model implies --nli (selecting a model means using the tier).
     use_nli = bool(args.nli or args.nli_model)
+    if not use_nli:
+        print(
+            "citesure: WARNING --no-nli disables the entailment tier; "
+            "overlap-only verdicts cannot detect negation or entity-swap claims "
+            "(see evals/EVAL_REPORT.md).",
+            file=sys.stderr,
+        )
 
     try:
         citations, meta = load_input(args.file)

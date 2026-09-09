@@ -55,7 +55,7 @@ def test_verify_sample_md_fails_high_threshold(tmp_path: Path):
 
 def test_verify_json_input(tmp_path: Path):
     proc = _run_cli(
-        "verify", str(SAMPLE_JSON), "--json", "--threshold", "0.5", cache_dir=tmp_path
+        "verify", str(SAMPLE_JSON), "--json", "--threshold", "0.5", "--no-nli", cache_dir=tmp_path
     )
     assert proc.returncode == 0, proc.stderr
     # 2 of 3 supported → pass_rate 0.6667 >= 0.5
@@ -84,7 +84,7 @@ def test_json_output_shape(tmp_path: Path):
         # Tier-2 overlap ran on the reachable pages; the dead URL stopped at
         # tier 1.
         if v["status"] == "supported":
-            assert v["tier_reached"] == 2
+            assert v["tier_reached"] == 3  # NLI now on by default
             assert v["score"] is not None
         else:
             assert v["tier_reached"] == 1

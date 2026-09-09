@@ -226,7 +226,13 @@ def get_nli_model(model_name: str | None = None) -> NLICrossEncoder:
 
     _configure_threads()
     cache_dir = _cache_dir()
-    cache_dir.mkdir(parents=True, exist_ok=True)
+    try:
+        cache_dir.mkdir(parents=True, exist_ok=True)
+    except OSError:
+        # Cache dir is not writable (e.g. read-only filesystem). Fall back to
+        # a temp dir so the model still loads; caching just won't persist.
+        import tempfile
+        cache_dir = Path(tempfile.mkdtemp(prefix="citesure-hf-"))
 
     local = _is_local_path(name)
     try:
