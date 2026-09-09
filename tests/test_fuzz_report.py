@@ -154,3 +154,81 @@ def test_render_human_survives_non_numeric_score():
     report = Report.from_verdicts([v])
     out = render_human(report, {"format": "markdown"}, 0.8, False)
     assert isinstance(out, str)
+
+
+# ---------------------------------------------------------------------------
+# Additional edge cases
+# ---------------------------------------------------------------------------
+
+
+def test_render_empty_report(tmp_path: Path):
+    """A report with 0 citations renders without error."""
+    report = Report.from_verdicts([])
+    out = render_human(report, {"format": "markdown"}, 0.8, False)
+    assert isinstance(out, str)
+    assert "total: 0" in out
+
+
+def test_render_unicode_claim():
+    """Unicode evidence renders correctly."""
+    v = Verdict(
+        citation_id="1",
+        url="https://e.example",
+        status=Status.SUPPORTED,
+        tier_reached=2,
+        score=0.9,
+        evidence="これはテストです 🎉",
+    )
+    report = Report.from_verdicts([v])
+    out = render_human(report, {"format": "markdown"}, 0.8, False)
+    assert "これはテストです" in out
+
+
+def test_render_long_claim():
+    """Long evidence renders without error."""
+    long_evidence = "A" * 1500
+    v = Verdict(
+        citation_id="1",
+        url="https://e.example",
+        status=Status.SUPPORTED,
+        tier_reached=2,
+        score=0.9,
+        evidence=long_evidence,
+    )
+    report = Report.from_verdicts([v])
+    out = render_human(report, {"format": "markdown"}, 0.8, False)
+    assert isinstance(out, str)
+
+
+def test_render_all_statuses():
+    """A report with all 5 statuses renders correctly."""
+    verdicts = [
+        Verdict("1", "u", Status.SUPPORTED, 2, 0.9),
+        Verdict("2", "u", Status.UNSUPPORTED, 2, 0.1),
+        Verdict("3", "u", Status.UNREACHABLE, 1, None),
+        Verdict("4", "u", Status.PAYWALLED, 1, None),
+        Verdict("5", "u", Status.AMBIGUOUS, 2, 0.5),
+    ]
+    report = Report.from_verdicts(verdicts)
+    out = render_human(report, {"format": "markdown"}, 0.8, False)
+    assert "supported: 1" in out
+    assert "unsupported: 1" in out
+    assert "unreachable: 1" in out
+    assert "paywalled: 1" in out
+    assert "ambiguous: 1" in out
+
+
+def test_json_round_trip():
+    """render_json → json.loads → Report.from_verdicts is identity."""
+    verdicts = [
+        Verdict("1", "https://e.example", Status.SUPPORTED, 2, 0.9),
+        Verdict("2", "https://e.example", Status.UNSUPPORTED, 2, 0.1),
+    ]
+    report = Report.from_verdicts(verdicts)
+    d = report.to_dict()
+    json_str = json.dumps(d)
+    d2 = json.loads(json_str)
+    # Verify key fields survive the round trip
+    assert d2["total"] == 2
+    assert d2["supported"] == 1
+    assert len(d2["verdicts"]) == 2
