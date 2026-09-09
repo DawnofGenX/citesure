@@ -25,10 +25,11 @@ import json
 import os
 import re
 import time
+import weakref
 from dataclasses import dataclass, field
 from pathlib import Path
 from urllib import robotparser
-from urllib.parse import urlparse
+from urllib.parse import urlparse, urlunparse
 
 import httpx
 import trafilatura
@@ -116,8 +117,26 @@ class FetchedPage:
 # ---------------------------------------------------------------------------
 
 
+def _normalize_url(url: str) -> str:
+    """Canonicalize a URL for cache-keying (BUG-5).
+
+    Scheme and host are case-insensitive per RFC 3986; path/query/fragment
+    are preserved verbatim. Without this, ``http://X`` and ``HTTP://x`` hash
+    to different keys and miss each other's cache entries.
+    """
+    try:
+        p = urlparse(url)
+    except ValueError:
+        return url
+    return urlunparse(
+        (p.scheme.lower(), p.netloc.lower(), p.path, p.params, p.query, p.fragment)
+    )
+
+
 def _cache_key(url: str, etag: str | None) -> str:
-    digest = hashlib.sha256(f"{url}|{etag or ''}".encode("utf-8")).hexdigest()[:40]
+    digest = hashlib.sha256(
+        f"{_normalize_url(url)}|{etag or ''}".encode("utf-8")
+    ).hexdigest()[:40]
     return f"{digest}.json"
 
 
@@ -200,7 +219,13 @@ def _local_path_for(url: str) -> Path | None:
         return Path(urlparse(url).path)
     if "://" in url:
         return None
-    p = Path(url).expanduser()
+    # ``expanduser()`` raises ``RuntimeError`` for ``~unknown-user`` paths
+    # (no such user). Treat those as "not a local path" rather than crashing.
+    # See BUG-6.
+    try:
+        p = Path(url).expanduser()
+    except (RuntimeError, ValueError):
+        return None
     return p if p.is_absolute() or p.exists() else None
 
 
@@ -245,40 +270,91 @@ def _extract_text(raw_html: str) -> str:
 # HTTP fetch
 # ---------------------------------------------------------------------------
 
-_semaphore: asyncio.Semaphore | None = None
+_semaphores: "weakref.WeakKeyDictionary[asyncio.AbstractEventLoop, asyncio.Semaphore]" = (
+    weakref.WeakKeyDictionary()
+)
 
 
 def _get_semaphore() -> asyncio.Semaphore:
-    global _semaphore
-    if _semaphore is None:
-        _semaphore = asyncio.Semaphore(MAX_CONCURRENT)
-    return _semaphore
+    """Return the concurrency-limiting semaphore *for the running loop*.
+
+    A single module-global ``asyncio.Semaphore`` is bound to whichever event
+    loop first created it; reusing it from a second loop deadlocks (its
+    internal futures are tied to the first, now-closed loop). Keying the
+    semaphore by the running loop keeps one limiter per loop, so nested or
+    parallel ``asyncio.run`` calls (thread pools, repeated CLI invocations,
+    MCP tool calls) each get a working limiter. The mapping is a
+    ``WeakKeyDictionary`` so closed loops (e.g. one per MCP tool call) do not
+    accumulate. See BUG-7.
+    """
+    loop = asyncio.get_running_loop()
+    sem = _semaphores.get(loop)
+    if sem is None:
+        sem = asyncio.Semaphore(MAX_CONCURRENT)
+        _semaphores[loop] = sem
+    return sem
+
+
+def _parse_retry_after(value: str | None) -> float | None:
+    """Parse a ``Retry-After`` header (delta-seconds form) into a delay.
+
+    Only integer-second values are honored; HTTP-date forms and garbage
+    fall back to ``None`` (caller uses exponential backoff). Capped at 30 s
+    so a hostile header cannot stall a fetch indefinitely. See BUG-4.
+    """
+    if not value:
+        return None
+    try:
+        secs = float(value.strip())
+    except ValueError:
+        return None
+    if secs < 0:
+        return None
+    return min(secs, 30.0)
+
+
+_RETRYABLE_STATUS = {429, 503}
 
 
 async def _http_get(client: httpx.AsyncClient, url: str) -> FetchedPage:
-    """GET ``url`` with 2 retries and exponential backoff (0.5 s, 1.5 s)."""
+    """GET ``url`` with retries and exponential backoff (0.5 s, 1.5 s).
+
+    Transient transport errors (timeout, connection reset) and rate-limit /
+    service-unavailable responses (429/503) are retried; 429 honors the
+    server's ``Retry-After`` header when present (BUG-4). Other HTTP errors
+    (404, 403, ...) are returned immediately as failed pages.
+    """
     last_error: str | None = None
     for attempt in range(MAX_RETRIES + 1):
         try:
             resp = await client.get(url, timeout=REQUEST_TIMEOUT)
-            raw = resp.content.decode("utf-8", errors="replace")
-            etag = resp.headers.get("etag")
-            text = _extract_text(raw)
-            return FetchedPage(
-                url=url,
-                ok=resp.status_code < 400,
-                status_code=resp.status_code,
-                text=text,
-                html=raw,
-                etag=etag,
-                error=None if resp.status_code < 400 else f"HTTP {resp.status_code}",
-                paywall_detected=detect_paywall(raw),
-                retraction_detected=detect_retraction(raw),
-            )
         except (httpx.TimeoutException, httpx.TransportError) as exc:
             last_error = f"{type(exc).__name__}: {exc}"
             if attempt < MAX_RETRIES:
                 await asyncio.sleep(RETRY_BACKOFFS[attempt])
+            continue
+        raw = resp.content.decode("utf-8", errors="replace")
+        etag = resp.headers.get("etag")
+        text = _extract_text(raw)
+        page = FetchedPage(
+            url=url,
+            ok=resp.status_code < 400,
+            status_code=resp.status_code,
+            text=text,
+            html=raw,
+            etag=etag,
+            error=None if resp.status_code < 400 else f"HTTP {resp.status_code}",
+            paywall_detected=detect_paywall(raw),
+            retraction_detected=detect_retraction(raw),
+        )
+        if resp.status_code in _RETRYABLE_STATUS and attempt < MAX_RETRIES:
+            delay = _parse_retry_after(resp.headers.get("retry-after"))
+            if delay is None:
+                delay = RETRY_BACKOFFS[attempt]
+            last_error = f"HTTP {resp.status_code} (retried)"
+            await asyncio.sleep(delay)
+            continue
+        return page
     return FetchedPage(url=url, ok=False, error=last_error)
 
 
@@ -291,7 +367,35 @@ async def fetch(url: str) -> FetchedPage:
 
     The disk cache is consulted for *all* URL kinds (including local files)
     so repeated runs stay fast and offline-friendly.
+
+    Malformed URLs (NUL bytes, broken IPv6 literals, ...) are rejected up
+    front as a failed :class:`FetchedPage` instead of escaping as
+    ``ValueError`` / ``httpx.InvalidURL``. See BUG-1 / BUG-2.
     """
+    if not isinstance(url, str) or "\x00" in url:
+        return FetchedPage(
+            url=url if isinstance(url, str) else repr(url),
+            ok=False,
+            error="invalid URL: NUL byte or non-string input",
+        )
+    try:
+        parsed = urlparse(url)
+    except ValueError as exc:
+        return FetchedPage(url=url, ok=False, error=f"invalid URL: {exc}")
+    # urlparse accepts most garbage, but httpx rejects e.g. IPv6 literals
+    # missing brackets or ports that are not numeric. Validate early so the
+    # failure is a clean FetchedPage, not an exception out of fetch().
+    try:
+        httpx.URL(url)
+    except httpx.InvalidURL as exc:
+        return FetchedPage(url=url, ok=False, error=f"invalid URL: {exc}")
+    if parsed.scheme not in ("", "file", "http", "https"):
+        return FetchedPage(
+            url=url,
+            ok=False,
+            error=f"unsupported URL scheme: {parsed.scheme!r}",
+        )
+
     cached = _cache_lookup_by_url(url)
     if cached is not None:
         return cached
@@ -328,12 +432,13 @@ def _cache_lookup_by_url(url: str) -> FetchedPage | None:
     if not root.is_dir():
         return None
     now = time.time()
+    norm_url = _normalize_url(url)
     for entry in root.glob("*.json"):
         try:
             data = json.loads(entry.read_text(encoding="utf-8"))
         except (OSError, json.JSONDecodeError):
             continue
-        if data.get("url") != url:
+        if _normalize_url(data.get("url", "")) != norm_url:
             continue
         if now - float(data.get("ts", 0)) > CACHE_TTL_SECONDS:
             continue
