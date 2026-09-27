@@ -382,3 +382,84 @@ def test_context_expansion_caps_at_512():
     result = expand_context(passage, sentences, passage_idx=1, radius=1)
     # Expansion would be 300+200+300 = 800 > 512, so returns original passage
     assert result == passage
+
+
+def test_anaphoric_sentence_includes_antecedent():
+    """Passage starting with anaphoric reference should include antecedent sentence."""
+    text = (
+        "BERT is a bidirectional encoder pre-trained on unlabeled text. "
+        "It obtains new state-of-the-art results on eleven natural language processing tasks. "
+        "The model was trained on large corpora."
+    )
+    passages = segment_passages(text)
+    # The passage containing "It obtains" should also contain "BERT"
+    it_passage = [p for p in passages if "It obtains" in p]
+    assert len(it_passage) == 1
+    assert "BERT" in it_passage[0]
+
+
+def test_anaphoric_sentence_includes_antecedent():
+    """Passage starting with anaphoric reference should include antecedent sentence.
+
+    When a sentence starts with a pronoun (it, he, she, they, this, that, etc.)
+    and the previous sentence is in a different passage, the passage should
+    be expanded to include the antecedent for NLI pronoun resolution.
+    """
+    # Long antecedent forces the anaphoric sentence into a separate passage
+    antecedent = (
+        "BERT is a bidirectional encoder pre-trained on unlabeled text "
+        "and uses a transformer architecture with attention mechanisms "
+        "that was introduced in 2018 by researchers at Google AI Language "
+        "and has since become one of the most widely used natural language "
+        "processing models in the world with many applications including "
+        "question answering named entity recognition text classification "
+        "sentiment analysis and machine translation tasks across many "
+        "domains and languages"
+    )
+    anaphoric = "It obtains new state-of-the-art results on eleven natural language processing tasks."
+    text = antecedent + " " + anaphoric
+
+    passages = segment_passages(text)
+
+    # Find the passage containing the anaphoric sentence
+    anaphoric_passages = [p for p in passages if "It obtains" in p]
+    assert len(anaphoric_passages) == 1, f"Expected 1 passage with anaphoric, got {len(anaphoric_passages)}"
+
+    # The anaphoric passage must include the antecedent "BERT"
+    assert "BERT" in anaphoric_passages[0], (
+        f"Anaphoric passage missing antecedent. Got: {anaphoric_passages[0][:100]}"
+    )
+
+
+def test_anaphoric_sentence_includes_antecedent():
+    """Passage starting with anaphoric reference should include antecedent sentence.
+
+    When a sentence starts with a pronoun (it, he, she, they, this, that, etc.)
+    and the previous sentence is in a different passage, the passage should
+    be expanded to include the antecedent for NLI pronoun resolution.
+    """
+    # Long antecedent (466 chars > PASSAGE_MAX_CHARS=400) forces the
+    # anaphoric sentence into a separate passage
+    antecedent = (
+        "BERT is a bidirectional encoder pre-trained on unlabeled text "
+        "and uses a transformer architecture with attention mechanisms "
+        "that was introduced in 2018 by researchers at Google AI Language "
+        "and has since become one of the most widely used natural language "
+        "processing models in the world with many applications including "
+        "question answering named entity recognition text classification "
+        "sentiment analysis and machine translation tasks across many "
+        "domains and languages."
+    )
+    anaphoric = "It obtains new state-of-the-art results on eleven natural language processing tasks."
+    text = antecedent + " " + anaphoric
+
+    passages = segment_passages(text)
+
+    # Find the passage containing the anaphoric sentence
+    anaphoric_passages = [p for p in passages if "It obtains" in p]
+    assert len(anaphoric_passages) == 1, f"Expected 1 passage with anaphoric, got {len(anaphoric_passages)}"
+
+    # The anaphoric passage must include the antecedent "BERT"
+    assert "BERT" in anaphoric_passages[0], (
+        f"Anaphoric passage missing antecedent. Got: {anaphoric_passages[0][:100]}"
+    )

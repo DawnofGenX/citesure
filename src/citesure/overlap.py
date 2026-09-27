@@ -179,13 +179,21 @@ def term_weights(text: str) -> dict[str, float]:
 # ---------------------------------------------------------------------------
 
 
+_ANAPHORIC_STARTS = frozenset({
+    "it", "he", "she", "they", "this", "that", "these", "those",
+    "our", "their", "his", "her", "its",
+})
+
+
 def segment_passages(text: str) -> list[str]:
     """Split extracted page text into short-paragraph passages.
 
     Consecutive sentences are grouped until the group would exceed
     ``PASSAGE_MAX_CHARS``; a leftover fragment shorter than
     ``PASSAGE_MIN_CHARS`` is merged into the previous passage (or kept as a
-    lone passage if there is no previous one). Deterministic.
+    lone passage if there is no previous one). When a sentence starts with
+    an anaphoric reference (pronoun/determiner), the previous sentence is
+    prepended to provide antecedent context for NLI. Deterministic.
     """
     flat = re.sub(r"\s+", " ", text or "").strip()
     if not flat:
@@ -193,7 +201,11 @@ def segment_passages(text: str) -> list[str]:
     sentences = [s.strip() for s in _SENTENCE_BOUNDARY_RE.split(flat) if s.strip()]
     passages: list[str] = []
     buf = ""
-    for sent in sentences:
+    for i, sent in enumerate(sentences):
+        # Prepend antecedent for anaphoric sentence starts
+        first_word = sent.split()[0].lower() if sent.split() else ""
+        if first_word in _ANAPHORIC_STARTS and i > 0:
+            sent = sentences[i - 1] + " " + sent
         if buf and len(buf) + 1 + len(sent) > PASSAGE_MAX_CHARS:
             passages.append(buf)
             buf = sent
