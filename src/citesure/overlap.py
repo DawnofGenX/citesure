@@ -289,6 +289,29 @@ def _clip_snippet(text: str) -> str:
     return text[: SNIPPET_MAX_CHARS - 1].rstrip() + "…"
 
 
+def clip_passage_for_nli(
+    claim: str, passage: str, max_sentences: int = 2
+) -> str:
+    """Clip a long passage to the sentence(s) with highest term overlap.
+
+    When a passage contains multiple sentences, NLI scoring can be diluted
+    by irrelevant context. This function selects the most relevant sentences
+    for the claim and returns them in original order.
+    """
+    sentences = [s.strip() for s in _SENTENCE_BOUNDARY_RE.split(passage.strip()) if s.strip()]
+    if len(sentences) <= max_sentences:
+        return passage
+    claim_terms = content_terms(clean_claim(claim))
+    scored = []
+    for i, sent in enumerate(sentences):
+        sent_terms = content_terms(sent)
+        overlap = len(claim_terms & sent_terms) / max(len(claim_terms), 1)
+        scored.append((overlap, i, sent))
+    scored.sort(key=lambda t: -t[0])
+    top = sorted(scored[:max_sentences], key=lambda t: t[1])
+    return " ".join(s for _, _, s in top)
+
+
 def rank_passages(
     claim: str, passages: list[str], top_k: int = DEFAULT_TOP_K
 ) -> list[tuple[float, str]]:
@@ -464,7 +487,9 @@ async def verify_citations(
                     # IMP-2: expand passage with adjacent sentences for
                     # pronoun resolution ("It obtains SOTA" → "BERT ... It ...")
                     expanded = expand_passage_in_text(passage, target_text, radius=1)
-                    flat_pairs.append((ctx["claim"], expanded))
+                    # Clip long passages to relevant sentences before NLI
+                    clipped = clip_passage_for_nli(ctx["claim"], expanded)
+                    flat_pairs.append((ctx["claim"], clipped))
                     pair_owner.append(ci)
 
             # Score all pairs in one batched pass

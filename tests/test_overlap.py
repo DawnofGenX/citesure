@@ -463,3 +463,21 @@ def test_anaphoric_sentence_includes_antecedent():
     assert "BERT" in anaphoric_passages[0], (
         f"Anaphoric passage missing antecedent. Got: {anaphoric_passages[0][:100]}"
     )
+
+
+def test_clip_passage_for_nli_selects_relevant_sentences():
+    """Long passage should be clipped to sentences with highest term overlap."""
+    from citesure.overlap import clip_passage_for_nli
+
+    claim = "Comments in Python start with the hash character, #, and extend to the end of the physical line."
+    long_passage = (
+        "Many of the examples in this manual, even those entered at the interactive prompt, include comments. "
+        "Comments in Python start with the hash character, #, and extend to the end of the physical line. "
+        "A comment may appear at the start of a line or following whitespace or code, but not within a string literal."
+    )
+    clipped = clip_passage_for_nli(claim, long_passage)
+    # The clipped passage should contain the claim sentence
+    assert "Comments in Python start" in clipped
+    # The clipped passage should NOT contain the irrelevant first sentence
+    # (only shares "comments" with the claim, lowest term overlap)
+    assert "Many of the examples" not in clipped
