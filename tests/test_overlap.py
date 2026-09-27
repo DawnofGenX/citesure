@@ -481,3 +481,4 @@ def test_clip_passage_for_nli_selects_relevant_sentences():
     # The clipped passage should NOT contain the irrelevant first sentence
     # (only shares "comments" with the claim, lowest term overlap)
     assert "Many of the examples" not in clipped
+

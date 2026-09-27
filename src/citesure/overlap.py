@@ -484,12 +484,12 @@ async def verify_citations(
             for ci, ctx in eligible:
                 target_text = ctx.get("target_text", "")
                 for passage in ctx.get("passages", [ctx["passage"]]):
+                    # Clip long passages to relevant sentences before expansion
+                    clipped = clip_passage_for_nli(ctx["claim"], passage)
                     # IMP-2: expand passage with adjacent sentences for
                     # pronoun resolution ("It obtains SOTA" → "BERT ... It ...")
-                    expanded = expand_passage_in_text(passage, target_text, radius=1)
-                    # Clip long passages to relevant sentences before NLI
-                    clipped = clip_passage_for_nli(ctx["claim"], expanded)
-                    flat_pairs.append((ctx["claim"], clipped))
+                    expanded = expand_passage_in_text(clipped, target_text, radius=1)
+                    flat_pairs.append((ctx["claim"], expanded))
                     pair_owner.append(ci)
 
             # Score all pairs in one batched pass

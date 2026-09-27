@@ -252,6 +252,67 @@ def _fetch_local(url: str, path: Path) -> FetchedPage:
     )
 
 
+#: One pipe-table row: ``| key | value |`` (trafilatura renders Wikipedia
+#: infobox/spec tables as pipe-delimited rows rather than prose).
+_TABLE_ROW_RE = re.compile(r"\|\s*([^|\n]+?)\s*\|\s*([^|\n]+?)\s*\|")
+
+
+def _normalize_table_markup(text: str) -> str:
+    """Rewrite pipe-table rows into prose so NLI can read them.
+
+    trafilatura emits Wikipedia infobox rows as ``| Key | Value |`` with no
+    sentence structure. A cross-encoder asked whether a natural-language claim
+    is entailed by ``| EVA duration | 2 hours, 31 minutes, 40 seconds |``
+    scores ~0.001: there is no proposition to match against. Rewriting each
+    populated row as ``"Key was Value."`` restores a sentence, but the row
+    still carries **no subject**, so the model has nothing to bind the claim's
+    entity to. Measured on the same row:
+
+    =======================================  ========
+    premise                                  entail
+    =======================================  ========
+    ``EVA duration was 2 hours, ...``            0.0006
+    ``Apollo 11 EVA duration was 2 hours, ...``  0.0437
+    ``Apollo 11. EVA duration was 2 hours, ...`` 0.9415
+    =======================================  ========
+
+    So the table's subject (its single-cell title row, e.g. ``| Apollo 11 |``)
+    is emitted as a standalone sentence *before* the rows that follow it, and
+    stays in scope until a new subject row appears. Rows whose value cell is
+    empty (spacers/headers) are dropped so no dangling ``"Key was ."`` is
+    produced. Prose without pipes is returned unchanged.
+    """
+    if not text or "|" not in text:
+        return text
+
+    out: list[str] = []
+    pos = 0
+    subject = ""
+    # Match a whole pipe-table row (any number of cells), so empty-value
+    # spacer rows can be consumed and discarded rather than left as raw pipes.
+    row_re = re.compile(r"(?:\|[^\n|]*)+\s*")
+    for m in row_re.finditer(text):
+        row = m.group()
+        cells = [c.strip() for c in row.strip().strip("|").split("|")]
+        cells = [c for c in cells if c]
+        # Skip pure separator rows (---, :::).
+        if not cells or all(set(c) <= {"-", ":"} for c in cells):
+            pos = m.end()
+            continue
+        out.append(text[pos : m.start()])
+        if len(cells) == 1:
+            # Single-cell row = table title / section subject. Emitted as its
+            # own sentence so the model can bind the claim's entity to it, and
+            # so downstream sentence-level selection can see a boundary.
+            subject = cells[0]
+            out.append(f"{subject}. ")
+        else:
+            out.append(f"{cells[0]} was {cells[1]}. ")
+        pos = m.end()
+    out.append(text[pos:])
+    return "".join(out)
+
+
 def _extract_text(raw_html: str) -> str:
     """trafilatura HTML→clean text with a raw-text fallback."""
     try:
@@ -259,7 +320,7 @@ def _extract_text(raw_html: str) -> str:
     except Exception:
         extracted = None
     if extracted:
-        return extracted.strip()
+        return _normalize_table_markup(extracted).strip()
     # Fallback: strip tags crudely so we still have *some* text.
     stripped = re.sub(r"(?is)<(script|style)[^>]*>.*?</\1>", " ", raw_html)
     stripped = re.sub(r"(?s)<[^>]+>", " ", stripped)

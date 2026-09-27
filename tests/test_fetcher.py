@@ -331,3 +331,27 @@ def test_concurrent_fetches_are_isolated(tmp_path: Path, monkeypatch: pytest.Mon
     # Each URL should have its own cache entry
     cache_entries = list((tmp_path / "cache").glob("*.json"))
     assert len(cache_entries) == 3
+
+
+def test_normalize_table_markup_converts_rows_to_prose():
+    """Table markup rows should be converted to natural-language sentences."""
+    from citesure.fetcher import _normalize_table_markup
+
+    raw = (
+        "| Mission duration | 8 days, 3 hours, 18 minutes, 35 seconds | \n"
+        "| EVA duration | 2 hours, 31 minutes, 40 seconds | \n"
+        "| Docking with Lunar module |  | \n"
+    )
+    out = _normalize_table_markup(raw)
+    assert "EVA duration" in out
+    assert "2 hours, 31 minutes, 40 seconds" in out
+    # Rows with an empty value cell must not produce dangling fragments
+    assert "Docking with Lunar module |" not in out
+
+
+def test_normalize_table_markup_preserves_non_table_text():
+    """Prose must be left untouched by the table normalizer."""
+    from citesure.fetcher import _normalize_table_markup
+
+    prose = "Armstrong became the first human to walk on the Moon."
+    assert _normalize_table_markup(prose) == prose
