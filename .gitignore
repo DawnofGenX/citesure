@@ -7,3 +7,6 @@ build/
 dist/
 .pytest_cache/
 .hermes/
+
+# fetched third-party page snapshots used for eval-set authoring (regenerable)
+evals/page_text/

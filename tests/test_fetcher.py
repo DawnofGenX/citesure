@@ -98,10 +98,30 @@ def test_detect_paywall_positive(html: str):
         "<p>Python 3.12 was released on October 2, 2023.</p>",
         "",
         None,
+        # A form posting to a URL that merely CONTAINS "auth"/"sign" as a
+        # substring is not a login form. Both of these are real pages seen
+        # in the wild being falsely flagged paywalled (rfc2616, Wikipedia
+        # author tools), which silently misclassifies free content.
+        '<form class="form-horizontal diff-form" action="https://author-tools.ietf.org/iddiff">',
+        '<form action="/author" method="get">',
+        '<form action="https://example.com/design/feedback" method="post">',
     ],
 )
 def test_detect_paywall_negative(html):
     assert detect_paywall(html) is False
+
+
+@pytest.mark.parametrize(
+    "html",
+    [
+        '<form action="/signin" method="post">',
+        '<form class="x" action="https://site.com/auth/login">',
+        '<form action="/user/login/">',
+    ],
+)
+def test_detect_paywall_matches_real_login_forms(html: str):
+    """Guarding the path-boundary fix: genuine login forms must still match."""
+    assert detect_paywall(html) is True
 
 
 @pytest.mark.parametrize(

@@ -1,0 +1,48 @@
+[
+  { "url": "https://docs.python.org/3/library/os.path.html", "domain_group": "python-docs", "topic": "os.path filesystem operations", "notes": "stable reference page; no JS-rendered content" },
+  { "url": "https://docs.python.org/3/library/json.html", "domain_group": "python-docs", "topic": "json serialization", "notes": "stable reference page" },
+  { "url": "https://docs.python.org/3/library/datetime.html", "domain_group": "python-docs", "topic": "datetime module", "notes": "stable reference page" },
+  { "url": "https://docs.python.org/3/library/itertools.html", "domain_group": "python-docs", "topic": "itertools module", "notes": "stable reference page" },
+  { "url": "https://docs.python.org/3/library/collections.html", "domain_group": "python-docs", "topic": "collections module", "notes": "stable reference page" },
+  { "url": "https://docs.python.org/3/library/asyncio-task.html", "domain_group": "python-docs", "topic": "asyncio tasks", "notes": "stable reference page" },
+
+  { "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map", "domain_group": "mdn", "topic": "JavaScript Map object", "notes": "stable reference page" },
+  { "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise", "domain_group": "mdn", "topic": "JavaScript Promise", "notes": "stable reference page" },
+  { "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array", "domain_group": "mdn", "topic": "JavaScript Array", "notes": "stable reference page" },
+  { "url": "https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage", "domain_group": "mdn", "topic": "Web Storage localStorage", "notes": "stable reference page" },
+  { "url": "https://developer.mozilla.org/en-US/docs/Web/CSS/color", "domain_group": "mdn", "topic": "CSS color", "notes": "stable reference page" },
+
+  { "url": "https://en.wikipedia.org/wiki/Alan_Turing", "domain_group": "wikipedia", "topic": "Alan Turing biography", "notes": "new article, not in v1" },
+  { "url": "https://en.wikipedia.org/wiki/Marie_Curie", "domain_group": "wikipedia", "topic": "Marie Curie biography", "notes": "new article, not in v1" },
+  { "url": "https://en.wikipedia.org/wiki/Mount_Everest", "domain_group": "wikipedia", "topic": "Mount Everest geography", "notes": "new article, not in v1" },
+  { "url": "https://en.wikipedia.org/wiki/Periodic_table", "domain_group": "wikipedia", "topic": "Periodic table of elements", "notes": "new article, not in v1" },
+  { "url": "https://en.wikipedia.org/wiki/Black_hole", "domain_group": "wikipedia", "topic": "Black hole astrophysics", "notes": "new article, not in v1" },
+  { "url": "https://en.wikipedia.org/wiki/Steam_engine", "domain_group": "wikipedia", "topic": "Steam engine history", "notes": "new article, not in v1" },
+  { "url": "https://en.wikipedia.org/wiki/Photosynthesis", "domain_group": "wikipedia", "topic": "Photosynthesis biology", "notes": "new article, not in v1" },
+
+  { "url": "https://arxiv.org/abs/1512.03385", "domain_group": "arxiv", "topic": "ResNet deep residual learning", "notes": "new paper, not in v1" },
+  { "url": "https://arxiv.org/abs/1412.6980", "domain_group": "arxiv", "topic": "Adam optimizer", "notes": "new paper, not in v1" },
+  { "url": "https://arxiv.org/abs/1308.0853", "domain_group": "arxiv", "topic": "Efficient estimation word vectors", "notes": "new paper, not in v1" },
+  { "url": "https://arxiv.org/abs/2005.11401", "domain_group": "arxiv", "topic": "Dense passage retrieval", "notes": "new paper, not in v1" },
+
+  { "url": "https://datatracker.ietf.org/doc/html/rfc2616", "domain_group": "standards", "topic": "HTTP/1.1 specification", "notes": "stable standards document" },
+  { "url": "https://www.rfc-editor.org/rfc/rfc793.html", "domain_group": "standards", "topic": "TCP specification", "notes": "stable standards document" },
+  { "url": "https://tc39.es/ecma262/", "domain_group": "standards", "topic": "ECMAScript language specification", "notes": "stable standards document" },
+
+  { "url": "https://science.nasa.gov/mars/", "domain_group": "gov-science", "topic": "Mars exploration", "notes": "stable gov science page" },
+  { "url": "https://www.noaa.gov/education", "domain_group": "gov-science", "topic": "NOAA education resources", "notes": "stable gov science page" },
+  { "url": "https://www.usgs.gov/programs/earthquake-hazards", "domain_group": "gov-science", "topic": "USGS earthquake hazards", "notes": "stable gov science page" },
+
+  { "url": "https://docs.djangoproject.com/en/stable/topics/db/models/", "domain_group": "reference-other", "topic": "Django ORM models", "notes": "stable framework reference" },
+  { "url": "https://guides.rubyonrails.org/active_record_basics.html", "domain_group": "reference-other", "topic": "Rails ActiveRecord basics", "notes": "stable framework reference" },
+
+  { "url": "https://www.nytimes.com/2024/01/15/technology/ai-future.html", "domain_group": "news-paywall", "topic": "technology paywalled article", "notes": "expected paywall; feeds paywalled category" },
+  { "url": "https://www.economist.com/science-and-technology/", "domain_group": "news-paywall", "topic": "science paywalled section", "notes": "expected paywall; feeds paywalled category" },
+  { "url": "https://www.wsj.com/tech", "domain_group": "news-paywall", "topic": "technology paywalled section", "notes": "expected paywall; feeds paywalled category" },
+  { "url": "https://www.theguardian.com/technology", "domain_group": "news-paywall", "topic": "technology news section", "notes": "expected paywall; feeds paywalled category" },
+
+  { "url": "https://example.invalid/citesure-v2-dead-1", "domain_group": "dead", "topic": "reserved invalid TLD", "notes": "guaranteed dead; feeds dead-link category" },
+  { "url": "https://nonexistent-citesure-v2-7q2z9k.com/dead-page", "domain_group": "dead", "topic": "nonexistent domain", "notes": "guaranteed dead; feeds dead-link category" },
+  { "url": "https://docs.python.org/3/library/definitely_not_a_module_zzz9.html", "domain_group": "dead", "topic": "nonexistent python doc page", "notes": "real 404 on stable domain" },
+  { "url": "https://developer.mozilla.org/en-US/docs/Web/NoSuchApiReferenceZzz9", "domain_group": "dead", "topic": "nonexistent MDN page", "notes": "real 404 on stable domain" }
+]

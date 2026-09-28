@@ -62,7 +62,15 @@ _PAYWALL_PATTERNS = [
     re.compile(r"metered\s+access", re.IGNORECASE),
     re.compile(r"this\s+article\s+requires\s+a\s+subscription", re.IGNORECASE),
     re.compile(r"you've\s+reached\s+your\s+(?:monthly\s+)?limit", re.IGNORECASE),
-    re.compile(r"<form[^>]*\baction=[^>]*(?:login|signin|sign-in|auth)[^>]*>", re.IGNORECASE),
+    # Require a path boundary before the login keyword. Without it, any form
+    # whose action URL merely CONTAINS the substring (e.g. ".../iddiff",
+    # "/author", "/design/feedback") is falsely flagged as a paywall login —
+    # observed on real free pages (rfc2616, Wikipedia author tools).
+    re.compile(
+        r"<form[^>]*\baction=[\"'][^\"']*(?:^|/|[\"'])"
+        r"(?:login|signin|sign-in|logout|auth)(?:[/\"'?#]|$)[^\"']*[\"'][^>]*>",
+        re.IGNORECASE,
+    ),
     re.compile(r"\bclass=[\"'][^\"']*(?:paywall|login-form|subscription-wall)[^\"']*[\"']", re.IGNORECASE),
 ]
 
