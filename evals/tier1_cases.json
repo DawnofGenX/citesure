@@ -1,0 +1,112 @@
+[
+  {
+    "id": "ind-241",
+    "category": "dead-link",
+    "expected_status": "unreachable",
+    "labeler_confidence": "high",
+    "url": "https://example.invalid/citesure-v2-dead-1",
+    "claim": "This page documents the citesure v2 evaluation set dead-link fixture.",
+    "notes": "Reserved invalid TLD (.invalid, RFC 2606). Pool fetch recorded ConnectError: Name or service not known. Claim is arbitrary because the page cannot exist."
+  },
+  {
+    "id": "ind-242",
+    "category": "dead-link",
+    "expected_status": "unreachable",
+    "labeler_confidence": "high",
+    "url": "https://nonexistent-citesure-v2-7q2z9k.com/dead-page",
+    "claim": "The citesure v2 dead-page fixture explains unreachable citation handling.",
+    "notes": "Nonexistent registrable domain. Pool fetch recorded ConnectError: Name or service not known. Claim is arbitrary because the host cannot resolve."
+  },
+  {
+    "id": "ind-243",
+    "category": "dead-link",
+    "expected_status": "unreachable",
+    "labeler_confidence": "high",
+    "url": "https://docs.python.org/3/library/definitely_not_a_module_zzz9.html",
+    "claim": "The definitely_not_a_module_zzz9 module provides helpers for working with zip archives.",
+    "notes": "Real 404 on a stable live domain (docs.python.org), per pool fetch. Claim is plausible-sounding but the module does not exist, so the page is unreachable regardless of content."
+  },
+  {
+    "id": "ind-244",
+    "category": "dead-link",
+    "expected_status": "unreachable",
+    "labeler_confidence": "high",
+    "url": "https://developer.mozilla.org/en-US/docs/Web/NoSuchApiReferenceZzz9",
+    "claim": "The NoSuchApiReferenceZzz9 interface defines methods for observing browser performance.",
+    "notes": "Real 404 on a stable live domain (developer.mozilla.org), per pool fetch. Claim is plausible-sounding but the reference page does not exist, so the page is unreachable regardless of content."
+  },
+
+  {
+    "id": "ind-245",
+    "category": "paywalled",
+    "expected_status": "paywalled",
+    "labeler_confidence": "high",
+    "url": "https://www.scientificamerican.com/",
+    "claim": "Scientific American publishes articles about scientific research and technology.",
+    "notes": "Pool fetch recorded paywall_detected=true (3819 chars extracted from a subscription-gated front page). Verifying the claim requires reading past the metered-access wall."
+  },
+  {
+    "id": "ind-246",
+    "category": "paywalled",
+    "expected_status": "paywalled",
+    "labeler_confidence": "high",
+    "url": "https://www.newyorker.com/magazine",
+    "claim": "The New Yorker magazine publishes longform journalism and commentary.",
+    "notes": "Pool fetch recorded paywall_detected=true (4322 chars). Subscription-gated longform section; claim sits behind the paywall."
+  },
+  {
+    "id": "ind-247",
+    "category": "paywalled",
+    "expected_status": "paywalled",
+    "labeler_confidence": "high",
+    "url": "https://www.foreignpolicy.com/",
+    "claim": "Foreign Policy publishes analysis of international relations and global affairs.",
+    "notes": "Pool fetch recorded paywall_detected=true (6324 chars), triggered by the FP-paywall CSS class. Subscription-gated front page."
+  },
+  {
+    "id": "ind-248",
+    "category": "paywalled",
+    "expected_status": "paywalled",
+    "labeler_confidence": "high",
+    "url": "https://www.cnbc.com/",
+    "claim": "CNBC provides financial news and market coverage.",
+    "notes": "Pool fetch recorded paywall_detected=true (11156 chars), triggered by DynamicPaywallSignUpModal CSS. Subscription-gated front page."
+  },
+
+  {
+    "id": "ind-249",
+    "category": "partially-true-ambiguous",
+    "expected_status": "ambiguous",
+    "labeler_confidence": "high",
+    "url": "https://en.wikipedia.org/wiki/Mount_Everest",
+    "claim": "Mount Everest is the highest mountain on Earth above sea level, and its height was most recently measured in 2020 as 8,848.86 m.",
+    "notes": "Compound claim built from extracted text lines 2-3. BOTH clauses are verbatim true. The ambiguity is that a verifier judging only the first clause would mark it supported while ignoring the precise measured value, which is the whole point of the claim. True half: the 2020 joint survey by Nepalese and Chinese authorities. Contested half: whether a single fixed height is meaningful given ongoing tectonic uplift and measurement revisions."
+  },
+  {
+    "id": "ind-250",
+    "category": "partially-true-ambiguous",
+    "expected_status": "ambiguous",
+    "labeler_confidence": "high",
+    "url": "https://en.wikipedia.org/wiki/Marie_Curie",
+    "claim": "Marie Curie died in 1934, aged 66, of aplastic anaemia, and she was the first woman to be entombed on her own merits in the Paris Pantheon.",
+    "notes": "Compound claim built from extracted text line 7. BOTH clauses are verbatim true. Ambiguity: a verifier matching only the death clause returns supported and silently ignores the entombment clause, and the entombment claim (1995) is the more consequential and more falsifiable of the two. True half: death in 1934 aged 66 of aplastic anaemia. Contested half: 'first woman to be entombed on her own merits' is a superlative that the page asserts but that depends on how 'merits' is defined."
+  },
+  {
+    "id": "ind-251",
+    "category": "partially-true-ambiguous",
+    "expected_status": "ambiguous",
+    "labeler_confidence": "high",
+    "url": "https://en.wikipedia.org/wiki/Steam_engine",
+    "claim": "The world's first railway journey took place on 21 February 1804, when Trevithick's steam locomotive hauled 10 tonnes of iron, 70 passengers and five wagons along a tramway in south Wales.",
+    "notes": "Compound claim built from extracted text line 40. All the details are verbatim true. Ambiguity: the precise passenger and tonnage counts vary between accounts of the Pen-y-darren run, and 'first railway journey' is a contested designation (the Stockton and Darlington line of 1825 is also called the first public railway). The page asserts this framing rather than qualifying it, so a verifier matching the date and tonnage would return supported without surfacing the contested premise."
+  },
+  {
+    "id": "ind-252",
+    "category": "partially-true-ambiguous",
+    "expected_status": "ambiguous",
+    "labeler_confidence": "high",
+    "url": "https://en.wikipedia.org/wiki/Photosynthesis",
+    "claim": "Photosynthesis was discovered in 1779 by Jan Ingenhousz, and a Nobel Prize in Chemistry was awarded to Melvin Calvin in 1961 for his work on carbon metabolism.",
+    "notes": "Compound claim built from extracted text lines 6 and 133. BOTH clauses are verbatim true. Ambiguity: the two attributions use 'discovered' loosely. Ingenhousz showed plants need light, which is not the discovery of photosynthesis itself (that is usually credited to Priestley, Senebier and de Saussure), and Calvin received the prize as one of several named chemists whose work the page describes as done collectively. A verifier matching either clause alone returns supported and hides the attribution nuance."
+  }
+]
