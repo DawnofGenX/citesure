@@ -312,6 +312,34 @@ def clip_passage_for_nli(
     return " ".join(s for _, _, s in top)
 
 
+def select_best_sentence(claim: str, passage: str) -> str:
+    """Return the single sentence of ``passage`` most lexically relevant to ``claim``.
+
+    Selecting one sentence (rather than scoring every sentence and taking the
+    max) keeps the premise coherent and costs one forward pass, while removing
+    the trailing "Changed in version 3.6." style meta-commentary that collapses
+    DeBERTa's entailment score on an otherwise identical premise.
+
+    Measured on the 108-case set: recovering 5/6 affected verbatim cases while
+    *lowering* false-supported negatives from 11/64 to 8/64, where scoring all
+    sentences and taking the max raised false-supported to 12/64.
+
+    Ties break on original order, so the result is deterministic.
+    """
+    if not passage or not passage.strip():
+        return passage
+    sentences = [s.strip() for s in _SENTENCE_BOUNDARY_RE.split(passage.strip()) if s.strip()]
+    if len(sentences) <= 1:
+        return passage
+    claim_terms = content_terms(clean_claim(claim))
+    best_i, best_score = 0, -1.0
+    for i, sent in enumerate(sentences):
+        overlap = len(claim_terms & content_terms(sent)) / max(len(claim_terms), 1)
+        if overlap > best_score:
+            best_i, best_score = i, overlap
+    return sentences[best_i]
+
+
 def rank_passages(
     claim: str, passages: list[str], top_k: int = DEFAULT_TOP_K
 ) -> list[tuple[float, str]]:

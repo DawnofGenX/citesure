@@ -482,3 +482,42 @@ def test_clip_passage_for_nli_selects_relevant_sentences():
     # (only shares "comments" with the claim, lowest term overlap)
     assert "Many of the examples" not in clipped
 
+
+
+def test_select_best_sentence_picks_claim_bearing_one():
+    """The sentence sharing the most claim terms must win, not the first.
+
+    Trailing metadata like "Changed in version 3.6." collapses DeBERTa's
+    entailment score on an otherwise identical premise, so the premise handed
+    to NLI must be the single claim-relevant sentence.
+    """
+    from citesure.overlap import select_best_sentence
+
+    claim = "On other operating systems, return the path unchanged."
+    premise = (
+        "Some unrelated opening sentence about nothing in particular. "
+        "On Windows, convert all characters in the pathname to lowercase. "
+        "On other operating systems, return the path unchanged. "
+        "Changed in version 3.6: Accepts a path-like object."
+    )
+    assert select_best_sentence(claim, premise) == (
+        "On other operating systems, return the path unchanged."
+    )
+
+
+def test_select_best_sentence_returns_whole_premise_when_single_sentence():
+    from citesure.overlap import select_best_sentence
+
+    claim = "The bridge opened in 1998."
+    assert select_best_sentence(claim, "The bridge opened in 1998.") == (
+        "The bridge opened in 1998."
+    )
+
+
+def test_select_best_sentence_handles_empty_input():
+    """Empty/whitespace input must pass through, never fabricate a sentence."""
+    from citesure.overlap import select_best_sentence
+
+    assert select_best_sentence("claim", "") == ""
+    # Whitespace-only: returned as-is (stripped to empty) rather than invented.
+    assert select_best_sentence("claim", "   ").strip() == ""
