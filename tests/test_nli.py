@@ -651,3 +651,50 @@ def test_label_index_returns_none_for_empty_mapping():
 
     assert _label_index(None) == (None, None)
     assert _label_index({}) == (None, None)
+
+
+# ---------------------------------------------------------------------------
+# Contradiction-override note honesty
+# ---------------------------------------------------------------------------
+
+
+def test_no_contradiction_note_when_override_did_not_fire():
+    """A low entailment band must NOT be reported as a contradiction.
+
+    Regression: the note was emitted whenever the verdict moved to
+    unsupported, so a case downgraded purely by the entailment band
+    (entailment 0.002, contradiction 0.000) printed
+    "contradiction 0.000 >= 0.5 - source contradicts claim" — a
+    self-contradictory and actively misleading diagnostic.
+    """
+    from citesure.nli import apply_nli_tier
+
+    final, _tier, _score, notes = apply_nli_tier(
+        Status.SUPPORTED,
+        ["overlap tier: score 1.000"],
+        nli_score=0.002,
+        marker_locatable=True,
+        evidence="some evidence",
+        contradiction=0.000,
+    )
+
+    assert final is Status.UNSUPPORTED  # downgraded by the entailment band
+    assert any("contradiction 0.000" in n for n in notes)  # the value is reported
+    assert not any("source contradicts claim" in n for n in notes)  # but not as a cause
+
+
+def test_contradiction_note_present_when_override_fires():
+    """When the override genuinely fires, the cause must be stated."""
+    from citesure.nli import apply_nli_tier
+
+    final, _tier, _score, notes = apply_nli_tier(
+        Status.SUPPORTED,
+        [],
+        nli_score=0.1,
+        marker_locatable=True,
+        evidence="evidence",
+        contradiction=0.98,
+    )
+
+    assert final is Status.UNSUPPORTED
+    assert any("source contradicts claim" in n for n in notes)

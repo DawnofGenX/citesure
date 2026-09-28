@@ -555,7 +555,11 @@ def apply_nli_tier(
     )
     if contradiction is not None:
         notes.append(f"NLI tier: contradiction {contradiction:.3f}")
-        if final is Status.UNSUPPORTED and verdict is not Status.UNSUPPORTED:
+        # Only state the override as the CAUSE when it actually fired. Emitting
+        # this note on any downgrade produced self-contradictory output such as
+        # "contradiction 0.000 >= 0.5 - source contradicts claim" for cases that
+        # were downgraded purely by a low entailment band.
+        if contradiction >= CONTRADICTION_THRESHOLD:
             notes.append(
                 f"NLI tier: contradiction {contradiction:.3f} >= "
                 f"{CONTRADICTION_THRESHOLD} — source contradicts claim"
