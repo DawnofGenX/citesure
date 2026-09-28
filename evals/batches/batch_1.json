@@ -1,0 +1,164 @@
+[
+  {
+    "id": "ind-101",
+    "category": "verbatim-supported",
+    "expected_status": "supported",
+    "labeler_confidence": "high",
+    "url": "https://tc39.es/ecma262/",
+    "claim": "The language was invented by Brendan Eich at Netscape and first appeared in that company's Navigator 2.0 browser.",
+    "notes": "Source sentence (near top of page text): \"The language was invented by Brendan Eich at Netscape and first appeared in that company's Navigator 2.0 browser.\" Copied verbatim. Text file: evals/page_text/tc39.es_ecma262_.txt."
+  },
+  {
+    "id": "ind-102",
+    "category": "negation-flip",
+    "expected_status": "unsupported",
+    "labeler_confidence": "medium",
+    "url": "https://tc39.es/ecma262/",
+    "claim": "The ECMAScript language was not invented by Brendan Eich.",
+    "notes": "Negation-flip of A: main verb reversed to 'was not invented by Brendan Eich'. Checked via 6-gram overlap against the saved text (evals/page_text/tc39.es_ecma262_.txt): absent. Text file: evals/page_text/tc39.es_ecma262_.txt."
+  },
+  {
+    "id": "ind-103",
+    "category": "entity-swap",
+    "expected_status": "unsupported",
+    "labeler_confidence": "medium",
+    "url": "https://tc39.es/ecma262/",
+    "claim": "Microsoft invented the language and first shipped it in the Navigator 2.0 browser.",
+    "notes": "Entity-swap (form 1): 'Microsoft' (named on the page as the JScript vendor) claimed as the inventor who shipped Navigator 2.0; Netscape/Brendan Eich detail re-attributed. 6-gram overlap checked: absent. Text file: evals/page_text/tc39.es_ecma262_.txt."
+  },
+  {
+    "id": "ind-104",
+    "category": "verbatim-supported",
+    "expected_status": "supported",
+    "labeler_confidence": "high",
+    "url": "https://en.wikipedia.org/wiki/Black_hole",
+    "claim": "In 1907, Einstein published a paper proposing his equivalence principle, the hypothesis that inertial mass and gravitational mass have a common cause.",
+    "notes": "Source sentence (History section): \"In 1907, Einstein published a paper proposing his equivalence principle, the hypothesis that inertial mass and gravitational mass have a common cause.\" Copied verbatim. Text file: evals/page_text/en.wikipedia.org_wiki_Black_hole.txt."
+  },
+  {
+    "id": "ind-105",
+    "category": "negation-flip",
+    "expected_status": "unsupported",
+    "labeler_confidence": "medium",
+    "url": "https://en.wikipedia.org/wiki/Black_hole",
+    "claim": "Einstein did not publish the 1907 paper proposing his equivalence principle.",
+    "notes": "Negation-flip of A: 'did not publish the 1907 paper proposing his equivalence principle'. Checked via 6-gram overlap against the saved text: absent. Text file: evals/page_text/en.wikipedia.org_wiki_Black_hole.txt."
+  },
+  {
+    "id": "ind-106",
+    "category": "entity-swap",
+    "expected_status": "unsupported",
+    "labeler_confidence": "medium",
+    "url": "https://en.wikipedia.org/wiki/Black_hole",
+    "claim": "In 1907, Karl Schwarzschild published a paper proposing the equivalence principle.",
+    "notes": "Entity-swap (form 1): subject replaced with 'Karl Schwarzschild' (named on the page) while keeping the 1907/equivalence-principle detail. Checked via 6-gram overlap: absent. Text file: evals/page_text/en.wikipedia.org_wiki_Black_hole.txt."
+  },
+  {
+    "id": "ind-107",
+    "category": "verbatim-supported",
+    "expected_status": "supported",
+    "labeler_confidence": "high",
+    "url": "https://docs.djangoproject.com/en/stable/topics/db/models/",
+    "claim": "To define a many-to-one relationship, use django.db.models.ForeignKey.",
+    "notes": "Source sentence (Relationships section): \"To define a many-to-one relationship, use django.db.models.ForeignKey.\" Copied verbatim. Text file: evals/page_text/docs.djangoproject.com_en_stable_topics_db_models_.txt."
+  },
+  {
+    "id": "ind-108",
+    "category": "negation-flip",
+    "expected_status": "unsupported",
+    "labeler_confidence": "medium",
+    "url": "https://docs.djangoproject.com/en/stable/topics/db/models/",
+    "claim": "To define a many-to-one relationship, do not use django.db.models.ForeignKey.",
+    "notes": "Negation-flip of A: imperative reversed to 'do not use django.db.models.ForeignKey'. Checked via 6-gram overlap against the saved text: absent. Text file: evals/page_text/docs.djangoproject.com_en_stable_topics_db_models_.txt."
+  },
+  {
+    "id": "ind-109",
+    "category": "entity-swap",
+    "expected_status": "unsupported",
+    "labeler_confidence": "medium",
+    "url": "https://docs.djangoproject.com/en/stable/topics/db/models/",
+    "claim": "Django uses django.db.models.ForeignKey to define many-to-many relationships.",
+    "notes": "Entity-swap (form 2, relation re-target): keeps django.db.models.ForeignKey (the page's many-to-one tool) but claims it defines many-to-many relationships, which the page assigns to ManyToManyField. Checked via 6-gram overlap: absent. Text file: evals/page_text/docs.djangoproject.com_en_stable_topics_db_models_.txt."
+  },
+  {
+    "id": "ind-110",
+    "category": "verbatim-supported",
+    "expected_status": "supported",
+    "labeler_confidence": "high",
+    "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise",
+    "claim": "The Promise object represents the eventual completion (or failure) of an asynchronous operation and its resulting value.",
+    "notes": "Source sentence (intro): \"The Promise object represents the eventual completion (or failure) of an asynchronous operation and its resulting value.\" Copied verbatim. Text file: evals/page_text/developer.mozilla.org_en-US_docs_Web_JavaScript_Reference_Global_Objects_Promise.txt."
+  },
+  {
+    "id": "ind-111",
+    "category": "negation-flip",
+    "expected_status": "unsupported",
+    "labeler_confidence": "medium",
+    "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise",
+    "claim": "The Promise object does not represent an asynchronous operation's eventual completion or failure.",
+    "notes": "Negation-flip of A: 'does not represent an asynchronous operation's eventual completion or failure'. Checked via 6-gram overlap against the saved text: absent. Text file: evals/page_text/developer.mozilla.org_en-US_docs_Web_JavaScript_Reference_Global_Objects_Promise.txt."
+  },
+  {
+    "id": "ind-112",
+    "category": "entity-swap",
+    "expected_status": "unsupported",
+    "labeler_confidence": "medium",
+    "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise",
+    "claim": "AbortController is the object that represents an asynchronous operation's eventual completion or failure.",
+    "notes": "Entity-swap (form 1): subject replaced with 'AbortController' (named on the page as the cancellation mechanism) keeping the completion-or-failure detail. Checked via 6-gram overlap: absent. Text file: evals/page_text/developer.mozilla.org_en-US_docs_Web_JavaScript_Reference_Global_Objects_Promise.txt."
+  },
+  {
+    "id": "ind-113",
+    "category": "verbatim-supported",
+    "expected_status": "supported",
+    "labeler_confidence": "high",
+    "url": "https://developer.mozilla.org/en-US/docs/Web/CSS/color",
+    "claim": "The color CSS property sets the foreground color value of an element's text and text decorations, and sets the currentColor value.",
+    "notes": "Source sentence (intro): \"The color CSS property sets the foreground color value of an element's text and text decorations, and sets the currentColor value.\" Copied verbatim. Text file: evals/page_text/developer.mozilla.org_en-US_docs_Web_CSS_color.txt."
+  },
+  {
+    "id": "ind-114",
+    "category": "negation-flip",
+    "expected_status": "unsupported",
+    "labeler_confidence": "medium",
+    "url": "https://developer.mozilla.org/en-US/docs/Web/CSS/color",
+    "claim": "The color CSS property does not set the foreground text color of an element.",
+    "notes": "Negation-flip of A: 'does not set the foreground text color of an element'. Checked via 6-gram overlap against the saved text: absent. Text file: evals/page_text/developer.mozilla.org_en-US_docs_Web_CSS_color.txt."
+  },
+  {
+    "id": "ind-115",
+    "category": "entity-swap",
+    "expected_status": "unsupported",
+    "labeler_confidence": "medium",
+    "url": "https://developer.mozilla.org/en-US/docs/Web/CSS/color",
+    "claim": "The border-color CSS property sets the foreground text color of an element.",
+    "notes": "Entity-swap (form 1): subject swapped to 'border-color' (named on the page as one of the other color properties) which does not set foreground text color. Checked via 6-gram overlap: absent. Text file: evals/page_text/developer.mozilla.org_en-US_docs_Web_CSS_color.txt."
+  },
+  {
+    "id": "ind-116",
+    "category": "verbatim-supported",
+    "expected_status": "supported",
+    "labeler_confidence": "high",
+    "url": "https://arxiv.org/abs/1308.0853",
+    "claim": "By considering a suitable Besov type norm, we obtain refined Sobolev inequalities on a family of Riemannian manifolds with (possibly exponentially large) ends.",
+    "notes": "Source sentence (abstract): \"By considering a suitable Besov type norm, we obtain refined Sobolev inequalities on a family of Riemannian manifolds with (possibly exponentially large) ends.\" Copied verbatim. Text file: evals/page_text/arxiv.org_abs_1308.0853.txt."
+  },
+  {
+    "id": "ind-117",
+    "category": "negation-flip",
+    "expected_status": "unsupported",
+    "labeler_confidence": "medium",
+    "url": "https://arxiv.org/abs/1308.0853",
+    "claim": "We do not obtain refined Sobolev inequalities on Riemannian manifolds with exponentially large ends.",
+    "notes": "Negation-flip of A: 'We do not obtain refined Sobolev inequalities on Riemannian manifolds with exponentially large ends'. Checked via 6-gram overlap against the saved text: absent. Text file: evals/page_text/arxiv.org_abs_1308.0853.txt."
+  },
+  {
+    "id": "ind-118",
+    "category": "entity-swap",
+    "expected_status": "unsupported",
+    "labeler_confidence": "medium",
+    "url": "https://arxiv.org/abs/1308.0853",
+    "claim": "By considering a suitable Sobolev type norm, we obtain refined Besov inequalities on manifolds with exponentially large ends.",
+    "notes": "Form 2 fallback (relation re-target): Besov/Sobolev roles swapped — claims a 'Sobolev type norm' yields 'refined Besov inequalities'. Checked via 6-gram overlap: absent. Text file: evals/page_text/arxiv.org_abs_1308.0853.txt."
+  }
+]

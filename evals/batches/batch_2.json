@@ -1,0 +1,164 @@
+[
+  {
+    "id": "ind-119",
+    "category": "verbatim-supported",
+    "expected_status": "supported",
+    "labeler_confidence": "high",
+    "url": "https://datatracker.ietf.org/doc/html/rfc2616",
+    "claim": "This specification defines the protocol referred to as \"HTTP/1.1\", and is an update to RFC 2068 [33].",
+    "notes": "Provenance: abstract paragraph of RFC 2616 at evals/page_text/datatracker.ietf.org_doc_html_rfc2616.txt lines 35-36 ('This specification defines the protocol / referred to as \"HTTP/1.1\", and is an update to RFC 2068 [33].'); copied verbatim across the hard line wrap. Entities: HTTP/1.1, RFC 2068; detail: the update-to-RFC-2068 relation."
+  },
+  {
+    "id": "ind-120",
+    "category": "negation-flip",
+    "expected_status": "unsupported",
+    "labeler_confidence": "medium",
+    "url": "https://datatracker.ietf.org/doc/html/rfc2616",
+    "claim": "This specification is not an update to RFC 2068.",
+    "notes": "Mutation of ind-119: polarity reversed at the main verb ('is an update' -> 'is not an update'), remainder trimmed to keep it natural. Verified: grep -i 'not an update to' on the text file returns 0 matches; 6-gram check vs page text: absent."
+  },
+  {
+    "id": "ind-121",
+    "category": "entity-swap",
+    "expected_status": "unsupported",
+    "labeler_confidence": "medium",
+    "url": "https://datatracker.ietf.org/doc/html/rfc2616",
+    "claim": "RFC 2068 is an update to RFC 2616.",
+    "notes": "Form 2 (re-target the relation): the update relation from ind-119 is reversed so the wrong entity (RFC 2068, which appears on the page as reference [33]; RFC 2616 appears throughout the headers) is made the updating document. The page only says HTTP/1.1 updates RFC 2068, never the reverse. Verified: grep for 'also an update' 0 matches and no 'RFC 2068 is an update' phrasing exists; 6-gram check vs page text: absent."
+  },
+  {
+    "id": "ind-122",
+    "category": "verbatim-supported",
+    "expected_status": "supported",
+    "labeler_confidence": "high",
+    "url": "https://en.wikipedia.org/wiki/Alan_Turing",
+    "claim": "In 1948, Turing was appointed reader in the Mathematics Department at the University of Manchester.",
+    "notes": "Provenance: sentence at evals/page_text/en.wikipedia.org_wiki_Alan_Turing.txt line 73, copied verbatim. Entity: Turing; checkable detail: 1948 + the reader appointment at the University of Manchester."
+  },
+  {
+    "id": "ind-123",
+    "category": "negation-flip",
+    "expected_status": "unsupported",
+    "labeler_confidence": "medium",
+    "url": "https://en.wikipedia.org/wiki/Alan_Turing",
+    "claim": "Turing was never appointed reader at the University of Manchester.",
+    "notes": "Mutation of ind-122: polarity reversed at the main verb ('was appointed' -> 'was never appointed'), remainder trimmed. Verified: grep -io 'never appointed' on the text file returns 0 matches; 6-gram check vs page text: absent."
+  },
+  {
+    "id": "ind-124",
+    "category": "entity-swap",
+    "expected_status": "unsupported",
+    "labeler_confidence": "medium",
+    "url": "https://en.wikipedia.org/wiki/Alan_Turing",
+    "claim": "Max Newman was appointed reader at the University of Manchester in 1948.",
+    "notes": "Form 1 (re-attribute): the 1948 reader appointment (ind-122's detail) re-assigned to Max Newman, who appears on the page (line 4/29/66, 'Max Newman's Computing Machine Laboratory') but is never said to have been appointed reader. Verified: grep for 'Newman was appointed' returns 0 matches; 6-gram check vs page text: absent."
+  },
+  {
+    "id": "ind-125",
+    "category": "verbatim-supported",
+    "expected_status": "supported",
+    "labeler_confidence": "high",
+    "url": "https://docs.python.org/3/library/collections.html",
+    "claim": "A ChainMap incorporates the underlying mappings by reference.",
+    "notes": "Provenance: ChainMap section sentence at evals/page_text/docs.python.org_3_library_collections.html.txt line 15, copied verbatim. Entity: ChainMap; checkable detail: the by-reference incorporation relation."
+  },
+  {
+    "id": "ind-126",
+    "category": "negation-flip",
+    "expected_status": "unsupported",
+    "labeler_confidence": "medium",
+    "url": "https://docs.python.org/3/library/collections.html",
+    "claim": "A ChainMap does not incorporate the underlying mappings by reference.",
+    "notes": "Mutation of ind-125: polarity reversed at the main verb ('incorporates' -> 'does not incorporate'). Verified: grep -i 'does not incorporate' on the text file returns 0 matches; 6-gram check vs page text: absent."
+  },
+  {
+    "id": "ind-127",
+    "category": "entity-swap",
+    "expected_status": "unsupported",
+    "labeler_confidence": "medium",
+    "url": "https://docs.python.org/3/library/collections.html",
+    "claim": "Counter objects incorporate underlying mappings by reference.",
+    "notes": "Form 1 (re-attribute): the by-reference incorporation detail (ind-125) re-assigned to Counter, a class documented on the same page. The page never attributes by-reference incorporation to Counter. Verified: grep -i 'counter incorporates' returns 0 matches; 6-gram check vs page text: absent."
+  },
+  {
+    "id": "ind-128",
+    "category": "verbatim-supported",
+    "expected_status": "supported",
+    "labeler_confidence": "high",
+    "url": "https://docs.python.org/3/library/json.html",
+    "claim": "JSON is a subset of YAML 1.2.",
+    "notes": "Provenance: Note block at evals/page_text/docs.python.org_3_library_json.html.txt line 92 ('JSON is a subset of YAML 1.2. The JSON produced by this module's...'), copied verbatim up to the sentence boundary. Entity: JSON; checkable detail: YAML 1.2."
+  },
+  {
+    "id": "ind-129",
+    "category": "negation-flip",
+    "expected_status": "unsupported",
+    "labeler_confidence": "medium",
+    "url": "https://docs.python.org/3/library/json.html",
+    "claim": "JSON is not a subset of YAML 1.2.",
+    "notes": "Mutation of ind-128: polarity reversed at the main verb ('is' -> 'is not'); note the page's only 'not' nearby is about JavaScript, unrelated. Verified: 6-gram check of the claim vs page text: absent (no shared 6-gram window)."
+  },
+  {
+    "id": "ind-130",
+    "category": "entity-swap",
+    "expected_status": "unsupported",
+    "labeler_confidence": "medium",
+    "url": "https://docs.python.org/3/library/json.html",
+    "claim": "YAML 1.2 is a subset of JSON.",
+    "notes": "Form 2 (re-target the relation): the subset relation from ind-128 reversed, swapping JSON and YAML 1.2 (both appear on the page). An earlier candidate ('RFC 4627 is also a subset of YAML 1.2.') collided with real text ('is also a subset of YAML 1.0 and 1.1') and was discarded. Verified: 6-gram check of final claim vs page text: absent."
+  },
+  {
+    "id": "ind-131",
+    "category": "verbatim-supported",
+    "expected_status": "supported",
+    "labeler_confidence": "high",
+    "url": "https://arxiv.org/abs/2005.11401",
+    "claim": "We introduce RAG models where the parametric memory is a pre-trained seq2seq model and the non-parametric memory is a dense vector index of Wikipedia, accessed with a pre-trained neural retriever.",
+    "notes": "Provenance: abstract of arXiv:2005.11401 (RAG paper) at evals/page_text/arxiv.org_abs_2005.11401.txt line 5, copied verbatim. Entities: RAG, Wikipedia, seq2seq; checkable detail: parametric=seq2seq / non-parametric=dense Wikipedia index assignment."
+  },
+  {
+    "id": "ind-132",
+    "category": "negation-flip",
+    "expected_status": "unsupported",
+    "labeler_confidence": "medium",
+    "url": "https://arxiv.org/abs/2005.11401",
+    "claim": "RAG models do not use a dense vector index of Wikipedia as their non-parametric memory.",
+    "notes": "Mutation of ind-131: polarity reversed at the main verb — asserts the opposite of the abstract's core design claim. Verified: grep for 'not use a dense' / 'do not' variants around the phrase returns 0 matches; 6-gram check vs page text: absent."
+  },
+  {
+    "id": "ind-133",
+    "category": "entity-swap",
+    "expected_status": "unsupported",
+    "labeler_confidence": "medium",
+    "url": "https://arxiv.org/abs/2005.11401",
+    "claim": "RAG models use a dense Wikipedia vector index as their parametric memory rather than their non-parametric memory.",
+    "notes": "Form 2 (re-target the relation): the dense Wikipedia index detail (ind-131) re-attached to the wrong slot — parametric instead of non-parametric memory; all terms exist on the page but the pairing is inverted. Verified: grep for 'parametric memory is a dense' returns 0 matches; 6-gram check vs page text: absent."
+  },
+  {
+    "id": "ind-134",
+    "category": "verbatim-supported",
+    "expected_status": "supported",
+    "labeler_confidence": "high",
+    "url": "https://docs.python.org/3/library/asyncio.html",
+    "claim": "asyncio is a library to write concurrent code using the async/await syntax.",
+    "notes": "Provenance: opening sentence of the asyncio page at evals/page_text/docs.python.org_3_library_asyncio.html.txt line 2, copied verbatim. Entity: asyncio; checkable detail: the async/await-syntax concurrency relation."
+  },
+  {
+    "id": "ind-135",
+    "category": "negation-flip",
+    "expected_status": "unsupported",
+    "labeler_confidence": "medium",
+    "url": "https://docs.python.org/3/library/asyncio.html",
+    "claim": "asyncio is not a library for writing concurrent code.",
+    "notes": "Mutation of ind-134: polarity reversed at the main verb ('is' -> 'is not'). The page's only 'not' text concerns WebAssembly availability, unrelated. Verified: grep -i 'library for writing' returns 0 matches and 6-gram check vs page text: absent."
+  },
+  {
+    "id": "ind-136",
+    "category": "entity-swap",
+    "expected_status": "unsupported",
+    "labeler_confidence": "medium",
+    "url": "https://docs.python.org/3/library/asyncio.html",
+    "claim": "The async/await syntax is a library provided by asyncio for writing concurrent code.",
+    "notes": "Form 2 (re-target the relation): asyncio's 'library for concurrent code' role (ind-134) re-attributed to the async/await syntax itself, which the page describes as the syntax asyncio uses, not a library asyncio provides. Verified: grep -i 'async/await syntax is a library' returns 0 matches; 6-gram check vs page text: absent."
+  }
+]
