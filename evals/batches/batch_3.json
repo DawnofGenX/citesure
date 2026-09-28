@@ -1,0 +1,137 @@
+[
+  {
+    "id": "ind-137",
+    "category": "verbatim-supported",
+    "expected_status": "supported",
+    "labeler_confidence": "high",
+    "url": "https://en.wikipedia.org/wiki/Periodic_table",
+    "claim": "In 1871, Mendeleev published a long article, including an updated form of his table, that made his predictions for unknown elements explicit.",
+    "notes": "Provenance: sentence from evals/page_text/en.wikipedia.org_wiki_Periodic_table.txt (Mendeleev section); copied verbatim, confirmed present via 6-gram overlap."
+  },
+  {
+    "id": "ind-138",
+    "category": "negation-flip",
+    "expected_status": "unsupported",
+    "labeler_confidence": "medium",
+    "url": "https://en.wikipedia.org/wiki/Periodic_table",
+    "claim": "In 1871, Mendeleev did not publish a long article containing his predictions for unknown elements.",
+    "notes": "Mutation of ind-137: polarity reversed at the main verb (published -> did not publish), article clause condensed. Grepped the saved text: this exact string absent, and 6-gram overlap check against the page returned no shared shingle."
+  },
+  {
+    "id": "ind-139",
+    "category": "entity-swap",
+    "expected_status": "unsupported",
+    "labeler_confidence": "medium",
+    "url": "https://en.wikipedia.org/wiki/Periodic_table",
+    "claim": "In 1871, Meyer published a long article containing his predictions for unknown elements.",
+    "notes": "Mutation of ind-137 (form 1 re-attribution): the 1871 long-article/predictions detail kept, subject swapped Mendeleev -> Meyer. Meyer is mentioned on the page ('including Meyer') but the page never attributes this publication to him. 6-gram overlap check against the page returned no shared shingle."
+  },
+  {
+    "id": "ind-140",
+    "category": "verbatim-supported",
+    "expected_status": "supported",
+    "labeler_confidence": "high",
+    "url": "https://docs.python.org/3/library/datetime.html",
+    "claim": "The ISO year consists of 52 or 53 full weeks.",
+    "notes": "Provenance: leading clause of the sentence in the isocalendar section of evals/page_text/docs.python.org_3_library_datetime.html.txt ('The ISO year consists of 52 or 53 full weeks, and where a week starts on a Monday...'); copied verbatim, confirmed present via 6-gram overlap."
+  },
+  {
+    "id": "ind-141",
+    "category": "negation-flip",
+    "expected_status": "unsupported",
+    "labeler_confidence": "medium",
+    "url": "https://docs.python.org/3/library/datetime.html",
+    "claim": "The ISO year does not consist of 52 or 53 full weeks.",
+    "notes": "Mutation of ind-140: polarity reversed at the main verb (consists -> does not consist). Grepped the saved text for the negated phrasing: absent, and 6-gram overlap check against the page returned no shared shingle."
+  },
+  {
+    "id": "ind-142",
+    "category": "entity-swap",
+    "expected_status": "unsupported",
+    "labeler_confidence": "medium",
+    "url": "https://docs.python.org/3/library/datetime.html",
+    "claim": "A Gregorian year always has 52 or 53 full weeks.",
+    "notes": "Mutation of ind-140 (form 1 re-attribution): the 52-or-53-weeks detail kept verbatim but re-attributed from the ISO year to the Gregorian year, which the page also discusses. The page states only the ISO year has this property. 6-gram overlap check against the page returned no shared shingle."
+  },
+  {
+    "id": "ind-143",
+    "category": "verbatim-supported",
+    "expected_status": "supported",
+    "labeler_confidence": "high",
+    "url": "https://docs.python.org/3/library/asyncio-task.html",
+    "claim": "Tasks are used to schedule coroutines concurrently.",
+    "notes": "Provenance: standalone sentence from the Tasks section of evals/page_text/docs.python.org_3_library_asyncio-task.html.txt; copied verbatim, confirmed present via 6-gram overlap."
+  },
+  {
+    "id": "ind-144",
+    "category": "negation-flip",
+    "expected_status": "unsupported",
+    "labeler_confidence": "medium",
+    "url": "https://docs.python.org/3/library/asyncio-task.html",
+    "claim": "Tasks are not used to schedule coroutines concurrently.",
+    "notes": "Mutation of ind-143: polarity reversed at the main verb (are used -> are not used). Grepped the saved text for 'are not used to schedule': absent, and 6-gram overlap check against the page returned no shared shingle."
+  },
+  {
+    "id": "ind-145",
+    "category": "entity-swap",
+    "expected_status": "unsupported",
+    "labeler_confidence": "medium",
+    "url": "https://docs.python.org/3/library/asyncio-task.html",
+    "claim": "A Future is used to schedule coroutines concurrently.",
+    "notes": "Mutation of ind-143 (form 1 re-attribution): the scheduling detail kept, subject swapped Tasks -> Future. Future is a described awaitable on the page but the docs say Futures are low-level awaitables, not concurrency schedulers. 6-gram overlap check against the page returned no shared shingle."
+  },
+  {
+    "id": "ind-146",
+    "category": "verbatim-supported",
+    "expected_status": "supported",
+    "labeler_confidence": "high",
+    "url": "https://guides.rubyonrails.org/active_record_basics.html",
+    "claim": "Active Record is part of the M in MVC - the model - which is the layer of the system responsible for representing data and business logic.",
+    "notes": "Provenance: opening sentence of 'What is Active Record?' in evals/page_text/guides.rubyonrails.org_active_record_basics.html.txt; copied verbatim, confirmed present via 6-gram overlap."
+  },
+  {
+    "id": "ind-147",
+    "category": "negation-flip",
+    "expected_status": "unsupported",
+    "labeler_confidence": "medium",
+    "url": "https://guides.rubyonrails.org/active_record_basics.html",
+    "claim": "Active Record is not part of the M in MVC.",
+    "notes": "Mutation of ind-146: polarity reversed at the main verb (is -> is not), tail truncated. Grepped the saved text: the negated sentence absent and 6-gram overlap check against the page returned no shared shingle."
+  },
+  {
+    "id": "ind-148",
+    "category": "entity-swap",
+    "expected_status": "unsupported",
+    "labeler_confidence": "medium",
+    "url": "https://guides.rubyonrails.org/active_record_basics.html",
+    "claim": "Active Model is the model layer in Rails and is responsible for database persistence.",
+    "notes": "Mutation of ind-146 (form 2 re-target): the model-layer/database-persistence role re-attributed to Active Model, which the page explicitly says is for objects that do NOT need database backing. First attempt 'Active Record is part of the V in MVC.' was rejected by the 6-gram check (shared shingle 'active record is part of the' with real text), so this re-targeted form was used; final claim confirmed absent via 6-gram overlap check."
+  },
+  {
+    "id": "ind-149",
+    "category": "verbatim-supported",
+    "expected_status": "supported",
+    "labeler_confidence": "high",
+    "url": "https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage",
+    "claim": "The keys and the values stored with localStorage are in the UTF-16 string format.",
+    "notes": "Provenance: sentence from the Description section of evals/page_text/developer.mozilla.org_en-US_docs_Web_API_Window_localStorage.txt; copied verbatim, confirmed present via 6-gram overlap."
+  },
+  {
+    "id": "ind-150",
+    "category": "negation-flip",
+    "expected_status": "unsupported",
+    "labeler_confidence": "medium",
+    "url": "https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage",
+    "claim": "The keys and values stored with localStorage are not in the UTF-16 string format.",
+    "notes": "Mutation of ind-149: polarity reversed at the main verb (are -> are not). Grepped the saved text for the negated phrasing: absent, and 6-gram overlap check against the page returned no shared shingle."
+  },
+  {
+    "id": "ind-151",
+    "category": "entity-swap",
+    "expected_status": "unsupported",
+    "labeler_confidence": "medium",
+    "url": "https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage",
+    "claim": "When using sessionStorage, the keys and values are stored as UTF-16 strings.",
+    "notes": "Mutation of ind-149 (form 1 re-attribution): the UTF-16 storage detail re-attributed to sessionStorage, which the page mentions but only in its expiration contrast with localStorage; the page never states sessionStorage's storage format. 6-gram overlap check against the page returned no shared shingle."
+  }
+]

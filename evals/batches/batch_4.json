@@ -1,0 +1,137 @@
+[
+  {
+    "id": "ind-152",
+    "category": "verbatim-supported",
+    "expected_status": "supported",
+    "labeler_confidence": "high",
+    "url": "https://www.rfc-editor.org/rfc/rfc793.html",
+    "claim": "TCP is based on concepts first described by Cerf and Kahn in [1].",
+    "notes": "Provenance: source sentence from Section 1.1 of evals/page_text/www.rfc-editor.org_rfc_rfc793.html.txt ('TCP is based on concepts first described by Cerf and Kahn in [1].'). Copied verbatim."
+  },
+  {
+    "id": "ind-153",
+    "category": "negation-flip",
+    "expected_status": "unsupported",
+    "labeler_confidence": "medium",
+    "url": "https://www.rfc-editor.org/rfc/rfc793.html",
+    "claim": "TCP is not based on the concepts of Cerf and Kahn.",
+    "notes": "Mutation of ind-152: main verb 'is based' negated to 'is not based'; tail lightly reworded ('the concepts of Cerf and Kahn') so no verbatim 6-gram tail survives. Grepped for 'not based on the concepts' — 0 hits in the page text."
+  },
+  {
+    "id": "ind-154",
+    "category": "entity-swap",
+    "expected_status": "unsupported",
+    "labeler_confidence": "medium",
+    "url": "https://www.rfc-editor.org/rfc/rfc793.html",
+    "claim": "The concepts behind TCP were first described by Jon Postel, not Cerf and Kahn.",
+    "notes": "Mutation of ind-152 (Form 1 re-attribution): the 'first described the TCP concepts' detail is re-attributed from Cerf and Kahn to Jon Postel, who does appear on the page (as the editor, page iii). The page never asserts Postel originated the concepts. Sentence restructured so the swapped entity falls inside every 6-gram; grepped 'described by jon postel' — 0 hits."
+  },
+  {
+    "id": "ind-155",
+    "category": "verbatim-supported",
+    "expected_status": "supported",
+    "labeler_confidence": "high",
+    "url": "https://en.wikipedia.org/wiki/Photosynthesis",
+    "claim": "In 1779, Jan Ingenhousz repeated Priestley's experiments.",
+    "notes": "Provenance: source sentence from the History section of evals/page_text/en.wikipedia.org_wiki_Photosynthesis.txt ('In 1779, Jan Ingenhousz repeated Priestley\\'s experiments.'). Copied verbatim."
+  },
+  {
+    "id": "ind-156",
+    "category": "negation-flip",
+    "expected_status": "unsupported",
+    "labeler_confidence": "high",
+    "url": "https://en.wikipedia.org/wiki/Photosynthesis",
+    "claim": "In 1779, Jan Ingenhousz did not repeat Priestley's experiments.",
+    "notes": "Mutation of ind-155: main verb 'repeated' flipped to 'did not repeat'. Grepped 'did not repeat' — 0 hits in the page text."
+  },
+  {
+    "id": "ind-157",
+    "category": "entity-swap",
+    "expected_status": "unsupported",
+    "labeler_confidence": "high",
+    "url": "https://en.wikipedia.org/wiki/Photosynthesis",
+    "claim": "In 1779, Melvin Calvin repeated Priestley's experiments.",
+    "notes": "Mutation of ind-155 (Form 1 re-attribution): the 1779/Priestley-experiments detail re-attributed from Jan Ingenhousz to Melvin Calvin, who appears on the page (Calvin cycle, Nobel Prize 1961) but is never linked to Priestley or 1779. Grepped 'Calvin repeated' — 0 hits."
+  },
+  {
+    "id": "ind-158",
+    "category": "verbatim-supported",
+    "expected_status": "supported",
+    "labeler_confidence": "high",
+    "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array",
+    "claim": "JavaScript array-copy operations create shallow copies.",
+    "notes": "Provenance: source sentence from the Description characteristics list of evals/page_text/developer.mozilla.org_en-US_docs_Web_JavaScript_Reference_Global_Objects_Array.txt ('JavaScript array-copy operations create shallow copies.'). Copied verbatim."
+  },
+  {
+    "id": "ind-159",
+    "category": "negation-flip",
+    "expected_status": "unsupported",
+    "labeler_confidence": "high",
+    "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array",
+    "claim": "JavaScript array-copy operations do not create shallow copies.",
+    "notes": "Mutation of ind-158: main verb 'create' flipped to 'do not create'. Grepped 'do not create' — 0 hits in the page text."
+  },
+  {
+    "id": "ind-160",
+    "category": "entity-swap",
+    "expected_status": "unsupported",
+    "labeler_confidence": "high",
+    "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array",
+    "claim": "JavaScript array-copy operations create deep copies.",
+    "notes": "Mutation of ind-158 (Form 2 re-target): no second object entity appears on the page, so the relation detail is re-targeted from 'shallow copies' to 'deep copies' — a term the page itself uses only to deny the pairing ('rather than deep copies'). Grepped the claim's 6-grams — 0 shared with page text."
+  },
+  {
+    "id": "ind-161",
+    "category": "verbatim-supported",
+    "expected_status": "supported",
+    "labeler_confidence": "high",
+    "url": "https://docs.python.org/3/library/os.path.html",
+    "claim": "On other operating systems, return the path unchanged.",
+    "notes": "Provenance: source sentence from the os.path.normcase entry of evals/page_text/docs.python.org_3_library_os.path.html.txt ('On other operating systems, return the path unchanged.'). Copied verbatim; the surrounding entry names the entity os.path.normcase."
+  },
+  {
+    "id": "ind-162",
+    "category": "negation-flip",
+    "expected_status": "unsupported",
+    "labeler_confidence": "high",
+    "url": "https://docs.python.org/3/library/os.path.html",
+    "claim": "On other operating systems, os.path.normcase does not return the path unchanged.",
+    "notes": "Mutation of ind-161: main verb 'return' flipped to 'does not return' (subject os.path.normcase made explicit). Grepped 'does not return' — 0 hits in the page text."
+  },
+  {
+    "id": "ind-163",
+    "category": "entity-swap",
+    "expected_status": "unsupported",
+    "labeler_confidence": "high",
+    "url": "https://docs.python.org/3/library/os.path.html",
+    "claim": "On Windows, return the path unchanged.",
+    "notes": "Mutation of ind-161 (Form 1 re-attribution): the 'return the path unchanged' detail is re-attributed from 'other operating systems' to Windows, which appears on the page; the page actually says the opposite for Windows (it converts to lowercase and swaps slashes). Grepped 'on windows, return the path' — 0 hits."
+  },
+  {
+    "id": "ind-164",
+    "category": "verbatim-supported",
+    "expected_status": "supported",
+    "labeler_confidence": "high",
+    "url": "https://arxiv.org/abs/1412.6980",
+    "claim": "Finally, we discuss AdaMax, a variant of Adam based on the infinity norm.",
+    "notes": "Provenance: final sentence of the abstract in evals/page_text/arxiv.org_abs_1412.6980.txt. Copied verbatim."
+  },
+  {
+    "id": "ind-165",
+    "category": "negation-flip",
+    "expected_status": "unsupported",
+    "labeler_confidence": "high",
+    "url": "https://arxiv.org/abs/1412.6980",
+    "claim": "Finally, we do not discuss AdaMax.",
+    "notes": "Mutation of ind-164: main verb 'discuss' flipped to 'do not discuss'; tail after the apposition dropped so no verbatim 6-gram tail survives. Grepped 'do not discuss' — 0 hits in the page text."
+  },
+  {
+    "id": "ind-166",
+    "category": "entity-swap",
+    "expected_status": "unsupported",
+    "labeler_confidence": "high",
+    "url": "https://arxiv.org/abs/1412.6980",
+    "claim": "Finally, we discuss Adam, a variant of AdaMax based on the infinity norm.",
+    "notes": "Mutation of ind-164 (Form 1 swap): Adam and AdaMax both appear on the page; the 'variant based on the infinity norm' relation is inverted so Adam is called a variant of AdaMax. The paper says the opposite (AdaMax is a variant of Adam). Grepped 'adam, a variant of adamax' — 0 hits."
+  }
+]
