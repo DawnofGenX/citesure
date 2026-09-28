@@ -1,0 +1,62 @@
+[
+  {
+    "url": "https://en.wikipedia.org/wiki/Hubble_space_telescope",
+    "domain_group": "wikipedia",
+    "topic": "Hubble space telescope",
+    "notes": "new article, not in v1",
+    "ok": true,
+    "reason": "",
+    "extracted_chars": 147044,
+    "paywall_detected": false,
+    "retraction_detected": false,
+    "text_path": "evals/page_text/en.wikipedia.org_wiki_Hubble_space_telescope.txt"
+  },
+  {
+    "url": "https://en.wikipedia.org/wiki/Steam_engine",
+    "domain_group": "wikipedia",
+    "topic": "Steam engine history",
+    "notes": "new article, not in v1",
+    "ok": true,
+    "reason": "",
+    "extracted_chars": 64400,
+    "paywall_detected": false,
+    "retraction_detected": false,
+    "text_path": "evals/page_text/en.wikipedia.org_wiki_Steam_engine.txt"
+  },
+  {
+    "url": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers",
+    "domain_group": "mdn",
+    "topic": "HTTP headers",
+    "notes": "stable reference page",
+    "ok": true,
+    "reason": "",
+    "extracted_chars": 30410,
+    "paywall_detected": false,
+    "retraction_detected": false,
+    "text_path": "evals/page_text/developer.mozilla.org_en-US_docs_Web_HTTP_Headers.txt"
+  },
+  {
+    "url": "https://science.nasa.gov/mars/",
+    "domain_group": "gov-science",
+    "topic": "Mars exploration",
+    "notes": "stable gov science page",
+    "ok": true,
+    "reason": "",
+    "extracted_chars": 8286,
+    "paywall_detected": false,
+    "retraction_detected": false,
+    "text_path": "evals/page_text/science.nasa.gov_mars_.txt"
+  },
+  {
+    "url": "https://arxiv.org/abs/1606.08415",
+    "domain_group": "arxiv",
+    "topic": "Gradients of a loss function optimizer",
+    "notes": "new paper, not in v1",
+    "ok": true,
+    "reason": "",
+    "extracted_chars": 2675,
+    "paywall_detected": false,
+    "retraction_detected": false,
+    "text_path": "evals/page_text/arxiv.org_abs_1606.08415.txt"
+  }
+]

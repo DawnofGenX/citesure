@@ -1,0 +1,62 @@
+[
+  {
+    "url": "https://en.wikipedia.org/wiki/Periodic_table",
+    "domain_group": "wikipedia",
+    "topic": "Periodic table of elements",
+    "notes": "new article, not in v1",
+    "ok": true,
+    "reason": "",
+    "extracted_chars": 171648,
+    "paywall_detected": false,
+    "retraction_detected": false,
+    "text_path": "evals/page_text/en.wikipedia.org_wiki_Periodic_table.txt"
+  },
+  {
+    "url": "https://docs.python.org/3/library/datetime.html",
+    "domain_group": "python-docs",
+    "topic": "datetime module",
+    "notes": "stable reference page",
+    "ok": true,
+    "reason": "",
+    "extracted_chars": 87538,
+    "paywall_detected": false,
+    "retraction_detected": false,
+    "text_path": "evals/page_text/docs.python.org_3_library_datetime.html.txt"
+  },
+  {
+    "url": "https://docs.python.org/3/library/asyncio-task.html",
+    "domain_group": "python-docs",
+    "topic": "asyncio tasks",
+    "notes": "stable reference page",
+    "ok": true,
+    "reason": "",
+    "extracted_chars": 42330,
+    "paywall_detected": false,
+    "retraction_detected": false,
+    "text_path": "evals/page_text/docs.python.org_3_library_asyncio-task.html.txt"
+  },
+  {
+    "url": "https://guides.rubyonrails.org/active_record_basics.html",
+    "domain_group": "reference-other",
+    "topic": "Rails ActiveRecord basics",
+    "notes": "stable framework reference",
+    "ok": true,
+    "reason": "",
+    "extracted_chars": 22209,
+    "paywall_detected": false,
+    "retraction_detected": false,
+    "text_path": "evals/page_text/guides.rubyonrails.org_active_record_basics.html.txt"
+  },
+  {
+    "url": "https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage",
+    "domain_group": "mdn",
+    "topic": "Web Storage localStorage",
+    "notes": "stable reference page",
+    "ok": true,
+    "reason": "",
+    "extracted_chars": 3446,
+    "paywall_detected": false,
+    "retraction_detected": false,
+    "text_path": "evals/page_text/developer.mozilla.org_en-US_docs_Web_API_Window_localStorage.txt"
+  }
+]

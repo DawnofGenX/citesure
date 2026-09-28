@@ -1,0 +1,62 @@
+[
+  {
+    "url": "https://www.rfc-editor.org/rfc/rfc793.html",
+    "domain_group": "standards",
+    "topic": "TCP specification",
+    "notes": "stable standards document",
+    "ok": true,
+    "reason": "",
+    "extracted_chars": 158337,
+    "paywall_detected": false,
+    "retraction_detected": false,
+    "text_path": "evals/page_text/www.rfc-editor.org_rfc_rfc793.html.txt"
+  },
+  {
+    "url": "https://en.wikipedia.org/wiki/Photosynthesis",
+    "domain_group": "wikipedia",
+    "topic": "Photosynthesis biology",
+    "notes": "new article, not in v1",
+    "ok": true,
+    "reason": "",
+    "extracted_chars": 79668,
+    "paywall_detected": false,
+    "retraction_detected": false,
+    "text_path": "evals/page_text/en.wikipedia.org_wiki_Photosynthesis.txt"
+  },
+  {
+    "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array",
+    "domain_group": "mdn",
+    "topic": "JavaScript Array",
+    "notes": "stable reference page",
+    "ok": true,
+    "reason": "",
+    "extracted_chars": 38840,
+    "paywall_detected": false,
+    "retraction_detected": false,
+    "text_path": "evals/page_text/developer.mozilla.org_en-US_docs_Web_JavaScript_Reference_Global_Objects_Array.txt"
+  },
+  {
+    "url": "https://docs.python.org/3/library/os.path.html",
+    "domain_group": "python-docs",
+    "topic": "os.path filesystem operations",
+    "notes": "stable reference page; no JS-rendered content",
+    "ok": true,
+    "reason": "",
+    "extracted_chars": 19580,
+    "paywall_detected": false,
+    "retraction_detected": false,
+    "text_path": "evals/page_text/docs.python.org_3_library_os.path.html.txt"
+  },
+  {
+    "url": "https://arxiv.org/abs/1412.6980",
+    "domain_group": "arxiv",
+    "topic": "Adam optimizer",
+    "notes": "new paper, not in v1",
+    "ok": true,
+    "reason": "",
+    "extracted_chars": 3411,
+    "paywall_detected": false,
+    "retraction_detected": false,
+    "text_path": "evals/page_text/arxiv.org_abs_1412.6980.txt"
+  }
+]

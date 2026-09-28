@@ -1,0 +1,62 @@
+[
+  {
+    "url": "https://en.wikipedia.org/wiki/Mount_Everest",
+    "domain_group": "wikipedia",
+    "topic": "Mount Everest geography",
+    "notes": "new article, not in v1",
+    "ok": true,
+    "reason": "",
+    "extracted_chars": 151485,
+    "paywall_detected": false,
+    "retraction_detected": false,
+    "text_path": "evals/page_text/en.wikipedia.org_wiki_Mount_Everest.txt"
+  },
+  {
+    "url": "https://en.wikipedia.org/wiki/Marie_Curie",
+    "domain_group": "wikipedia",
+    "topic": "Marie Curie biography",
+    "notes": "new article, not in v1",
+    "ok": true,
+    "reason": "",
+    "extracted_chars": 69203,
+    "paywall_detected": false,
+    "retraction_detected": false,
+    "text_path": "evals/page_text/en.wikipedia.org_wiki_Marie_Curie.txt"
+  },
+  {
+    "url": "https://docs.python.org/3/library/itertools.html",
+    "domain_group": "python-docs",
+    "topic": "itertools module",
+    "notes": "stable reference page",
+    "ok": true,
+    "reason": "",
+    "extracted_chars": 35382,
+    "paywall_detected": false,
+    "retraction_detected": false,
+    "text_path": "evals/page_text/docs.python.org_3_library_itertools.html.txt"
+  },
+  {
+    "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map",
+    "domain_group": "mdn",
+    "topic": "JavaScript Map object",
+    "notes": "stable reference page",
+    "ok": true,
+    "reason": "",
+    "extracted_chars": 12684,
+    "paywall_detected": false,
+    "retraction_detected": false,
+    "text_path": "evals/page_text/developer.mozilla.org_en-US_docs_Web_JavaScript_Reference_Global_Objects_Map.txt"
+  },
+  {
+    "url": "https://arxiv.org/abs/1512.03385",
+    "domain_group": "arxiv",
+    "topic": "ResNet deep residual learning",
+    "notes": "new paper, not in v1",
+    "ok": true,
+    "reason": "",
+    "extracted_chars": 3013,
+    "paywall_detected": false,
+    "retraction_detected": false,
+    "text_path": "evals/page_text/arxiv.org_abs_1512.03385.txt"
+  }
+]

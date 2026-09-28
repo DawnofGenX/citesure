@@ -1,0 +1,74 @@
+[
+  {
+    "url": "https://datatracker.ietf.org/doc/html/rfc2616",
+    "domain_group": "standards",
+    "topic": "HTTP/1.1 specification",
+    "notes": "stable standards document",
+    "ok": true,
+    "reason": "",
+    "extracted_chars": 416072,
+    "paywall_detected": false,
+    "retraction_detected": false,
+    "text_path": "evals/page_text/datatracker.ietf.org_doc_html_rfc2616.txt"
+  },
+  {
+    "url": "https://en.wikipedia.org/wiki/Alan_Turing",
+    "domain_group": "wikipedia",
+    "topic": "Alan Turing biography",
+    "notes": "new article, not in v1",
+    "ok": true,
+    "reason": "",
+    "extracted_chars": 104449,
+    "paywall_detected": false,
+    "retraction_detected": false,
+    "text_path": "evals/page_text/en.wikipedia.org_wiki_Alan_Turing.txt"
+  },
+  {
+    "url": "https://docs.python.org/3/library/collections.html",
+    "domain_group": "python-docs",
+    "topic": "collections module",
+    "notes": "stable reference page",
+    "ok": true,
+    "reason": "",
+    "extracted_chars": 44613,
+    "paywall_detected": false,
+    "retraction_detected": false,
+    "text_path": "evals/page_text/docs.python.org_3_library_collections.html.txt"
+  },
+  {
+    "url": "https://docs.python.org/3/library/json.html",
+    "domain_group": "python-docs",
+    "topic": "json serialization",
+    "notes": "stable reference page",
+    "ok": true,
+    "reason": "",
+    "extracted_chars": 23677,
+    "paywall_detected": false,
+    "retraction_detected": false,
+    "text_path": "evals/page_text/docs.python.org_3_library_json.html.txt"
+  },
+  {
+    "url": "https://arxiv.org/abs/2005.11401",
+    "domain_group": "arxiv",
+    "topic": "Dense passage retrieval",
+    "notes": "new paper, not in v1",
+    "ok": true,
+    "reason": "",
+    "extracted_chars": 3600,
+    "paywall_detected": false,
+    "retraction_detected": false,
+    "text_path": "evals/page_text/arxiv.org_abs_2005.11401.txt"
+  },
+  {
+    "url": "https://docs.python.org/3/library/asyncio.html",
+    "domain_group": "python-docs",
+    "topic": "asyncio module",
+    "notes": "stable reference page",
+    "ok": true,
+    "reason": "",
+    "extracted_chars": 2174,
+    "paywall_detected": false,
+    "retraction_detected": false,
+    "text_path": "evals/page_text/docs.python.org_3_library_asyncio.html.txt"
+  }
+]

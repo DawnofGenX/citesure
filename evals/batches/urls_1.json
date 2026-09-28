@@ -1,0 +1,74 @@
+[
+  {
+    "url": "https://tc39.es/ecma262/",
+    "domain_group": "standards",
+    "topic": "ECMAScript language specification",
+    "notes": "stable standards document",
+    "ok": true,
+    "reason": "",
+    "extracted_chars": 773782,
+    "paywall_detected": false,
+    "retraction_detected": false,
+    "text_path": "evals/page_text/tc39.es_ecma262_.txt"
+  },
+  {
+    "url": "https://en.wikipedia.org/wiki/Black_hole",
+    "domain_group": "wikipedia",
+    "topic": "Black hole astrophysics",
+    "notes": "new article, not in v1",
+    "ok": true,
+    "reason": "",
+    "extracted_chars": 134415,
+    "paywall_detected": false,
+    "retraction_detected": false,
+    "text_path": "evals/page_text/en.wikipedia.org_wiki_Black_hole.txt"
+  },
+  {
+    "url": "https://docs.djangoproject.com/en/stable/topics/db/models/",
+    "domain_group": "reference-other",
+    "topic": "Django ORM models",
+    "notes": "stable framework reference",
+    "ok": true,
+    "reason": "",
+    "extracted_chars": 49010,
+    "paywall_detected": false,
+    "retraction_detected": false,
+    "text_path": "evals/page_text/docs.djangoproject.com_en_stable_topics_db_models_.txt"
+  },
+  {
+    "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise",
+    "domain_group": "mdn",
+    "topic": "JavaScript Promise",
+    "notes": "stable reference page",
+    "ok": true,
+    "reason": "",
+    "extracted_chars": 27614,
+    "paywall_detected": false,
+    "retraction_detected": false,
+    "text_path": "evals/page_text/developer.mozilla.org_en-US_docs_Web_JavaScript_Reference_Global_Objects_Promise.txt"
+  },
+  {
+    "url": "https://developer.mozilla.org/en-US/docs/Web/CSS/color",
+    "domain_group": "mdn",
+    "topic": "CSS color",
+    "notes": "stable reference page",
+    "ok": true,
+    "reason": "",
+    "extracted_chars": 4329,
+    "paywall_detected": false,
+    "retraction_detected": false,
+    "text_path": "evals/page_text/developer.mozilla.org_en-US_docs_Web_CSS_color.txt"
+  },
+  {
+    "url": "https://arxiv.org/abs/1308.0853",
+    "domain_group": "arxiv",
+    "topic": "Efficient estimation word vectors",
+    "notes": "new paper, not in v1",
+    "ok": true,
+    "reason": "",
+    "extracted_chars": 2620,
+    "paywall_detected": false,
+    "retraction_detected": false,
+    "text_path": "evals/page_text/arxiv.org_abs_1308.0853.txt"
+  }
+]
