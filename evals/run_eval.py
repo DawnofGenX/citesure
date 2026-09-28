@@ -213,6 +213,9 @@ def main(argv=None) -> int:
     ap.add_argument("--nli", action="store_true", help="enable NLI tier (Phase B)")
     ap.add_argument("--out", default=str(Path(__file__).resolve().parent / "results"),
                     help="output directory for results JSON")
+    ap.add_argument("--compare", default=None,
+                    help="baseline results file or dir to diff against "
+                         "(e.g. evals/results/v1_replay)")
     args = ap.parse_args(argv)
 
     cache_dir = _configure_cache_dir()
@@ -288,6 +291,38 @@ def main(argv=None) -> int:
     }
     result_path.write_text(json.dumps(payload, indent=2, ensure_ascii=False), encoding="utf-8")
     print(f"\nwrote results -> {result_path}")
+
+    # ---- optional no-regression diff --------------------------------------
+    if args.compare:
+        base_path = Path(args.compare)
+        if base_path.is_dir():
+            files = sorted(base_path.glob("*.json"))
+            baseline = json.loads(files[-1].read_text(encoding="utf-8")) if files else None
+        elif base_path.exists():
+            baseline = json.loads(base_path.read_text(encoding="utf-8"))
+        else:
+            baseline = None
+        if baseline is None:
+            print(f"\n[compare] no baseline found at {args.compare}")
+        else:
+            b_tot, n_tot = baseline.get("total", 0), total
+            b_matched, n_matched = baseline.get("matched", 0), matched
+            b_pct = baseline.get("agreement_pct", 0.0)
+            print("\n=== COMPARISON vs baseline ===")
+            print(f"baseline : {b_matched}/{b_tot} = {b_pct:.1f}%  ({baseline.get('set', '?')})")
+            print(f"current  : {n_matched}/{n_tot} = {agreement:.1f}%  ({args.set})")
+            if b_tot == n_tot:
+                print(f"delta    : {n_matched - b_matched:+d} cases")
+            else:
+                print(f"delta    : {n_matched - b_matched:+d} cases "
+                      f"(NOTE: set size changed {b_tot} -> {n_tot}; "
+                      f"only within-set runs are comparable)")
+            for key in ("negation_flip_false_supported", "entity_swap_false_supported"):
+                b = baseline.get("safety", {}).get(key)
+                n = payload["safety"].get(key)
+                if b is not None and n is not None:
+                    flag = "" if n <= b else "   <-- SAFETY REGRESSION"
+                    print(f"{key:34s} {b} -> {n}{flag}")
     return 0
 
 
