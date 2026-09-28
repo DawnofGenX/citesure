@@ -514,9 +514,15 @@ async def verify_citations(
                 for passage in ctx.get("passages", [ctx["passage"]]):
                     # Clip long passages to relevant sentences before expansion
                     clipped = clip_passage_for_nli(ctx["claim"], passage)
+                    # IMP-3: select the single claim-bearing sentence BEFORE
+                    # expansion. A trailing meta-comment ("Changed in version
+                    # 3.6.") collapses DeBERTa's entailment on an otherwise
+                    # identical premise; selecting here removes it while keeping
+                    # expansion free to re-attach an anaphoric antecedent.
+                    selected = select_best_sentence(ctx["claim"], clipped)
                     # IMP-2: expand passage with adjacent sentences for
                     # pronoun resolution ("It obtains SOTA" → "BERT ... It ...")
-                    expanded = expand_passage_in_text(clipped, target_text, radius=1)
+                    expanded = expand_passage_in_text(selected, target_text, radius=1)
                     flat_pairs.append((ctx["claim"], expanded))
                     pair_owner.append(ci)
 
