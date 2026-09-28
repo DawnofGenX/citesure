@@ -332,12 +332,23 @@ def select_best_sentence(claim: str, passage: str) -> str:
     if len(sentences) <= 1:
         return passage
     claim_terms = content_terms(clean_claim(claim))
-    best_i, best_score = 0, -1.0
+    scored = []
     for i, sent in enumerate(sentences):
         overlap = len(claim_terms & content_terms(sent)) / max(len(claim_terms), 1)
-        if overlap > best_score:
-            best_i, best_score = i, overlap
-    return sentences[best_i]
+        # An anaphoric sentence ("It obtains ...") names its subject only in the
+        # preceding sentence, and it usually out-scores the antecedent on term
+        # overlap alone. Boost it so the pair is scored as the pair reads, not
+        # with the subject sliced off.
+        first_word = (sent.split() or [""])[0].strip(",;:").lower()
+        if first_word in _ANAPHORIC_STARTS:
+            overlap += 1.0
+        scored.append((overlap, i, sent))
+    scored.sort(key=lambda t: (-t[0], t[1]))
+    best = scored[0]
+    # Return the anaphoric sentence together with its antecedent.
+    if best[0] > 1.0 and best[1] > 0:
+        return sentences[best[1] - 1] + " " + best[2]
+    return best[2]
 
 
 def rank_passages(

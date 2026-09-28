@@ -521,3 +521,22 @@ def test_select_best_sentence_handles_empty_input():
     assert select_best_sentence("claim", "") == ""
     # Whitespace-only: returned as-is (stripped to empty) rather than invented.
     assert select_best_sentence("claim", "   ").strip() == ""
+
+
+def test_select_best_sentence_keeps_anaphoric_antecedent():
+    """An anaphoric "It ..." must not be isolated from the sentence naming its subject.
+
+    ind-006/ind-015 regression: "BERT is conceptually simple ... It obtains new
+    state-of-the-art results" -- the pronoun sentence shares 7 claim terms while
+    the antecedent sentence shares only 1 ("BERT"), so naive selection keeps the
+    pronoun and strips the subject, dropping entailment 0.9975 -> 0.0028.
+    """
+    from citesure.overlap import select_best_sentence
+
+    claim = "BERT obtains new state-of-the-art results on eleven language tasks."
+    passage = (
+        "BERT is conceptually simple and empirically powerful. "
+        "It obtains new state-of-the-art results on eleven language tasks."
+    )
+    out = select_best_sentence(claim, passage)
+    assert "BERT" in out, f"antecedent stripped: {out!r}"
