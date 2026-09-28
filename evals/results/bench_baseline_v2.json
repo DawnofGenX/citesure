@@ -50,9 +50,984 @@
           "rate": 0.2188
         }
       },
-      "model": "/home/hermes/.cache/huggingface/hub/models--cross-encoder--nli-deberta-v3-base/snapshots/6c749ce3425cd33b46d187e45b92bbf96ee12ec7",
-      "elapsed_s": 116.7,
-      "s_per_case": 1.08
+      "model": "cross-encoder/nli-deberta-v3-base",
+      "elapsed_s": 119.1,
+      "s_per_case": 1.102,
+      "records": [
+        {
+          "id": "ind-101",
+          "category": "verbatim-supported",
+          "expected": "supported",
+          "predicted": "ambiguous",
+          "score": 0.676,
+          "tier_reached": 3,
+          "evidence": "Introduction This Ecma Standard defines the ECMAScript 2027 Language. It is the eighteenth edition of the ECMAScript Language Specification. ECMAScript is based on several originating technologies, th"
+        },
+        {
+          "id": "ind-102",
+          "category": "negation-flip",
+          "expected": "unsupported",
+          "predicted": "unsupported",
+          "score": 0.0027,
+          "tier_reached": 3,
+          "evidence": "Introduction This Ecma Standard defines the ECMAScript 2027 Language. It is the eighteenth edition of the ECMAScript Language Specification. ECMAScript is based on several originating technologies, th"
+        },
+        {
+          "id": "ind-103",
+          "category": "entity-swap",
+          "expected": "unsupported",
+          "predicted": "unsupported",
+          "score": 0.0002,
+          "tier_reached": 3,
+          "evidence": "Introduction This Ecma Standard defines the ECMAScript 2027 Language. It is the eighteenth edition of the ECMAScript Language Specification. ECMAScript is based on several originating technologies, th"
+        },
+        {
+          "id": "ind-104",
+          "category": "verbatim-supported",
+          "expected": "supported",
+          "predicted": "unsupported",
+          "score": 0.0026,
+          "tier_reached": 3,
+          "evidence": "The laws of mechanics had already been shown to be invariant in this way. However, the theory of gravitation was yet to be included.[8]: 19 In 1907, Einstein published a paper proposing his equivalenc"
+        },
+        {
+          "id": "ind-105",
+          "category": "negation-flip",
+          "expected": "unsupported",
+          "predicted": "unsupported",
+          "score": 0.0003,
+          "tier_reached": 3,
+          "evidence": "The laws of mechanics had already been shown to be invariant in this way. However, the theory of gravitation was yet to be included.[8]: 19 In 1907, Einstein published a paper proposing his equivalenc"
+        },
+        {
+          "id": "ind-106",
+          "category": "entity-swap",
+          "expected": "unsupported",
+          "predicted": "unsupported",
+          "score": 0.0002,
+          "tier_reached": 3,
+          "evidence": "The laws of mechanics had already been shown to be invariant in this way. However, the theory of gravitation was yet to be included.[8]: 19 In 1907, Einstein published a paper proposing his equivalenc"
+        },
+        {
+          "id": "ind-107",
+          "category": "verbatim-supported",
+          "expected": "supported",
+          "predicted": "supported",
+          "score": 0.989,
+          "tier_reached": 3,
+          "evidence": "Django will automatically capitalize the first letter where it needs to. Relationships\u00b6 Clearly, the power of relational databases lies in relating tables to each other. Django offers ways to define t"
+        },
+        {
+          "id": "ind-108",
+          "category": "negation-flip",
+          "expected": "unsupported",
+          "predicted": "unsupported",
+          "score": 0.0001,
+          "tier_reached": 3,
+          "evidence": "Django will automatically capitalize the first letter where it needs to. Relationships\u00b6 Clearly, the power of relational databases lies in relating tables to each other. Django offers ways to define t"
+        },
+        {
+          "id": "ind-109",
+          "category": "entity-swap",
+          "expected": "unsupported",
+          "predicted": "supported",
+          "score": 0.9946,
+          "tier_reached": 3,
+          "evidence": "Django will automatically capitalize the first letter where it needs to. Relationships\u00b6 Clearly, the power of relational databases lies in relating tables to each other. Django offers ways to define t"
+        },
+        {
+          "id": "ind-110",
+          "category": "verbatim-supported",
+          "expected": "supported",
+          "predicted": "supported",
+          "score": 0.9959,
+          "tier_reached": 3,
+          "evidence": "Promise Baseline Widely available * This feature is well established and works across many devices and browser versions. It\u2019s been available across browsers since July 2015. * Some parts of this featu"
+        },
+        {
+          "id": "ind-111",
+          "category": "negation-flip",
+          "expected": "unsupported",
+          "predicted": "unsupported",
+          "score": 0.0087,
+          "tier_reached": 3,
+          "evidence": "Promise Baseline Widely available * This feature is well established and works across many devices and browser versions. It\u2019s been available across browsers since July 2015. * Some parts of this featu"
+        },
+        {
+          "id": "ind-112",
+          "category": "entity-swap",
+          "expected": "unsupported",
+          "predicted": "unsupported",
+          "score": 0.0032,
+          "tier_reached": 3,
+          "evidence": "Promise Baseline Widely available * This feature is well established and works across many devices and browser versions. It\u2019s been available across browsers since July 2015. * Some parts of this featu"
+        },
+        {
+          "id": "ind-113",
+          "category": "verbatim-supported",
+          "expected": "supported",
+          "predicted": "supported",
+          "score": 0.9917,
+          "tier_reached": 3,
+          "evidence": "color CSS property Baseline Widely available This feature is well established and works across many devices and browser versions. It\u2019s been available across browsers since July 2015. The color CSS pro"
+        },
+        {
+          "id": "ind-114",
+          "category": "negation-flip",
+          "expected": "unsupported",
+          "predicted": "unsupported",
+          "score": 0.0405,
+          "tier_reached": 3,
+          "evidence": "color CSS property Baseline Widely available This feature is well established and works across many devices and browser versions. It\u2019s been available across browsers since July 2015. The color CSS pro"
+        },
+        {
+          "id": "ind-115",
+          "category": "entity-swap",
+          "expected": "unsupported",
+          "predicted": "unsupported",
+          "score": 0.0656,
+          "tier_reached": 3,
+          "evidence": "color CSS property Baseline Widely available This feature is well established and works across many devices and browser versions. It\u2019s been available across browsers since July 2015. The color CSS pro"
+        },
+        {
+          "id": "ind-116",
+          "category": "verbatim-supported",
+          "expected": "supported",
+          "predicted": "supported",
+          "score": 0.9864,
+          "tier_reached": 3,
+          "evidence": "Mathematics > Classical Analysis and ODEs [Submitted on 4 Aug 2013 (v1), last revised 11 Dec 2013 (this version, v2)] Title:Refined Sobolev inequalities on manifolds with ends View PDF HTML (experimen"
+        },
+        {
+          "id": "ind-117",
+          "category": "negation-flip",
+          "expected": "unsupported",
+          "predicted": "supported",
+          "score": 0.8995,
+          "tier_reached": 3,
+          "evidence": "Mathematics > Classical Analysis and ODEs [Submitted on 4 Aug 2013 (v1), last revised 11 Dec 2013 (this version, v2)] Title:Refined Sobolev inequalities on manifolds with ends View PDF HTML (experimen"
+        },
+        {
+          "id": "ind-118",
+          "category": "entity-swap",
+          "expected": "unsupported",
+          "predicted": "supported",
+          "score": 0.9851,
+          "tier_reached": 3,
+          "evidence": "Mathematics > Classical Analysis and ODEs [Submitted on 4 Aug 2013 (v1), last revised 11 Dec 2013 (this version, v2)] Title:Refined Sobolev inequalities on manifolds with ends View PDF HTML (experimen"
+        },
+        {
+          "id": "ind-119",
+          "category": "verbatim-supported",
+          "expected": "supported",
+          "predicted": "supported",
+          "score": 0.9922,
+          "tier_reached": 3,
+          "evidence": "HTTP has been in use by the World-Wide Web global information initiative since 1990. This specification defines the protocol referred to as \"HTTP/1.1\", and is an update to RFC 2068 [33]. Fielding, et "
+        },
+        {
+          "id": "ind-120",
+          "category": "negation-flip",
+          "expected": "unsupported",
+          "predicted": "unsupported",
+          "score": 0.0019,
+          "tier_reached": 3,
+          "evidence": "HTTP has been in use by the World-Wide Web global information initiative since 1990. This specification defines the protocol referred to as \"HTTP/1.1\", and is an update to RFC 2068 [33]. Fielding, et "
+        },
+        {
+          "id": "ind-121",
+          "category": "entity-swap",
+          "expected": "unsupported",
+          "predicted": "unsupported",
+          "score": 0.0026,
+          "tier_reached": 3,
+          "evidence": "Standards Track [Page 6] RFC 2616 HTTP/1.1 June 1999 19.4.1 MIME-Version ............................................167 19.4.2 Conversion to Canonical Form ............................167 19.4.3 Conv"
+        },
+        {
+          "id": "ind-122",
+          "category": "verbatim-supported",
+          "expected": "supported",
+          "predicted": "supported",
+          "score": 0.9924,
+          "tier_reached": 3,
+          "evidence": "Participants were Womersley, Turing, Porter from England and a few German researchers like Zuse, Walther, and Billing (for more details see Herbert Bruderer, Konrad Zuse und die Schweiz). In 1948, Tur"
+        },
+        {
+          "id": "ind-123",
+          "category": "negation-flip",
+          "expected": "unsupported",
+          "predicted": "unsupported",
+          "score": 0.0001,
+          "tier_reached": 3,
+          "evidence": "Participants were Womersley, Turing, Porter from England and a few German researchers like Zuse, Walther, and Billing (for more details see Herbert Bruderer, Konrad Zuse und die Schweiz). In 1948, Tur"
+        },
+        {
+          "id": "ind-124",
+          "category": "entity-swap",
+          "expected": "unsupported",
+          "predicted": "unsupported",
+          "score": 0.041,
+          "tier_reached": 3,
+          "evidence": "In 1948, he joined Max Newman's Computing Machine Laboratory at the University of Manchester, contributing to the development of early Manchester computers.[13] He also turned to mathematical biology,"
+        },
+        {
+          "id": "ind-125",
+          "category": "verbatim-supported",
+          "expected": "supported",
+          "predicted": "supported",
+          "score": 0.997,
+          "tier_reached": 3,
+          "evidence": "In contrast, writes, updates, and deletions only operate on the first mapping. A ChainMap incorporates the underlying mappings by reference. So, if one of the underlying mappings gets updated, those c"
+        },
+        {
+          "id": "ind-126",
+          "category": "negation-flip",
+          "expected": "unsupported",
+          "predicted": "unsupported",
+          "score": 0.0002,
+          "tier_reached": 3,
+          "evidence": "In contrast, writes, updates, and deletions only operate on the first mapping. A ChainMap incorporates the underlying mappings by reference. So, if one of the underlying mappings gets updated, those c"
+        },
+        {
+          "id": "ind-127",
+          "category": "entity-swap",
+          "expected": "unsupported",
+          "predicted": "unsupported",
+          "score": 0.0182,
+          "tier_reached": 3,
+          "evidence": "ChainMap was dict-like class for creating a single view of multiple mappings. Counter was dict subclass for counting hashable objects. OrderedDict was dict subclass that remembers the order entries we"
+        },
+        {
+          "id": "ind-128",
+          "category": "verbatim-supported",
+          "expected": "supported",
+          "predicted": "unsupported",
+          "score": 0.1154,
+          "tier_reached": 3,
+          "evidence": "Expecting property name enclosed in double quotes: line 1 column 2 (char 1) See Command-line interface for detailed documentation. Note JSON is a subset of YAML 1.2. The JSON produced by this module\u2019s"
+        },
+        {
+          "id": "ind-129",
+          "category": "negation-flip",
+          "expected": "unsupported",
+          "predicted": "unsupported",
+          "score": 0.0518,
+          "tier_reached": 3,
+          "evidence": "Expecting property name enclosed in double quotes: line 1 column 2 (char 1) See Command-line interface for detailed documentation. Note JSON is a subset of YAML 1.2. The JSON produced by this module\u2019s"
+        },
+        {
+          "id": "ind-130",
+          "category": "entity-swap",
+          "expected": "unsupported",
+          "predicted": "unsupported",
+          "score": 0.0205,
+          "tier_reached": 3,
+          "evidence": "Expecting property name enclosed in double quotes: line 1 column 2 (char 1) See Command-line interface for detailed documentation. Note JSON is a subset of YAML 1.2. The JSON produced by this module\u2019s"
+        },
+        {
+          "id": "ind-131",
+          "category": "verbatim-supported",
+          "expected": "supported",
+          "predicted": "unsupported",
+          "score": 0.0026,
+          "tier_reached": 3,
+          "evidence": "We introduce RAG models where the parametric memory is a pre-trained seq2seq model and the non-parametric memory is a dense vector index of Wikipedia, accessed with a pre-trained neural retriever. We "
+        },
+        {
+          "id": "ind-132",
+          "category": "negation-flip",
+          "expected": "unsupported",
+          "predicted": "unsupported",
+          "score": 0.0047,
+          "tier_reached": 3,
+          "evidence": "We introduce RAG models where the parametric memory is a pre-trained seq2seq model and the non-parametric memory is a dense vector index of Wikipedia, accessed with a pre-trained neural retriever. We "
+        },
+        {
+          "id": "ind-133",
+          "category": "entity-swap",
+          "expected": "unsupported",
+          "predicted": "unsupported",
+          "score": 0.0033,
+          "tier_reached": 3,
+          "evidence": "We introduce RAG models where the parametric memory is a pre-trained seq2seq model and the non-parametric memory is a dense vector index of Wikipedia, accessed with a pre-trained neural retriever. We "
+        },
+        {
+          "id": "ind-134",
+          "category": "verbatim-supported",
+          "expected": "supported",
+          "predicted": "supported",
+          "score": 0.9949,
+          "tier_reached": 3,
+          "evidence": "asyncio \u2014 Asynchronous I/O\u00b6 asyncio is a library to write concurrent code using the async/await syntax. asyncio is used as a foundation for multiple Python asynchronous frameworks that provide high-pe"
+        },
+        {
+          "id": "ind-135",
+          "category": "negation-flip",
+          "expected": "unsupported",
+          "predicted": "unsupported",
+          "score": 0.0003,
+          "tier_reached": 3,
+          "evidence": "asyncio \u2014 Asynchronous I/O\u00b6 asyncio is a library to write concurrent code using the async/await syntax. asyncio is used as a foundation for multiple Python asynchronous frameworks that provide high-pe"
+        },
+        {
+          "id": "ind-136",
+          "category": "entity-swap",
+          "expected": "unsupported",
+          "predicted": "supported",
+          "score": 0.9669,
+          "tier_reached": 3,
+          "evidence": "asyncio \u2014 Asynchronous I/O\u00b6 asyncio is a library to write concurrent code using the async/await syntax. asyncio is used as a foundation for multiple Python asynchronous frameworks that provide high-pe"
+        },
+        {
+          "id": "ind-137",
+          "category": "verbatim-supported",
+          "expected": "supported",
+          "predicted": "supported",
+          "score": 0.9962,
+          "tier_reached": 3,
+          "evidence": "After he found a consistent arrangement, his printed table appeared in May 1869 in the journal of the Russian Chemical Society.[209] When elements did not appear to fit in the system, he boldly predic"
+        },
+        {
+          "id": "ind-138",
+          "category": "negation-flip",
+          "expected": "unsupported",
+          "predicted": "unsupported",
+          "score": 0.001,
+          "tier_reached": 3,
+          "evidence": "After he found a consistent arrangement, his printed table appeared in May 1869 in the journal of the Russian Chemical Society.[209] When elements did not appear to fit in the system, he boldly predic"
+        },
+        {
+          "id": "ind-139",
+          "category": "entity-swap",
+          "expected": "unsupported",
+          "predicted": "unsupported",
+          "score": 0.0051,
+          "tier_reached": 3,
+          "evidence": "After he found a consistent arrangement, his printed table appeared in May 1869 in the journal of the Russian Chemical Society.[209] When elements did not appear to fit in the system, he boldly predic"
+        },
+        {
+          "id": "ind-140",
+          "category": "verbatim-supported",
+          "expected": "supported",
+          "predicted": "supported",
+          "score": 0.9973,
+          "tier_reached": 3,
+          "evidence": "[3] The ISO year consists of 52 or 53 full weeks, and where a week starts on a Monday and ends on a Sunday. The first week of an ISO year is the first (Gregorian) calendar week of a year containing a "
+        },
+        {
+          "id": "ind-141",
+          "category": "negation-flip",
+          "expected": "unsupported",
+          "predicted": "unsupported",
+          "score": 0.064,
+          "tier_reached": 3,
+          "evidence": "[3] The ISO year consists of 52 or 53 full weeks, and where a week starts on a Monday and ends on a Sunday. The first week of an ISO year is the first (Gregorian) calendar week of a year containing a "
+        },
+        {
+          "id": "ind-142",
+          "category": "entity-swap",
+          "expected": "unsupported",
+          "predicted": "unsupported",
+          "score": 0.1155,
+          "tier_reached": 3,
+          "evidence": "[3] The ISO year consists of 52 or 53 full weeks, and where a week starts on a Monday and ends on a Sunday. The first week of an ISO year is the first (Gregorian) calendar week of a year containing a "
+        },
+        {
+          "id": "ind-143",
+          "category": "verbatim-supported",
+          "expected": "supported",
+          "predicted": "supported",
+          "score": 0.9961,
+          "tier_reached": 3,
+          "evidence": "# Let's do it differently now and await it: print(await nested()) # will print \"42\". asyncio.run(main()) Important In this documentation the term \u201ccoroutine\u201d can be used for two closely related concep"
+        },
+        {
+          "id": "ind-144",
+          "category": "negation-flip",
+          "expected": "unsupported",
+          "predicted": "unsupported",
+          "score": 0.0002,
+          "tier_reached": 3,
+          "evidence": "# Let's do it differently now and await it: print(await nested()) # will print \"42\". asyncio.run(main()) Important In this documentation the term \u201ccoroutine\u201d can be used for two closely related concep"
+        },
+        {
+          "id": "ind-145",
+          "category": "entity-swap",
+          "expected": "unsupported",
+          "predicted": "supported",
+          "score": 0.9761,
+          "tier_reached": 3,
+          "evidence": "# Let's do it differently now and await it: print(await nested()) # will print \"42\". asyncio.run(main()) Important In this documentation the term \u201ccoroutine\u201d can be used for two closely related concep"
+        },
+        {
+          "id": "ind-146",
+          "category": "verbatim-supported",
+          "expected": "supported",
+          "predicted": "supported",
+          "score": 0.9008,
+          "tier_reached": 3,
+          "evidence": "1. What is Active Record? Active Record is part of the M in MVC - the model - which is the layer of the system responsible for representing data and business logic. Active Record helps you create and "
+        },
+        {
+          "id": "ind-147",
+          "category": "negation-flip",
+          "expected": "unsupported",
+          "predicted": "unsupported",
+          "score": 0.0902,
+          "tier_reached": 3,
+          "evidence": "It's possible to model data with Ruby objects that do not need to be backed by a database. Active Model is commonly used for that in Rails, making Active Record and Active Model both part of the M in "
+        },
+        {
+          "id": "ind-148",
+          "category": "entity-swap",
+          "expected": "unsupported",
+          "predicted": "unsupported",
+          "score": 0.0182,
+          "tier_reached": 3,
+          "evidence": "1. What is Active Record? Active Record is part of the M in MVC - the model - which is the layer of the system responsible for representing data and business logic. Active Record helps you create and "
+        },
+        {
+          "id": "ind-149",
+          "category": "verbatim-supported",
+          "expected": "supported",
+          "predicted": "supported",
+          "score": 0.9373,
+          "tier_reached": 3,
+          "evidence": "Note that if the user blocks cookies, browsers will probably interpret this as an instruction to prevent the page from persisting data. - The origin is not a valid scheme/host/port tuple. - The origin"
+        },
+        {
+          "id": "ind-150",
+          "category": "negation-flip",
+          "expected": "unsupported",
+          "predicted": "unsupported",
+          "score": 0.0004,
+          "tier_reached": 3,
+          "evidence": "Note that if the user blocks cookies, browsers will probably interpret this as an instruction to prevent the page from persisting data. - The origin is not a valid scheme/host/port tuple. - The origin"
+        },
+        {
+          "id": "ind-151",
+          "category": "entity-swap",
+          "expected": "unsupported",
+          "predicted": "unsupported",
+          "score": 0.0033,
+          "tier_reached": 3,
+          "evidence": "Note that if the user blocks cookies, browsers will probably interpret this as an instruction to prevent the page from persisting data. - The origin is not a valid scheme/host/port tuple. - The origin"
+        },
+        {
+          "id": "ind-152",
+          "category": "verbatim-supported",
+          "expected": "supported",
+          "predicted": "supported",
+          "score": 0.995,
+          "tier_reached": 3,
+          "evidence": "[Page 1] September 1981 Transmission Control Protocol Introduction TCP is based on concepts first described by Cerf and Kahn in [1]. The TCP fits into a layered protocol architecture just above a basi"
+        },
+        {
+          "id": "ind-153",
+          "category": "negation-flip",
+          "expected": "unsupported",
+          "predicted": "unsupported",
+          "score": 0.0009,
+          "tier_reached": 3,
+          "evidence": "[Page 1] September 1981 Transmission Control Protocol Introduction TCP is based on concepts first described by Cerf and Kahn in [1]. The TCP fits into a layered protocol architecture just above a basi"
+        },
+        {
+          "id": "ind-154",
+          "category": "entity-swap",
+          "expected": "unsupported",
+          "predicted": "unsupported",
+          "score": 0.002,
+          "tier_reached": 3,
+          "evidence": "[Page 1] September 1981 Transmission Control Protocol Introduction TCP is based on concepts first described by Cerf and Kahn in [1]. The TCP fits into a layered protocol architecture just above a basi"
+        },
+        {
+          "id": "ind-155",
+          "category": "verbatim-supported",
+          "expected": "supported",
+          "predicted": "supported",
+          "score": 0.9743,
+          "tier_reached": 3,
+          "evidence": "He further discovered that a mouse could similarly \"injure\" air. He then showed that a plant could restore the air the candle and the mouse had \"injured\".[90] In 1779, Jan Ingenhousz repeated Priestle"
+        },
+        {
+          "id": "ind-156",
+          "category": "negation-flip",
+          "expected": "unsupported",
+          "predicted": "unsupported",
+          "score": 0.0025,
+          "tier_reached": 3,
+          "evidence": "He further discovered that a mouse could similarly \"injure\" air. He then showed that a plant could restore the air the candle and the mouse had \"injured\".[90] In 1779, Jan Ingenhousz repeated Priestle"
+        },
+        {
+          "id": "ind-157",
+          "category": "entity-swap",
+          "expected": "unsupported",
+          "predicted": "unsupported",
+          "score": 0.0005,
+          "tier_reached": 3,
+          "evidence": "He further discovered that a mouse could similarly \"injure\" air. He then showed that a plant could restore the air the candle and the mouse had \"injured\".[90] In 1779, Jan Ingenhousz repeated Priestle"
+        },
+        {
+          "id": "ind-158",
+          "category": "verbatim-supported",
+          "expected": "supported",
+          "predicted": "supported",
+          "score": 0.9952,
+          "tier_reached": 3,
+          "evidence": "- JavaScript arrays are zero-indexed: the first element of an array is at index 0 , the second is at index1 , and so on \u2014 and the last element is at the value of the array'slength property minus1 . - "
+        },
+        {
+          "id": "ind-159",
+          "category": "negation-flip",
+          "expected": "unsupported",
+          "predicted": "unsupported",
+          "score": 0.0268,
+          "tier_reached": 3,
+          "evidence": "- JavaScript arrays are zero-indexed: the first element of an array is at index 0 , the second is at index1 , and so on \u2014 and the last element is at the value of the array'slength property minus1 . - "
+        },
+        {
+          "id": "ind-160",
+          "category": "entity-swap",
+          "expected": "unsupported",
+          "predicted": "unsupported",
+          "score": 0.0087,
+          "tier_reached": 3,
+          "evidence": "- JavaScript arrays are zero-indexed: the first element of an array is at index 0 , the second is at index1 , and so on \u2014 and the last element is at the value of the array'slength property minus1 . - "
+        },
+        {
+          "id": "ind-161",
+          "category": "verbatim-supported",
+          "expected": "supported",
+          "predicted": "unsupported",
+          "score": 0.0024,
+          "tier_reached": 3,
+          "evidence": "- os.path.normcase(path, /)\u00b6 - Normalize the case of a pathname. On Windows, convert all characters in the pathname to lowercase, and also convert forward slashes to backward slashes. On other operati"
+        },
+        {
+          "id": "ind-162",
+          "category": "negation-flip",
+          "expected": "unsupported",
+          "predicted": "unsupported",
+          "score": 0.0015,
+          "tier_reached": 3,
+          "evidence": "- os.path.normcase(path, /)\u00b6 - Normalize the case of a pathname. On Windows, convert all characters in the pathname to lowercase, and also convert forward slashes to backward slashes. On other operati"
+        },
+        {
+          "id": "ind-163",
+          "category": "entity-swap",
+          "expected": "unsupported",
+          "predicted": "supported",
+          "score": 0.9588,
+          "tier_reached": 3,
+          "evidence": "- os.path.expandvars(path)\u00b6 - Return the argument with environment variables expanded. Substrings of the form $name or${name} are replaced by the value of environment variable name. Malformed variable"
+        },
+        {
+          "id": "ind-164",
+          "category": "verbatim-supported",
+          "expected": "supported",
+          "predicted": "unsupported",
+          "score": 0.004,
+          "tier_reached": 3,
+          "evidence": "Empirical results demonstrate that Adam works well in practice and compares favorably to other stochastic optimization methods. Finally, we discuss AdaMax, a variant of Adam based on the infinity norm"
+        },
+        {
+          "id": "ind-165",
+          "category": "negation-flip",
+          "expected": "unsupported",
+          "predicted": "unsupported",
+          "score": 0.0009,
+          "tier_reached": 3,
+          "evidence": "Empirical results demonstrate that Adam works well in practice and compares favorably to other stochastic optimization methods. Finally, we discuss AdaMax, a variant of Adam based on the infinity norm"
+        },
+        {
+          "id": "ind-166",
+          "category": "entity-swap",
+          "expected": "unsupported",
+          "predicted": "unsupported",
+          "score": 0.0041,
+          "tier_reached": 3,
+          "evidence": "Empirical results demonstrate that Adam works well in practice and compares favorably to other stochastic optimization methods. Finally, we discuss AdaMax, a variant of Adam based on the infinity norm"
+        },
+        {
+          "id": "ind-167",
+          "category": "verbatim-supported",
+          "expected": "supported",
+          "predicted": "supported",
+          "score": 0.9938,
+          "tier_reached": 3,
+          "evidence": "On the 1924 expedition, George Mallory and Andrew Irvine made a final summit attempt on 8 June but never returned, leading to debate as to whether they were the first to reach the top. Tenzing Norgay "
+        },
+        {
+          "id": "ind-168",
+          "category": "negation-flip",
+          "expected": "unsupported",
+          "predicted": "supported",
+          "score": 0.9486,
+          "tier_reached": 3,
+          "evidence": "On the 1924 expedition, George Mallory and Andrew Irvine made a final summit attempt on 8 June but never returned, leading to debate as to whether they were the first to reach the top. Tenzing Norgay "
+        },
+        {
+          "id": "ind-169",
+          "category": "entity-swap",
+          "expected": "unsupported",
+          "predicted": "unsupported",
+          "score": 0.0004,
+          "tier_reached": 3,
+          "evidence": "Norgay had reached 8,595 m (28,199 ft) the previous year as a member of the 1952 Swiss expedition. The Chinese mountaineering team of Wang Fuzhou, Gonpo, and Qu Yinhua made the first reported ascent o"
+        },
+        {
+          "id": "ind-170",
+          "category": "verbatim-supported",
+          "expected": "supported",
+          "predicted": "supported",
+          "score": 0.9981,
+          "tier_reached": 3,
+          "evidence": "Meanwhile, a new industry began developing, based on radium.[37] The Curies did not patent their discovery and benefited little from this increasingly profitable business.[29][37] Nobel Prizes In Dece"
+        },
+        {
+          "id": "ind-171",
+          "category": "negation-flip",
+          "expected": "unsupported",
+          "predicted": "supported",
+          "score": 0.9452,
+          "tier_reached": 3,
+          "evidence": "Meanwhile, a new industry began developing, based on radium.[37] The Curies did not patent their discovery and benefited little from this increasingly profitable business.[29][37] Nobel Prizes In Dece"
+        },
+        {
+          "id": "ind-172",
+          "category": "entity-swap",
+          "expected": "unsupported",
+          "predicted": "supported",
+          "score": 0.7937,
+          "tier_reached": 3,
+          "evidence": "Meanwhile, a new industry began developing, based on radium.[37] The Curies did not patent their discovery and benefited little from this increasingly profitable business.[29][37] Nobel Prizes In Dece"
+        },
+        {
+          "id": "ind-173",
+          "category": "verbatim-supported",
+          "expected": "supported",
+          "predicted": "supported",
+          "score": 0.9939,
+          "tier_reached": 3,
+          "evidence": "Roughly equivalent to: def compress(data, selectors): # compress('ABCDEF', [1,0,1,0,1,1]) \u2192 A C E F return (datum for datum, selector in zip(data, selectors) if selector) Added in version 3.1. - itert"
+        },
+        {
+          "id": "ind-174",
+          "category": "negation-flip",
+          "expected": "unsupported",
+          "predicted": "supported",
+          "score": 0.9653,
+          "tier_reached": 3,
+          "evidence": "Roughly equivalent to: def compress(data, selectors): # compress('ABCDEF', [1,0,1,0,1,1]) \u2192 A C E F return (datum for datum, selector in zip(data, selectors) if selector) Added in version 3.1. - itert"
+        },
+        {
+          "id": "ind-175",
+          "category": "entity-swap",
+          "expected": "unsupported",
+          "predicted": "unsupported",
+          "score": 0.0411,
+          "tier_reached": 3,
+          "evidence": "Roughly equivalent to: def compress(data, selectors): # compress('ABCDEF', [1,0,1,0,1,1]) \u2192 A C E F return (datum for datum, selector in zip(data, selectors) if selector) Added in version 3.1. - itert"
+        },
+        {
+          "id": "ind-176",
+          "category": "verbatim-supported",
+          "expected": "supported",
+          "predicted": "supported",
+          "score": 0.9824,
+          "tier_reached": 3,
+          "evidence": "Map Baseline Widely available * This feature is well established and works across many devices and browser versions. It\u2019s been available across browsers since July 2015. * Some parts of this feature m"
+        },
+        {
+          "id": "ind-177",
+          "category": "negation-flip",
+          "expected": "unsupported",
+          "predicted": "unsupported",
+          "score": 0.0002,
+          "tier_reached": 3,
+          "evidence": "If the key is not present, it inserts a new entry with the key and a default value computed from a given callback, and returns the inserted value. - Map.prototype.has() - Returns a boolean indicating "
+        },
+        {
+          "id": "ind-178",
+          "category": "entity-swap",
+          "expected": "unsupported",
+          "predicted": "unsupported",
+          "score": 0.0111,
+          "tier_reached": 3,
+          "evidence": "Map Baseline Widely available * This feature is well established and works across many devices and browser versions. It\u2019s been available across browsers since July 2015. * Some parts of this feature m"
+        },
+        {
+          "id": "ind-179",
+          "category": "verbatim-supported",
+          "expected": "supported",
+          "predicted": "unsupported",
+          "score": 0.0079,
+          "tier_reached": 3,
+          "evidence": "On the ImageNet dataset we evaluate residual nets with a depth of up to 152 layers---8x deeper than VGG nets but still having lower complexity. An ensemble of these residual nets achieves 3.57% error "
+        },
+        {
+          "id": "ind-180",
+          "category": "negation-flip",
+          "expected": "unsupported",
+          "predicted": "unsupported",
+          "score": 0.0015,
+          "tier_reached": 3,
+          "evidence": "On the ImageNet dataset we evaluate residual nets with a depth of up to 152 layers---8x deeper than VGG nets but still having lower complexity. An ensemble of these residual nets achieves 3.57% error "
+        },
+        {
+          "id": "ind-181",
+          "category": "entity-swap",
+          "expected": "unsupported",
+          "predicted": "unsupported",
+          "score": 0.0133,
+          "tier_reached": 3,
+          "evidence": "Deep residual nets are foundations of our submissions to ILSVRC & COCO 2015 competitions, where we also won the 1st places on the tasks of ImageNet detection, ImageNet localization, COCO detection, an"
+        },
+        {
+          "id": "ind-182",
+          "category": "verbatim-supported",
+          "expected": "supported",
+          "predicted": "supported",
+          "score": 0.9937,
+          "tier_reached": 3,
+          "evidence": "Instruments and limited life items were designed as orbital replacement units.[107] Five servicing missions (SM 1, 2, 3A, 3B, and 4) were flown by NASA Space Shuttles, the first in December 1993 and t"
+        },
+        {
+          "id": "ind-183",
+          "category": "negation-flip",
+          "expected": "unsupported",
+          "predicted": "unsupported",
+          "score": 0.0067,
+          "tier_reached": 3,
+          "evidence": "However, this delay allowed time for engineers to perform extensive tests, swap out a possibly failure-prone battery, and make other improvements.[72] Furthermore, the ground software needed to contro"
+        },
+        {
+          "id": "ind-184",
+          "category": "entity-swap",
+          "expected": "unsupported",
+          "predicted": "unsupported",
+          "score": 0.0022,
+          "tier_reached": 3,
+          "evidence": "Instruments and limited life items were designed as orbital replacement units.[107] Five servicing missions (SM 1, 2, 3A, 3B, and 4) were flown by NASA Space Shuttles, the first in December 1993 and t"
+        },
+        {
+          "id": "ind-185",
+          "category": "verbatim-supported",
+          "expected": "supported",
+          "predicted": "unsupported",
+          "score": 0.0026,
+          "tier_reached": 3,
+          "evidence": "Savery's engine was used in mines, pumping stations and supplying water to water wheels powering textile machinery.[19] One advantage of Savery's engine was its low cost.[20] Bento de Moura Portugal i"
+        },
+        {
+          "id": "ind-186",
+          "category": "negation-flip",
+          "expected": "unsupported",
+          "predicted": "unsupported",
+          "score": 0.045,
+          "tier_reached": 3,
+          "evidence": "Savery's engine was used in mines, pumping stations and supplying water to water wheels powering textile machinery.[19] One advantage of Savery's engine was its low cost.[20] Bento de Moura Portugal i"
+        },
+        {
+          "id": "ind-187",
+          "category": "entity-swap",
+          "expected": "unsupported",
+          "predicted": "unsupported",
+          "score": 0.0142,
+          "tier_reached": 3,
+          "evidence": "The first commercially successful engine that could transmit continuous power to a machine was developed in 1712 by Thomas Newcomen. In 1764, James Watt made a critical improvement by removing spent s"
+        },
+        {
+          "id": "ind-188",
+          "category": "verbatim-supported",
+          "expected": "supported",
+          "predicted": "supported",
+          "score": 0.988,
+          "tier_reached": 3,
+          "evidence": "HTTP headers HTTP headers let the client and the server pass additional information with a message in a request or response. In HTTP/1.X, a header is a case-insensitive name followed by a colon, then "
+        },
+        {
+          "id": "ind-189",
+          "category": "negation-flip",
+          "expected": "unsupported",
+          "predicted": "unsupported",
+          "score": 0.0123,
+          "tier_reached": 3,
+          "evidence": "HTTP headers HTTP headers let the client and the server pass additional information with a message in a request or response. In HTTP/1.X, a header is a case-insensitive name followed by a colon, then "
+        },
+        {
+          "id": "ind-190",
+          "category": "entity-swap",
+          "expected": "unsupported",
+          "predicted": "supported",
+          "score": 0.9893,
+          "tier_reached": 3,
+          "evidence": "HTTP headers HTTP headers let the client and the server pass additional information with a message in a request or response. In HTTP/1.X, a header is a case-insensitive name followed by a colon, then "
+        },
+        {
+          "id": "ind-191",
+          "category": "verbatim-supported",
+          "expected": "supported",
+          "predicted": "unsupported",
+          "score": 0.0023,
+          "tier_reached": 3,
+          "evidence": "Mars Relay Network: Communications Bridge Between Mars & Earth NASA Says Farewell to MAVEN, Declares End of Mission The first mission devoted to observing the Martian atmosphere and its evolution, NAS"
+        },
+        {
+          "id": "ind-192",
+          "category": "negation-flip",
+          "expected": "unsupported",
+          "predicted": "unsupported",
+          "score": 0.0025,
+          "tier_reached": 3,
+          "evidence": "Mars Relay Network: Communications Bridge Between Mars & Earth NASA Says Farewell to MAVEN, Declares End of Mission The first mission devoted to observing the Martian atmosphere and its evolution, NAS"
+        },
+        {
+          "id": "ind-193",
+          "category": "entity-swap",
+          "expected": "unsupported",
+          "predicted": "unsupported",
+          "score": 0.0013,
+          "tier_reached": 3,
+          "evidence": "Mars Relay Network: Communications Bridge Between Mars & Earth NASA Says Farewell to MAVEN, Declares End of Mission The first mission devoted to observing the Martian atmosphere and its evolution, NAS"
+        },
+        {
+          "id": "ind-194",
+          "category": "verbatim-supported",
+          "expected": "supported",
+          "predicted": "unsupported",
+          "score": 0.0024,
+          "tier_reached": 3,
+          "evidence": "The GELU activation function is $x\\Phi(x)$, where $\\Phi(x)$ the standard Gaussian cumulative distribution function. The GELU nonlinearity weights inputs by their value, rather than gates inputs by the"
+        },
+        {
+          "id": "ind-195",
+          "category": "negation-flip",
+          "expected": "unsupported",
+          "predicted": "unsupported",
+          "score": 0.0327,
+          "tier_reached": 3,
+          "evidence": "The GELU activation function is $x\\Phi(x)$, where $\\Phi(x)$ the standard Gaussian cumulative distribution function. The GELU nonlinearity weights inputs by their value, rather than gates inputs by the"
+        },
+        {
+          "id": "ind-196",
+          "category": "entity-swap",
+          "expected": "unsupported",
+          "predicted": "unsupported",
+          "score": 0.0106,
+          "tier_reached": 3,
+          "evidence": "The GELU activation function is $x\\Phi(x)$, where $\\Phi(x)$ the standard Gaussian cumulative distribution function. The GELU nonlinearity weights inputs by their value, rather than gates inputs by the"
+        },
+        {
+          "id": "ind-241",
+          "category": "dead-link",
+          "expected": "unreachable",
+          "predicted": "unreachable",
+          "score": null,
+          "tier_reached": 1,
+          "evidence": ""
+        },
+        {
+          "id": "ind-242",
+          "category": "dead-link",
+          "expected": "unreachable",
+          "predicted": "unreachable",
+          "score": null,
+          "tier_reached": 1,
+          "evidence": ""
+        },
+        {
+          "id": "ind-243",
+          "category": "dead-link",
+          "expected": "unreachable",
+          "predicted": "unreachable",
+          "score": null,
+          "tier_reached": 1,
+          "evidence": ""
+        },
+        {
+          "id": "ind-244",
+          "category": "dead-link",
+          "expected": "unreachable",
+          "predicted": "unreachable",
+          "score": null,
+          "tier_reached": 1,
+          "evidence": "HTML: Markup language\nCSS: Styling language\nJavaScript: Scripting language\nWeb APIs: Programming interfaces\nAll web technology\nLearn web development\nDiscover our tools\nGet to know MDN better\nGo back t"
+        },
+        {
+          "id": "ind-245",
+          "category": "paywalled",
+          "expected": "paywalled",
+          "predicted": "paywalled",
+          "score": null,
+          "tier_reached": 1,
+          "evidence": "The world\u2019s largest rocket is on a 10-hour mission to prove its mettle\nScientific American\nAnd how they might have helped save the future of American apples\nAfter transplant, young hearts in both mice"
+        },
+        {
+          "id": "ind-246",
+          "category": "paywalled",
+          "expected": "paywalled",
+          "predicted": "paywalled",
+          "score": null,
+          "tier_reached": 1,
+          "evidence": "The Magazine\nOctober 5, 2026\nGoings On\nGoings On\nThe Sublime Somi Bridges African and Western Jazz\nAlso: David Greenspan and Lupita Nyong\u2019o onstage, the found-object art of Narcissister, a Hong Kong-b"
+        },
+        {
+          "id": "ind-247",
+          "category": "paywalled",
+          "expected": "paywalled",
+          "predicted": "paywalled",
+          "score": null,
+          "tier_reached": 1,
+          "evidence": "An illustration in red and blue tones depicting five silhouetted figures running forward through a dark corridor flanked by large, textured Russian lettering on the walls and floor. Light radiates fro"
+        },
+        {
+          "id": "ind-248",
+          "category": "paywalled",
+          "expected": "paywalled",
+          "predicted": "paywalled",
+          "score": null,
+          "tier_reached": 1,
+          "evidence": "Skip Navigation\nMarkets\nPre-Markets\nU.S. Markets\nEurope Markets\nChina Markets\nAsia Markets\nWorld Markets\nCurrencies\nPrediction Markets\nCryptocurrency\nFutures & Commodities\nBonds\nFunds & ETFs\nBusiness\n"
+        },
+        {
+          "id": "ind-249",
+          "category": "partially-true-ambiguous",
+          "expected": "ambiguous",
+          "predicted": "unsupported",
+          "score": 0.0029,
+          "tier_reached": 3,
+          "evidence": "Mount Everest Mount Everest (known in Nepali as Sagarm\u0101th\u0101[a], in Sherpa as Chamolangma[4], and in Tibetan as Jomolangma/\u010chomolangma[b] is the highest mountain on Earth above sea level. It lies in the"
+        },
+        {
+          "id": "ind-250",
+          "category": "partially-true-ambiguous",
+          "expected": "ambiguous",
+          "predicted": "supported",
+          "score": 0.954,
+          "tier_reached": 3,
+          "evidence": "While a French citizen, Curie, who used both surnames,[8][9] never lost her sense of Polish identity. She taught her daughters the Polish language and took them on visits to Poland.[10] She named the "
+        },
+        {
+          "id": "ind-251",
+          "category": "partially-true-ambiguous",
+          "expected": "ambiguous",
+          "predicted": "supported",
+          "score": 0.9957,
+          "tier_reached": 3,
+          "evidence": "The first full-scale working railway steam locomotive was built by Richard Trevithick in the United Kingdom and, on 21 February 1804, the world's first railway journey took place as Trevithick's steam"
+        },
+        {
+          "id": "ind-252",
+          "category": "partially-true-ambiguous",
+          "expected": "ambiguous",
+          "predicted": "unsupported",
+          "score": 0.0007,
+          "tier_reached": 3,
+          "evidence": "For that original and ground-breaking work, a Nobel Prize in Chemistry was awarded to Melvin Calvin in 1961."
+        }
+      ],
+      "errors": 0
     }
   ]
 }
