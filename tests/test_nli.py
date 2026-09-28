@@ -612,3 +612,42 @@ def test_contradiction_threshold_boundary():
     # At threshold
     result = status_for_nli(Status.SUPPORTED, nli_score=0.9, contradiction=0.500)
     assert result is Status.UNSUPPORTED
+
+
+# ---------------------------------------------------------------------------
+# Label-order safety across model families
+# ---------------------------------------------------------------------------
+
+
+@pytest.mark.parametrize(
+    "id2label",
+    [
+        # cross-encoder/* family: contradiction, entailment, neutral
+        {0: "contradiction", 1: "entailment", 2: "neutral"},
+        # MoritzLaurer/* family: entailment, neutral, contradiction (REVERSED)
+        {0: "entailment", 1: "neutral", 2: "contradiction"},
+    ],
+)
+def test_label_index_resolves_by_name_not_position(id2label):
+    """Entailment/neutral indices must be read from label NAMES, not positions.
+
+    The two model families ship opposite label orders. A positional
+    implementation would read the neutral column as entailment on one of
+    them — which would RAISE the agreement score rather than lower it, so
+    the failure is invisible to a naive "did the number go up?" check.
+    """
+    from citesure.nli import _label_index
+
+    ent, neu = _label_index(id2label)
+    expected_ent = int([k for k, v in id2label.items() if "entail" in v.lower()][0])
+    expected_neu = int([k for k, v in id2label.items() if "neutral" in v.lower()][0])
+    assert ent == expected_ent
+    assert neu == expected_neu
+
+
+def test_label_index_returns_none_for_empty_mapping():
+    """A model with no id2label must degrade safely, not guess a position."""
+    from citesure.nli import _label_index
+
+    assert _label_index(None) == (None, None)
+    assert _label_index({}) == (None, None)

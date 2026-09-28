@@ -1,0 +1,58 @@
+{
+  "set": "evals/independent_set_v2.json",
+  "cache": "/tmp/citesure-v2",
+  "results": [
+    {
+      "matched": 83,
+      "total": 108,
+      "agreement_pct": 76.85,
+      "per_category": {
+        "dead-link": {
+          "correct": 4,
+          "total": 4,
+          "recall": 1.0
+        },
+        "entity-swap": {
+          "correct": 25,
+          "total": 32,
+          "recall": 0.7812
+        },
+        "negation-flip": {
+          "correct": 28,
+          "total": 32,
+          "recall": 0.875
+        },
+        "partially-true-ambiguous": {
+          "correct": 0,
+          "total": 4,
+          "recall": 0.0
+        },
+        "paywalled": {
+          "correct": 4,
+          "total": 4,
+          "recall": 1.0
+        },
+        "verbatim-supported": {
+          "correct": 22,
+          "total": 32,
+          "recall": 0.6875
+        }
+      },
+      "false_supported": {
+        "negation-flip": {
+          "count": 4,
+          "total": 32,
+          "rate": 0.125
+        },
+        "entity-swap": {
+          "count": 7,
+          "total": 32,
+          "rate": 0.2188
+        }
+      },
+      "model": "/home/hermes/.cache/huggingface/hub/models--cross-encoder--nli-deberta-v3-base/snapshots/6c749ce3425cd33b46d187e45b92bbf96ee12ec7",
+      "elapsed_s": 116.7,
+      "s_per_case": 1.08
+    }
+  ]
+}
