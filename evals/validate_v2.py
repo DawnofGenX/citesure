@@ -33,9 +33,14 @@ def main() -> int:
             continue
         by_url[c["url"]].append(c)
 
+        # A page that failed to fetch has no saved text BY DESIGN — that is what
+        # makes it an unreachable/dead-link case. There is nothing to compare a
+        # claim against, so the presence/absence rule does not apply.
         if not Path(entry["text_path"]).exists():
-            problems.append(f"{c['id']}: missing saved text {entry['text_path']}")
+            if entry.get("ok"):
+                problems.append(f"{c['id']}: fetchable page but no saved text {entry['text_path']}")
             continue
+
         text = Path(entry["text_path"]).read_text(encoding="utf-8")
         present = bool(shingles(c["claim"]) & shingles(text))
 

@@ -1,0 +1,137 @@
+[
+  {
+    "id": "ind-167",
+    "category": "verbatim-supported",
+    "expected_status": "supported",
+    "labeler_confidence": "high",
+    "url": "https://en.wikipedia.org/wiki/Mount_Everest",
+    "claim": "Tenzing Norgay and Edmund Hillary made the first documented ascent of Everest in 1953, using the Southeast Ridge route.",
+    "notes": "Provenance: source sentence copied verbatim from evals/page_text/en.wikipedia.org_wiki_Mount_Everest.txt (intro paragraph, lead section)."
+  },
+  {
+    "id": "ind-168",
+    "category": "negation-flip",
+    "expected_status": "unsupported",
+    "labeler_confidence": "medium",
+    "url": "https://en.wikipedia.org/wiki/Mount_Everest",
+    "claim": "Tenzing Norgay and Edmund Hillary did not make Everest's first documented ascent in 1953.",
+    "notes": "Mutation of the source sentence 'Tenzing Norgay and Edmund Hillary made the first documented ascent of Everest in 1953, using the Southeast Ridge route.': polarity reversed at the main verb (made -> did not make). Grepped the page text for 'did not make' (absent); 6-gram check confirmed the claim shares no 6-gram run with the text."
+  },
+  {
+    "id": "ind-169",
+    "category": "entity-swap",
+    "expected_status": "unsupported",
+    "labeler_confidence": "medium",
+    "url": "https://en.wikipedia.org/wiki/Mount_Everest",
+    "claim": "Wang Fuzhou made Everest's first documented ascent in 1953.",
+    "notes": "Mutation of the same source sentence: subject re-attributed from Tenzing Norgay and Edmund Hillary to Wang Fuzhou, who appears on the page only in the claim that the Chinese team made the first reported ascent from the North Ridge on 25 May 1960 — the page never pairs Wang Fuzhou with the 1953 first documented ascent. 6-gram check confirmed absence."
+  },
+  {
+    "id": "ind-170",
+    "category": "verbatim-supported",
+    "expected_status": "supported",
+    "labeler_confidence": "high",
+    "url": "https://en.wikipedia.org/wiki/Marie_Curie",
+    "claim": "Marie Curie was the first woman to be awarded a Nobel Prize.",
+    "notes": "Provenance: source sentence copied verbatim from evals/page_text/en.wikipedia.org_wiki_Marie_Curie.txt (Nobel Prize section, 'Marie Curie was the first woman to be awarded a Nobel Prize.')."
+  },
+  {
+    "id": "ind-171",
+    "category": "negation-flip",
+    "expected_status": "unsupported",
+    "labeler_confidence": "medium",
+    "url": "https://en.wikipedia.org/wiki/Marie_Curie",
+    "claim": "Marie Curie was not the first woman to receive a Nobel Prize.",
+    "notes": "Mutation of the source sentence 'Marie Curie was the first woman to be awarded a Nobel Prize.': polarity reversed at the copula (was -> was not); 'awarded' lightly reworded to 'receive'. Grepped for 'not the first woman' (absent); 6-gram check confirmed absence."
+  },
+  {
+    "id": "ind-172",
+    "category": "entity-swap",
+    "expected_status": "unsupported",
+    "labeler_confidence": "medium",
+    "url": "https://en.wikipedia.org/wiki/Marie_Curie",
+    "claim": "Henri Becquerel was the first female Nobel laureate, awarded in 1903.",
+    "notes": "Mutation of the source sentence: detail (first-woman Nobel laureate, 1903 — the year on the page) re-attributed to Henri Becquerel, who appears on the page as Curie's co-laureate for the 1903 Physics prize and is male; the page never calls him the first female laureate. 6-gram check confirmed absence."
+  },
+  {
+    "id": "ind-173",
+    "category": "verbatim-supported",
+    "expected_status": "supported",
+    "labeler_confidence": "high",
+    "url": "https://docs.python.org/3/library/itertools.html",
+    "claim": "Make an iterator that returns evenly spaced values beginning with start.",
+    "notes": "Provenance: source sentence copied verbatim from evals/page_text/docs.python.org_3_library_itertools.html.txt (description of itertools.count)."
+  },
+  {
+    "id": "ind-174",
+    "category": "negation-flip",
+    "expected_status": "unsupported",
+    "labeler_confidence": "medium",
+    "url": "https://docs.python.org/3/library/itertools.html",
+    "claim": "Make an iterator that does not return evenly spaced values from start.",
+    "notes": "Mutation of the source sentence for itertools.count: polarity reversed at the main verb (returns -> does not return); tail lightly reworded ('beginning with start' -> 'from start') to avoid overlapping the positive sentence's 6-grams. Grepped for 'does not return evenly' (absent); 6-gram check confirmed absence."
+  },
+  {
+    "id": "ind-175",
+    "category": "entity-swap",
+    "expected_status": "unsupported",
+    "labeler_confidence": "medium",
+    "url": "https://docs.python.org/3/library/itertools.html",
+    "claim": "The cycle function returns evenly spaced values, starting from its iterable.",
+    "notes": "Mutation of the count() description: the evenly-spaced-values detail re-attributed to itertools.cycle, which also appears on the page but is described as cycling the iterable's elements, never as returning evenly spaced values. 6-gram check confirmed absence."
+  },
+  {
+    "id": "ind-176",
+    "category": "verbatim-supported",
+    "expected_status": "supported",
+    "labeler_confidence": "high",
+    "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map",
+    "claim": "The Map object holds key-value pairs and remembers the original insertion order of the keys.",
+    "notes": "Provenance: source sentence copied verbatim from evals/page_text/developer.mozilla.org_en-US_docs_Web_JavaScript_Reference_Global_Objects_Map.txt (intro description of the Map object)."
+  },
+  {
+    "id": "ind-177",
+    "category": "negation-flip",
+    "expected_status": "unsupported",
+    "labeler_confidence": "medium",
+    "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map",
+    "claim": "The Map object does not remember the insertion order of its keys.",
+    "notes": "Mutation of the source sentence: polarity reversed at the main verb (remembers -> does not remember); tail lightly reworded ('the original insertion order of the keys' -> 'the insertion order of its keys'). Grepped for 'does not remember the insertion' (absent); 6-gram check confirmed absence."
+  },
+  {
+    "id": "ind-178",
+    "category": "entity-swap",
+    "expected_status": "unsupported",
+    "labeler_confidence": "medium",
+    "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map",
+    "claim": "WeakMap remembers the insertion order of its keys.",
+    "notes": "Form 2 (re-targeted relation): WeakMap and insertion-order wording both appear on the page, but the page attributes order-remembering to Map, never to WeakMap. 6-gram check confirmed the claim is absent from the text."
+  },
+  {
+    "id": "ind-179",
+    "category": "verbatim-supported",
+    "expected_status": "supported",
+    "labeler_confidence": "high",
+    "url": "https://arxiv.org/abs/1512.03385",
+    "claim": "This result won the 1st place on the ILSVRC 2015 classification task.",
+    "notes": "Provenance: source sentence copied verbatim from evals/page_text/arxiv.org_abs_1512.03385.txt (abstract of 'Deep Residual Learning for Image Recognition')."
+  },
+  {
+    "id": "ind-180",
+    "category": "negation-flip",
+    "expected_status": "unsupported",
+    "labeler_confidence": "medium",
+    "url": "https://arxiv.org/abs/1512.03385",
+    "claim": "The residual nets did not win 1st place on ILSVRC 2015.",
+    "notes": "Mutation of the source sentence 'This result won the 1st place on the ILSVRC 2015 classification task.': polarity reversed at the main verb (won -> did not win); 'This result' reworded to 'The residual nets'. Grepped for 'did not win' (absent); 6-gram check confirmed absence."
+  },
+  {
+    "id": "ind-181",
+    "category": "entity-swap",
+    "expected_status": "unsupported",
+    "labeler_confidence": "medium",
+    "url": "https://arxiv.org/abs/1512.03385",
+    "claim": "Deep residual nets won 1st place on the COCO 2015 classification task.",
+    "notes": "Mutation of the source sentence: the '1st place ... 2015' detail re-targeted from the ILSVRC classification task to COCO — the page mentions COCO only for detection and segmentation wins, never a COCO classification task. Grepped for 'COCO classification' (absent); 6-gram check confirmed absence."
+  }
+]

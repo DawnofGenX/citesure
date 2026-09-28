@@ -1,0 +1,137 @@
+[
+  {
+    "id": "ind-182",
+    "category": "verbatim-supported",
+    "expected_status": "supported",
+    "labeler_confidence": "high",
+    "url": "https://en.wikipedia.org/wiki/Hubble_space_telescope",
+    "claim": "Five servicing missions were flown by NASA Space Shuttles, the first in December 1993 and the last in May 2009.",
+    "notes": "Source sentence in evals/page_text/en.wikipedia.org_wiki_Hubble_space_telescope.txt (servicing-missions paragraph): 'Five servicing missions (SM 1, 2, 3A, 3B, and 4) were flown by NASA Space Shuttles, the first in December 1993 and the last in May 2009.' Only the parenthetical mission list was dropped; shares long verbatim runs with the text."
+  },
+  {
+    "id": "ind-183",
+    "category": "negation-flip",
+    "expected_status": "unsupported",
+    "labeler_confidence": "high",
+    "url": "https://en.wikipedia.org/wiki/Hubble_space_telescope",
+    "claim": "The final of Hubble's five servicing missions was not flown by a NASA Space Shuttle.",
+    "notes": "Mutation of ind-182: polarity reversed at the main verb ('was not flown'). Grepped page text lowercased for 'not flown' -> absent."
+  },
+  {
+    "id": "ind-184",
+    "category": "entity-swap",
+    "expected_status": "unsupported",
+    "labeler_confidence": "high",
+    "url": "https://en.wikipedia.org/wiki/Hubble_space_telescope",
+    "claim": "The five servicing missions were flown to the International Space Station by NASA Space Shuttles instead.",
+    "notes": "Form-1 entity-swap of ind-182: the servicing-mission detail (five missions, Space Shuttles) re-targeted to the International Space Station, which the article mentions but never pairs with Hubble servicing. Grepped for 'were flown to' -> absent."
+  },
+  {
+    "id": "ind-185",
+    "category": "verbatim-supported",
+    "expected_status": "supported",
+    "labeler_confidence": "high",
+    "url": "https://en.wikipedia.org/wiki/Steam_engine",
+    "claim": "The first commercially successful engine that could transmit continuous power to a machine was the atmospheric engine invented by Thomas Newcomen around 1712.",
+    "notes": "Source sentence in evals/page_text/en.wikipedia.org_wiki_Steam_engine.txt (Newcomen paragraph): 'The first commercially successful engine that could transmit continuous power to a machine was the atmospheric engine (or \"fire engine\"), invented by Thomas Newcomen around 1712.' Only the '(or \"fire engine\")' gloss was dropped; the claim shares a long verbatim word run with the text."
+  },
+  {
+    "id": "ind-186",
+    "category": "negation-flip",
+    "expected_status": "unsupported",
+    "labeler_confidence": "high",
+    "url": "https://en.wikipedia.org/wiki/Steam_engine",
+    "claim": "The atmospheric engine invented by Thomas Newcomen was not the first commercially successful engine to transmit continuous power to a machine.",
+    "notes": "Mutation of ind-185: polarity reversed ('was not the first'). Grepped lowercased text for 'not the first commercially' -> absent."
+  },
+  {
+    "id": "ind-187",
+    "category": "entity-swap",
+    "expected_status": "unsupported",
+    "labeler_confidence": "high",
+    "url": "https://en.wikipedia.org/wiki/Steam_engine",
+    "claim": "The atmospheric engine invented by James Watt around 1712 was the first commercially successful engine to transmit continuous power to a machine.",
+    "notes": "Form-1 entity-swap of ind-185: the 1712/first-commercial-success detail re-attributed to James Watt, who appears elsewhere in the article but is never credited with the atmospheric engine or 1712. Grepped for 'invented by James Watt' -> absent."
+  },
+  {
+    "id": "ind-188",
+    "category": "verbatim-supported",
+    "expected_status": "supported",
+    "labeler_confidence": "high",
+    "url": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers",
+    "claim": "In HTTP/1.X, a header is a case-insensitive name followed by a colon, then optional whitespace which will be ignored, and finally by its value (for example: Allow: POST).",
+    "notes": "Source sentence copied verbatim from evals/page_text/developer.mozilla.org_en-US_docs_Web_HTTP_Headers.txt (HTTP/1.X header syntax paragraph)."
+  },
+  {
+    "id": "ind-189",
+    "category": "negation-flip",
+    "expected_status": "unsupported",
+    "labeler_confidence": "high",
+    "url": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers",
+    "claim": "In HTTP/1.X, a header is not a case-insensitive name with a colon before its value.",
+    "notes": "Mutation of ind-188: polarity reversed at 'is' -> 'is not'. Grepped lowercased text for 'is not a case-insensitive' -> absent."
+  },
+  {
+    "id": "ind-190",
+    "category": "entity-swap",
+    "expected_status": "unsupported",
+    "labeler_confidence": "high",
+    "url": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers",
+    "claim": "In HTTP/2, headers are case-insensitive names followed by a colon and optional whitespace.",
+    "notes": "Form-1 entity-swap of ind-188: the HTTP/1.X syntax detail re-attributed to HTTP/2, which the page discusses (lowercase display, pseudo-headers) but never with this name/colon/whitespace syntax sentence. Grepped for 'case-insensitive names' -> absent."
+  },
+  {
+    "id": "ind-191",
+    "category": "verbatim-supported",
+    "expected_status": "supported",
+    "labeler_confidence": "high",
+    "url": "https://science.nasa.gov/mars/",
+    "claim": "The first mission devoted to observing the Martian atmosphere and its evolution, NASA's MAVEN (Mars Atmosphere and Volatile Evolution) has ended after more than 11 years in orbit at Mars.",
+    "notes": "Source sentence in evals/page_text/science.nasa.gov_mars_.txt (MAVEN end-of-mission section); truncated after 'in orbit at Mars', dropping only the trailing 'and a decade beyond its primary, one-year mission' clause. The retained span is verbatim."
+  },
+  {
+    "id": "ind-192",
+    "category": "negation-flip",
+    "expected_status": "unsupported",
+    "labeler_confidence": "high",
+    "url": "https://science.nasa.gov/mars/",
+    "claim": "NASA's MAVEN mission has not ended; it remains in orbit at Mars after more than 11 years.",
+    "notes": "Mutation of ind-191: polarity reversed ('has not ended'). Grepped lowercased text for 'maven mission has' and 'has not ended' -> absent (page says 'has ended')."
+  },
+  {
+    "id": "ind-193",
+    "category": "entity-swap",
+    "expected_status": "unsupported",
+    "labeler_confidence": "high",
+    "url": "https://science.nasa.gov/mars/",
+    "claim": "NASA's Mars Reconnaissance Orbiter, the first mission to observe the Martian atmosphere, served for over 11 years in orbit around the planet.",
+    "notes": "Form-1 entity-swap of ind-191: the 'first mission to observe the Martian atmosphere / 11 years in orbit' detail re-attributed to Mars Reconnaissance Orbiter, which the page mentions but describes as searching for evidence of water, not as the first atmosphere mission. Grepped for 'the first mission to observe' -> absent."
+  },
+  {
+    "id": "ind-194",
+    "category": "verbatim-supported",
+    "expected_status": "supported",
+    "labeler_confidence": "high",
+    "url": "https://arxiv.org/abs/1606.08415",
+    "claim": "The GELU activation function is xΦ(x), where Φ(x) the standard Gaussian cumulative distribution function.",
+    "notes": "Source sentence copied verbatim from the abstract in evals/page_text/arxiv.org_abs_1606.08415.txt (rendered without LaTeX markup in the extraction)."
+  },
+  {
+    "id": "ind-195",
+    "category": "negation-flip",
+    "expected_status": "unsupported",
+    "labeler_confidence": "high",
+    "url": "https://arxiv.org/abs/1606.08415",
+    "claim": "The GELU activation function is not xΦ(x), but instead gates inputs by their sign.",
+    "notes": "Mutation of ind-194: polarity reversed ('is not xΦ(x)') and the sign-gating tail borrowed from the page's ReLU description, so the combined negated claim cannot match. Grepped lowercased text for 'is not' adjacent to 'xφ(x)' region via 6-gram check -> absent."
+  },
+  {
+    "id": "ind-196",
+    "category": "entity-swap",
+    "expected_status": "unsupported",
+    "labeler_confidence": "high",
+    "url": "https://arxiv.org/abs/1606.08415",
+    "claim": "The ReLU activation function is defined as xΦ(x), with Φ(x) being a standard Gaussian cumulative distribution function.",
+    "notes": "Form-1 entity-swap of ind-194: GELU's defining formula re-attributed to ReLU, which the paper mentions but says gates inputs by their sign. First draft ('...is xΦ(x), where Φ(x) the standard Gaussian...') shared a 6-gram with real abstract text and was rejected by the 6-gram check; reworded the tail ('is defined as ... with ... being a ...') and re-verified -> absent."
+  }
+]

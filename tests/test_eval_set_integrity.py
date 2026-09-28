@@ -37,11 +37,21 @@ def test_set_shape_and_labels(rel: str) -> None:
         assert c["claim"].strip(), c["id"]
 
 
+CONTRAST_CATEGORIES = {"verbatim-supported", "negation-flip", "entity-swap"}
+
+
 def test_v2_url_cap_and_diversity() -> None:
-    """v2: at most 3 cases per URL, drawn from many domains."""
+    """v2: at most 3 CONTRAST cases per URL, drawn from many domains.
+
+    The 3-per-URL cap protects the three-way contrast (A/B/C must share one
+    source sentence to be diagnostic). It deliberately does NOT cap other
+    categories: a partially-true-ambiguous case spans two clauses and is not
+    part of any triple, so it may legitimately share a page with a triple.
+    """
     cases = _load("evals/independent_set_v2.json")
-    top = Counter(c["url"] for c in cases).most_common(1)[0]
-    assert top[1] <= 3, f"v2 has {top[1]} cases on {top[0]}"
+    contrast = [c for c in cases if c["category"] in CONTRAST_CATEGORIES]
+    top = Counter(c["url"] for c in contrast).most_common(1)[0]
+    assert top[1] <= 3, f"v2 has {top[1]} contrast cases on {top[0]}"
     assert len({urlparse(c["url"]).netloc for c in cases}) >= 8, "too few domains"
 
 
