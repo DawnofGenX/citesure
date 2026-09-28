@@ -44,6 +44,9 @@
   { "url": "https://www.scientificamerican.com/", "domain_group": "news-paywall", "topic": "science magazine front page", "notes": "metered/subscription science content" },
   { "url": "https://www.newyorker.com/magazine", "domain_group": "news-paywall", "topic": "magazine subscription content", "notes": "subscription-gated longform" },
   { "url": "https://www.nature.com/nature/articles", "domain_group": "news-paywall", "topic": "Nature journal articles index", "notes": "journal with metered access" },
+  { "url": "https://www.foreignpolicy.com/", "domain_group": "news-paywall", "topic": "Foreign Policy front page", "notes": "subscription-gated; verified FP-paywall CSS class" },
+  { "url": "https://www.cnbc.com/", "domain_group": "news-paywall", "topic": "CNBC front page", "notes": "subscription-gated; verified DynamicPaywallSignUpModal CSS" },
+  { "url": "https://time.com/", "domain_group": "news-paywall", "topic": "Time front page", "notes": "subscription-gated news; reachable, tests the negative side" },
   { "url": "https://www.economist.com/science-and-technology/", "domain_group": "news-paywall", "topic": "science paywalled section", "notes": "expected paywall; feeds paywalled category" },
 
   { "url": "https://example.invalid/citesure-v2-dead-1", "domain_group": "dead", "topic": "reserved invalid TLD", "notes": "guaranteed dead; feeds dead-link category" },

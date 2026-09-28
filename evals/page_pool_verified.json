@@ -522,6 +522,54 @@
       "paywall_detected": false,
       "retraction_detected": false,
       "text_path": "evals/page_text/developer.mozilla.org_en-US_docs_Web_NoSuchApiReferenceZzz9.txt"
+    },
+    {
+      "url": "https://www.foreignpolicy.com/",
+      "domain_group": "news-paywall",
+      "topic": "",
+      "notes": "",
+      "ok": true,
+      "reason": "",
+      "extracted_chars": 6324,
+      "paywall_detected": true,
+      "retraction_detected": false,
+      "text_path": "evals/page_text/www.foreignpolicy.com_.txt"
+    },
+    {
+      "url": "https://time.com/",
+      "domain_group": "news-paywall",
+      "topic": "",
+      "notes": "",
+      "ok": true,
+      "reason": "",
+      "extracted_chars": 1516,
+      "paywall_detected": false,
+      "retraction_detected": false,
+      "text_path": "evals/page_text/time.com_.txt"
+    },
+    {
+      "url": "https://www.reuters.com/",
+      "domain_group": "news-paywall",
+      "topic": "Reuters front page",
+      "notes": "subscription-gated; verified DynamicPaywall CSS",
+      "ok": false,
+      "reason": "blocked by robots.txt",
+      "extracted_chars": 0,
+      "paywall_detected": false,
+      "retraction_detected": false,
+      "text_path": "evals/page_text/www.reuters.com_.txt"
+    },
+    {
+      "url": "https://www.cnbc.com/",
+      "domain_group": "news-paywall",
+      "topic": "CNBC front page",
+      "notes": "subscription-gated; verified DynamicPaywallSignUpModal CSS",
+      "ok": true,
+      "reason": "",
+      "extracted_chars": 11156,
+      "paywall_detected": true,
+      "retraction_detected": false,
+      "text_path": "evals/page_text/www.cnbc.com_.txt"
     }
   ]
 }
