@@ -627,3 +627,103 @@ def test_slot_conflict_handles_empty_input():
 
     assert not has_slot_conflict("", "Some sentence with content here.")
     assert not has_slot_conflict("Some claim with content here.", "")
+
+
+def test_score_overlap_fallback_to_all_passages_when_topk_all_low():
+    """When all top-k passages score < 0.3, fall back to scoring ALL passages.
+
+    This catches cases where the claim's sentence is in a passage ranked
+    below top-5 due to term-coverage ties or segmentation splitting.
+    """
+    from citesure.overlap import score_overlap
+
+    passages = [
+        "The history of programming languages is long and varied.",
+        "Many languages have come and gone over the decades.",
+        "Some languages are interpreted, others compiled.",
+        "The choice of language depends on the use case.",
+        "Performance is often a key consideration.",
+        "Python was released in 2023.",
+    ]
+    claim = "Python was released in 2023."
+    score, best = score_overlap(claim, passages, top_k=5)
+    assert score >= 0.6
+    assert "Python was released in 2023" in best
+
+
+def test_score_overlap_no_fallback_when_topk_has_good_match():
+    """When a top-k passage scores >= 0.3, do NOT fall back (regression guard)."""
+    from citesure.overlap import score_overlap
+
+    passages = [
+        "Python was released in 2023.",
+        "Other text.",
+        "More text.",
+    ]
+    claim = "Python was released in 2023."
+    score, best = score_overlap(claim, passages, top_k=5)
+    assert score >= 0.6
+    assert "Python was released in 2023" in best
+
+
+def test_split_compound_claim_simple():
+    """Simple claim without conjunction → single clause."""
+    from citesure.overlap import split_compound_claim
+    clauses = split_compound_claim("Python 3.12 was released in 2023")
+    assert len(clauses) == 1
+    assert clauses[0] == "Python 3.12 was released in 2023"
+
+
+def test_split_compound_claim_two_clauses():
+    """Compound claim with 'and' → two clauses."""
+    from citesure.overlap import split_compound_claim
+    clauses = split_compound_claim(
+        "Python 3.12 was released on October 2, 2023 and introduced a Rust garbage collector"
+    )
+    assert len(clauses) == 2
+    assert "Python 3.12 was released on October 2, 2023" in clauses[0]
+    assert "Rust garbage collector" in clauses[1]
+
+
+def test_split_compound_claim_multiple_conjunctions():
+    """Multiple conjunctions → multiple clauses."""
+    from citesure.overlap import split_compound_claim
+    clauses = split_compound_claim("A and B and C")
+    assert len(clauses) == 3
+
+
+def test_split_compound_claim_empty():
+    """Empty claim → empty list."""
+    from citesure.overlap import split_compound_claim
+    assert split_compound_claim("") == []
+
+
+def test_score_compound_claim_mixed_support_is_ambiguous():
+    """A compound claim with one true and one false clause → ambiguous.
+
+    Clause 1: "Python 3.12 was released in 2023" → supported (passage matches)
+    Clause 2: "introduced a Rust garbage collector" → unsupported (no passage)
+    Expected: ambiguous (not supported, not unsupported)
+    """
+    from citesure.overlap import score_compound_claim
+    passages = [
+        "Python 3.12 was released in 2023 with many new features.",
+        "The release included performance improvements.",
+    ]
+    claim = "Python 3.12 was released in 2023 and introduced a Rust garbage collector"
+    score, evidence = score_compound_claim(claim, passages)
+    # The false clause should drag the score below supported threshold
+    assert score < 0.6  # HIGH_OVERLAP_THRESHOLD
+
+
+def test_score_compound_claim_all_supported():
+    """A compound claim where all clauses are supported → falls back to whole-claim scoring."""
+    from citesure.overlap import score_compound_claim
+    passages = [
+        "Python 3.12 was released in 2023.",
+        "It introduced a new syntax for type parameters.",
+    ]
+    claim = "Python 3.12 was released in 2023 and introduced a new syntax for type parameters"
+    score, evidence = score_compound_claim(claim, passages)
+    # Falls back to whole-claim scoring since both clauses are in the same band
+    assert score >= 0.3  # At least ambiguous

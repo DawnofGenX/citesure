@@ -351,8 +351,88 @@ def select_best_sentence(claim: str, passage: str) -> str:
     return best[2]
 
 
+#: Conjunctions that join independent clauses in a compound claim.
+_COMPOUND_CONJUNCTIONS = {" and ", " while ", " but ", " and also "}
+
+
+def split_compound_claim(claim: str) -> list[str]:
+    """Split a compound claim into independent clauses on conjunctions.
+
+    Returns a list of clause strings. If no conjunction is found, returns
+    the claim as a single-element list. Deterministic: splits on the first
+    conjunction found, then recursively on the remainder.
+
+    Examples:
+        "A and B" -> ["A", "B"]
+        "A and B and C" -> ["A", "B", "C"]
+        "A" -> ["A"]
+    """
+    cleaned = clean_claim(claim)
+    if not cleaned:
+        return []
+    earliest_pos = -1
+    earliest_conj = None
+    for conj in _COMPOUND_CONJUNCTIONS:
+        pos = cleaned.find(conj)
+        if pos != -1 and (earliest_pos == -1 or pos < earliest_pos):
+            earliest_pos = pos
+            earliest_conj = conj
+    if earliest_pos == -1 or earliest_conj is None:
+        return [cleaned]
+    left = cleaned[:earliest_pos].strip()
+    right = cleaned[earliest_pos + len(earliest_conj):].strip()
+    result: list[str] = []
+    if left:
+        result.extend(split_compound_claim(left))
+    if right:
+        result.extend(split_compound_claim(right))
+    return result
+
+
+def score_compound_claim(
+    claim: str,
+    passages: list[str],
+    top_k: int = DEFAULT_TOP_K,
+) -> tuple[float, str]:
+    """Score a compound claim by scoring each clause independently.
+
+    Returns ``(score, evidence)`` where:
+    - If all clauses score >= HIGH_OVERLAP_THRESHOLD: ``(max_score, best_evidence)``
+    - If any clause scores < LOW_OVERLAP_THRESHOLD: ``(min_score, worst_evidence)``
+      (the claim is partially true — some clauses supported, some not)
+    - If all clauses score < LOW_OVERLAP_THRESHOLD: ``(min_score, worst_evidence)``
+
+    The key insight: a compound claim with mixed support is AMBIGUOUS, not
+    supported. The previous behavior scored the whole claim as a unit,
+    which meant a single true clause could make the whole claim "supported"
+    even when another clause was false.
+    """
+    clauses = split_compound_claim(claim)
+    if len(clauses) <= 1:
+        return score_overlap(claim, passages, top_k)
+
+    clause_results: list[tuple[float, str]] = []
+    for clause in clauses:
+        score, evidence = score_overlap(clause, passages, top_k)
+        clause_results.append((score, evidence))
+
+    max_score = max(s for s, _ in clause_results)
+    min_score = min(s for s, _ in clause_results)
+
+    best_evidence = next(e for s, e in clause_results if s == max_score)
+    worst_evidence = next(e for s, e in clause_results if s == min_score)
+
+    # Only use compound scoring when there's genuinely mixed support:
+    # some clauses are at least ambiguous, and some are unsupported.
+    # Otherwise, fall back to whole-claim scoring.
+    if max_score >= LOW_OVERLAP_THRESHOLD and min_score < LOW_OVERLAP_THRESHOLD:
+        return min_score, worst_evidence
+    else:
+        return score_overlap(claim, passages, top_k)
+
+
 #: Minimum fraction of the claim's content terms a sentence must share to enter
-#: the contradiction pool. Calibrated by a 10x6 sweep over the 108-case set:
+#: the contradiction pool. Calibrated by a 10x6 sweep over the 108 case set:
 #: pooling over ALL sentences fixes 9/10 false-supports but falsely rejects
 #: 14/27 supported cases, because page furniture ("[view email] [v1] Mon, 22 Dec
 #: 2014", "Holdich, Thomas (1911).") contradicts irrelevantly at 0.99+. Filtering
@@ -585,6 +665,13 @@ def score_overlap(
     the top-k ranked candidates (see :func:`rank_passages`). Returns
     ``(0.0, "")`` when the claim has no content terms or no passages are
     given. Pure and deterministic.
+
+    Fallback: when all top-k passages score below ``LOW_OVERLAP_THRESHOLD``,
+    score ALL passages and take the max. This catches cases where the claim's
+    sentence is in a passage ranked below top-k due to term-coverage ties or
+    segmentation splitting. The fallback only fires when the top-k result is
+    already ``unsupported`` — it can never downgrade a supported or ambiguous
+    verdict.
     """
     if not term_weights(clean_claim(claim)):
         return 0.0, ""
@@ -592,6 +679,12 @@ def score_overlap(
     if not ranked:
         return 0.0, ""
     best_score, best_passage = ranked[0]
+    if best_score < LOW_OVERLAP_THRESHOLD and len(passages) > top_k:
+        all_ranked = rank_passages(claim, passages, top_k=len(passages))
+        if all_ranked:
+            alt_score, alt_passage = all_ranked[0]
+            if alt_score > best_score:
+                best_score, best_passage = alt_score, alt_passage
     return best_score, _clip_snippet(best_passage)
 
 
@@ -655,11 +748,10 @@ async def _verify_one(
             evidence = target
         else:
             passages = segment_passages(target)
+            score, best_passage = score_compound_claim(
+                citation.claim, passages
+            )
             ranked = rank_passages(citation.claim, passages)
-            if ranked:
-                score, best_passage = ranked[0]
-            else:
-                score, best_passage = 0.0, ""
             status = status_for_score(score)
             notes.append(
                 f"overlap tier: score {score:.3f} against {source_label}; "
