@@ -426,7 +426,15 @@ def score_compound_claim(
     # some clauses are at least ambiguous, and some are unsupported.
     # Otherwise, fall back to whole-claim scoring.
     if max_score >= LOW_OVERLAP_THRESHOLD and min_score < LOW_OVERLAP_THRESHOLD:
-        return min_score, worst_evidence
+        # A partially-true claim is AMBIGUOUS, never unsupported: some clause
+        # is at least ambiguous, so there is real (if incomplete) support.
+        # Returning the raw minimum let a single short trailing clause that
+        # matches nothing ("faster startup times.") collapse the entire claim
+        # to 0.000 -> unsupported, which is strictly more confident than any
+        # clause justifies and inverted the recorded expectation for every
+        # partially-true case (v1 ambig1-4, v2 partially-true-ambiguous).
+        # Floor at the ambiguous band; keep the worst clause as evidence.
+        return max(min_score, LOW_OVERLAP_THRESHOLD), worst_evidence
     else:
         return score_overlap(claim, passages, top_k)
 
