@@ -1,0 +1,1149 @@
+{
+  "set": "evals/independent_set_v2.json",
+  "model": "cross-encoder/nli-deberta-v3-base",
+  "elapsed_s": 300.0,
+  "baseline": {
+    "matched": 83,
+    "total": 108,
+    "agreement_pct": 76.85,
+    "negation_flip_false_supported": 4,
+    "entity_swap_false_supported": 7
+  },
+  "sentence_max": {
+    "matched": 88,
+    "total": 108,
+    "agreement_pct": 81.48,
+    "negation_flip_false_supported": 5,
+    "entity_swap_false_supported": 7
+  },
+  "flips": [
+    [
+      "ind-101",
+      "verbatim-supported",
+      "supported",
+      "ambiguous",
+      "supported"
+    ],
+    [
+      "ind-104",
+      "verbatim-supported",
+      "supported",
+      "unsupported",
+      "supported"
+    ],
+    [
+      "ind-111",
+      "negation-flip",
+      "unsupported",
+      "unsupported",
+      "supported"
+    ],
+    [
+      "ind-127",
+      "entity-swap",
+      "unsupported",
+      "unsupported",
+      "supported"
+    ],
+    [
+      "ind-128",
+      "verbatim-supported",
+      "supported",
+      "unsupported",
+      "supported"
+    ],
+    [
+      "ind-131",
+      "verbatim-supported",
+      "supported",
+      "unsupported",
+      "supported"
+    ],
+    [
+      "ind-141",
+      "negation-flip",
+      "unsupported",
+      "unsupported",
+      "supported"
+    ],
+    [
+      "ind-161",
+      "verbatim-supported",
+      "supported",
+      "unsupported",
+      "supported"
+    ],
+    [
+      "ind-163",
+      "entity-swap",
+      "unsupported",
+      "supported",
+      "unsupported"
+    ],
+    [
+      "ind-164",
+      "verbatim-supported",
+      "supported",
+      "unsupported",
+      "supported"
+    ],
+    [
+      "ind-168",
+      "negation-flip",
+      "unsupported",
+      "supported",
+      "unsupported"
+    ],
+    [
+      "ind-172",
+      "entity-swap",
+      "unsupported",
+      "supported",
+      "unsupported"
+    ],
+    [
+      "ind-174",
+      "negation-flip",
+      "unsupported",
+      "supported",
+      "unsupported"
+    ],
+    [
+      "ind-180",
+      "negation-flip",
+      "unsupported",
+      "unsupported",
+      "supported"
+    ],
+    [
+      "ind-181",
+      "entity-swap",
+      "unsupported",
+      "unsupported",
+      "ambiguous"
+    ],
+    [
+      "ind-185",
+      "verbatim-supported",
+      "supported",
+      "unsupported",
+      "ambiguous"
+    ],
+    [
+      "ind-186",
+      "negation-flip",
+      "unsupported",
+      "unsupported",
+      "ambiguous"
+    ],
+    [
+      "ind-187",
+      "entity-swap",
+      "unsupported",
+      "unsupported",
+      "supported"
+    ],
+    [
+      "ind-190",
+      "entity-swap",
+      "unsupported",
+      "supported",
+      "unsupported"
+    ],
+    [
+      "ind-191",
+      "verbatim-supported",
+      "supported",
+      "unsupported",
+      "supported"
+    ],
+    [
+      "ind-194",
+      "verbatim-supported",
+      "supported",
+      "unsupported",
+      "supported"
+    ],
+    [
+      "ind-196",
+      "entity-swap",
+      "unsupported",
+      "unsupported",
+      "supported"
+    ]
+  ],
+  "rows": [
+    {
+      "id": "ind-101",
+      "category": "verbatim-supported",
+      "expected": "supported",
+      "baseline_pred": "ambiguous",
+      "baseline_score": 0.676,
+      "sentmax_score": 0.9922,
+      "sentmax_pred": "supported"
+    },
+    {
+      "id": "ind-102",
+      "category": "negation-flip",
+      "expected": "unsupported",
+      "baseline_pred": "unsupported",
+      "baseline_score": 0.0027,
+      "sentmax_score": 0.0191,
+      "sentmax_pred": "unsupported"
+    },
+    {
+      "id": "ind-103",
+      "category": "entity-swap",
+      "expected": "unsupported",
+      "baseline_pred": "unsupported",
+      "baseline_score": 0.0002,
+      "sentmax_score": 0.0,
+      "sentmax_pred": "unsupported"
+    },
+    {
+      "id": "ind-104",
+      "category": "verbatim-supported",
+      "expected": "supported",
+      "baseline_pred": "unsupported",
+      "baseline_score": 0.0026,
+      "sentmax_score": 0.9932,
+      "sentmax_pred": "supported"
+    },
+    {
+      "id": "ind-105",
+      "category": "negation-flip",
+      "expected": "unsupported",
+      "baseline_pred": "unsupported",
+      "baseline_score": 0.0003,
+      "sentmax_score": 0.0002,
+      "sentmax_pred": "unsupported"
+    },
+    {
+      "id": "ind-106",
+      "category": "entity-swap",
+      "expected": "unsupported",
+      "baseline_pred": "unsupported",
+      "baseline_score": 0.0002,
+      "sentmax_score": 0.0002,
+      "sentmax_pred": "unsupported"
+    },
+    {
+      "id": "ind-107",
+      "category": "verbatim-supported",
+      "expected": "supported",
+      "baseline_pred": "supported",
+      "baseline_score": 0.989,
+      "sentmax_score": 0.9896,
+      "sentmax_pred": "supported"
+    },
+    {
+      "id": "ind-108",
+      "category": "negation-flip",
+      "expected": "unsupported",
+      "baseline_pred": "unsupported",
+      "baseline_score": 0.0001,
+      "sentmax_score": 0.0055,
+      "sentmax_pred": "unsupported"
+    },
+    {
+      "id": "ind-109",
+      "category": "entity-swap",
+      "expected": "unsupported",
+      "baseline_pred": "supported",
+      "baseline_score": 0.9946,
+      "sentmax_score": 0.9873,
+      "sentmax_pred": "supported"
+    },
+    {
+      "id": "ind-110",
+      "category": "verbatim-supported",
+      "expected": "supported",
+      "baseline_pred": "supported",
+      "baseline_score": 0.9959,
+      "sentmax_score": 0.9867,
+      "sentmax_pred": "supported"
+    },
+    {
+      "id": "ind-111",
+      "category": "negation-flip",
+      "expected": "unsupported",
+      "baseline_pred": "unsupported",
+      "baseline_score": 0.0087,
+      "sentmax_score": 0.9831,
+      "sentmax_pred": "supported"
+    },
+    {
+      "id": "ind-112",
+      "category": "entity-swap",
+      "expected": "unsupported",
+      "baseline_pred": "unsupported",
+      "baseline_score": 0.0032,
+      "sentmax_score": 0.0021,
+      "sentmax_pred": "unsupported"
+    },
+    {
+      "id": "ind-113",
+      "category": "verbatim-supported",
+      "expected": "supported",
+      "baseline_pred": "supported",
+      "baseline_score": 0.9917,
+      "sentmax_score": 0.9916,
+      "sentmax_pred": "supported"
+    },
+    {
+      "id": "ind-114",
+      "category": "negation-flip",
+      "expected": "unsupported",
+      "baseline_pred": "unsupported",
+      "baseline_score": 0.0405,
+      "sentmax_score": 0.0405,
+      "sentmax_pred": "unsupported"
+    },
+    {
+      "id": "ind-115",
+      "category": "entity-swap",
+      "expected": "unsupported",
+      "baseline_pred": "unsupported",
+      "baseline_score": 0.0656,
+      "sentmax_score": 0.0656,
+      "sentmax_pred": "unsupported"
+    },
+    {
+      "id": "ind-116",
+      "category": "verbatim-supported",
+      "expected": "supported",
+      "baseline_pred": "supported",
+      "baseline_score": 0.9864,
+      "sentmax_score": 0.9864,
+      "sentmax_pred": "supported"
+    },
+    {
+      "id": "ind-117",
+      "category": "negation-flip",
+      "expected": "unsupported",
+      "baseline_pred": "supported",
+      "baseline_score": 0.8995,
+      "sentmax_score": 0.9794,
+      "sentmax_pred": "supported"
+    },
+    {
+      "id": "ind-118",
+      "category": "entity-swap",
+      "expected": "unsupported",
+      "baseline_pred": "supported",
+      "baseline_score": 0.9851,
+      "sentmax_score": 0.9851,
+      "sentmax_pred": "supported"
+    },
+    {
+      "id": "ind-119",
+      "category": "verbatim-supported",
+      "expected": "supported",
+      "baseline_pred": "supported",
+      "baseline_score": 0.9922,
+      "sentmax_score": 0.9894,
+      "sentmax_pred": "supported"
+    },
+    {
+      "id": "ind-120",
+      "category": "negation-flip",
+      "expected": "unsupported",
+      "baseline_pred": "unsupported",
+      "baseline_score": 0.0019,
+      "sentmax_score": 0.0015,
+      "sentmax_pred": "unsupported"
+    },
+    {
+      "id": "ind-121",
+      "category": "entity-swap",
+      "expected": "unsupported",
+      "baseline_pred": "unsupported",
+      "baseline_score": 0.0026,
+      "sentmax_score": 0.0032,
+      "sentmax_pred": "unsupported"
+    },
+    {
+      "id": "ind-122",
+      "category": "verbatim-supported",
+      "expected": "supported",
+      "baseline_pred": "supported",
+      "baseline_score": 0.9924,
+      "sentmax_score": 0.9887,
+      "sentmax_pred": "supported"
+    },
+    {
+      "id": "ind-123",
+      "category": "negation-flip",
+      "expected": "unsupported",
+      "baseline_pred": "unsupported",
+      "baseline_score": 0.0001,
+      "sentmax_score": 0.0001,
+      "sentmax_pred": "unsupported"
+    },
+    {
+      "id": "ind-124",
+      "category": "entity-swap",
+      "expected": "unsupported",
+      "baseline_pred": "unsupported",
+      "baseline_score": 0.041,
+      "sentmax_score": 0.041,
+      "sentmax_pred": "unsupported"
+    },
+    {
+      "id": "ind-125",
+      "category": "verbatim-supported",
+      "expected": "supported",
+      "baseline_pred": "supported",
+      "baseline_score": 0.997,
+      "sentmax_score": 0.9891,
+      "sentmax_pred": "supported"
+    },
+    {
+      "id": "ind-126",
+      "category": "negation-flip",
+      "expected": "unsupported",
+      "baseline_pred": "unsupported",
+      "baseline_score": 0.0002,
+      "sentmax_score": 0.0292,
+      "sentmax_pred": "unsupported"
+    },
+    {
+      "id": "ind-127",
+      "category": "entity-swap",
+      "expected": "unsupported",
+      "baseline_pred": "unsupported",
+      "baseline_score": 0.0182,
+      "sentmax_score": 0.7224,
+      "sentmax_pred": "supported"
+    },
+    {
+      "id": "ind-128",
+      "category": "verbatim-supported",
+      "expected": "supported",
+      "baseline_pred": "unsupported",
+      "baseline_score": 0.1154,
+      "sentmax_score": 0.9952,
+      "sentmax_pred": "supported"
+    },
+    {
+      "id": "ind-129",
+      "category": "negation-flip",
+      "expected": "unsupported",
+      "baseline_pred": "unsupported",
+      "baseline_score": 0.0518,
+      "sentmax_score": 0.0564,
+      "sentmax_pred": "unsupported"
+    },
+    {
+      "id": "ind-130",
+      "category": "entity-swap",
+      "expected": "unsupported",
+      "baseline_pred": "unsupported",
+      "baseline_score": 0.0205,
+      "sentmax_score": 0.0679,
+      "sentmax_pred": "unsupported"
+    },
+    {
+      "id": "ind-131",
+      "category": "verbatim-supported",
+      "expected": "supported",
+      "baseline_pred": "unsupported",
+      "baseline_score": 0.0026,
+      "sentmax_score": 0.984,
+      "sentmax_pred": "supported"
+    },
+    {
+      "id": "ind-132",
+      "category": "negation-flip",
+      "expected": "unsupported",
+      "baseline_pred": "unsupported",
+      "baseline_score": 0.0047,
+      "sentmax_score": 0.0109,
+      "sentmax_pred": "unsupported"
+    },
+    {
+      "id": "ind-133",
+      "category": "entity-swap",
+      "expected": "unsupported",
+      "baseline_pred": "unsupported",
+      "baseline_score": 0.0033,
+      "sentmax_score": 0.0065,
+      "sentmax_pred": "unsupported"
+    },
+    {
+      "id": "ind-134",
+      "category": "verbatim-supported",
+      "expected": "supported",
+      "baseline_pred": "supported",
+      "baseline_score": 0.9949,
+      "sentmax_score": 0.9949,
+      "sentmax_pred": "supported"
+    },
+    {
+      "id": "ind-135",
+      "category": "negation-flip",
+      "expected": "unsupported",
+      "baseline_pred": "unsupported",
+      "baseline_score": 0.0003,
+      "sentmax_score": 0.0018,
+      "sentmax_pred": "unsupported"
+    },
+    {
+      "id": "ind-136",
+      "category": "entity-swap",
+      "expected": "unsupported",
+      "baseline_pred": "supported",
+      "baseline_score": 0.9669,
+      "sentmax_score": 0.9669,
+      "sentmax_pred": "supported"
+    },
+    {
+      "id": "ind-137",
+      "category": "verbatim-supported",
+      "expected": "supported",
+      "baseline_pred": "supported",
+      "baseline_score": 0.9962,
+      "sentmax_score": 0.9962,
+      "sentmax_pred": "supported"
+    },
+    {
+      "id": "ind-138",
+      "category": "negation-flip",
+      "expected": "unsupported",
+      "baseline_pred": "unsupported",
+      "baseline_score": 0.001,
+      "sentmax_score": 0.1091,
+      "sentmax_pred": "unsupported"
+    },
+    {
+      "id": "ind-139",
+      "category": "entity-swap",
+      "expected": "unsupported",
+      "baseline_pred": "unsupported",
+      "baseline_score": 0.0051,
+      "sentmax_score": 0.0196,
+      "sentmax_pred": "unsupported"
+    },
+    {
+      "id": "ind-140",
+      "category": "verbatim-supported",
+      "expected": "supported",
+      "baseline_pred": "supported",
+      "baseline_score": 0.9973,
+      "sentmax_score": 0.9944,
+      "sentmax_pred": "supported"
+    },
+    {
+      "id": "ind-141",
+      "category": "negation-flip",
+      "expected": "unsupported",
+      "baseline_pred": "unsupported",
+      "baseline_score": 0.064,
+      "sentmax_score": 0.9713,
+      "sentmax_pred": "supported"
+    },
+    {
+      "id": "ind-142",
+      "category": "entity-swap",
+      "expected": "unsupported",
+      "baseline_pred": "unsupported",
+      "baseline_score": 0.1155,
+      "sentmax_score": 0.0031,
+      "sentmax_pred": "unsupported"
+    },
+    {
+      "id": "ind-143",
+      "category": "verbatim-supported",
+      "expected": "supported",
+      "baseline_pred": "supported",
+      "baseline_score": 0.9961,
+      "sentmax_score": 0.9963,
+      "sentmax_pred": "supported"
+    },
+    {
+      "id": "ind-144",
+      "category": "negation-flip",
+      "expected": "unsupported",
+      "baseline_pred": "unsupported",
+      "baseline_score": 0.0002,
+      "sentmax_score": 0.0013,
+      "sentmax_pred": "unsupported"
+    },
+    {
+      "id": "ind-145",
+      "category": "entity-swap",
+      "expected": "unsupported",
+      "baseline_pred": "supported",
+      "baseline_score": 0.9761,
+      "sentmax_score": 0.9689,
+      "sentmax_pred": "supported"
+    },
+    {
+      "id": "ind-146",
+      "category": "verbatim-supported",
+      "expected": "supported",
+      "baseline_pred": "supported",
+      "baseline_score": 0.9008,
+      "sentmax_score": 0.9947,
+      "sentmax_pred": "supported"
+    },
+    {
+      "id": "ind-147",
+      "category": "negation-flip",
+      "expected": "unsupported",
+      "baseline_pred": "unsupported",
+      "baseline_score": 0.0902,
+      "sentmax_score": 0.2608,
+      "sentmax_pred": "unsupported"
+    },
+    {
+      "id": "ind-148",
+      "category": "entity-swap",
+      "expected": "unsupported",
+      "baseline_pred": "unsupported",
+      "baseline_score": 0.0182,
+      "sentmax_score": 0.0043,
+      "sentmax_pred": "unsupported"
+    },
+    {
+      "id": "ind-149",
+      "category": "verbatim-supported",
+      "expected": "supported",
+      "baseline_pred": "supported",
+      "baseline_score": 0.9373,
+      "sentmax_score": 0.9918,
+      "sentmax_pred": "supported"
+    },
+    {
+      "id": "ind-150",
+      "category": "negation-flip",
+      "expected": "unsupported",
+      "baseline_pred": "unsupported",
+      "baseline_score": 0.0004,
+      "sentmax_score": 0.0061,
+      "sentmax_pred": "unsupported"
+    },
+    {
+      "id": "ind-151",
+      "category": "entity-swap",
+      "expected": "unsupported",
+      "baseline_pred": "unsupported",
+      "baseline_score": 0.0033,
+      "sentmax_score": 0.1852,
+      "sentmax_pred": "unsupported"
+    },
+    {
+      "id": "ind-152",
+      "category": "verbatim-supported",
+      "expected": "supported",
+      "baseline_pred": "supported",
+      "baseline_score": 0.995,
+      "sentmax_score": 0.9947,
+      "sentmax_pred": "supported"
+    },
+    {
+      "id": "ind-153",
+      "category": "negation-flip",
+      "expected": "unsupported",
+      "baseline_pred": "unsupported",
+      "baseline_score": 0.0009,
+      "sentmax_score": 0.0019,
+      "sentmax_pred": "unsupported"
+    },
+    {
+      "id": "ind-154",
+      "category": "entity-swap",
+      "expected": "unsupported",
+      "baseline_pred": "unsupported",
+      "baseline_score": 0.002,
+      "sentmax_score": 0.002,
+      "sentmax_pred": "unsupported"
+    },
+    {
+      "id": "ind-155",
+      "category": "verbatim-supported",
+      "expected": "supported",
+      "baseline_pred": "supported",
+      "baseline_score": 0.9743,
+      "sentmax_score": 0.9958,
+      "sentmax_pred": "supported"
+    },
+    {
+      "id": "ind-156",
+      "category": "negation-flip",
+      "expected": "unsupported",
+      "baseline_pred": "unsupported",
+      "baseline_score": 0.0025,
+      "sentmax_score": 0.0064,
+      "sentmax_pred": "unsupported"
+    },
+    {
+      "id": "ind-157",
+      "category": "entity-swap",
+      "expected": "unsupported",
+      "baseline_pred": "unsupported",
+      "baseline_score": 0.0005,
+      "sentmax_score": 0.0007,
+      "sentmax_pred": "unsupported"
+    },
+    {
+      "id": "ind-158",
+      "category": "verbatim-supported",
+      "expected": "supported",
+      "baseline_pred": "supported",
+      "baseline_score": 0.9952,
+      "sentmax_score": 0.9951,
+      "sentmax_pred": "supported"
+    },
+    {
+      "id": "ind-159",
+      "category": "negation-flip",
+      "expected": "unsupported",
+      "baseline_pred": "unsupported",
+      "baseline_score": 0.0268,
+      "sentmax_score": 0.0268,
+      "sentmax_pred": "unsupported"
+    },
+    {
+      "id": "ind-160",
+      "category": "entity-swap",
+      "expected": "unsupported",
+      "baseline_pred": "unsupported",
+      "baseline_score": 0.0087,
+      "sentmax_score": 0.0691,
+      "sentmax_pred": "unsupported"
+    },
+    {
+      "id": "ind-161",
+      "category": "verbatim-supported",
+      "expected": "supported",
+      "baseline_pred": "unsupported",
+      "baseline_score": 0.0024,
+      "sentmax_score": 0.9941,
+      "sentmax_pred": "supported"
+    },
+    {
+      "id": "ind-162",
+      "category": "negation-flip",
+      "expected": "unsupported",
+      "baseline_pred": "unsupported",
+      "baseline_score": 0.0015,
+      "sentmax_score": 0.0019,
+      "sentmax_pred": "unsupported"
+    },
+    {
+      "id": "ind-163",
+      "category": "entity-swap",
+      "expected": "unsupported",
+      "baseline_pred": "supported",
+      "baseline_score": 0.9588,
+      "sentmax_score": 0.0051,
+      "sentmax_pred": "unsupported"
+    },
+    {
+      "id": "ind-164",
+      "category": "verbatim-supported",
+      "expected": "supported",
+      "baseline_pred": "unsupported",
+      "baseline_score": 0.004,
+      "sentmax_score": 0.985,
+      "sentmax_pred": "supported"
+    },
+    {
+      "id": "ind-165",
+      "category": "negation-flip",
+      "expected": "unsupported",
+      "baseline_pred": "unsupported",
+      "baseline_score": 0.0009,
+      "sentmax_score": 0.0009,
+      "sentmax_pred": "unsupported"
+    },
+    {
+      "id": "ind-166",
+      "category": "entity-swap",
+      "expected": "unsupported",
+      "baseline_pred": "unsupported",
+      "baseline_score": 0.0041,
+      "sentmax_score": 0.0041,
+      "sentmax_pred": "unsupported"
+    },
+    {
+      "id": "ind-167",
+      "category": "verbatim-supported",
+      "expected": "supported",
+      "baseline_pred": "supported",
+      "baseline_score": 0.9938,
+      "sentmax_score": 0.9824,
+      "sentmax_pred": "supported"
+    },
+    {
+      "id": "ind-168",
+      "category": "negation-flip",
+      "expected": "unsupported",
+      "baseline_pred": "supported",
+      "baseline_score": 0.9486,
+      "sentmax_score": 0.2856,
+      "sentmax_pred": "unsupported"
+    },
+    {
+      "id": "ind-169",
+      "category": "entity-swap",
+      "expected": "unsupported",
+      "baseline_pred": "unsupported",
+      "baseline_score": 0.0004,
+      "sentmax_score": 0.0022,
+      "sentmax_pred": "unsupported"
+    },
+    {
+      "id": "ind-170",
+      "category": "verbatim-supported",
+      "expected": "supported",
+      "baseline_pred": "supported",
+      "baseline_score": 0.9981,
+      "sentmax_score": 0.9981,
+      "sentmax_pred": "supported"
+    },
+    {
+      "id": "ind-171",
+      "category": "negation-flip",
+      "expected": "unsupported",
+      "baseline_pred": "supported",
+      "baseline_score": 0.9452,
+      "sentmax_score": 0.9032,
+      "sentmax_pred": "supported"
+    },
+    {
+      "id": "ind-172",
+      "category": "entity-swap",
+      "expected": "unsupported",
+      "baseline_pred": "supported",
+      "baseline_score": 0.7937,
+      "sentmax_score": 0.002,
+      "sentmax_pred": "unsupported"
+    },
+    {
+      "id": "ind-173",
+      "category": "verbatim-supported",
+      "expected": "supported",
+      "baseline_pred": "supported",
+      "baseline_score": 0.9939,
+      "sentmax_score": 0.993,
+      "sentmax_pred": "supported"
+    },
+    {
+      "id": "ind-174",
+      "category": "negation-flip",
+      "expected": "unsupported",
+      "baseline_pred": "supported",
+      "baseline_score": 0.9653,
+      "sentmax_score": 0.0078,
+      "sentmax_pred": "unsupported"
+    },
+    {
+      "id": "ind-175",
+      "category": "entity-swap",
+      "expected": "unsupported",
+      "baseline_pred": "unsupported",
+      "baseline_score": 0.0411,
+      "sentmax_score": 0.0416,
+      "sentmax_pred": "unsupported"
+    },
+    {
+      "id": "ind-176",
+      "category": "verbatim-supported",
+      "expected": "supported",
+      "baseline_pred": "supported",
+      "baseline_score": 0.9824,
+      "sentmax_score": 0.9926,
+      "sentmax_pred": "supported"
+    },
+    {
+      "id": "ind-177",
+      "category": "negation-flip",
+      "expected": "unsupported",
+      "baseline_pred": "unsupported",
+      "baseline_score": 0.0002,
+      "sentmax_score": 0.0025,
+      "sentmax_pred": "unsupported"
+    },
+    {
+      "id": "ind-178",
+      "category": "entity-swap",
+      "expected": "unsupported",
+      "baseline_pred": "unsupported",
+      "baseline_score": 0.0111,
+      "sentmax_score": 0.0136,
+      "sentmax_pred": "unsupported"
+    },
+    {
+      "id": "ind-179",
+      "category": "verbatim-supported",
+      "expected": "supported",
+      "baseline_pred": "unsupported",
+      "baseline_score": 0.0079,
+      "sentmax_score": 0.0246,
+      "sentmax_pred": "unsupported"
+    },
+    {
+      "id": "ind-180",
+      "category": "negation-flip",
+      "expected": "unsupported",
+      "baseline_pred": "unsupported",
+      "baseline_score": 0.0015,
+      "sentmax_score": 0.9689,
+      "sentmax_pred": "supported"
+    },
+    {
+      "id": "ind-181",
+      "category": "entity-swap",
+      "expected": "unsupported",
+      "baseline_pred": "unsupported",
+      "baseline_score": 0.0133,
+      "sentmax_score": 0.4866,
+      "sentmax_pred": "ambiguous"
+    },
+    {
+      "id": "ind-182",
+      "category": "verbatim-supported",
+      "expected": "supported",
+      "baseline_pred": "supported",
+      "baseline_score": 0.9937,
+      "sentmax_score": 0.9937,
+      "sentmax_pred": "supported"
+    },
+    {
+      "id": "ind-183",
+      "category": "negation-flip",
+      "expected": "unsupported",
+      "baseline_pred": "unsupported",
+      "baseline_score": 0.0067,
+      "sentmax_score": 0.0017,
+      "sentmax_pred": "unsupported"
+    },
+    {
+      "id": "ind-184",
+      "category": "entity-swap",
+      "expected": "unsupported",
+      "baseline_pred": "unsupported",
+      "baseline_score": 0.0022,
+      "sentmax_score": 0.0022,
+      "sentmax_pred": "unsupported"
+    },
+    {
+      "id": "ind-185",
+      "category": "verbatim-supported",
+      "expected": "supported",
+      "baseline_pred": "unsupported",
+      "baseline_score": 0.0026,
+      "sentmax_score": 0.5827,
+      "sentmax_pred": "ambiguous"
+    },
+    {
+      "id": "ind-186",
+      "category": "negation-flip",
+      "expected": "unsupported",
+      "baseline_pred": "unsupported",
+      "baseline_score": 0.045,
+      "sentmax_score": 0.3455,
+      "sentmax_pred": "ambiguous"
+    },
+    {
+      "id": "ind-187",
+      "category": "entity-swap",
+      "expected": "unsupported",
+      "baseline_pred": "unsupported",
+      "baseline_score": 0.0142,
+      "sentmax_score": 0.8308,
+      "sentmax_pred": "supported"
+    },
+    {
+      "id": "ind-188",
+      "category": "verbatim-supported",
+      "expected": "supported",
+      "baseline_pred": "supported",
+      "baseline_score": 0.988,
+      "sentmax_score": 0.987,
+      "sentmax_pred": "supported"
+    },
+    {
+      "id": "ind-189",
+      "category": "negation-flip",
+      "expected": "unsupported",
+      "baseline_pred": "unsupported",
+      "baseline_score": 0.0123,
+      "sentmax_score": 0.043,
+      "sentmax_pred": "unsupported"
+    },
+    {
+      "id": "ind-190",
+      "category": "entity-swap",
+      "expected": "unsupported",
+      "baseline_pred": "supported",
+      "baseline_score": 0.9893,
+      "sentmax_score": 0.0079,
+      "sentmax_pred": "unsupported"
+    },
+    {
+      "id": "ind-191",
+      "category": "verbatim-supported",
+      "expected": "supported",
+      "baseline_pred": "unsupported",
+      "baseline_score": 0.0023,
+      "sentmax_score": 0.9938,
+      "sentmax_pred": "supported"
+    },
+    {
+      "id": "ind-192",
+      "category": "negation-flip",
+      "expected": "unsupported",
+      "baseline_pred": "unsupported",
+      "baseline_score": 0.0025,
+      "sentmax_score": 0.004,
+      "sentmax_pred": "unsupported"
+    },
+    {
+      "id": "ind-193",
+      "category": "entity-swap",
+      "expected": "unsupported",
+      "baseline_pred": "unsupported",
+      "baseline_score": 0.0013,
+      "sentmax_score": 0.0099,
+      "sentmax_pred": "unsupported"
+    },
+    {
+      "id": "ind-194",
+      "category": "verbatim-supported",
+      "expected": "supported",
+      "baseline_pred": "unsupported",
+      "baseline_score": 0.0024,
+      "sentmax_score": 0.9488,
+      "sentmax_pred": "supported"
+    },
+    {
+      "id": "ind-195",
+      "category": "negation-flip",
+      "expected": "unsupported",
+      "baseline_pred": "unsupported",
+      "baseline_score": 0.0327,
+      "sentmax_score": 0.0327,
+      "sentmax_pred": "unsupported"
+    },
+    {
+      "id": "ind-196",
+      "category": "entity-swap",
+      "expected": "unsupported",
+      "baseline_pred": "unsupported",
+      "baseline_score": 0.0106,
+      "sentmax_score": 0.9788,
+      "sentmax_pred": "supported"
+    },
+    {
+      "id": "ind-241",
+      "category": "dead-link",
+      "expected": "unreachable",
+      "baseline_pred": "unreachable",
+      "baseline_score": null,
+      "sentmax_pred": "unreachable",
+      "sentmax_score": null
+    },
+    {
+      "id": "ind-242",
+      "category": "dead-link",
+      "expected": "unreachable",
+      "baseline_pred": "unreachable",
+      "baseline_score": null,
+      "sentmax_pred": "unreachable",
+      "sentmax_score": null
+    },
+    {
+      "id": "ind-243",
+      "category": "dead-link",
+      "expected": "unreachable",
+      "baseline_pred": "unreachable",
+      "baseline_score": null,
+      "sentmax_pred": "unreachable",
+      "sentmax_score": null
+    },
+    {
+      "id": "ind-244",
+      "category": "dead-link",
+      "expected": "unreachable",
+      "baseline_pred": "unreachable",
+      "baseline_score": null,
+      "sentmax_pred": "unreachable",
+      "sentmax_score": null
+    },
+    {
+      "id": "ind-245",
+      "category": "paywalled",
+      "expected": "paywalled",
+      "baseline_pred": "paywalled",
+      "baseline_score": null,
+      "sentmax_pred": "paywalled",
+      "sentmax_score": null
+    },
+    {
+      "id": "ind-246",
+      "category": "paywalled",
+      "expected": "paywalled",
+      "baseline_pred": "paywalled",
+      "baseline_score": null,
+      "sentmax_pred": "paywalled",
+      "sentmax_score": null
+    },
+    {
+      "id": "ind-247",
+      "category": "paywalled",
+      "expected": "paywalled",
+      "baseline_pred": "paywalled",
+      "baseline_score": null,
+      "sentmax_pred": "paywalled",
+      "sentmax_score": null
+    },
+    {
+      "id": "ind-248",
+      "category": "paywalled",
+      "expected": "paywalled",
+      "baseline_pred": "paywalled",
+      "baseline_score": null,
+      "sentmax_pred": "paywalled",
+      "sentmax_score": null
+    },
+    {
+      "id": "ind-249",
+      "category": "partially-true-ambiguous",
+      "expected": "ambiguous",
+      "baseline_pred": "unsupported",
+      "baseline_score": 0.0029,
+      "sentmax_score": 0.0022,
+      "sentmax_pred": "unsupported"
+    },
+    {
+      "id": "ind-250",
+      "category": "partially-true-ambiguous",
+      "expected": "ambiguous",
+      "baseline_pred": "supported",
+      "baseline_score": 0.954,
+      "sentmax_score": 0.9643,
+      "sentmax_pred": "supported"
+    },
+    {
+      "id": "ind-251",
+      "category": "partially-true-ambiguous",
+      "expected": "ambiguous",
+      "baseline_pred": "supported",
+      "baseline_score": 0.9957,
+      "sentmax_score": 0.9957,
+      "sentmax_pred": "supported"
+    },
+    {
+      "id": "ind-252",
+      "category": "partially-true-ambiguous",
+      "expected": "ambiguous",
+      "baseline_pred": "unsupported",
+      "baseline_score": 0.0007,
+      "sentmax_score": 0.0005,
+      "sentmax_pred": "unsupported"
+    }
+  ]
+}
