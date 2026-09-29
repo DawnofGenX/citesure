@@ -121,7 +121,10 @@ Each citation is pushed through up to three tiers. A verdict records
    region? The sentence/paragraph containing the `[n]` marker is the claim
    unit (D4); it's matched against the top-k most relevant passages of the
    fetched page using deterministic weighted term-coverage scoring in
-   `[0, 1]`. No LLM, no embeddings.
+   `[0, 1]`. No LLM, no embeddings. Compound claims (joined by "and", "while",
+   "but") are split into clauses and scored independently — a claim with mixed
+   support (some clauses true, some false) returns `ambiguous`, not `supported`.
+   When all top-k passages score below 0.3, the fallback scores all passages.
 3. **NLI entailment (tier 3, opt-in)** — a local cross-encoder scores each
    `(claim, best-passage)` pair for entailment. Off by default; enable with
    `--nli`. See [NLI tier](#nli-tier-opt-in).
