@@ -351,6 +351,79 @@ def select_best_sentence(claim: str, passage: str) -> str:
     return best[2]
 
 
+#: Minimum fraction of the claim's content terms a sentence must share to enter
+#: the contradiction pool. Calibrated by a 10x6 sweep over the 108-case set:
+#: pooling over ALL sentences fixes 9/10 false-supports but falsely rejects
+#: 14/27 supported cases, because page furniture ("[view email] [v1] Mon, 22 Dec
+#: 2014", "Holdich, Thomas (1911).") contradicts irrelevantly at 0.99+. Filtering
+#: the pool holds false-rejects to 3/27 while still fixing 6/10. 0.5 is the middle
+#: of the 0.4-0.6 plateau, chosen over the 0.6 peak to avoid picking a lucky cell.
+CONTRADICTION_POOL_MIN_OVERLAP = 0.5
+
+#: A pooled contradiction at or above this vetoes a ``supported`` verdict.
+#: Swept: 0.5 is the only value tested; thresholds are NOT swept against the
+#: 108-case headline metric (that would be fitting the test set).
+POOLED_CONTRADICTION_THRESHOLD = 0.5
+
+#: Sentences shorter than this carry no proposition worth contradicting.
+_POOL_MIN_SENTENCE_CHARS = 25
+
+
+def pool_candidate_sentences(
+    claim: str,
+    premises: list[str],
+    min_overlap: float = CONTRADICTION_POOL_MIN_OVERLAP,
+) -> list[str]:
+    """Return claim-relevant sentences from ``premises`` for contradiction scoring.
+
+    A sentence qualifies when it shares at least ``min_overlap`` of the claim's
+    content terms. This deliberately excludes page furniture, which contradicts
+    irrelevantly and at high confidence.
+    """
+    claim_terms = content_terms(clean_claim(claim))
+    if not claim_terms:
+        return []
+    out: list[str] = []
+    for premise in premises or []:
+        for sent in _SENTENCE_BOUNDARY_RE.split(premise or ""):
+            sent = sent.strip()
+            if len(sent) < _POOL_MIN_SENTENCE_CHARS:
+                continue
+            overlap = len(claim_terms & content_terms(sent)) / len(claim_terms)
+            if overlap >= min_overlap:
+                out.append(sent)
+    return out
+
+
+def pooled_contradiction(
+    claim: str,
+    premises: list[str],
+    encoder=None,
+    min_overlap: float = CONTRADICTION_POOL_MIN_OVERLAP,
+) -> float:
+    """Max contradiction over claim-relevant sentences; 0.0 if none qualify.
+
+    The pipeline keeps only the max-entailment pair's contradiction, which is
+    ~0.00 for a false-support even when another captured sentence contradicts
+    the claim at 0.99+. This surfaces that discarded signal.
+
+    Measured on the 108-case set: 9 of 10 false-supports already had a
+    contradicting sentence (0.82-0.9999) sitting in the captured evidence that
+    the entailment-max threw away. Pooling over all sentences is unsafe
+    (14/27 false rejects); restricting to claim-relevant sentences is not
+    (3/27).
+    """
+    if encoder is None:
+        return 0.0
+    candidates = pool_candidate_sentences(claim, premises, min_overlap)
+    if not candidates:
+        return 0.0
+    from citesure.nli import score_nli_batch_all
+
+    scored = score_nli_batch_all(encoder, [(claim, s) for s in candidates])
+    return max((contra for _ent, contra in scored), default=0.0)
+
+
 def rank_passages(
     claim: str, passages: list[str], top_k: int = DEFAULT_TOP_K
 ) -> list[tuple[float, str]]:

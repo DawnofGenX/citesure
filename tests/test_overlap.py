@@ -540,3 +540,42 @@ def test_select_best_sentence_keeps_anaphoric_antecedent():
     )
     out = select_best_sentence(claim, passage)
     assert "BERT" in out, f"antecedent stripped: {out!r}"
+
+
+def test_pool_candidate_sentences_filters_page_furniture():
+    """Only claim-relevant sentences may enter the contradiction pool.
+
+    Page furniture contradicts irrelevantly: "Holdich, Thomas (1911)." scores
+    0.9997 contradiction against an unrelated claim and must be excluded.
+    """
+    from citesure.overlap import pool_candidate_sentences
+
+    claim = "The GELU activation function is defined as x times Phi of x."
+    premises = [
+        "The GELU activation function is the hyperbolic tanh approximation, "
+        "defined as 0.5 times x times one plus the exponential of minus 2x.",
+        "Holdich, Thomas (1911). A Manual of Geographical Science. London.",
+    ]
+    kept = pool_candidate_sentences(claim, premises, min_overlap=0.5)
+    assert kept == [premises[0]]
+    assert not any("Holdich" in s for s in kept)
+
+
+def test_pool_candidate_sentences_handles_empty_and_single_clause():
+    from citesure.overlap import pool_candidate_sentences
+
+    assert pool_candidate_sentences("claim", [], min_overlap=0.5) == []
+    assert pool_candidate_sentences("claim", [""], min_overlap=0.5) == []
+    # A claim with no content terms (all stopwords) yields no candidates.
+    assert pool_candidate_sentences("the of and", ["a real sentence here"],
+                                    min_overlap=0.5) == []
+
+
+def test_pooled_contradiction_is_zero_without_encoder():
+    """No encoder means no scoring; the veto must not fire by default."""
+    from citesure.overlap import pooled_contradiction
+
+    claim = "The GELU activation function is defined as x times Phi of x."
+    premises = ["The GELU activation function is defined as 0.5 times x times "
+                "one plus the exponential of minus 2x squared."]
+    assert pooled_contradiction(claim, premises, encoder=None) == 0.0
