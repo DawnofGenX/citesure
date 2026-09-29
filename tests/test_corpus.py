@@ -48,6 +48,13 @@ def _load_cases() -> list[dict]:
     out = []
     for item in items:
         citation = item["citation"]
+        # {FIXTURES} is a portable stand-in for the absolute fixtures dir. The
+        # three file:// cases used to hardcode a machine-specific absolute path
+        # (/home/hermes/...), so they silently passed locally and failed in CI
+        # with "No such file or directory". Keep the file:// scheme (the shape
+        # test requires >= 3 of them) but resolve the path at load time.
+        if "{FIXTURES}" in citation:
+            citation = citation.replace("{FIXTURES}", str(FIXTURES))
         # Anchor bare relative paths against the fixtures directory.
         if not any(citation.startswith(s) for s in ("http://", "https://", "file://", "/")):
             citation = str((FIXTURES / citation).resolve())

@@ -23,6 +23,7 @@ from __future__ import annotations
 
 import asyncio
 import json
+import shutil
 from pathlib import Path
 
 from mcp import Client
@@ -30,7 +31,38 @@ from mcp.client.stdio import StdioServerParameters
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 PAGES = Path(__file__).resolve().parent / "fixtures" / "pages"
-MCP_SCRIPT = REPO_ROOT / ".venv" / "bin" / "citesure-mcp"
+
+
+def _mcp_command() -> str:
+    """Portable path to the citesure-mcp server entry point.
+
+    The repo-local .venv path is absent under `pip install -e ".[dev]"` in CI,
+    where the console script lands in the runner's Python environment instead.
+    Prefer PATH (covers CI and a venv-activated shell), then fall back to the
+    repo venv (covers a bare `pytest` run with the venv not on PATH). Both real
+    environments are covered, so a miss here is a genuinely broken checkout and
+    deserves a clear message rather than a bare FileNotFoundError later.
+
+    Returns a single executable path: the MCP stdio transport passes this as
+    the command with no arguments, so a compound "python -m ..." string would
+    be treated as one literal argv and fail confusingly.
+    """
+    found = shutil.which("citesure-mcp")
+    if found:
+        return found
+    for local in (
+        REPO_ROOT / ".venv" / "bin" / "citesure-mcp",
+        REPO_ROOT / ".venv" / "Scripts" / "citesure-mcp.exe",
+    ):
+        if local.exists():
+            return str(local)
+    raise RuntimeError(
+        "citesure-mcp not found on PATH and no repo-local .venv entry point; "
+        "install the package (pip install -e '.[dev]') before running the MCP tests"
+    )
+
+
+MCP_SCRIPT = _mcp_command()
 
 
 def _uri(name: str) -> str:

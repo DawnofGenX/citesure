@@ -21,13 +21,13 @@
     {
       "id": "sup4",
       "claim": "Rust 1.75 was released on July 25, 2024, introducing a new inline assembly syntax.",
-      "citation": "file:///home/hermes/citesure/tests/fixtures/pages/sup4.html",
+      "citation": "file://{FIXTURES}/pages/sup4.html",
       "expected_status": "supported"
     },
     {
       "id": "sup5",
       "claim": "Kubernetes 1.30 was released on April 16, 2024, promoting in-place pod vertical scaling to beta.",
-      "citation": "file:///home/hermes/citesure/tests/fixtures/pages/sup5.html",
+      "citation": "file://{FIXTURES}/pages/sup5.html",
       "expected_status": "supported"
     },
     {
@@ -147,7 +147,7 @@
     {
       "id": "deadlink",
       "claim": "The migration moved all documents to the new repository in spring.",
-      "citation": "file:///home/hermes/citesure/tests/fixtures/pages/deadlink.html",
+      "citation": "file://{FIXTURES}/pages/deadlink.html",
       "expected_status": "unsupported"
     },
     {
