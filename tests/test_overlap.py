@@ -579,3 +579,51 @@ def test_pooled_contradiction_is_zero_without_encoder():
     premises = ["The GELU activation function is defined as 0.5 times x times "
                 "one plus the exponential of minus 2x squared."]
     assert pooled_contradiction(claim, premises, encoder=None) == 0.0
+
+
+def test_slot_conflict_detects_polarity_and_subject_conflict():
+    """A contradicting sentence must disagree on a slot the claim also fills.
+
+    ind-168/ind-145/ind-109 are genuine refutations: same subject, the sentence
+    negates or reassigns what the claim asserts. ind-013 is a DIFFERENT
+    experiment ("WMT 2014 English-to-French, BLEU 41.8" against a claim about
+    English-to-German 28.4) and must not veto.
+    """
+    from citesure.overlap import has_slot_conflict
+
+    # polarity conflict: claim negates, sentence affirms
+    assert has_slot_conflict(
+        "Tenzing Norgay and Edmund Hillary did not make the ascent in 1953.",
+        "Tenzing Norgay and Edmund Hillary made the first documented ascent "
+        "of Everest in 1953.",
+    )
+    # subject swap: both name a scheduler, they disagree which
+    assert has_slot_conflict(
+        "A Future is used to schedule coroutines concurrently.",
+        "Tasks are used to run coroutines in event loops.",
+    )
+    # different experiment, same subject -> NOT a conflict
+    assert not has_slot_conflict(
+        "The Transformer achieved a BLEU score of 28.4 on the WMT 2014 "
+        "English-to-German translation task.",
+        "On the WMT 2014 English-to-French translation task, our model "
+        "establishes a new single-model state-of-the-art BLEU score of 41.8.",
+    )
+
+
+def test_slot_conflict_ignores_off_topic_sentences():
+    """A contradicting sentence about a different function is not a refutation."""
+    from citesure.overlap import has_slot_conflict
+
+    assert not has_slot_conflict(
+        "os.chdir changes the current working directory to the given path.",
+        "Set followlinks to True to visit directories pointed to by symlinks, "
+        "on systems that support them.",
+    )
+
+
+def test_slot_conflict_handles_empty_input():
+    from citesure.overlap import has_slot_conflict
+
+    assert not has_slot_conflict("", "Some sentence with content here.")
+    assert not has_slot_conflict("Some claim with content here.", "")

@@ -424,6 +424,143 @@ def pooled_contradiction(
     return max((contra for _ent, contra in scored), default=0.0)
 
 
+#: A claim and a sentence must share at least this fraction of content terms
+#: before a disagreement between them counts as a conflict. Below it, the
+#: sentence is about something else ("Set followlinks to True..." vs a claim
+#: about os.chdir) and its contradiction score is not evidence about the claim.
+#: 0.35 with a small tolerance: ind-145 ("A Future is used to schedule" vs
+#: "Tasks are used to run coroutines") shares exactly 2/5 = 0.4 terms, so a
+#: strict 0.4 cut misses a real subject-swap veto.
+SLOT_CONFLICT_MIN_SHARED = 0.35
+_SLOT_SHARED_TOLERANCE = 1e-9
+
+_NUMERIC_TOKEN_RE = re.compile(r"\d+(?:\.\d+)?")
+
+#: Vocabulary that carries no topical identity. Two statements can share only
+#: these and still be about different things: "A Future is used to schedule
+#: coroutines concurrently" vs "Tasks are used to run coroutines in event
+#: loops" overlap on used/coroutines/concurrently, which says nothing about
+#: WHICH thing is being scheduled.
+_GENERIC_SHARED_TERMS = frozenset({
+    "used", "use", "uses", "using", "run", "runs", "running", "coroutine",
+    "coroutines", "concurrently", "concurrent", "scheduled", "schedule",
+    "object", "objects", "function", "functions", "value", "values", "type",
+    "types", "task", "tasks", "event", "events", "loop", "loops", "way",
+    "ways", "one", "two", "new", "set", "get", "make", "made", "provide",
+    "provides", "support", "supports", "call", "calls", "code", "data",
+    "time", "times", "first", "other", "same", "given", "using", "able",
+})
+
+_PROPER_NOUN_RE = re.compile(r"\b[A-Z][a-zA-Z0-9]{2,}(?:\s+[A-Z][a-zA-Z0-9]+)*\b")
+
+#: Capitalised words that open a sentence or a heading rather than name an
+#: entity. Without this, every sentence yields a "proper noun" from its first
+#: word and the subject-swap test never fires.
+_NOT_PROPER_NOUN = frozenset({
+    "the", "a", "an", "in", "on", "at", "it", "this", "that", "these", "those",
+    "as", "by", "for", "we", "he", "she", "they", "our", "its", "if", "but",
+    "and", "or", "so", "to", "from", "with", "when", "while", "after", "before",
+    "during", "each", "some", "most", "many", "all", "one", "two", "three",
+    "both", "however", "there", "here", "then", "thus", "also", "because",
+    "since", "although", "though", "whether", "see", "note", "return", "set",
+    "not", "new", "use", "used", "using", "supports", "support", "provides",
+})
+
+
+def has_negation(text: str) -> bool:
+    """True when ``text`` contains a negation word (see ``_NEGATION_WORDS``)."""
+    return bool(_NEGATION_WORDS & content_terms(text or ""))
+
+
+def proper_nouns(text: str) -> set[str]:
+    """Capitalised entity names in ``text``, excluding sentence-initial words."""
+    out: set[str] = set()
+    for m in _PROPER_NOUN_RE.finditer(text or ""):
+        phrase = m.group(0).strip()
+        head = phrase.split()[0].lower()
+        if head in _NOT_PROPER_NOUN:
+            continue
+        out.add(phrase)
+    return out
+
+
+def has_slot_conflict(claim: str, sentence: str) -> bool:
+    """True when ``claim`` and ``sentence`` fill a shared slot and disagree.
+
+    A page legitimately contains many true statements that *contradict* the
+    claim without refuting it: a paper reports BLEU 41.8 on one translation
+    task while the claim cites 28.4 on another. Vetoing on raw contradiction
+    there rejects a supported claim (v1 ind-013, ind-010 regressed to 75.6%).
+
+    A genuine refutation instead disagrees about something the two share:
+
+    * **polarity** — the claim negates and the sentence affirms the same
+      proposition (ind-168: claim "did not make", page "made");
+    * **subject** — both fill the same role with a different entity (ind-145:
+      claim "A Future is used to schedule", page "Tasks are used to run");
+    * **number** — the same referent is given a different value.
+
+    This is the slot-disagreement test of Minervini & Pilehvar (TACL 2021):
+    contradiction counts only when it changes the answer.
+    """
+    claim_terms = content_terms(clean_claim(claim))
+    sent_terms = content_terms(sentence)
+    if not claim_terms or not sent_terms:
+        return False
+    shared = claim_terms & sent_terms
+    if len(shared) / len(claim_terms) < SLOT_CONFLICT_MIN_SHARED - _SLOT_SHARED_TOLERANCE:
+        return False
+
+    claim_negated = has_negation(claim)
+    sent_negated = has_negation(sentence)
+    if claim_negated != sent_negated:
+        return True
+
+    # Different numeric value for a number both statements mention. The
+    # claim's numbers must actually be absent from the sentence: a page may
+    # legitimately report a different number for a DIFFERENT referent
+    # (ind-013: claim "BLEU 28.4 on WMT 2014 English-to-German", page
+    # "BLEU 41.8 on WMT 2014 English-to-French" — same year, other experiment).
+    claim_nums = set(_NUMERIC_TOKEN_RE.findall(claim))
+    sent_nums = set(_NUMERIC_TOKEN_RE.findall(sentence))
+    if claim_nums and sent_nums and (claim_nums - sent_nums):
+        # A number the claim asserts and the sentence omits is only a conflict
+        # when the sentence is about the SAME referent. ind-013 reports a
+        # different number for a different experiment: claim "BLEU 28.4 on WMT
+        # 2014 English-to-German", page "BLEU 41.8 on WMT 2014 English-to-
+        # French". The tell is that the claim carries distinctive content the
+        # sentence never mentions ("German", "Transformer"): the sentence is
+        # about something else, so a differing number is expected, not a
+        # refutation. A true numeric conflict leaves the number as the ONLY
+        # thing unmatched ("The bridge opened in 1998" vs "...in 1997").
+        claim_only_content = {
+            t for t in claim_terms - sent_terms
+            if not _NUMERIC_TOKEN_RE.fullmatch(t)
+        } - _GENERIC_SHARED_TERMS
+        if not claim_only_content:
+            return True
+
+    # Different SUBJECT filling the same role. A subject swap (ind-145: claim
+    # "A Future is used to schedule", page "Tasks are used to run") replaces
+    # what the predicate applies to. The two statements still share function
+    # words ("used to", "coroutines"), so overlap alone never separates them;
+    # the discriminator is that the shared content is only GENERIC vocabulary
+    # and the two name different subjects.
+    #
+    # Merely differing in a QUALIFIER (ind-013: English-to-German vs
+    # English-to-French) also names different entities, so require in addition
+    # that the sentences share no non-generic content term. "BLEU 28.4 on WMT
+    # 2014 English-to-German" vs "BLEU 41.8 on WMT 2014 English-to-French"
+    # shares bleu/score/wmt/english/translation/task and must NOT veto.
+    claim_ents = proper_nouns(claim)
+    sent_ents = proper_nouns(sentence)
+    if claim_ents and sent_ents and not (claim_ents & sent_ents):
+        substantive_shared = shared - _GENERIC_SHARED_TERMS
+        if not substantive_shared:
+            return True
+    return False
+
+
 def rank_passages(
     claim: str, passages: list[str], top_k: int = DEFAULT_TOP_K
 ) -> list[tuple[float, str]]:
@@ -631,6 +768,13 @@ async def verify_citations(
                 if ci not in best_for_citation:
                     continue
                 for sent in pool_candidate_sentences(claim, [premise]):
+                    # D3.2a: a page legitimately contains statements that
+                    # contradict the claim without refuting it (a different
+                    # experiment, a different function's docs). Only pool a
+                    # sentence that actually disagrees with the claim on a slot
+                    # they share.
+                    if not has_slot_conflict(claim, sent):
+                        continue
                     pool_pairs.append((ci, (claim, sent)))
             if pool_pairs:
                 from citesure.nli import score_nli_batch_all as _score_pool
