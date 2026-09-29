@@ -42,6 +42,10 @@ dependencies = [
 [project.optional-dependencies]
 dev = [
     "pytest>=8.0",
+    # Required by tests/test_fuzz_{extraction,urls,report}.py, added in d8c7f84.
+    # Without this, `pip install -e ".[dev]"` leaves the module missing and the
+    # whole suite fails at import on every supported Python (3.10-3.12).
+    "hypothesis>=6.0",
 ]
 
 [project.scripts]
