@@ -184,3 +184,13 @@ Outputs: stdout (confusion matrix, per-category recall, per-status P/R, safety m
 
 
 
+
+---
+
+## 2026-09-29 addendum
+
+Post-Phase-B v2 results are in `evals/RESULTS_v2_BASELINE.md` (frozen baseline + appended
+re-confirmation section) and `evals/RESULTS_v2_COMPOUND_CLAIM.md` (2026-09-29 re-confirmation
+runs: three metrically-identical saves of the same 93/108 = 86.1% v2 verdict set; the frozen
+41-case gate remains 32/41 = 78.0%). The sections above describe the original NLI-off v1
+report and are left as written.
