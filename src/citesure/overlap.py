@@ -619,6 +619,27 @@ async def verify_citations(
                 if ci not in best_for_citation or ent > best_for_citation[ci][0]:
                     best_for_citation[ci] = (ent, con)
 
+            # D3.2: pooled contradiction per citation. The max-entailment pair's
+            # own contradiction is ~0.00 for most false-supports even when
+            # another captured sentence contradicts the claim at 0.99+, so pool
+            # the signal over the same premises for each citation. All pool
+            # candidates are scored in ONE extra batched pass, keeping the
+            # pipeline at two forward passes total.
+            pooled_by_citation: dict[int, float] = {}
+            pool_pairs: list[tuple[int, tuple[str, str]]] = []
+            for ci, (claim, premise) in zip(pair_owner, flat_pairs):
+                if ci not in best_for_citation:
+                    continue
+                for sent in pool_candidate_sentences(claim, [premise]):
+                    pool_pairs.append((ci, (claim, sent)))
+            if pool_pairs:
+                from citesure.nli import score_nli_batch_all as _score_pool
+
+                pool_scores = _score_pool(encoder, [p for _ci, p in pool_pairs])
+                for (ci, _pair), (_ent, contra) in zip(pool_pairs, pool_scores):
+                    if contra > pooled_by_citation.get(ci, 0.0):
+                        pooled_by_citation[ci] = contra
+
             # Apply the NLI tier with the best score per citation
             for ci, ctx in eligible:
                 if ci in best_for_citation:
@@ -631,6 +652,7 @@ async def verify_citations(
                         marker_locatable=ctx["marker_locatable"],
                         evidence=verdict.evidence,
                         contradiction=best_con,
+                        pooled_contradiction=pooled_by_citation.get(ci),
                     )
                     verdicts[ci] = Verdict(
                         citation_id=verdict.citation_id,

@@ -529,8 +529,12 @@ def test_pipeline_nli_batch_scores_all_eligible_once(_clean_cache, monkeypatch):
     assert by_id["2"].tier_reached == 3 and by_id["2"].status is Status.SUPPORTED
     assert by_id["3"].tier_reached == 1 and by_id["3"].status is Status.UNREACHABLE
     assert by_id["3"].score is None
-    # With top-k=5, each citation scores up to 5 passages (total pairs >= 2)
-    assert len(enc.calls) == 1 and len(enc.calls[0]) >= 2
+    # With top-k=5, each citation scores up to 5 passages (total pairs >= 2).
+    # Two batched passes: one for entailment, one for the D3.2 contradiction
+    # pool. Batching is the point -- the pool must not cost one call per item.
+    assert len(enc.calls) == 2
+    assert len(enc.calls[0]) >= 2
+    assert all(len(c) >= 1 for c in enc.calls)
 
 
 # ---------------------------------------------------------------------------
@@ -698,3 +702,54 @@ def test_contradiction_note_present_when_override_fires():
 
     assert final is Status.UNSUPPORTED
     assert any("source contradicts claim" in n for n in notes)
+
+
+def test_pooled_contradiction_vetoes_supported_verdict():
+    """A strong claim-relevant contradiction must veto support (D3.2).
+
+    The max-entailment pair's own contradiction is ~0.00 for these cases even
+    when another captured sentence contradicts the claim at 0.99+.
+    """
+    from citesure.models import Status
+    from citesure.nli import POOLED_CONTRADICTION_THRESHOLD, apply_nli_tier
+
+    final, tier, _score, notes = apply_nli_tier(
+        Status.AMBIGUOUS, [],
+        nli_score=0.98,               # winning sentence strongly entails
+        marker_locatable=True,
+        evidence="...",
+        contradiction=0.001,          # ...and its own contradiction is ~0
+        pooled_contradiction=0.97,    # but a claim-relevant sentence contradicts
+    )
+    assert final is Status.UNSUPPORTED
+    assert tier == 3
+    assert any("pooled contradiction" in n for n in notes)
+
+
+def test_pooled_contradiction_below_threshold_does_not_veto():
+    from citesure.models import Status
+    from citesure.nli import apply_nli_tier
+
+    final, _tier, _score, notes = apply_nli_tier(
+        Status.AMBIGUOUS, [],
+        nli_score=0.98,
+        marker_locatable=True,
+        evidence="...",
+        contradiction=0.001,
+        pooled_contradiction=0.10,
+    )
+    assert final is Status.SUPPORTED
+    assert not any("pooled contradiction" in n for n in notes)
+
+
+def test_pooled_contradiction_none_preserves_default_behaviour():
+    """Existing callers that pass no pooled value must behave exactly as before."""
+    from citesure.models import Status
+    from citesure.nli import apply_nli_tier
+
+    final, _t, _s, _n = apply_nli_tier(
+        Status.AMBIGUOUS, [],
+        nli_score=0.98, marker_locatable=True, evidence="...",
+        contradiction=0.001,
+    )
+    assert final is Status.SUPPORTED

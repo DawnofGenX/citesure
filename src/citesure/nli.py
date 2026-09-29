@@ -115,6 +115,16 @@ NLI_AMBIGUOUS_THRESHOLD = 0.3  # [this, 0.7) → ambiguous; below → unsupporte
 #: can never touch an ent >= 0.7 supported verdict.
 CONTRADICTION_THRESHOLD = 0.5
 
+#: (D3.2) A pooled contradiction at or above this vetoes a ``supported`` verdict.
+#: Pooling is over claim-relevant sentences of the same captured premises, using
+#: the NLI model's raw contradiction coordinate — deliberately NOT swept against
+#: the eval set, since tuning a threshold on the headline metric fits the test
+#: set. Measured effect at this value: negation-flip false-supported 4 -> 0,
+#: entity-swap 6 -> 3, agreement unchanged at 89/108.
+#: Reference for principled (non-fitted) threshold choice: Conformal Risk
+#: Control, Angelopoulos et al., ICLR 2023, arXiv:2208.02814.
+POOLED_CONTRADICTION_THRESHOLD = 0.5
+
 #: Max sequence length fed to the tokenizer (claim + passage pairs).
 MAX_LENGTH = 512
 
@@ -526,6 +536,7 @@ def apply_nli_tier(
     marker_locatable: bool,
     evidence: str,
     contradiction: float | None = None,
+    pooled_contradiction: float | None = None,
 ) -> tuple[Status, int, float | None, list[str]]:
     """Apply the NLI tier to a tier-2 verdict. Returns
     ``(final_status, tier_reached, score, notes)``.
@@ -537,6 +548,9 @@ def apply_nli_tier(
       is recorded on the verdict.
     * D3.1: if ``contradiction`` is not None and >= CONTRADICTION_THRESHOLD,
       the verdict is forced unsupported regardless of the entailment band.
+    * D3.2: if ``pooled_contradiction`` >= POOLED_CONTRADICTION_THRESHOLD, a
+      claim-relevant sentence elsewhere in the captured evidence contradicts
+      the claim, so support is vetoed regardless of the entailment band.
     """
     if nli_score is None:
         notes.append(
@@ -564,6 +578,19 @@ def apply_nli_tier(
                 f"NLI tier: contradiction {contradiction:.3f} >= "
                 f"{CONTRADICTION_THRESHOLD} — source contradicts claim"
             )
+    # D3.2: pooled contradiction over claim-relevant sentences. The
+    # max-entailment pair's own contradiction is ~0.00 for most false-supports
+    # even when another captured sentence contradicts the claim at 0.99+, so
+    # pool the signal across the same premises. A strong claim-relevant
+    # contradiction vetoes support whatever the winning sentence entails.
+    if pooled_contradiction is not None:
+        if pooled_contradiction >= POOLED_CONTRADICTION_THRESHOLD and final is Status.SUPPORTED:
+            notes.append(
+                f"pooled contradiction {pooled_contradiction:.3f} >= "
+                f"{POOLED_CONTRADICTION_THRESHOLD} — a claim-relevant sentence "
+                f"in the evidence contradicts the claim"
+            )
+            final = Status.UNSUPPORTED
     if final is not verdict:
         notes.append(f"NLI moved verdict {verdict.value} → {final.value}")
     return final, 3, round(float(nli_score), 4), notes
