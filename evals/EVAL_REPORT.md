@@ -164,6 +164,7 @@ Thresholds in `overlap.py`: score ≥ 0.6 → `supported`, ≥ 0.3 → `ambiguou
 4. **Topical-overlap ceiling.** Because the tier can never emit `unsupported`, its best possible agreement on this set is bounded below 100% even with perfect topical matching. The 53.7% is therefore a floor-limited figure, not a pure accuracy estimate.
 5. **Live-web drift.** Claims were verified against pages fetched 2026-09-09. Wikipedia/NASA/MDN content can change; a re-run could shift individual scores (though the structural failures — negation stripping, no entity binding — are code properties, not content properties, and will persist).
 6. **Cache reuse.** The run used a warm cache (`~/.cache/citesure-eval`). Tier-1 reachability/paywall results are cached; a cold-cache re-run should reproduce them but was not separately timed here.
+7. **Open defect: `ind-010` false pooled veto (NLI on).** With the NLI tier enabled, one high-confidence `paraphrase-supported` case is wrongly flipped to `unsupported` by the pooled-contradiction veto. Root cause, the five fixes attempted and rejected, and the evidence are in `evals/DEFECT_ind010_false_veto.md`. It costs 1 case on the 41-case frozen gate (32/41) and 0 on the 108-case set (ind-010 is not in v2). Unfixed as of 2026-09-30.
 
 ## 9. Recommendations (for Phase B / fixes)
 
