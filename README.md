@@ -5,21 +5,18 @@ supported by the sources it cites — resolves each citation, fetches the real
 content, flags dead/retracted/paywalled links, and abstains when it can't
 confirm.
 
-citesure verifies *claims* (not just whether a link is alive). It runs fully
-offline by default: no API keys, no LLM, no embeddings on the fast path.
+citesure verifies *claims* (not just whether a link is alive). It needs no API
+keys and no LLM: the fast path (tiers 1+2) is pure `httpx` + `trafilatura`, and
+passing `--no-nli` keeps it fully offline. The NLI tier (tier 3) is on by
+default and lazy-downloads a local cross-encoder on first use.
 
 ## Install
 
-One command (D12):
+Not on PyPI yet — install from a git checkout:
 
 ```bash
-pip install citesure        # or: pipx install citesure
-```
-
-From a git checkout instead:
-
-```bash
-pip install -e .            # editable, for development
+git clone https://github.com/DawnofGenX/citesure.git && cd citesure
+pip install -e .            # or: pip install -e ".[dev]" to get pytest
 ```
 
 `requires-python >= 3.10`. The default fast path (tiers 1+2) needs only
@@ -66,6 +63,14 @@ Then verify:
 
 ```bash
 citesure verify notes.md
+```
+
+On the first run the NLI tier lazy-downloads a ~425 MB cross-encoder, so this
+command needs network once. To stay fully offline, add `--no-nli` and use tiers
+1+2 only (link status + content overlap):
+
+```bash
+citesure verify notes.md --no-nli
 ```
 
 Real output (run from a clean venv, zero API keys, ~2 s):
