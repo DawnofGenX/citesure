@@ -1,3 +1,5 @@
+<p align="center"><img src="https://raw.githubusercontent.com/DawnofGenX/citesure/main/docs/og-banner.png" alt="citesure" width="100%"/></p>
+
 # citesure
 
 An MCP server + CLI + library that verifies whether an LLM's claims are actually
