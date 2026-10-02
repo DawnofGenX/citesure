@@ -1,0 +1,35 @@
+[
+  {
+    "precision": "fp32",
+    "device": "cuda",
+    "n_pairs": 105,
+    "mean_sec": 1.299,
+    "p50_sec": 1.2501,
+    "pairs_per_sec": 80.83,
+    "peak_vram_mb": 4159.7,
+    "peak_rss_mb": 3056.6,
+    "max_length": 256
+  },
+  {
+    "precision": "fp32",
+    "device": "cpu",
+    "n_pairs": 105,
+    "mean_sec": 14.3697,
+    "p50_sec": 14.3152,
+    "pairs_per_sec": 7.31,
+    "peak_vram_mb": 0.0,
+    "peak_rss_mb": 5993.8,
+    "max_length": 256
+  },
+  {
+    "precision": "int8",
+    "device": "cpu",
+    "n_pairs": 105,
+    "mean_sec": 12.9777,
+    "p50_sec": 12.6928,
+    "pairs_per_sec": 8.09,
+    "peak_vram_mb": 0.0,
+    "peak_rss_mb": 7487.0,
+    "max_length": 256
+  }
+]
