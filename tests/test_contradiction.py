@@ -10,7 +10,24 @@ from __future__ import annotations
 from unittest.mock import MagicMock
 
 import pytest
-import torch
+
+# torch is an OPTIONAL dependency (see the ``nli`` extra in pyproject.toml). A
+# plain ``pip install citesure`` must not require it, and CI installs only
+# ``.[dev]`` — so this module must import cleanly without torch.
+#
+# Only one test below builds a fixed-logit tensor; the rest exercise pure
+# decision logic that needs no ML stack. Where a tensor is genuinely needed we
+# fall back to a tiny stand-in with just ``.shape``/indexing, which is all
+# ``_contradiction_probs`` reads. Skipping the whole module on a light install
+# would silently drop that decision logic, which is the part worth testing.
+try:  # pragma: no cover - trivial import guard
+    import torch
+except ModuleNotFoundError:  # torch not installed (default, light install)
+    torch = None
+
+requires_torch = pytest.mark.skipif(
+    torch is None, reason="torch is optional; install citesure[nli] to run this"
+)
 
 from citesure.models import Status
 from citesure.nli import (
@@ -102,6 +119,7 @@ def test_contradiction_probs_binary_model():
     assert result == [0.0]
 
 
+@requires_torch
 def test_contradiction_probs_three_label_model():
     """3-label models return the contradiction column."""
 

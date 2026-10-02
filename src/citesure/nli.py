@@ -236,6 +236,21 @@ def _is_local_path(name: str) -> bool:
     return "/" in name or "\\" in name or name.startswith(".") or Path(name).exists()
 
 
+def _has_module(name: str) -> bool:
+    """True if ``name`` is importable, without importing it.
+
+    Uses find_spec so a missing optional ML dependency is detected cheaply
+    and without side effects. torch/transformers are extras, not hard
+    requirements of the package.
+    """
+    import importlib.util
+
+    try:
+        return importlib.util.find_spec(name) is not None
+    except (ImportError, ValueError):
+        return False
+
+
 def get_nli_model(model_name: str | None = None) -> NLICrossEncoder:
     """Load (or return the cached) NLI cross-encoder for the resolved name.
 
@@ -254,6 +269,19 @@ def get_nli_model(model_name: str | None = None) -> NLICrossEncoder:
         cached = _model_cache.get(name)
         if cached is not None:
             return cached
+
+    # torch/transformers are OPTIONAL (the ``nli`` extra). A default install has
+    # neither, so fail with the same clear, actionable NLIError the other load
+    # failures raise - not a raw ModuleNotFoundError from deep inside a
+    # function-local import. Checked before _configure_threads(), which imports
+    # torch unguarded.
+    missing = [m for m in ("torch", "transformers") if not _has_module(m)]
+    if missing:
+        raise NLIError(
+            "the NLI tier needs optional dependencies that are not installed: "
+            + ", ".join(missing)
+            + '. Install them with: pip install "citesure[nli]"'
+        )
 
     _configure_threads()
     cache_dir = _cache_dir()

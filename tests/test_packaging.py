@@ -6,8 +6,22 @@ imports in nli.py are function-local precisely so this is possible.
 """
 from __future__ import annotations
 
-import tomllib
+import sys
 from pathlib import Path
+
+import pytest
+
+# ``tomllib`` is stdlib only from Python 3.11, but pyproject declares
+# ``requires-python = ">=3.10"`` and CI runs a 3.10 leg. Skip rather than break
+# a supported version.
+if sys.version_info >= (3, 11):
+    import tomllib
+else:  # pragma: no cover - 3.10 has no stdlib tomllib
+    tomllib = None
+
+pytestmark = pytest.mark.skipif(
+    tomllib is None, reason="tomllib requires Python 3.11+"
+)
 
 PYPROJECT = Path(__file__).resolve().parent.parent / "pyproject.toml"
 
