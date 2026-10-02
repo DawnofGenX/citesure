@@ -41,11 +41,17 @@ An exhaustive threshold sweep (support 0.30-0.90 x ambiguous 0.05-support) moved
 
 ## Install
 
-Not on PyPI yet — install from a git checkout:
+Default install stays light — no torch, no model download:
+
+```bash
+pip install citesure            # tiers 1+2: httpx + trafilatura only
+pip install "citesure[nli]"     # adds the opt-in NLI cross-encoder tier
+```
+
+Or from a checkout:
 
 ```bash
 git clone https://github.com/DawnofGenX/citesure.git && cd citesure
-
 pip install .               # default: offline, key-free, no torch
 pip install ".[nli]"        # adds the opt-in NLI tier
 pip install -e ".[dev]"     # editable + test deps
