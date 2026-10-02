@@ -12,13 +12,43 @@ keys and no LLM: the fast path (tiers 1+2) is pure `httpx` + `trafilatura`, and
 passing `--no-nli` keeps it fully offline. The NLI tier (tier 3) is on by
 default and lazy-downloads a local cross-encoder on first use.
 
+## Accuracy
+
+Measured on an independent 108 case set (40 unique URLs, 13 domains), built as a three-way
+contrast: each source fact appears three times — verbatim-supported, negation-flipped, and
+entity-swapped — all sharing one source sentence. The A-vs-B gap isolates polarity handling and
+A-vs-C isolates subject binding, so a drop points at a specific bug class rather than "hard cases".
+
+| Configuration | Agreement |
+|---|---|
+| NLI tier on (default claim path) | **83/108 = 76.9%** |
+| NLI tier off (deterministic tiers only) | **41/108 = 38.0%** |
+
+The 38.9-point gap is the cross-encoder tier's entire contribution, measured rather than asserted.
+
+**Safety metrics** — the failure modes that matter for a verifier:
+
+| Metric | Result |
+|---|---|
+| Negation-flip false-supported | 4/32 = 12.5% |
+| Entity-swap false-supported | 7/32 = 21.9% |
+
+Both rise to ~90-100% with the NLI tier off, which is the honest cost of the fast path.
+
+An exhaustive threshold sweep (support 0.30-0.90 x ambiguous 0.05-support) moved agreement from
+66.7% to 69.4% — a gain of exactly one item. Threshold tuning is a dead end here; see
+`evals/THRESHOLD_CALIBRATION.md`.
+
 ## Install
 
 Not on PyPI yet — install from a git checkout:
 
 ```bash
 git clone https://github.com/DawnofGenX/citesure.git && cd citesure
-pip install -e .            # or: pip install -e ".[dev]" to get pytest
+
+pip install .               # default: offline, key-free, no torch
+pip install ".[nli]"        # adds the opt-in NLI tier
+pip install -e ".[dev]"     # editable + test deps
 ```
 
 `requires-python >= 3.10`. The default fast path (tiers 1+2) needs only
