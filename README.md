@@ -21,10 +21,12 @@ A-vs-C isolates subject binding, so a drop points at a specific bug class rather
 
 | Configuration | Agreement |
 |---|---|
-| NLI tier on (default claim path) | **83/108 = 76.9%** |
+| NLI tier on (default claim path) | **93/108 = 86.1%** |
 | NLI tier off (deterministic tiers only) | **41/108 = 38.0%** |
 
-The 38.9-point gap is the cross-encoder tier's entire contribution, measured rather than asserted.
+The 48.1-point gap is the cross-encoder tier's entire contribution, measured rather than
+asserted. Both rows are committed runs under `evals/results/`; the 86.1% figure is the current one
+after the pooled-contradiction and score fixes (it supersedes the original 76.9% v2 baseline).
 
 **Safety metrics** — the failure modes that matter for a verifier:
 
