@@ -3,7 +3,7 @@
 Measures throughput and peak memory for the same cross-encoder at FP32 and at
 dynamically-quantized INT8, and scores each precision through citesure's real
 pipeline against the committed 108-case eval set so the accuracy delta is
-directly comparable to the published 76.9% (83/108) baseline.
+directly comparable to the committed 93/108 (86.1%) baseline.
 
 Two run modes, because the two halves need different environments (see
 ``bench/RESULTS.md`` for the measured reason):
@@ -43,9 +43,10 @@ ROOT = Path(__file__).resolve().parent.parent
 EVAL_SET = ROOT / "evals" / "independent_set_v2.json"
 PAGE_POOL = ROOT / "evals" / "page_pool_verified.json"
 
-#: Published full-pipeline agreement with the NLI tier ON (citesure README,
-#: commit 34db250): 83/108 = 76.9%.
-BASELINE_MATCHED = 83
+#: Committed full-pipeline agreement with the NLI tier ON. 93/108 = 86.1% is
+#: the current figure (evals/results/v2_post_score_fix and every tracked v2 run
+#: from 2026-09-29). It supersedes the 83/108 = 76.9% v2 baseline run.
+BASELINE_MATCHED = 93
 BASELINE_N = 108
 MAX_LENGTH = 256
 
@@ -177,7 +178,7 @@ def bench(precision: str, device: str, pairs, warmup: int = 2, iters: int = 5) -
 def accuracy(precision: str, device: str = "cpu", limit: int | None = None) -> dict:
     """Score the eval set through citesure's pipeline with an injected encoder.
 
-    Reproducing the published 76.9% requires the *whole* pipeline (overlap
+    Reproducing the published 86.1% requires the *whole* pipeline (overlap
     tiers + NLI banding + contradiction vetoes), not a bare entailment
     threshold on one pair per case — so this loads citesure, builds an
     :class:`NLICrossEncoder` at the requested precision and installs it into
@@ -185,7 +186,7 @@ def accuracy(precision: str, device: str = "cpu", limit: int | None = None) -> d
     case and compares the final status to ``expected_status``.
 
     Needs citesure's own dependencies (fetch/extract); run it from the citesure
-    venv. Returns matched/total plus the delta against the 83/108 baseline.
+    venv. Returns matched/total plus the delta against the 93/108 baseline.
     """
     src = str(ROOT / "src")
     if src not in sys.path:
@@ -288,7 +289,7 @@ def main(argv=None) -> None:
         print("\n[accuracy] running citesure's real pipeline (tiers 1+2+3) per precision")
         acc_rows = [accuracy(p, "cpu", args.limit) for p in precisions]
         print(json.dumps(acc_rows, indent=2))
-        print("\n| precision | device | matched | total | agreement | vs baseline 83/108 (76.9%) |")
+        print("\n| precision | device | matched | total | agreement | vs baseline 93/108 (86.1%) |")
         print("|---|---|---|---|---|---|")
         for r in acc_rows:
             print(f"| {r['precision']} | {r['device']} | {r['matched']} | {r['n']} | "

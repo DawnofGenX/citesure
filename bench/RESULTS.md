@@ -66,11 +66,25 @@ batch = all 105 pairs in one forward pass. Measured in `/home/hermes/cuda-bench`
 
 The CUDA row is a median of four repeat runs: 120.07, 121.09, 119.33, 122.31
 pairs/s (median **120.58**, spread 2.5%). Peak VRAM was identical to 0.1 MB in
-every run. An earlier measurement in a different CUDA environment (torch
-2.10.0+cu128) read 80.83 pairs/s with the *same* 4159.7 MB peak; the gap is
-first-call cuDNN autotuning landing inside the timed window rather than a
-different workload — the harness does 2 warmup passes and pins no thread count,
-so the first timed iteration absorbs kernel selection.
+every run.
+
+**Environment matters more than warm-up.** Three separate CUDA environments were
+measured on this RTX 5090, all with the same 105-pair batch and the same
+4159.7 MB peak VRAM:
+
+| env | torch | cuDNN | transformers | pairs/s |
+|---|---|---|---|---|
+| `/home/hermes/cuda-bench` | 2.11.0+cu128 | 9.19.0 | 5.18.0 | **121.09** (median of 4) |
+| `/home/hermes/heartlib-venv` | 2.10.0+cu128 | 9.1.0 | 4.57.0 | 45–48 (3 runs) |
+| same, earlier in the session | 2.10.0+cu128 | 9.1.0 | 4.57.0 | 80.83 |
+
+This is **not** a warm-up artifact. Repeating the run inside `heartlib-venv` three times
+gives 45.18, 44.63, 47.77 pairs/s — stably ~2.6× slower than `cuda-bench`, with no upward
+drift after the first call. The 80.83 reading from earlier in the session does not reproduce
+in that environment now, so the honest statement is that **the committed figure is
+environment-specific and only `cuda-bench` is reproducible at ~121 pairs/s.** The difference
+tracks the torch/cuDNN pair, not the workload: identical input, identical peak memory, different
+kernel selection. Report the environment with any throughput number or it is not comparable.
 
 **Device constraint, stated plainly:** `torch.ao.quantization.quantize_dynamic`
 emits CPU-only quantized kernels. Moving the quantized model to CUDA succeeds
@@ -92,10 +106,10 @@ the requested precision into the module cache, and runs
 `verify_citations(use_nli=True)` over all 108 cases. Run in citesure's own venv
 (it needs citesure's fetch/extract dependencies).
 
-| precision | device | matched | total | agreement | vs README 83/108 (76.9%) |
+| precision | device | matched | total | agreement | vs committed 93/108 (86.1%) |
 |---|---|---|---|---|---|
-| fp32 | cpu | 93 | 108 | 86.1% | +10 cases |
-| int8 | cpu | 72 | 108 | 66.7% | −11 cases |
+| fp32 | cpu | 93 | 108 | 86.1% | ±0 — exact match |
+| int8 | cpu | 72 | 108 | 66.7% | −21 cases |
 
 Per-category recall (correct/total):
 
@@ -114,10 +128,12 @@ entailment band — the quantized model reads a verbatim-supported claim as
 *unsupported*. It "passes" the negation-flip and entity-swap categories only by
 collapsing everything toward unsupported, which is the wrong reason.
 
-### Why FP32 reads 86.1% and not the README's 76.9%
+### Note: the README previously published 76.9%, which was superseded
 
-The README (commit `34db250`) publishes **83/108 = 76.9%**. My FP32 run reads
-**93/108 = 86.1%**, and this was investigated rather than published blind:
+*Historical record — the README has since been corrected to 86.1%.*
+
+README commit `34db250` published **83/108 = 76.9%**. This harness's FP32 run reads
+**93/108 = 86.1%**, and that discrepancy was investigated rather than published blind:
 
 - My FP32 run is **record-for-record identical (108/108 predicted statuses)** to
   citesure's latest committed v2 result
