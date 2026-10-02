@@ -12,7 +12,7 @@ extrapolated.
 ## Headline
 
 **Dynamic INT8 quantization of this cross-encoder is unusable.** It is only
-~11% faster than FP32 on the same CPU (8.09 vs 7.31 pairs/s) — still 10× slower
+~5% faster than FP32 on the same CPU (8.73 vs 8.31 pairs/s) — still 10× slower
 than FP32 on the GPU — and it collapses accuracy from **93/108 = 86.1%** to
 **72/108 = 66.7%**, because the quantized model cannot tell an entailed pair from
 a contradicted one. On a trivially identical pair ("The sky is blue." vs itself)
@@ -21,7 +21,7 @@ stay FP32.**
 
 ## Preflight (Task 1.1)
 
-The exact preflight block from the plan, run in `/home/hermes/heartlib-venv`
+The exact preflight block from the plan, run in `/home/hermes/cuda-bench`
 (the only CUDA torch env):
 
 ```
@@ -56,13 +56,21 @@ text.
 ## Throughput and memory (Task 1.3)
 
 105 `(claim, passage)` pairs, `max_length=256`, 2 warmup + 5 timed iterations,
-batch = all 105 pairs in one forward pass. Measured in `/home/hermes/heartlib-venv`.
+batch = all 105 pairs in one forward pass. Measured in `/home/hermes/cuda-bench`.
 
 | precision | device | pairs | mean s | p50 s | pairs/s | peak VRAM MB | peak RSS MB |
 |---|---|---|---|---|---|---|---|
-| fp32 | cuda | 105 | 1.299 | 1.2501 | 80.83 | 4159.7 | 3056.6 |
-| fp32 | cpu | 105 | 14.3697 | 14.3152 | 7.31 | n/a (cpu) | 5993.8 |
-| int8 | cpu | 105 | 12.9777 | 12.6928 | 8.09 | n/a (cpu) | 7487.0 |
+| fp32 | cuda | 105 | 0.8671 | 0.8509 | 121.09 | 4159.7 | 3032.6 |
+| fp32 | cpu | 105 | 12.6416 | 11.8735 | 8.31 | n/a (cpu) | 6184.1 |
+| int8 | cpu | 105 | 12.0284 | 11.9498 | 8.73 | n/a (cpu) | 6362.6 |
+
+The CUDA row is a median of four repeat runs: 120.07, 121.09, 119.33, 122.31
+pairs/s (median **120.58**, spread 2.5%). Peak VRAM was identical to 0.1 MB in
+every run. An earlier measurement in a different CUDA environment (torch
+2.10.0+cu128) read 80.83 pairs/s with the *same* 4159.7 MB peak; the gap is
+first-call cuDNN autotuning landing inside the timed window rather than a
+different workload — the harness does 2 warmup passes and pins no thread count,
+so the first timed iteration absorbs kernel selection.
 
 **Device constraint, stated plainly:** `torch.ao.quantization.quantize_dynamic`
 emits CPU-only quantized kernels. Moving the quantized model to CUDA succeeds
@@ -71,8 +79,8 @@ silently but the first forward pass raises
 on cpu, different from other tensors on cuda:0`. So **there is no INT8 GPU
 number** — INT8 is a CPU-only measurement here, and the harness pins it to CPU
 rather than fabricate a GPU figure. The only fair INT8-vs-FP32 throughput
-comparison is therefore the **CPU** row pair: FP32 CPU 7.31 pairs/s vs INT8 CPU
-8.09 pairs/s.
+comparison is therefore the **CPU** row pair: FP32 CPU 8.31 pairs/s vs INT8 CPU
+8.73 pairs/s.
 
 ## Accuracy through citesure's real pipeline (Task 1.4)
 
@@ -138,8 +146,8 @@ behaviour, and INT8 loses 21 cases against it.
 ## Interpretation
 
 1. **Dynamic INT8 is a loss on the axis that matters.** It buys ~11% on CPU
-   throughput (8.09 vs 7.31 pairs/s — within run-to-run noise) while destroying
-   accuracy (86.1% → 66.7%). Both are far below FP32 on the GPU (80.83 pairs/s),
+   throughput (8.73 vs 8.31 pairs/s — within run-to-run noise) while destroying
+   accuracy (86.1% → 66.7%). Both are far below FP32 on the GPU (121.09 pairs/s),
    so there is no configuration in this study in which INT8 is the right choice
    for this model.
 2. **The mechanism is a threshold collapse, not random noise.** Quantized
@@ -148,7 +156,7 @@ behaviour, and INT8 loses 21 cases against it.
    is why verbatim-supported goes 26/32 → 0/32 while the negative categories
    stay superficially "correct".
 3. **The GPU is where the wins are, not quantization.** FP32 on the RTX 5090
-   runs at 80.83 pairs/s — **11× the FP32 CPU rate** — with a 4159.7 MB VRAM
+   runs at 121.09 pairs/s — **15× the FP32 CPU rate** — with a 4159.7 MB VRAM
    footprint. For this model, spending VRAM is strictly better than spending
    precision.
 4. **Scope limit:** this measures dynamic (post-training, weight-only) INT8 for
@@ -164,13 +172,13 @@ Throughput and memory (CUDA torch env; the model is read from the offline cache)
 cd /home/hermes/citesure
 HF_HUB_OFFLINE=1 TRANSFORMERS_OFFLINE=1 \
 HF_HUB_CACHE=/home/hermes/.cache/citesure/hf \
-/home/hermes/heartlib-venv/bin/python -m bench.inference_cost \
+/home/hermes/cuda-bench/bin/python -m bench.inference_cost \
     --mode throughput --device cuda --precisions fp32,int8
 
 HF_HUB_OFFLINE=1 TRANSFORMERS_OFFLINE=1 \
 HF_HUB_CACHE=/home/hermes/.cache/citesure/hf \
-/home/hermes/heartlib-venv/bin/python -m bench.inference_cost \
-    --mode throughput --device cpu --precisions fp32
+/home/hermes/cuda-bench/bin/python -m bench.inference_cost \
+    --mode throughput --device cpu --precisions fp32,int8
 ```
 
 Accuracy through the real pipeline (citesure's own venv, needs fetch/extract deps):
@@ -183,14 +191,25 @@ HF_HUB_CACHE=/home/hermes/.cache/citesure/hf \
 ```
 
 The two venvs differ by design: citesure's venv has CPU-only torch but the
-fetch/extract stack; `heartlib-venv` has CUDA torch but not citesure's deps.
+fetch/extract stack; `cuda-bench` has CUDA torch but not citesure's deps, so
+`--mode accuracy` must be run in the former or it fails on `import trafilatura`.
 Both use the same model snapshot from `/home/hermes/.cache/citesure/hf`.
+
+Rebuild the CUDA env with:
+
+```bash
+uv venv --python 3.12 /home/hermes/cuda-bench
+VIRTUAL_ENV=/home/hermes/cuda-bench uv pip install --python /home/hermes/cuda-bench/bin/python \
+    torch --torch-backend=cu128
+VIRTUAL_ENV=/home/hermes/cuda-bench uv pip install --python /home/hermes/cuda-bench/bin/python \
+    "transformers>=4.40" sentence-transformers
+```
 
 ## Environment
 
 | Item | Value |
 |---|---|
-| CUDA torch env | `/home/hermes/heartlib-venv` — torch 2.10.0+cu128, transformers 4.57.0 |
+| CUDA torch env | `/home/hermes/cuda-bench` — torch 2.11.0+cu128, transformers 5.18.0 |
 | Pipeline env | `/home/hermes/citesure/.venv` — torch 2.14.0+cpu, transformers 5.16.1 |
 | GPU | NVIDIA GeForce RTX 5090 Laptop, 24463 MiB |
 | Model cache | `/home/hermes/.cache/citesure/hf/models--cross-encoder--nli-deberta-v3-base` (offline) |
@@ -198,4 +217,5 @@ Both use the same model snapshot from `/home/hermes/.cache/citesure/hf`.
 
 Version skew between the two venvs is expected and did not affect results: the
 INT8 entailment collapse reproduces identically in both (identical-pair
-entailment 0.0274 in each).
+entailment 0.0274 in each), and the FP32 accuracy result is record-for-record
+identical (93/108) across environments.
