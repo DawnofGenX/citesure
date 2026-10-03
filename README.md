@@ -43,26 +43,18 @@ An exhaustive threshold sweep (support 0.30-0.90 x ambiguous 0.05-support) moved
 
 ## Install
 
-Default install stays light — no torch, no model download:
-
 ```bash
 pip install citesure            # tiers 1+2: httpx + trafilatura only
 pip install "citesure[nli]"     # adds the opt-in NLI cross-encoder tier
 ```
 
-Or from a checkout:
-
-```bash
-git clone https://github.com/DawnofGenX/citesure.git && cd citesure
-pip install .               # default: offline, key-free, no torch
-pip install ".[nli]"        # adds the opt-in NLI tier
-pip install -e ".[dev]"     # editable + test deps
-```
-
 `requires-python >= 3.10`. The default fast path (tiers 1+2) needs only
-`httpx` + `trafilatura`. The opt-in NLI tier pulls in the local cross-encoder
-stack (`torch`, `transformers`, `sentence-transformers`) and lazy-downloads a
-~425 MB model on first `--nli` use — see [NLI tier](#nli-tier-opt-in).
+`httpx` + `trafilatura` — no torch, no model download, no API key. The opt-in
+NLI tier pulls in the local cross-encoder stack (`torch`, `transformers`,
+`sentence-transformers`) and lazy-downloads a ~425 MB model on first `--nli`
+use — see [NLI tier](#nli-tier-opt-in).
+
+From a checkout: `pip install .` (default) or `pip install ".[nli]"` / `pip install -e ".[dev]"`.
 
 ## Quickstart
 
