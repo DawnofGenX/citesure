@@ -221,20 +221,124 @@ def clear_robots_cache() -> None:
 # ---------------------------------------------------------------------------
 
 
-def _local_path_for(url: str) -> Path | None:
-    """Map a ``file://`` URL or bare local path to a Path, else None."""
-    if url.startswith("file://"):
-        return Path(urlparse(url).path)
-    if "://" in url:
-        return None
-    # ``expanduser()`` raises ``RuntimeError`` for ``~unknown-user`` paths
-    # (no such user). Treat those as "not a local path" rather than crashing.
-    # See BUG-6.
+#: Env var that gates access to local files OUTSIDE the sandbox roots.
+ENV_ALLOW_LOCAL_FILES = "CITECHECK_ALLOW_LOCAL_FILES"
+#: Env var holding a path-separated list of extra readable roots.
+ENV_LOCAL_ROOTS = "CITECHECK_LOCAL_ROOTS"
+
+
+def _truthy_env(name: str) -> bool:
+    val = os.environ.get(name, "").strip().lower()
+    return val in ("1", "true", "yes", "on", "all")
+
+
+def local_files_policy() -> tuple[bool, tuple[Path, ...]]:
+    """Resolve the local-file read policy: ``(unrestricted, extra_roots)``.
+
+    Local-file reading exists so a user can verify a saved HTML file offline
+    (``citesure verify notes.md`` with a relative source). Unrestricted it,
+    any absolute path or ``file://`` URL was readable — so an LLM holding the
+    MCP tool could ask for ``/etc/passwd`` or ``~/.ssh/id_rsa`` and receive the
+    contents in its own context (confirmed 2026-10-04).
+
+    Policy, in force unless the caller passes ``unrestricted=True`` (the CLI
+    keeps that behaviour for backwards compatibility):
+
+    * RELATIVE paths and paths under the current working directory: ALLOWED.
+    * ``file://`` URLs and absolute paths outside the CWD: DENIED, unless
+      ``CITECHECK_ALLOW_LOCAL_FILES=1`` (unrestricted) or the path sits inside
+      a root listed in ``CITECHECK_LOCAL_ROOTS`` (path-separator delimited).
+    * The citesure cache dir is always readable (it holds fetched snapshots).
+
+    Returns the extra roots so the error message can name the escape hatch.
+    """
+    roots: list[Path] = []
+    raw = os.environ.get(ENV_LOCAL_ROOTS, "").strip()
+    if raw:
+        roots = [Path(p).expanduser().resolve() for p in raw.split(os.pathsep) if p.strip()]
+    unrestricted = _truthy_env(ENV_ALLOW_LOCAL_FILES)
+    return unrestricted, tuple(roots)
+
+
+def _within(path: Path, root: Path) -> bool:
     try:
-        p = Path(url).expanduser()
-    except (RuntimeError, ValueError):
+        path.relative_to(root)
+        return True
+    except ValueError:
+        return False
+
+
+def _local_path_allowed(path: Path, *, allow_any: bool = False) -> tuple[bool, str]:
+    """Whether a resolved local path may be read, plus a reason when denied.
+
+    ``allow_any=True`` skips the sandbox entirely (CLI legacy behaviour).
+    """
+    if allow_any:
+        return True, ""
+    unrestricted, extra_roots = local_files_policy()
+    if unrestricted:
+        return True, ""
+
+    try:
+        resolved = path.expanduser().resolve()
+    except (OSError, RuntimeError, ValueError):
+        return False, "path could not be resolved"
+
+    cwd = Path.cwd().resolve()
+    sandboxed_roots = [cwd, _cache_root().expanduser().resolve(), *extra_roots]
+    for root in sandboxed_roots:
+        if _within(resolved, root):
+            return True, ""
+
+    return False, (
+        f"local file outside the allowed roots ({cwd}); absolute and file:// "
+        f"citations are blocked because citesure may be driven by an "
+        f"untrusted model. Set {ENV_ALLOW_LOCAL_FILES}=1 to allow any local "
+        f"path, or {ENV_LOCAL_ROOTS}=/path{os.pathsep}/other to allow specific "
+        f"directories."
+    )
+
+
+def _is_local_shaped(url: str) -> bool:
+    """True when ``url`` is a ``file://`` URL or a bare filesystem path.
+
+    Used to distinguish "the sandbox refused a local file" from "this is just
+    a remote URL we should fetch normally". A ``file://`` URL or a string with
+    no URL scheme is local-shaped; anything with ``http(s)://`` is not.
+    """
+    if url.startswith("file://"):
+        return True
+    return "://" not in url
+
+
+def _local_path_for(url: str, *, allow_any: bool = False) -> Path | None:
+    """Map a ``file://`` URL or bare local path to a Path, else None.
+
+    Denied paths return None as well as allowed-but-absent ones: the caller
+    cannot distinguish them, which is deliberate — a denial must not become an
+    oracle that reveals whether an arbitrary path exists.
+    """
+    candidate: Path | None = None
+    if url.startswith("file://"):
+        candidate = Path(urlparse(url).path)
+    elif "://" in url:
         return None
-    return p if p.is_absolute() or p.exists() else None
+    else:
+        # ``expanduser()`` raises ``RuntimeError`` for ``~unknown-user`` paths
+        # (no such user). Treat those as "not a local path" rather than
+        # crashing. See BUG-6.
+        try:
+            p = Path(url).expanduser()
+        except (RuntimeError, ValueError):
+            return None
+        if not (p.is_absolute() or p.exists()):
+            return None
+        candidate = p
+
+    allowed, _reason = _local_path_allowed(candidate, allow_any=allow_any)
+    if not allowed:
+        return None
+    return candidate
 
 
 def _fetch_local(url: str, path: Path) -> FetchedPage:
@@ -427,7 +531,7 @@ async def _http_get(client: httpx.AsyncClient, url: str) -> FetchedPage:
     return FetchedPage(url=url, ok=False, error=last_error)
 
 
-async def fetch(url: str) -> FetchedPage:
+async def fetch(url: str, *, allow_any_local: bool = False) -> FetchedPage:
     """Fetch a URL and return a :class:`FetchedPage`.
 
     * ``file://`` URLs and bare local paths are read from disk (no network).
@@ -440,6 +544,11 @@ async def fetch(url: str) -> FetchedPage:
     Malformed URLs (NUL bytes, broken IPv6 literals, ...) are rejected up
     front as a failed :class:`FetchedPage` instead of escaping as
     ``ValueError`` / ``httpx.InvalidURL``. See BUG-1 / BUG-2.
+
+    ``allow_any_local=True`` lifts the local-file sandbox for this call (see
+    :func:`local_files_policy`). The CLI passes it so ``citesure verify`` on a
+    user's own saved HTML keeps working; the MCP server does NOT, so a model
+    cannot walk the filesystem.
     """
     if not isinstance(url, str) or "\x00" in url:
         return FetchedPage(
@@ -465,16 +574,34 @@ async def fetch(url: str) -> FetchedPage:
             error=f"unsupported URL scheme: {parsed.scheme!r}",
         )
 
+    # Local-file policy is checked BEFORE the disk cache. Order matters for
+    # safety: a page cached by a previous (unsandboxed) run must not be
+    # served to a sandboxed caller — otherwise the cache becomes a side
+    # channel that replays a read the sandbox would now refuse. (Found by
+    # tests/test_local_sandbox.py on 2026-10-04: an /etc/passwd snapshot
+    # cached by the audit leaked straight past the new check.)
+    if _is_local_shaped(url):
+        _allowed, reason = _local_path_allowed(Path(url), allow_any=allow_any_local)
+        if not _allowed:
+            return FetchedPage(url=url, ok=False, error=reason)
+
     cached = _cache_lookup_by_url(url)
     if cached is not None:
         return cached
 
-    local = _local_path_for(url)
+    local = _local_path_for(url, allow_any=allow_any_local)
     if local is not None:
         page = await asyncio.to_thread(_fetch_local, url, local)
         if page.ok:
             _cache_put(page)
         return page
+
+    # A local-shaped URL that is neither allowed nor cached falls through to
+    # no usable network form; report that rather than silently succeeding.
+    if _is_local_shaped(url):
+        _allowed, reason = _local_path_allowed(Path(url), allow_any=allow_any_local)
+        if not _allowed:
+            return FetchedPage(url=url, ok=False, error=reason)
 
     async with _get_semaphore():
         async with httpx.AsyncClient(

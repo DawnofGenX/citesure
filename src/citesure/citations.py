@@ -157,21 +157,40 @@ def _claim_unit(paragraph: str, pos: int) -> str:
 
 
 # ---------------------------------------------------------------------------
+# Dropped markers (D6, 2026-10-04)
+# ---------------------------------------------------------------------------
+
+
+@dataclass
+class DroppedMarker:
+    """A citation marker that was found but could not be resolved to a URL.
+
+    Silently dropping these was the most dangerous failure mode for a
+    verifier: a claim whose citation is never extracted is a claim that is
+    never verified, yet the report showed only the citations that DID survive,
+    so the user got a clean-looking report with silent holes in coverage.
+    Callers now surface these instead.
+    """
+
+    marker: str
+    reason: str
+    context: str = ""
+
+    def to_dict(self) -> dict:
+        return {"marker": self.marker, "reason": self.reason, "context": self.context}
+
+
 # Public API
 # ---------------------------------------------------------------------------
 
 
-def extract_citations(
+def extract_citations_with_drops(
     text: str, url_map: dict[str, str] | None = None
-) -> list[Citation]:
-    """Extract citations from markdown text.
+) -> tuple[list[Citation], list[DroppedMarker]]:
+    """Extract citations AND report every marker that could not be resolved.
 
-    Handles numeric ``[n]`` markers (resolved via ``url_map`` or a trailing
-    Sources/References section) and inline ``[label](url)`` links. The claim
-    for each marker is the sentence (or paragraph) containing it (D4).
-
-    Numeric markers whose id is missing from the URL map are skipped (see
-    module docstring for the rationale).
+    Returns ``(citations, dropped)``. ``extract_citations`` is the thin wrapper
+    that discards ``dropped`` and exists for backwards compatibility.
     """
     body, section_map = _split_sources_section(text)
     merged: dict[str, str] = dict(section_map)
@@ -179,6 +198,7 @@ def extract_citations(
         merged.update({str(k): v for k, v in url_map.items()})
 
     citations: list[Citation] = []
+    dropped: list[DroppedMarker] = []
     for para in _PARAGRAPH_SPLIT_RE.split(body):
         para = para.strip()
         if not para:
@@ -196,7 +216,13 @@ def extract_citations(
             if kind == "num":
                 url = merged.get(payload)
                 if url is None:
-                    continue  # missing id in url_map → skip (documented)
+                    # Record instead of silently discarding (D6).
+                    dropped.append(DroppedMarker(
+                        marker=f"[{payload}]",
+                        reason="no URL for this marker id in the Sources section or url_map",
+                        context=_claim_unit(para, pos)[:160],
+                    ))
+                    continue
                 citations.append(
                     Citation(citation_id=payload, url=url, claim=_claim_unit(para, pos))
                 )
@@ -204,6 +230,22 @@ def extract_citations(
                 citations.append(
                     Citation(citation_id=label, url=payload, claim=_claim_unit(para, pos))
                 )
+    return citations, dropped
+
+
+def extract_citations(
+    text: str, url_map: dict[str, str] | None = None
+) -> list[Citation]:
+    """Extract citations from markdown text.
+
+    Handles numeric ``[n]`` markers (resolved via ``url_map`` or a trailing
+    Sources/References section) and inline ``[label](url)`` links. The claim
+    for each marker is the sentence (or paragraph) containing it (D4).
+
+    Numeric markers whose id is missing from the URL map are skipped (see
+    module docstring for the rationale).
+    """
+    citations, _dropped = extract_citations_with_drops(text, url_map)
     return citations
 
 
@@ -316,6 +358,14 @@ def load_input(path: str) -> tuple[list[Citation], dict[str, Any]]:
             data = None
         if data is not None:
             citations = _citations_from_json(data)
-            return [_anchor(c, p.parent) for c in citations], {"format": "json"}
-    citations = extract_citations(raw)
-    return [_anchor(c, p.parent) for c in citations], {"format": "markdown"}
+            return [_anchor(c, p.parent) for c in citations], {
+                "format": "json",
+                "dropped_markers": [],
+            }
+    citations, dropped = extract_citations_with_drops(raw)
+    return [_anchor(c, p.parent) for c in citations], {
+        "format": "markdown",
+        # Surfaced so an unverified claim can never hide (D6). The CLI prints
+        # these as warnings and the count lands in --json output.
+        "dropped_markers": [d.to_dict() for d in dropped],
+    }

@@ -232,8 +232,26 @@ def _configure_threads() -> None:
 
 
 def _is_local_path(name: str) -> bool:
-    """True if ``name`` looks like a local filesystem path (not an HF id)."""
-    return "/" in name or "\\" in name or name.startswith(".") or Path(name).exists()
+    """True if ``name`` is a local model directory, False for a HF hub id.
+
+    A HuggingFace identifier is ``org/model`` — it ALWAYS contains ``/`` — so
+    testing for ``"/" in name`` misclassifies every hub id as a local path
+    and, via ``local_files_only=True``, forbids the very download the NLI tier
+    depends on. The default model could therefore never be fetched on a clean
+    install; it only worked where the cache had been pre-seeded.
+
+    A name is treated as a local path only when it is unambiguously one: an
+    explicit relative/absolute prefix, a Windows separator, or an existing
+    filesystem entry. Everything else is a hub id and may be downloaded.
+    """
+    if "\\" in name:
+        return True
+    if name.startswith(("/", "./", "../", "~", ".")):
+        return True
+    try:
+        return Path(name).exists()
+    except OSError:  # pragma: no cover - defensive (e.g. name too long)
+        return False
 
 
 def _has_module(name: str) -> bool:
@@ -249,6 +267,18 @@ def _has_module(name: str) -> bool:
         return importlib.util.find_spec(name) is not None
     except (ImportError, ValueError):
         return False
+
+
+def nli_extra_available() -> tuple[bool, list[str]]:
+    """Whether the optional NLI stack (the ``[nli]`` extra) is importable.
+
+    Returns ``(available, missing)`` where ``missing`` lists the modules that
+    are not installed. Cheap and side-effect free (``find_spec`` only, no
+    import), so it is safe to call on every CLI/MCP invocation to decide
+    whether tier 3 can run — the auto-detect default.
+    """
+    missing = [m for m in ("torch", "transformers") if not _has_module(m)]
+    return (not missing, missing)
 
 
 def get_nli_model(model_name: str | None = None) -> NLICrossEncoder:
@@ -275,13 +305,13 @@ def get_nli_model(model_name: str | None = None) -> NLICrossEncoder:
     # failures raise - not a raw ModuleNotFoundError from deep inside a
     # function-local import. Checked before _configure_threads(), which imports
     # torch unguarded.
-    missing = [m for m in ("torch", "transformers") if not _has_module(m)]
-    if missing:
-        raise NLIError(
-            "the NLI tier needs optional dependencies that are not installed: "
-            + ", ".join(missing)
-            + '. Install them with: pip install "citesure[nli]"'
-        )
+    available, missing = nli_extra_available()
+    if not available:
+            raise NLIError(
+                "the NLI tier needs optional dependencies that are not installed: "
+                + ", ".join(missing)
+                + '. Install them with: pip install "citesure[nli]"'
+            )
 
     _configure_threads()
     cache_dir = _cache_dir()

@@ -67,17 +67,31 @@ ENV_NLI_MODEL = "CITECHECK_NLI_MODEL"
 
 
 def _nli_default() -> bool:
-    """Default NLI-tier state for the MCP server.
+    """Default NLI-tier state for the MCP server (auto-detect).
 
-    Returns True unless ``CITECHECK_NLI`` is explicitly set to a falsy
-    value (``0/false/no/off``). This makes NLI-on the safe default; the
-    env var is an explicit opt-out, and per-call ``use_nli`` can still
-    override.
+    Order of decision:
+      1. ``CITECHECK_NLI`` explicitly set to a falsy value (``0/false/no/off``)
+         -> NLI off (explicit opt-out always wins).
+      2. ``CITECHECK_NLI`` explicitly truthy -> NLI on.
+      3. Otherwise AUTO-DETECT: on when the optional ``[nli]`` extra is
+         importable, off when it is not.
+
+    Rationale (bug fixed 2026-10-04): this used to return True unless the
+    env var was falsy. Combined with torch/transformers moving to the
+    ``[nli]`` extra in v0.2.0, every default install answered every tool call
+    with ``{"error": "NLI model failed to load..."}`` - the MCP server was
+    non-functional out of the box. The tier that actually ran is reported in
+    the tool result (``nli_active``), so this is never a silent downgrade.
     """
     val = os.environ.get(ENV_NLI_ENABLED, "").strip().lower()
     if val in ("0", "false", "no", "off"):
         return False
-    return True
+    if val in ("1", "true", "yes", "on"):
+        return True
+    from .nli import nli_extra_available
+
+    available, _missing = nli_extra_available()
+    return available
 
 
 def _nli_model_name() -> str | None:
@@ -87,15 +101,26 @@ def _nli_model_name() -> str | None:
 
 
 async def _run_pipeline(
-    citations: list[Any], use_nli: bool = True
+    citations: list[Any], use_nli: bool | None = None
 ) -> dict[str, Any]:
     """Run the full library pipeline and return the D3 report as a dict.
 
-    Tiers 1+2 always run; tier 3 (NLI) only when ``use_nli`` is True
-    (per-call override; server-wide ``CITECHECK_NLI`` still governs the
-    default). The NLI stack is imported lazily inside the pipeline — nothing
-    heavy happens here unless the tier is on.
+    Tiers 1+2 always run; tier 3 (NLI) only when ``use_nli`` is True.
+    ``use_nli=None`` means "decide automatically" via :func:`_nli_default`,
+    which honours CITECHECK_NLI and otherwise auto-detects the ``[nli]``
+    extra.
+
+    The default was previously ``True``, which meant any caller that did not
+    pass the flag explicitly got NLI-on regardless of what was installed - the
+    bug that made the server answer every call with an error on a default
+    install. Resolving inside this function means the tool wrappers, the
+    library entry point and the documented default cannot drift apart again.
+
+    The NLI stack is imported lazily inside the pipeline — nothing heavy
+    happens here unless the tier is on.
     """
+    if use_nli is None:
+        use_nli = _nli_default()
     from .nli import NLIError
     from .reachability import verify_citations
 
@@ -109,7 +134,13 @@ async def _run_pipeline(
     except NLIError as exc:
         # Fail fast with a clear, actionable message (D6) instead of a crash.
         return {"error": f"NLI model failed to load: {exc}"}
-    return report.to_dict()
+    payload = report.to_dict()
+    # Declare which tiers actually ran. An overlap-only result must never be
+    # read as an entailment-checked one - the safety numbers in evals/ depend
+    # on tier 3 having executed.
+    payload["nli_active"] = use_nli
+    payload["tiers_reached"] = 3 if use_nli else 2
+    return payload
 
 
 def build_server():

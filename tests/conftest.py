@@ -17,6 +17,29 @@ if str(_TESTS_DIR.parent) not in sys.path:
 from tests.fixtures.mock_server import mock_server  # noqa: E402,F401  (re-exported fixture)
 
 
+# ---------------------------------------------------------------------------
+# Local-file sandbox opt-in for the test suite
+#
+# Since 2026-10-04 the fetcher sandboxes local-file reads: relative paths and
+# paths under the CWD are allowed, but absolute paths and ``file://`` URLs
+# outside the CWD are refused unless the caller opts in. This is the fix for
+# the "MCP server reads /etc/passwd" finding (D2). pytest's ``tmp_path`` is
+# outside the repo CWD, so every test that reads a fixture/tmp file would
+# otherwise be testing the refusal path instead of its real subject.
+#
+# The suite therefore opts IN via an env var - deliberately, not implicitly:
+# it keeps testing fetch/score behaviour, while the refusal behaviour itself
+# is asserted explicitly in tests/test_local_sandbox.py. An autouse fixture is
+# the right place because it applies uniformly and is visible in one diff.
+# ---------------------------------------------------------------------------
+
+
+@pytest.fixture(autouse=True)
+def _allow_local_files_in_tests(monkeypatch: pytest.MonkeyPatch):
+    """Let the suite read local files outside the repo CWD."""
+    monkeypatch.setenv("CITECHECK_ALLOW_LOCAL_FILES", "1")
+
+
 # --------------------------------------------------------------------------
 # Optional-ML-stack handling
 #

@@ -59,19 +59,19 @@ def classify_reachability(page: FetchedPage) -> tuple[Status, list[str]]:
     return Status.SUPPORTED, notes
 
 
-async def _fetch_safe(url: str) -> FetchedPage:
+async def _fetch_safe(url: str, allow_any_local: bool = False) -> FetchedPage:
     """Fetch a URL, converting any exception (e.g. malformed URL) into a
     failed :class:`FetchedPage` so a single bad citation cannot crash the
     whole batch."""
     try:
-        return await fetch(url)
+        return await fetch(url, allow_any_local=allow_any_local)
     except Exception as exc:  # noqa: BLE001 - defensive batch guard
         return FetchedPage(url=url, ok=False, error=f"{type(exc).__name__}: {exc}")
 
 
 async def verify_citations(
     citations: list[Citation], *, use_overlap: bool = False, use_nli: bool = False,
-    nli_model: str | None = None,
+    nli_model: str | None = None, allow_any_local: bool = False,
 ) -> Report:
     """Verify citations and build a :class:`Report`.
 
@@ -102,11 +102,12 @@ async def verify_citations(
         from .overlap import verify_citations as _verify_with_overlap
 
         return await _verify_with_overlap(
-            citations, use_overlap=True, use_nli=use_nli, nli_model=nli_model
+            citations, use_overlap=True, use_nli=use_nli, nli_model=nli_model,
+            allow_any_local=allow_any_local,
         )
 
     pages = await asyncio.gather(
-        *(_fetch_safe(c.url) for c in citations)
+        *(_fetch_safe(c.url, allow_any_local) for c in citations)
     )
     verdicts: list[Verdict] = []
     for citation, page in zip(citations, pages):

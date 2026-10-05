@@ -44,7 +44,7 @@ from pathlib import Path
 
 from .citations import load_input
 from .models import Report
-from .nli import NLIError, get_nli_model, resolve_nli_model
+from .nli import NLIError, get_nli_model, nli_extra_available, resolve_nli_model
 from .reachability import verify_citations
 from .report import exit_code, render_human, render_markdown
 
@@ -97,12 +97,13 @@ def _build_parser() -> argparse.ArgumentParser:
     v.add_argument(
         "--nli",
         action="store_true",
-        default=True,
+        default=None,
         help=(
             "enable the NLI entailment tier (tier 3): a local cross-encoder "
             "scores each (claim, best-passage) pair. Lazy-downloads the "
             "default model (~425 MB) into ~/.cache/citesure/ on first use. "
-            "(default: on; use --no-nli to disable)"
+            "(default: auto — on when the [nli] extra is installed, off when "
+            "it is not; the report always states which tier ran)"
         ),
     )
     v.add_argument(
@@ -142,7 +143,23 @@ def _cmd_verify(args: argparse.Namespace) -> int:
             Path(args.cache_dir).expanduser().resolve()
         )
     # --nli-model implies --nli (selecting a model means using the tier).
-    use_nli = bool(args.nli or args.nli_model)
+    # ``args.nli`` is None when neither flag was passed: AUTO-DETECT. The NLI
+    # stack is the optional ``[nli]`` extra, so a plain ``pip install
+    # citesure`` cannot run tier 3. Defaulting it ON anyway made the
+    # documented first command fail outright on a default install (exit 2).
+    # Instead: on when the extra is importable, off when it is not, and the
+    # report always names the tier that actually ran - never a silent
+    # downgrade (D6 fail-fast spirit).
+    nli_available, nli_missing = nli_extra_available()
+    if args.nli is None:
+        use_nli = nli_available
+    else:
+        use_nli = bool(args.nli)
+    if args.nli_model:
+        # An explicit model means the user wants the tier; if the extra is
+        # missing, get_nli_model() below fails fast with the actionable
+        # message rather than silently ignoring the request.
+        use_nli = True
     if not use_nli:
         print(
             "citesure: WARNING --no-nli disables the entailment tier; "
@@ -150,6 +167,14 @@ def _cmd_verify(args: argparse.Namespace) -> int:
             "(see evals/EVAL_REPORT.md).",
             file=sys.stderr,
         )
+        if args.nli is None and not nli_available:
+            print(
+                "citesure: note the NLI extra is not installed (missing: "
+                + ", ".join(nli_missing)
+                + '), so tier 3 is off. Install it with pip install "citesure[nli]" '
+                "to enable entailment scoring.",
+                file=sys.stderr,
+            )
 
     try:
         citations, meta = load_input(args.file)
@@ -158,6 +183,21 @@ def _cmd_verify(args: argparse.Namespace) -> int:
         return 2
     if not citations:
         print("citesure: warning: no citations found in input", file=sys.stderr)
+    # D6: a marker that resolved to no URL is a claim that is NEVER verified.
+    # Say so loudly rather than reporting clean coverage over a silent hole.
+    dropped = meta.get("dropped_markers") or []
+    for d in dropped:
+        print(
+            "citesure: WARNING unresolved citation marker "
+            f"{d['marker']} — {d['reason']}. This claim was NOT verified.",
+            file=sys.stderr,
+        )
+    if dropped:
+        print(
+            f"citesure: {len(dropped)} marker(s) could not be resolved to a URL; "
+            f"{len(citations)} citation(s) were verified.",
+            file=sys.stderr,
+        )
 
     nli_name: str | None = None
     if use_nli:
@@ -175,7 +215,8 @@ def _cmd_verify(args: argparse.Namespace) -> int:
     try:
         report = asyncio.run(
             verify_citations(
-                citations, use_overlap=True, use_nli=use_nli, nli_model=args.nli_model
+                citations, use_overlap=True, use_nli=use_nli,
+                nli_model=args.nli_model, allow_any_local=True,
             )
         )
     except NLIError as exc:  # defensive: load already validated above
@@ -183,13 +224,23 @@ def _cmd_verify(args: argparse.Namespace) -> int:
         return 2
 
     if args.json:
-        print(json.dumps(report.to_dict(), indent=2))
+        payload = report.to_dict()
+        # Never let a JSON consumer mistake an overlap-only run for an
+        # entailment-checked one: state the tiers that actually ran.
+        payload["nli_active"] = use_nli
+        payload["tiers_reached"] = 3 if use_nli else 2
+        payload["dropped_markers"] = dropped
+        print(json.dumps(payload, indent=2))
     else:
-        print(render_human(report, meta, args.threshold, args.strict, nli_model=nli_name))
+        print(render_human(
+            report, meta, args.threshold, args.strict,
+            nli_model=nli_name, nli_active=use_nli,
+        ))
     if args.md:
         Path(args.md).write_text(
             render_markdown(
-                report, meta, args.threshold, args.strict, nli_model=nli_name
+                report, meta, args.threshold, args.strict,
+                nli_model=nli_name, nli_active=use_nli,
             ),
             encoding="utf-8",
         )

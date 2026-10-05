@@ -202,10 +202,30 @@ def segment_passages(text: str) -> list[str]:
     passages: list[str] = []
     buf = ""
     for i, sent in enumerate(sentences):
-        # Prepend antecedent for anaphoric sentence starts
+        # Prepend the antecedent for anaphoric sentence starts ("It", "They",
+        # "This", ...). Walk back to the nearest sentence NOT already used as
+        # somebody else's antecedent, so a run of anaphora does not duplicate
+        # text: previously "It is good. It is also great. They agree." produced
+        # "It is good. It is good. It is also great. It is also great. They
+        # agree." (D5, fixed 2026-10-04).
         first_word = sent.split()[0].lower() if sent.split() else ""
         if first_word in _ANAPHORIC_STARTS and i > 0:
-            sent = sentences[i - 1] + " " + sent
+            antecedent = sentences[i - 1]
+            # The antecedent must be PRESENT (the NLI tier sees only this
+            # passage) but must not be DUPLICATED (D5: "It is good. It is also
+            # great." used to yield "It is good. It is good. It is also great.").
+            #
+            # Whether it is already present depends on whether a passage split
+            # is about to happen, so decide that FIRST: if this sentence does
+            # not fit in ``buf``, the antecedent stays behind in the previous
+            # passage and must be prepended. If it does fit and the buffer
+            # already ends with the antecedent, prepending would duplicate it.
+            will_split = bool(buf) and len(buf) + 1 + len(sent) > PASSAGE_MAX_CHARS
+            already_present = (not will_split) and bool(antecedent) and buf.endswith(
+                antecedent
+            )
+            if antecedent and not already_present:
+                sent = f"{antecedent} {sent}"
         if buf and len(buf) + 1 + len(sent) > PASSAGE_MAX_CHARS:
             passages.append(buf)
             buf = sent
@@ -711,7 +731,7 @@ def status_for_score(score: float) -> Status:
 
 
 async def _verify_one(
-    citation: Citation, use_overlap: bool
+    citation: Citation, use_overlap: bool, allow_any_local: bool = False
 ) -> tuple[Verdict, dict | None]:
     """Verify a single citation: fetch → tier 1 → (if clean) tier 2.
 
@@ -722,7 +742,7 @@ async def _verify_one(
     JS pages with no extractable text, empty claims).
     """
     try:
-        page = await fetch(citation.url)
+        page = await fetch(citation.url, allow_any_local=allow_any_local)
     except Exception as exc:  # malformed URL etc. → treat as unreachable
         from .fetcher import FetchedPage
 
@@ -796,7 +816,7 @@ async def _verify_one(
 
 async def verify_citations(
     citations: list[Citation], *, use_overlap: bool = True, use_nli: bool = False,
-    nli_model: str | None = None,
+    nli_model: str | None = None, allow_any_local: bool = False,
 ) -> Report:
     """Verify citations through the full pipeline (D2 tiers 1+2, +3 with NLI).
 
@@ -814,7 +834,9 @@ async def verify_citations(
     (fail fast — no silent fallback).
     """
     results = list(
-        await asyncio.gather(*(_verify_one(c, use_overlap) for c in citations))
+        await asyncio.gather(
+            *(_verify_one(c, use_overlap, allow_any_local) for c in citations)
+        )
     )
     verdicts: list[Verdict] = [v for v, _ in results]
 

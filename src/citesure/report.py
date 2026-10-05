@@ -44,7 +44,7 @@ def _verdict_label(verdict: Verdict, strict: bool) -> str:
 
 def render_human(
     report: Report, meta: dict, threshold: float, strict: bool,
-    nli_model: str | None = None,
+    nli_model: str | None = None, nli_active: bool | None = None,
 ) -> str:
     """Render the human-readable Markdown-style report to a string.
 
@@ -53,6 +53,11 @@ def render_human(
     per-status counts and the pass/decision line. When ``nli_model`` is
     given (the NLI tier is on), the header shows which cross-encoder was
     used (D6).
+
+    The header ALWAYS states which tiers ran. ``nli_active`` makes that
+    explicit when the NLI tier was auto-detected off (extra not installed),
+    so an overlap-only report can never be mistaken for an entailment-checked
+    one - the safety metrics in evals/ depend on tier 3 actually running.
     """
     lines: list[str] = [
         f"# citesure verification report — {report.total} citation(s) "
@@ -60,6 +65,13 @@ def render_human(
     ]
     if nli_model:
         lines.append(f"NLI: {nli_model}")
+    elif nli_active is False:
+        lines.append(
+            "NLI: OFF (tiers 1+2 only — the entailment tier did not run; "
+            "negation and entity-swap claims are NOT detected in this mode)"
+        )
+    else:
+        lines.append("Tiers: 1+2 (reachability + content overlap)")
     lines.append("")
     for v in report.verdicts:
         symbol = _STATUS_SYMBOLS.get(v.status, "•")
@@ -81,6 +93,22 @@ def render_human(
         for note in v.notes:
             lines.append(f"  - note: {note}")
     lines.append("")
+    dropped = (meta.get("dropped_markers") or []) if isinstance(meta, dict) else []
+    if dropped:
+        lines.append(
+            f"## Unresolved citation markers ({len(dropped)})"
+        )
+        lines.append("")
+        lines.append(
+            "These markers resolved to no URL, so the claims they mark were "
+            "NOT verified. Treat coverage as incomplete."
+        )
+        lines.append("")
+        for d in dropped:
+            marker = d.get("marker", "?") if isinstance(d, dict) else "?"
+            reason = d.get("reason", "") if isinstance(d, dict) else str(d)
+            lines.append(f"- {marker} — {reason}")
+        lines.append("")
     lines.append("## Summary")
     lines.append("")
     counts = {s: 0 for s in Status}
@@ -106,10 +134,13 @@ def render_human(
 
 def render_markdown(
     report: Report, meta: dict, threshold: float, strict: bool,
-    nli_model: str | None = None,
+    nli_model: str | None = None, nli_active: bool | None = None,
 ) -> str:
     """Markdown report file variant (same content as :func:`render_human`)."""
-    return render_human(report, meta, threshold, strict, nli_model=nli_model)
+    return render_human(
+        report, meta, threshold, strict, nli_model=nli_model,
+        nli_active=nli_active,
+    )
 
 
 def exit_code(report: Report, threshold: float, strict: bool) -> int:
