@@ -21,28 +21,57 @@ contrast: each source fact appears three times — verbatim-supported, negation-
 entity-swapped — all sharing one source sentence. The A-vs-B gap isolates polarity handling and
 A-vs-C isolates subject binding, so a drop points at a specific bug class rather than "hard cases".
 
-All four numbers below come from ONE committed run,
-`evals/results/v2_post_score_fix/20260929-200951.json`:
+### Tier ablation — what each tier actually contributes
 
-| Metric | Result |
-|---|---|
-| NLI tier on (default claim path) | **93/108 = 86.1%** |
-| NLI tier off (deterministic tiers only) | **41/108 = 38.0%** |
-| Negation-flip false-supported | **0/32 = 0.0%** |
-| Entity-swap false-supported | **5/32 = 15.6%** |
+Measured by `evals/tier_ablation.py` on the same 108 cases; committed run
+`evals/results/tier_ablation/20261005-170852.json`:
 
-The 48.1-point gap is the cross-encoder tier's entire contribution, measured rather than
-asserted. The 86.1% figure is the current one after the pooled-contradiction and score fixes (it
-supersedes the original 76.9% v2 baseline).
+| Configuration | Agreement | 95% CI |
+|---|---|---|
+| `reachability_only` (tier 1) | 40/108 = 37.0% | [28.5, 46.4] |
+| `overlap_only` (tiers 1+2, the default install) | 41/108 = 38.0% | [29.4, 47.4] |
+| `nli_only_effect` (all tiers) | **93/108 = 86.1%** | [78.3, 91.4] |
+
+Two things this table makes explicit that a single headline number hid:
+
+- **Tiers 1+2 add almost nothing over tier 1 alone** (37.0% → 38.0%, one case). Essentially all
+  of citesure's claim-checking ability lives in the NLI tier. A plain `pip install citesure`
+  therefore buys you link-status checking and very little claim verification.
+- Per-`tier_reached`: verdicts that stopped at tier 1 were 8/8 correct, while tier-3 verdicts
+  were 85/100. The pipeline is well-calibrated about *when* it cannot reach an answer.
+
+### Safety metrics
+
+All figures below come from ONE committed run,
+`evals/results/p1_uncertainty/20261005-171702.json` (NLI-on row), with the NLI-off row
+from the paired baseline it was compared against:
+
+| Metric | Result | 95% CI |
+|---|---|---|
+| NLI tier on (default claim path) | **93/108 = 86.1%** | [78.3, 91.4] |
+| NLI tier off (deterministic tiers only) | **41/108 = 38.0%** | [29.4, 47.4] |
+| Negation-flip false-supported | **0/32 = 0.0%** | [89.3, 100.0] correct |
+| Entity-swap false-supported | **5/32 = 15.6%** | [68.2, 93.1] correct |
+
+The 48.1-point gap is the cross-encoder tier's entire contribution. It is now tested rather than
+asserted: an exact McNemar test on the paired outcomes gives 59 cases correct only with NLI
+against 7 correct only without it, **p < 0.00001**. The 86.1% figure supersedes the original 76.9%
+v2 baseline.
 
 > **Read these numbers with their sample size.** The set is 108 cases but only **40 unique URLs**:
 > 32 URLs appear three times each (one source sentence, three transformations), so the cases are
-> correlated, not independent. A 95% Wilson interval on 86.1% is **[78.3%, 91.4%]**, and the safety
-> subsets (n=32) are far wider still — 15.6% carries roughly [7%, 30%]. Treat these as accurate
-> descriptions of *this* 108-case set, not as general accuracy on the open web. See
+> correlated, not independent. `evals/stats.py` reports a cluster-bootstrap interval that
+> resamples whole URLs; on this run it gives [80.5, 91.6] versus [78.3, 91.4] for the naive iid
+> interval. The safety subsets are n=32, where a bare "15.6%" hides an interval roughly 25 points
+> wide. Treat all of this as an accurate description of *this* 108-case set — 16 domains, mostly
+> English technical documentation — not as general accuracy on the open web. See
 > `evals/RESULTS_v2_BASELINE.md` for the design and its limits.
 
-Both safety rates rise to ~90-100% with the NLI tier off, which is the honest cost of the fast path.
+`labeler_confidence` is recorded on every case but was previously never analysed. Splitting the
+same run by it: high-confidence cases 50/62 = 80.6%, medium-confidence 43/46 = 93.5%. The
+contested cases score *higher*, so the headline is not being propped up by shaky labels.
+
+Both safety rates rise sharply with the NLI tier off, which is the honest cost of the fast path.
 
 An exhaustive threshold sweep (support 0.30-0.90 x ambiguous 0.05-support) moved agreement from
 66.7% to 69.4% — a gain of exactly one item. Threshold tuning is a dead end here; see

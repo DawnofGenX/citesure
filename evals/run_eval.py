@@ -40,6 +40,9 @@ from pathlib import Path
 # --- project import path (library, not installed) ---------------------------
 _PROJECT_ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(_PROJECT_ROOT / "src"))
+# evals/ is a script directory, not a package (no __init__.py), so the sibling
+# stats module is loaded by path rather than imported as evals.stats.
+sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 # --- own cache dir (set BEFORE any fetch happens) --------------------------
 DEFAULT_EVAL_CACHE = Path.home() / ".cache" / "citesure-eval"
@@ -77,6 +80,100 @@ def _norm_status(value) -> str:
     if s.startswith("error"):
         return "error"
     return s if s in STATUSES else "error"
+
+
+# ---------------------------------------------------------------------------
+# Uncertainty quantification (added 2026-10-04)
+# ---------------------------------------------------------------------------
+
+
+def _load_stats():
+    """Load the sibling stats module, or return None if it is unavailable."""
+    try:
+        import stats as _stats  # evals/ is on sys.path
+    except Exception:
+        return None
+    return _stats
+
+
+def _fmt_pct_ci(ci) -> str:
+    """Format a (lo, hi) proportion pair as a percentage interval."""
+    return f"[{100 * ci[0]:.1f}, {100 * ci[1]:.1f}]"
+
+
+def _uncertainty_block(records: list[dict], items: list[dict]) -> dict:
+    """Compute and print every interval the report should carry.
+
+    Returns a JSON-serialisable dict so the numbers persist in the results
+    file rather than only appearing on stdout -- a CI nobody can find later
+    is not evidence.
+
+    Prints:
+      * Wilson 95% CI on the headline agreement (iid assumption).
+      * Cluster-bootstrap 95% CI resampling whole URLs (correct assumption),
+        which is the honest interval for this set.
+      * McNemar on the NLI-on-vs-off claim when a baseline is supplied.
+      * Agreement split by labeler_confidence (46/108 v2 cases are 'medium'
+        and the field was previously collected but never analysed).
+    """
+    st = _load_stats()
+    total = len(records)
+    matched = sum(1 for r in records if r.get("match"))
+    out: dict[str, Any] = {}
+
+    print("\n=== UNCERTAINTY ===")
+    if st is None:
+        print("  (evals/stats.py unavailable -- intervals skipped)")
+        return out
+
+    matches = [bool(r.get("match")) for r in records]
+    wilson = st.wilson_ci(matched, total)
+    out["wilson_ci"] = {"low": round(wilson[0], 4), "high": round(wilson[1], 4),
+                        "assumption": "iid cases"}
+    print(f"  headline {matched}/{total}  Wilson 95% CI {_fmt_pct_ci(wilson)}"
+          "   (assumes independent cases)")
+
+    # Cluster on the source URL: cases from one URL share a source sentence.
+    url_by_id = {it["id"]: it["url"] for it in items}
+    clusters = [url_by_id.get(r["id"], r["id"]) for r in records]
+    n_clusters = len(set(clusters))
+    if n_clusters < total:
+        boot = st.cluster_bootstrap_ci(matches, clusters)
+        out["cluster_bootstrap_ci"] = {
+            "low": round(boot[0], 4), "high": round(boot[1], 4),
+            "n_clusters": n_clusters, "assumption": "cases clustered by source URL",
+        }
+        print(f"  {n_clusters} unique URLs across {total} cases -> cases are "
+              "CORRELATED")
+        print(f"  cluster-bootstrap 95% CI {_fmt_pct_ci(boot)}   "
+              "(resamples whole URLs -- the honest interval)")
+    else:
+        print("  every case has a distinct URL; iid interval is adequate")
+
+    # Safety subsets are small; a bare percentage overstates precision.
+    for label, key in (("negation-flip", "negation-flip"),
+                       ("entity-swap", "entity-swap")):
+        sub = [(bool(r.get("match")), url_by_id.get(r["id"], r["id"]))
+               for r in records if r.get("category") == key]
+        if not sub:
+            continue
+        k = sum(1 for m, _ in sub if m)
+        n = len(sub)
+        ci = st.wilson_ci(k, n)
+        out[f"{label}_wilson_ci"] = {"low": round(ci[0], 4), "high": round(ci[1], 4),
+                                     "correct": k, "total": n}
+        print(f"  {label:14s} {k}/{n} = {100 * k / n:.1f}%  "
+              f"95% CI {_fmt_pct_ci(ci)}")
+
+    # labeler_confidence was collected but never analysed until now.
+    conf = st.labeler_confidence_breakdown(records, items)
+    if conf:
+        out["by_labeler_confidence"] = conf
+        print("  by labeler_confidence:")
+        for label, blk in sorted(conf.items()):
+            print(f"    {label:7s} {blk['correct']}/{blk['total']} = "
+                  f"{100 * blk['agreement']:.1f}%")
+    return out
 
 
 async def _verify_one(item: dict, use_nli: bool) -> dict:
@@ -255,6 +352,13 @@ def main(argv=None) -> int:
     print("\n=== Overall ===")
     print(f"agreement: {matched}/{total} = {agreement:.1f}%")
 
+    # ---- uncertainty (added 2026-10-04) -----------------------------------
+    # A bare point estimate on n=108 is reported as if it were exact. It is
+    # not, and the eval set is CORRELATED: 32 of 40 unique URLs contribute
+    # three cases each (verbatim / negation-flip / entity-swap of ONE source
+    # sentence), so an iid interval is too narrow. Quote both.
+    unc = _uncertainty_block(records, items)
+
     print("\n=== SAFETY METRICS (false-supported where expected=unsupported) ===")
     print(f"negation-flip : {nf_fs}/{nf_tot} = {nf_rate:.1%}")
     print(f"entity-swap   : {es_fs}/{es_tot} = {es_rate:.1%}")
@@ -279,6 +383,7 @@ def main(argv=None) -> int:
         "confusion_matrix": mat,
         "per_category_recall": pr,
         "per_status_pr": sp,
+        "uncertainty": unc,
         "safety": {
             "negation_flip_false_supported": nf_fs,
             "negation_flip_total": nf_tot,
@@ -289,8 +394,16 @@ def main(argv=None) -> int:
         },
         "records": records,
     }
-    result_path.write_text(json.dumps(payload, indent=2, ensure_ascii=False), encoding="utf-8")
-    print(f"\nwrote results -> {result_path}")
+    def _write_results() -> None:
+        """Persist the payload. Called after --compare so any McNemar result
+        computed there is included (added 2026-10-04: it was previously
+        written first, so the significance test never reached the file)."""
+        result_path.write_text(
+            json.dumps(payload, indent=2, ensure_ascii=False), encoding="utf-8"
+        )
+        print(f"\nwrote results -> {result_path}")
+
+    _write_results()
 
     # ---- optional no-regression diff --------------------------------------
     if args.compare:
@@ -317,12 +430,49 @@ def main(argv=None) -> int:
                 print(f"delta    : {n_matched - b_matched:+d} cases "
                       f"(NOTE: set size changed {b_tot} -> {n_tot}; "
                       f"only within-set runs are comparable)")
+            # Paired significance test for the headline NLI-on-vs-off gap.
+            # The project already runs McNemar for model-vs-model in
+            # RESULTS_MODEL_BENCH.md but never for this toggle, which is the
+            # claim the README calls "measured rather than asserted".
+            base_by_id = {}
+            for br in baseline.get("records", []) or []:
+                if "id" in br and "match" in br:
+                    base_by_id[br["id"]] = bool(br["match"])
+            cur_by_id = {r["id"]: bool(r["match"]) for r in records}
+            shared = [i for i in cur_by_id if i in base_by_id]
+            if shared and b_tot == n_tot:
+                st = _load_stats()
+                if st is not None:
+                    nli_on_wins = sum(1 for i in shared
+                                      if cur_by_id[i] and not base_by_id[i])
+                    nli_off_wins = sum(1 for i in shared
+                                       if base_by_id[i] and not cur_by_id[i])
+                    stat, pval = st.mcnemar_exact(nli_on_wins, nli_off_wins)
+                    verdict = ("SIGNIFICANT" if pval < 0.05
+                               else "NOT significant")
+                    print(f"McNemar (exact, paired, n={len(shared)} shared): "
+                          f"current-only-correct={nli_on_wins} "
+                          f"baseline-only-correct={nli_off_wins} "
+                          f"p={pval:.5f}  -> {verdict}")
+                    payload["mcnemar_vs_baseline"] = {
+                        "shared_cases": len(shared),
+                        "current_only_correct": nli_on_wins,
+                        "baseline_only_correct": nli_off_wins,
+                        "p_value": round(pval, 6),
+                        "significant_at_0.05": pval < 0.05,
+                        "note": "current = this run; baseline = --compare target",
+                    }
+
             for key in ("negation_flip_false_supported", "entity_swap_false_supported"):
                 b = baseline.get("safety", {}).get(key)
                 n = payload["safety"].get(key)
                 if b is not None and n is not None:
                     flag = "" if n <= b else "   <-- SAFETY REGRESSION"
                     print(f"{key:34s} {b} -> {n}{flag}")
+
+    # Re-write so the McNemar block (added above, after the first write) is
+    # persisted too. Cheap and idempotent.
+    _write_results()
     return 0
 
 
