@@ -10,6 +10,7 @@ dist/
 
 # fetched third-party page snapshots used for eval-set authoring (regenerable)
 evals/page_text/
+evals/page_text_v3/
 
 # Secrets and local credentials — never commit these
 .env

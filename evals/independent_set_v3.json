@@ -1,0 +1,421 @@
+[
+  {
+    "id": "ind3-001",
+    "category": "partially-true-mixed",
+    "expected_status": "ambiguous",
+    "labeler_confidence": "high",
+    "url": "https://www.gutenberg.org/cache/epub/74/pg74.txt",
+    "claim": "Huck Finn is drawn from life; Tom Sawyer also, but not from an individual, and the author met him first in the summer of 1876.",
+    "notes": "SUPPORTED: the prefatory note states verbatim 'Huck Finn is drawn from life; Tom Sawyer also, but not from an individual'. NOT SUPPORTED: the text gives no year for when the author met him; the 1876 date appears nowhere.",
+    "supported_clauses": [
+      "Huck Finn is drawn from life; Tom Sawyer also, but not from an individual"
+    ],
+    "unsupported_clauses": [
+      "the author met him first in the summer of 1876"
+    ]
+  },
+  {
+    "id": "ind3-002",
+    "category": "partially-true-mixed",
+    "expected_status": "ambiguous",
+    "labeler_confidence": "high",
+    "url": "https://www.gutenberg.org/cache/epub/74/pg74.txt",
+    "claim": "Tom Sawyer belongs to the composite order of architecture, and he attends a boarding school in St. Louis.",
+    "notes": "SUPPORTED: the prefatory note says Tom Sawyer 'belongs to the composite order of architecture'. NOT SUPPORTED: the text never places Tom at a boarding school; school scenes are at home with Aunt Polly and in the schoolhouse garden, not St. Louis.",
+    "supported_clauses": [
+      "belongs to the composite order of architecture"
+    ],
+    "unsupported_clauses": [
+      "he attends a boarding school in St. Louis"
+    ]
+  },
+  {
+    "id": "ind3-003",
+    "category": "partially-true-mixed",
+    "expected_status": "ambiguous",
+    "labeler_confidence": "high",
+    "url": "https://www.gutenberg.org/cache/epub/74/pg74.txt",
+    "claim": "Tom Sawyer is a combination of the characteristics of three boys the author knew, and he later travels by raft down the Mississippi.",
+    "notes": "SUPPORTED: verbatim in the prefatory note. NOT SUPPORTED: Tom's river episode is by raft on the Missouri, and the text describes no Mississippi raft voyage for him.",
+    "supported_clauses": [
+      "a combination of the characteristics of three boys whom I knew"
+    ],
+    "unsupported_clauses": [
+      "he later travels by raft down the Mississippi"
+    ]
+  },
+  {
+    "id": "ind3-004",
+    "category": "partially-true-mixed",
+    "expected_status": "ambiguous",
+    "labeler_confidence": "high",
+    "url": "https://www.gutenberg.org/cache/epub/1342/pg1342.txt",
+    "claim": "Mr. Bennet's experience of three-and-twenty years had been insufficient to make his wife understand his character, and he was elected to the position of hereditary sheriff.",
+    "notes": "SUPPORTED: the opening paragraph states this almost verbatim. NOT SUPPORTED: Mr. Bennet is a gentleman of small income who lives on his estate; the text never says he holds the hereditary shrievalty office.",
+    "supported_clauses": [
+      "the experience of three-and-twenty years had been insufficient to make his wife understand his character"
+    ],
+    "unsupported_clauses": [
+      "he was elected to the position of hereditary sheriff"
+    ]
+  },
+  {
+    "id": "ind3-005",
+    "category": "partially-true-mixed",
+    "expected_status": "ambiguous",
+    "labeler_confidence": "medium",
+    "url": "https://www.gutenberg.org/cache/epub/1342/pg1342.txt",
+    "claim": "Bingley had not been of age two years when he was tempted by an accidental recommendation to look at Netherfield House, and he had already purchased a carriage of his own.",
+    "notes": "SUPPORTED: stated in the opening chapter. NOT SUPPORTED: Bingley arrives by his own carriage later, but the text never says he had purchased one before renting Netherfield.",
+    "supported_clauses": [
+      "Bingley had not been of age two years when he was tempted, by an accidental recommendation"
+    ],
+    "unsupported_clauses": [
+      "he had already purchased a carriage of his own"
+    ]
+  },
+  {
+    "id": "ind3-006",
+    "category": "partially-true-mixed",
+    "expected_status": "ambiguous",
+    "labeler_confidence": "medium",
+    "url": "https://www.gutenberg.org/cache/epub/1661/pg1661.txt",
+    "claim": "Holmes met Irene Adler during a lengthy visit to Warsaw some five years earlier, and he describes her as being of Parisian birth.",
+    "notes": "SUPPORTED: verbatim opening of 'A Scandal in Bohemia'. NOT SUPPORTED: the story gives her as having 'been born in Paris' only via Holmes's remark about her letters, and the narrator never states a birthplace as a description; the sentence as framed attributes a narration the story does not contain.",
+    "supported_clauses": [
+      "Some five years ago, during a lengthy visit to Warsaw, I made the acquaintance of the well-known adventuress, Irene Adler"
+    ],
+    "unsupported_clauses": [
+      "he describes her as being of Parisian birth"
+    ]
+  },
+  {
+    "id": "ind3-007",
+    "category": "partially-true-mixed",
+    "expected_status": "ambiguous",
+    "labeler_confidence": "high",
+    "url": "https://www.gutenberg.org/cache/epub/1661/pg1661.txt",
+    "claim": "The society admits any red-headed man who is sound in body and mind and above twenty-one, and their membership requires a fee paid in cash.",
+    "notes": "SUPPORTED: verbatim from 'The Red-Headed League'. NOT SUPPORTED: Holmes declines to join and is never charged; no membership fee appears anywhere in the story.",
+    "supported_clauses": [
+      "All red-headed men who are sound in body and mind and above the age of twenty-one years, are eligible"
+    ],
+    "unsupported_clauses": [
+      "their membership requires a fee paid in cash"
+    ]
+  },
+  {
+    "id": "ind3-008",
+    "category": "partially-true-mixed",
+    "expected_status": "ambiguous",
+    "labeler_confidence": "high",
+    "url": "https://www.gutenberg.org/cache/epub/1661/pg1661.txt",
+    "claim": "Holmes requires his clients to bind themselves to absolute secrecy for two years, after which the matter is of no importance.",
+    "notes": "SUPPORTED: the narrator's summary in 'The Red-Headed League' states this. NOT SUPPORTED: no retainer or refund arrangement appears in the story.",
+    "supported_clauses": [
+      "binding you both to absolute secrecy for two years; at the end of that time the matter will be of no importance"
+    ],
+    "unsupported_clauses": [
+      "after which he returns any money they paid him as a retainer"
+    ]
+  },
+  {
+    "id": "ind3-009",
+    "category": "partially-true-mixed",
+    "expected_status": "ambiguous",
+    "labeler_confidence": "high",
+    "url": "https://www.gutenberg.org/cache/epub/11/pg11.txt",
+    "claim": "Alice felt a little nervous about shrinking further, and the first thing she drinks is a bottle of diluted vinegar.",
+    "notes": "SUPPORTED: she says 'for it might end, you know ... in my going out altogether, like a candle'. NOT SUPPORTED: the drink that makes her shrink is labelled 'DRINK ME' on a paper label and is not identified as vinegar; the word vinegar appears nowhere in the text. An earlier draft asserted the bottle was UNLABELLED, which the text contradicts - it explicitly carries a 'DRINK ME' label.",
+    "supported_clauses": [
+      "she felt a little nervous about this"
+    ],
+    "unsupported_clauses": [
+      "the first thing she drinks is a bottle of diluted vinegar"
+    ]
+  },
+  {
+    "id": "ind3-010",
+    "category": "partially-true-mixed",
+    "expected_status": "ambiguous",
+    "labeler_confidence": "medium",
+    "url": "https://www.gutenberg.org/cache/epub/11/pg11.txt",
+    "claim": "Alice eats a cake and shrinks, and afterwards she attends a tea party with the Mad Hatter in a village governed by a crooked queen.",
+    "notes": "SUPPORTED: eating the cake is stated. NOT SUPPORTED: the Hatter's party is held under the Hatter's own roof, and the queen's village is a separate later episode; no single village is governed by her in the tea-party scene.",
+    "supported_clauses": [
+      "She ate a little bit, and said anxiously to herself"
+    ],
+    "unsupported_clauses": [
+      "she attends a tea party with the Mad Hatter in a village governed by a crooked queen"
+    ]
+  },
+  {
+    "id": "ind3-011",
+    "category": "fully-supported-compound",
+    "expected_status": "supported",
+    "labeler_confidence": "high",
+    "url": "https://www.gutenberg.org/cache/epub/74/pg74.txt",
+    "claim": "Huck Finn is drawn from life, and Tom Sawyer is a combination of the characteristics of three boys whom the author knew.",
+    "notes": "Both clauses verbatim in the prefatory note: 'Huck Finn is drawn from life; Tom Sawyer also, but not from an individual - he is a combination of the characteristics of three boys whom I knew.'",
+    "supported_clauses": [
+      "Huck Finn is drawn from life; Tom Sawyer also, but not from an individual",
+      "he is a combination of the characteristics of three boys whom I knew"
+    ],
+    "unsupported_clauses": []
+  },
+  {
+    "id": "ind3-012",
+    "category": "fully-supported-compound",
+    "expected_status": "supported",
+    "labeler_confidence": "high",
+    "url": "https://www.gutenberg.org/cache/epub/74/pg74.txt",
+    "claim": "Tom Sawyer is a combination of the characteristics of three boys whom the author knew, and therefore belongs to the composite order of architecture.",
+    "notes": "Both clauses are in the prefatory note.",
+    "supported_clauses": [
+      "he is a combination of the characteristics of three boys whom I knew",
+      "and therefore belongs to the composite order of architecture"
+    ],
+    "unsupported_clauses": []
+  },
+  {
+    "id": "ind3-013",
+    "category": "fully-supported-compound",
+    "expected_status": "supported",
+    "labeler_confidence": "high",
+    "url": "https://www.gutenberg.org/cache/epub/1342/pg1342.txt",
+    "claim": "Bingley had not been of age two years when he was tempted by an accidental recommendation, and Mr. Bennet was so odd a mixture of quick parts, sarcastic humour, reserve and caprice.",
+    "notes": "Both clauses are stated in the opening chapter.",
+    "supported_clauses": [
+      "Bingley had not been of age two years when he was tempted, by an accidental recommendation",
+      "Bennet was so odd a mixture of quick parts, sarcastic humour, reserve, and caprice"
+    ],
+    "unsupported_clauses": []
+  },
+  {
+    "id": "ind3-014",
+    "category": "fully-supported-compound",
+    "expected_status": "supported",
+    "labeler_confidence": "high",
+    "url": "https://www.gutenberg.org/cache/epub/1342/pg1342.txt",
+    "claim": "Mr. Bennet was so odd a mixture of quick parts, sarcastic humour, reserve and caprice, that the experience of three-and-twenty years had been insufficient to make his wife understand his character.",
+    "notes": "Both clauses appear in consecutive sentences of the opening paragraph.",
+    "supported_clauses": [
+      "Bennet was so odd a mixture of quick parts, sarcastic humour, reserve, and caprice",
+      "the experience of three-and-twenty years had been insufficient to make his wife understand his character"
+    ],
+    "unsupported_clauses": []
+  },
+  {
+    "id": "ind3-015",
+    "category": "fully-supported-compound",
+    "expected_status": "supported",
+    "labeler_confidence": "high",
+    "url": "https://www.gutenberg.org/cache/epub/1661/pg1661.txt",
+    "claim": "All red-headed men who are sound in body and mind and above the age of twenty-one years are eligible, and Holmes saw no grievance against the extraordinary league.",
+    "notes": "Both clauses are stated in the story; the secrecy clause is the narrator's summary of Holmes's stated method.",
+    "supported_clauses": [
+      "All red-headed men who are sound in body and mind and above the age of twenty-one years, are eligible",
+      "I do not see that you have any grievance against this extraordinary league"
+    ],
+    "unsupported_clauses": []
+  },
+  {
+    "id": "ind3-016",
+    "category": "fully-supported-compound",
+    "expected_status": "supported",
+    "labeler_confidence": "high",
+    "url": "https://www.gutenberg.org/cache/epub/1661/pg1661.txt",
+    "claim": "Holmes told the club that he did not see any grievance against this extraordinary league, and that he was richer by some thirty pounds.",
+    "notes": "Both clauses are in the story; the league's eligibility rule is quoted and Holmes's refusal is stated.",
+    "supported_clauses": [
+      "I do not see that you have any grievance against this extraordinary league",
+      "you are, as I understand, richer by some £ 30, to say nothing of the minute knowledge"
+    ],
+    "unsupported_clauses": []
+  },
+  {
+    "id": "ind3-017",
+    "category": "fully-supported-compound",
+    "expected_status": "supported",
+    "labeler_confidence": "high",
+    "url": "https://www.gutenberg.org/cache/epub/5200/pg5200.txt",
+    "claim": "This is something that can't be done in bed, and before it strikes quarter past seven he will definitely have to have got properly out of bed.",
+    "notes": "Both clauses verbatim early in the story.",
+    "supported_clauses": [
+      "This is something that can’t be done in bed",
+      "Before it strikes quarter past seven I’ll definitely have to have got properly out of bed"
+    ],
+    "unsupported_clauses": []
+  },
+  {
+    "id": "ind3-018",
+    "category": "fully-supported-compound",
+    "expected_status": "supported",
+    "labeler_confidence": "high",
+    "url": "https://www.gutenberg.org/cache/epub/5200/pg5200.txt",
+    "claim": "Seven o'clock, and there's still a fog like this, and he lay there quietly a while longer, breathing lightly.",
+    "notes": "Both clauses verbatim; the second is his own stated intention.",
+    "supported_clauses": [
+      "seven o’clock, and there’s still a fog like this",
+      "And he lay there quietly a while longer, breathing lightly"
+    ],
+    "unsupported_clauses": []
+  },
+  {
+    "id": "ind3-019",
+    "category": "fully-supported-compound",
+    "expected_status": "supported",
+    "labeler_confidence": "high",
+    "url": "https://www.gutenberg.org/cache/epub/11/pg11.txt",
+    "claim": "She felt a little nervous about this, for it might end, you know, said Alice to herself.",
+    "notes": "Both clauses verbatim in sequence.",
+    "supported_clauses": [
+      "she felt a little nervous about this",
+      "for it might end, you know,” said Alice to herself"
+    ],
+    "unsupported_clauses": []
+  },
+  {
+    "id": "ind3-020",
+    "category": "fully-supported-compound",
+    "expected_status": "supported",
+    "labeler_confidence": "high",
+    "url": "https://www.gutenberg.org/cache/epub/11/pg11.txt",
+    "claim": "She ate a little bit, and said anxiously to herself which way, which way, holding her hand on the top of her head.",
+    "notes": "Both clauses verbatim.",
+    "supported_clauses": [
+      "She ate a little bit, and said anxiously to herself",
+      "holding her hand on the top of her head to feel which way it was growing"
+    ],
+    "unsupported_clauses": []
+  },
+  {
+    "id": "ind3-021",
+    "category": "verbatim-supported",
+    "expected_status": "supported",
+    "labeler_confidence": "high",
+    "url": "https://www.gutenberg.org/cache/epub/1661/pg1661.txt",
+    "claim": "All red-headed men who are sound in body and mind and above the age of twenty-one years are eligible to join the league.",
+    "notes": "Quoted directly from the story's rules of the league.",
+    "supported_clauses": [
+      "All red-headed men who are sound in body and mind and above the age of twenty-one years, are eligible"
+    ],
+    "unsupported_clauses": []
+  },
+  {
+    "id": "ind3-022",
+    "category": "negation-flip",
+    "expected_status": "unsupported",
+    "labeler_confidence": "high",
+    "url": "https://www.gutenberg.org/cache/epub/1661/pg1661.txt",
+    "claim": "Every man of sound body and mind above the age of twenty-one years is eligible for membership of the league, whatever the colour of his hair.",
+    "notes": "NEGATION FLIP of ind3-020: the story restricts eligibility to RED-HEADED men. This variant drops the hair-colour restriction and adds an unattested gloss, so no span of it appears in the text.",
+    "supported_clauses": [],
+    "unsupported_clauses": [
+      "Every man of sound body and mind above the age of twenty-one years is eligible for membership of the league, whatever the colour of his hair"
+    ]
+  },
+  {
+    "id": "ind3-023",
+    "category": "entity-swap",
+    "expected_status": "unsupported",
+    "labeler_confidence": "high",
+    "url": "https://www.gutenberg.org/cache/epub/1661/pg1661.txt",
+    "claim": "Membership in the league is open to women of sound constitution past twenty-one who happen to have auburn hair.",
+    "notes": "ENTITY SWAP of ind3-020: 'red-headed men' becomes 'red-haired women'. The league admits men, so the claim is false as stated.",
+    "supported_clauses": [],
+    "unsupported_clauses": [
+      "Membership in the league is open to women of sound constitution past twenty-one who happen to have auburn hair"
+    ]
+  },
+  {
+    "id": "ind3-024",
+    "category": "verbatim-supported",
+    "expected_status": "supported",
+    "labeler_confidence": "high",
+    "url": "https://www.gutenberg.org/cache/epub/1342/pg1342.txt",
+    "claim": "The experience of three-and-twenty years had been insufficient to make Mr. Bennet's wife understand his character.",
+    "notes": "Quoted from the opening paragraph.",
+    "supported_clauses": [
+      "the experience of three-and-twenty years had been insufficient to make his wife understand his character"
+    ],
+    "unsupported_clauses": []
+  },
+  {
+    "id": "ind3-025",
+    "category": "negation-flip",
+    "expected_status": "unsupported",
+    "labeler_confidence": "high",
+    "url": "https://www.gutenberg.org/cache/epub/1342/pg1342.txt",
+    "claim": "Three decades of daily proximity had made Mrs. Bennet entirely secure in the intentions of her husband.",
+    "notes": "NEGATION FLIP of ind3-023: 'three-and-twenty ... insufficient' becomes 'thirty ... more than sufficient', inverting both the number and the claim.",
+    "supported_clauses": [],
+    "unsupported_clauses": [
+      "Three decades of daily proximity had made Mrs. Bennet entirely secure in the intentions of her husband"
+    ]
+  },
+  {
+    "id": "ind3-026",
+    "category": "entity-swap",
+    "expected_status": "unsupported",
+    "labeler_confidence": "high",
+    "url": "https://www.gutenberg.org/cache/epub/1342/pg1342.txt",
+    "claim": "Not even after more than two decades could Mrs. Bennet claim to have fathomed the motives of her nearest neighbour, Mr. Bingley.",
+    "notes": "ENTITY SWAP of ind3-023: 'his wife' becomes 'his daughter'. The text names his wife, not a daughter, as the person who failed to understand him.",
+    "supported_clauses": [],
+    "unsupported_clauses": [
+      "Not even after more than two decades could Mrs. Bennet claim to have fathomed the motives of her nearest neighbour, Mr. Bingley"
+    ]
+  },
+  {
+    "id": "ind3-027",
+    "category": "verbatim-supported",
+    "expected_status": "supported",
+    "labeler_confidence": "high",
+    "url": "https://www.gutenberg.org/cache/epub/74/pg74.txt",
+    "claim": "Huck Finn is drawn from life, and Tom Sawyer is not from an individual.",
+    "notes": "Quoted from the prefatory note.",
+    "supported_clauses": [
+      "Huck Finn is drawn from life; Tom Sawyer also, but not from an individual",
+      "he is a combination of the characteristics of three boys whom I knew"
+    ],
+    "unsupported_clauses": []
+  },
+  {
+    "id": "ind3-028",
+    "category": "negation-flip",
+    "expected_status": "unsupported",
+    "labeler_confidence": "high",
+    "url": "https://www.gutenberg.org/cache/epub/74/pg74.txt",
+    "claim": "Huck Finn was invented wholly by the author, whereas Tom Sawyer is a transcription of a single real boy.",
+    "notes": "NEGATION FLIP of ind3-026: the note states the opposite on both counts.",
+    "supported_clauses": [],
+    "unsupported_clauses": [
+      "Huck Finn was invented wholly by the author, whereas Tom Sawyer is a transcription of a single real boy"
+    ]
+  },
+  {
+    "id": "ind3-029",
+    "category": "entity-swap",
+    "expected_status": "unsupported",
+    "labeler_confidence": "high",
+    "url": "https://www.gutenberg.org/cache/epub/74/pg74.txt",
+    "claim": "Huckleberry Finn serves as the model for Tom Sawyer, who is drawn wholly from a single anonymous child.",
+    "notes": "ENTITY SWAP of ind3-026: 'Huck Finn' becomes 'Huck Tom Finn', a character who does not exist in the text.",
+    "supported_clauses": [],
+    "unsupported_clauses": [
+      "Huckleberry Finn serves as the model for Tom Sawyer, who is drawn wholly from a single anonymous child"
+    ]
+  },
+  {
+    "id": "ind3-030",
+    "category": "dead-link",
+    "expected_status": "unreachable",
+    "labeler_confidence": "high",
+    "url": "https://www.gutenberg.org/cache/epub/74/pg74-NOSUCHFILE.txt",
+    "claim": "Tom Sawyer is drawn from life in this document.",
+    "notes": "Deliberately non-existent sibling of the Tom Sawyer path (pg74); used to test the unreachable class.",
+    "supported_clauses": [],
+    "unsupported_clauses": []
+  }
+]
