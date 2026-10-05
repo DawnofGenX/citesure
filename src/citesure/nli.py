@@ -509,6 +509,48 @@ def _entailment_probs(
     return out
 
 
+def combine_clause_scores(scores: Sequence[float]) -> float | None:
+    """Combine per-clause entailment scores into ONE score for a whole claim.
+
+    Pure helper, NOT currently on the pipeline path. It survived a reverted
+    experiment: scoring compound claims clause-by-clause in the NLI tier was
+    implemented and measured on2026-10-05, and it LOWERED accuracy (93/108 ->
+    82/108 taking a min over every clause x passage pair, then 84/108 taking
+    each clause's best passage first). It rescued3 `ambiguous` cases at the
+    cost of 12 correctly-`supported` ones. See
+    tests/test_nli_compound.py for the full record.
+
+    The helper is kept because the combination RULE is well-defined and
+    independently testable, and because a future attempt needs to compare
+    against measured ground truth rather than reinvent it. Semantics:
+
+    * no scores            -> ``None`` (caller falls back to whole-claim);
+    * a single score       -> returned unchanged, so a NON-compound claim
+      takes exactly the path it took before;
+    * all clauses >= the ambiguous threshold -> the MINIMUM clause score (the
+      claim is only as strong as its weakest part, still supported overall);
+    * mixed support (some >= ambiguous, some below) -> floored at the
+      ambiguous threshold, because a partially-true claim must read as
+      ambiguous rather than confidently unsupported;
+    * all clauses below the ambiguous threshold -> the MINIMUM clause score
+      (genuinely unsupported; stay negative).
+
+    The mixed case is the whole point: returning an unconditional
+    ``min(vals)`` maps ``[0.95, 0.05]`` to 0.05 = unsupported, which is the
+    collapse this helper exists to express correctly.
+    """
+    vals = [float(v) for v in scores if v is not None]
+    if not vals:
+        return None
+    if len(vals) == 1:
+        return vals[0]
+
+    weakest = min(vals)
+    strongest = max(vals)
+    if strongest >= NLI_AMBIGUOUS_THRESHOLD and weakest < NLI_AMBIGUOUS_THRESHOLD:
+        return max(weakest, NLI_AMBIGUOUS_THRESHOLD)
+    return weakest
+
 def score_nli(model: NLICrossEncoder, claim: str, passage: str) -> float:
     """Entailment probability in ``[0, 1]`` for one (claim, passage) pair.
 

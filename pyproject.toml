@@ -50,6 +50,12 @@ dev = [
     # Without this, `pip install -e ".[dev]"` leaves the module missing and the
     # whole suite fails at import on every supported Python (3.10-3.12).
     "hypothesis>=6.0",
+    # Eval-harness statistics only (evals/stats.py): Wilson intervals, the
+    # cluster bootstrap and the exact McNemar test. Needed by
+    # tests/test_eval_stats.py and tests/test_eval_split.py. NOT a runtime
+    # dependency of the package itself - the shipped fast path needs neither.
+    "scipy>=1.10",
+    "numpy>=1.24",
 ]
 
 [project.scripts]

@@ -67,14 +67,46 @@ def _torch_available() -> bool:
         return False
 
 
+# -----------------------------------------------------------------------------
+# Eval-statistics stack handling (added 2026-10-04)
+#
+# scipy/numpy back evals/stats.py (Wilson intervals, cluster bootstrap, exact
+# McNemar). They are declared in the [dev] extra, but CI and contributors may
+# still run in an environment that predates that, and these tests fail at
+# IMPORT time without scipy - so they must skip, not error on collection. Same
+# treatment as the torch modules above.
+# -----------------------------------------------------------------------------
+_SCIPY_REQUIRED_MODULES = {
+    "test_eval_stats.py",
+    "test_eval_split.py",
+}
+
+
+def _scipy_available() -> bool:
+    try:
+        return importlib.util.find_spec("scipy") is not None
+    except (ImportError, ValueError):
+        return False
+
+
 def pytest_collection_modifyitems(config, items):
-    """Skip torch-dependent modules on a light install instead of erroring."""
-    if _torch_available():
-        return
-    skip_ml = pytest.mark.skip(
-        reason="torch is an optional dependency; install citesure[nli] to run these"
-    )
+    """Skip modules whose optional dependency is absent instead of erroring."""
+    skip_ml = None
+    if not _torch_available():
+        skip_ml = pytest.mark.skip(
+            reason="torch is an optional dependency; "
+                   "install citesure[nli] to run these"
+        )
+    skip_stats = None
+    if not _scipy_available():
+        skip_stats = pytest.mark.skip(
+            reason="scipy/numpy back the eval statistics module; "
+                   "install citesure[dev] to run these"
+        )
+
     for item in items:
         module = Path(str(item.fspath)).name
-        if module in _TORCH_REQUIRED_MODULES:
+        if module in _TORCH_REQUIRED_MODULES and skip_ml is not None:
             item.add_marker(skip_ml)
+        elif module in _SCIPY_REQUIRED_MODULES and skip_stats is not None:
+            item.add_marker(skip_stats)

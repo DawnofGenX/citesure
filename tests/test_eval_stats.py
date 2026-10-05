@@ -11,7 +11,16 @@ import sys
 from pathlib import Path
 
 import pytest
-from scipy.stats import binomtest
+
+# scipy/numpy back evals/stats.py. They are declared in the [dev] extra, but a
+# light environment (or an older CI image) may lack them, and a top-level
+# `from scipy...` raises ImportError DURING COLLECTION - before pytest can
+# apply a skip marker, which aborts the whole run. Guard the import so a
+# missing scipy skips these tests instead of breaking collection.
+pytest.importorskip("scipy", reason="scipy backs the eval statistics module")
+pytest.importorskip("numpy", reason="numpy backs the eval statistics module")
+
+from scipy.stats import binomtest  # noqa: E402  (import guarded above)
 
 REPO = Path(__file__).resolve().parent.parent
 if str(REPO / "evals") not in sys.path:

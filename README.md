@@ -71,6 +71,28 @@ v2 baseline.
 same run by it: high-confidence cases 50/62 = 80.6%, medium-confidence 43/46 = 93.5%. The
 contested cases score *higher*, so the headline is not being propped up by shaky labels.
 
+### What the 86.1% is actually worth
+
+A headline number means nothing without a floor, so `evals/split.py` measures trivial classifiers
+on the same 108 cases (`evals/RESULTS_BASELINES.md`):
+
+| Baseline | Accuracy |
+|---|---|
+| `always_supported` | 32/108 = 29.6% |
+| `always_unsupported` | **64/108 = 59.3%** |
+| `majority_class` (oracle-fitted) | 64/108 = 59.3% |
+
+**The trivial floor is 59.3%**, because the set is 59% `unsupported` — a verifier that simply
+rejects every claim scores that much. citesure's 86.1% exceeds the floor by **26.8 percentage
+points**, and that gap, not the raw 86.1%, is the part attributable to actual claim-checking.
+
+Two honest caveats. The floor is inflated by the class skew; a balanced set would put it nearer
+50% and widen the apparent gap. And the 86.1% is an **in-sample** estimate — thresholds were tuned
+on v1 and the NLI model was chosen using v2, which is the set being reported. A frozen
+URL-clustered tune/held-out partition now exists (`evals/splits/`) for future tuning decisions,
+but it cannot retroactively make the current number held-out. A genuinely clean number needs a v3
+set that has never been used for any model selection. Until then, read 86.1% as optimistic.
+
 Both safety rates rise sharply with the NLI tier off, which is the honest cost of the fast path.
 
 An exhaustive threshold sweep (support 0.30-0.90 x ambiguous 0.05-support) moved agreement from
