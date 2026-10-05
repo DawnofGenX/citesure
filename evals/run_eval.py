@@ -69,6 +69,14 @@ CATEGORY_CANONICAL = {
     "partially-true-ambiguous": "ambiguous",
     "dead-link": "unreachable",
     "paywalled": "paywalled",
+    # --- v3 categories (added 2026-10-05) ---
+    # v3 splits the old ambiguous category in two. "partially-true-mixed" is
+    # the diagnostic one: a compound claim where one clause HAS a verifiable
+    # span and another is genuinely absent, so mixed support is real rather
+    # than a matter of contested framing. Both map to the D3 status
+    # "ambiguous" -- the category names are NOT statuses.
+    "partially-true-mixed": "ambiguous",
+    "fully-supported-compound": "supported",
 }
 
 

@@ -1,0 +1,637 @@
+{
+  "generated_utc": "20261005-212028",
+  "set": "evals/independent_set_v3.json",
+  "nli": false,
+  "cache_dir": "/home/hermes/.cache/citesure-eval",
+  "total": 30,
+  "matched": 20,
+  "agreement_pct": 66.67,
+  "confusion_matrix": {
+    "supported": {
+      "supported": 12,
+      "unsupported": 0,
+      "unreachable": 0,
+      "paywalled": 0,
+      "ambiguous": 1,
+      "error": 0
+    },
+    "unsupported": {
+      "supported": 0,
+      "unsupported": 1,
+      "unreachable": 0,
+      "paywalled": 0,
+      "ambiguous": 5,
+      "error": 0
+    },
+    "unreachable": {
+      "supported": 0,
+      "unsupported": 0,
+      "unreachable": 1,
+      "paywalled": 0,
+      "ambiguous": 0,
+      "error": 0
+    },
+    "paywalled": {
+      "supported": 0,
+      "unsupported": 0,
+      "unreachable": 0,
+      "paywalled": 0,
+      "ambiguous": 0,
+      "error": 0
+    },
+    "ambiguous": {
+      "supported": 4,
+      "unsupported": 0,
+      "unreachable": 0,
+      "paywalled": 0,
+      "ambiguous": 6,
+      "error": 0
+    },
+    "error": {
+      "supported": 0,
+      "unsupported": 0,
+      "unreachable": 0,
+      "paywalled": 0,
+      "ambiguous": 0,
+      "error": 0
+    }
+  },
+  "per_category_recall": {
+    "dead-link": {
+      "canonical_status": "unreachable",
+      "total": 1,
+      "correct": 1,
+      "recall": 1.0
+    },
+    "entity-swap": {
+      "canonical_status": "unsupported",
+      "total": 3,
+      "correct": 1,
+      "recall": 0.3333333333333333
+    },
+    "false-claim": {
+      "canonical_status": "unsupported",
+      "total": 0,
+      "correct": 0,
+      "recall": NaN
+    },
+    "fully-supported-compound": {
+      "canonical_status": "supported",
+      "total": 10,
+      "correct": 9,
+      "recall": 0.9
+    },
+    "negation-flip": {
+      "canonical_status": "unsupported",
+      "total": 3,
+      "correct": 0,
+      "recall": 0.0
+    },
+    "numeric-detail-supported": {
+      "canonical_status": "supported",
+      "total": 0,
+      "correct": 0,
+      "recall": NaN
+    },
+    "paraphrase-supported": {
+      "canonical_status": "supported",
+      "total": 0,
+      "correct": 0,
+      "recall": NaN
+    },
+    "partially-true-ambiguous": {
+      "canonical_status": "ambiguous",
+      "total": 0,
+      "correct": 0,
+      "recall": NaN
+    },
+    "partially-true-mixed": {
+      "canonical_status": "ambiguous",
+      "total": 10,
+      "correct": 6,
+      "recall": 0.6
+    },
+    "paywalled": {
+      "canonical_status": "paywalled",
+      "total": 0,
+      "correct": 0,
+      "recall": NaN
+    },
+    "verbatim-supported": {
+      "canonical_status": "supported",
+      "total": 3,
+      "correct": 3,
+      "recall": 1.0
+    }
+  },
+  "per_status_pr": {
+    "supported": {
+      "tp": 12,
+      "fp": 4,
+      "fn": 1,
+      "precision": 0.75,
+      "recall": 0.9230769230769231
+    },
+    "unsupported": {
+      "tp": 1,
+      "fp": 0,
+      "fn": 5,
+      "precision": 1.0,
+      "recall": 0.16666666666666666
+    },
+    "unreachable": {
+      "tp": 1,
+      "fp": 0,
+      "fn": 0,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    "paywalled": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 0,
+      "precision": NaN,
+      "recall": NaN
+    },
+    "ambiguous": {
+      "tp": 6,
+      "fp": 6,
+      "fn": 4,
+      "precision": 0.5,
+      "recall": 0.6
+    },
+    "error": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 0,
+      "precision": NaN,
+      "recall": NaN
+    }
+  },
+  "uncertainty": {
+    "wilson_ci": {
+      "low": 0.4878,
+      "high": 0.8077,
+      "assumption": "iid cases"
+    },
+    "cluster_bootstrap_ci": {
+      "low": 0.5152,
+      "high": 0.9048,
+      "n_clusters": 6,
+      "assumption": "cases clustered by source URL"
+    },
+    "negation-flip_wilson_ci": {
+      "low": 0.0,
+      "high": 0.5615,
+      "correct": 0,
+      "total": 3
+    },
+    "entity-swap_wilson_ci": {
+      "low": 0.0615,
+      "high": 0.7923,
+      "correct": 1,
+      "total": 3
+    },
+    "by_labeler_confidence": {
+      "high": {
+        "correct": 18,
+        "total": 27,
+        "agreement": 0.6666666666666666
+      },
+      "medium": {
+        "correct": 2,
+        "total": 3,
+        "agreement": 0.6666666666666666
+      }
+    }
+  },
+  "safety": {
+    "negation_flip_false_supported": 0,
+    "negation_flip_total": 3,
+    "negation_flip_rate": 0.0,
+    "entity_swap_false_supported": 0,
+    "entity_swap_total": 3,
+    "entity_swap_rate": 0.0
+  },
+  "records": [
+    {
+      "id": "ind3-001",
+      "category": "partially-true-mixed",
+      "expected": "ambiguous",
+      "predicted": "supported",
+      "score": 0.6842,
+      "tier_reached": 2,
+      "match": false,
+      "evidence": "Huck Finn is drawn from life; Tom Sawyer also, but not from an individual—he is a combination of the characteristics of three boys whom I knew, and therefore belongs to the composite order of architecture. The odd superstitions touched upon were all prevalent among children and slaves in the West a…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 0.684 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported"
+      ]
+    },
+    {
+      "id": "ind3-002",
+      "category": "partially-true-mixed",
+      "expected": "ambiguous",
+      "predicted": "ambiguous",
+      "score": 0.5333,
+      "tier_reached": 2,
+      "match": true,
+      "evidence": "Huck Finn is drawn from life; Tom Sawyer also, but not from an individual—he is a combination of the characteristics of three boys whom I knew, and therefore belongs to the composite order of architecture. The odd superstitions touched upon were all prevalent among children and slaves in the West a…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 0.533 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported"
+      ]
+    },
+    {
+      "id": "ind3-003",
+      "category": "partially-true-mixed",
+      "expected": "ambiguous",
+      "predicted": "supported",
+      "score": 0.6,
+      "tier_reached": 2,
+      "match": false,
+      "evidence": "Huck Finn is drawn from life; Tom Sawyer also, but not from an individual—he is a combination of the characteristics of three boys whom I knew, and therefore belongs to the composite order of architecture. The odd superstitions touched upon were all prevalent among children and slaves in the West a…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 0.600 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported"
+      ]
+    },
+    {
+      "id": "ind3-004",
+      "category": "partially-true-mixed",
+      "expected": "ambiguous",
+      "predicted": "ambiguous",
+      "score": 0.3,
+      "tier_reached": 2,
+      "match": true,
+      "evidence": "But if I go on I shall displease you by saying what I think of persons you esteem. Stop me, whilst you can.” “You persist, then, in supposing his sisters influence him?” “Yes, in conjunction with his friend.” “I cannot believe it. Why should they try to influence him? They can only wish his happine…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 0.300 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported"
+      ]
+    },
+    {
+      "id": "ind3-005",
+      "category": "partially-true-mixed",
+      "expected": "ambiguous",
+      "predicted": "supported",
+      "score": 0.8235,
+      "tier_reached": 2,
+      "match": false,
+      "evidence": "Hurst, who had married a man of more fashion than fortune, less disposed to consider his house as her home when it suited her. Mr. Bingley had not been of age two years when he was tempted, by an accidental recommendation, to look at Netherfield House.",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 0.824 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported"
+      ]
+    },
+    {
+      "id": "ind3-006",
+      "category": "partially-true-mixed",
+      "expected": "ambiguous",
+      "predicted": "ambiguous",
+      "score": 0.3,
+      "tier_reached": 2,
+      "match": true,
+      "evidence": "While she was walking in this way down Swandam Lane, she suddenly heard an ejaculation or cry, and was struck cold to see her husband looking down at her and, as it seemed to her, beckoning to her from a second-floor window. The window was open, and she distinctly saw his face, which she describes…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 0.300 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported"
+      ]
+    },
+    {
+      "id": "ind3-007",
+      "category": "partially-true-mixed",
+      "expected": "ambiguous",
+      "predicted": "ambiguous",
+      "score": 0.4,
+      "tier_reached": 2,
+      "match": true,
+      "evidence": "All red-headed men who are sound in body and mind and above the age of twenty-one years, are eligible. Apply in person on Monday, at eleven o’clock, to Duncan Ross, at the offices of the League, 7 Pope’s Court, Fleet Street.” “What on earth does this mean?” I ejaculated after I had twice read over…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 0.400 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported"
+      ]
+    },
+    {
+      "id": "ind3-008",
+      "category": "partially-true-mixed",
+      "expected": "ambiguous",
+      "predicted": "supported",
+      "score": 0.6429,
+      "tier_reached": 2,
+      "match": false,
+      "evidence": "“Then I must begin,” said he, “by binding you both to absolute secrecy for two years; at the end of that time the matter will be of no importance. At present it is not too much to say that it is of such weight it may have an influence upon European history.” “I promise,” said Holmes. “And I.” “You…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 0.643 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported"
+      ]
+    },
+    {
+      "id": "ind3-009",
+      "category": "partially-true-mixed",
+      "expected": "ambiguous",
+      "predicted": "ambiguous",
+      "score": 0.5385,
+      "tier_reached": 2,
+      "match": true,
+      "evidence": "First, however, she waited for a few minutes to see if she was going to shrink any further: she felt a little nervous about this; “for it might end, you know,” said Alice to herself, “in my going out altogether, like a candle.",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 0.538 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported"
+      ]
+    },
+    {
+      "id": "ind3-010",
+      "category": "partially-true-mixed",
+      "expected": "ambiguous",
+      "predicted": "ambiguous",
+      "score": 0.3,
+      "tier_reached": 2,
+      "match": true,
+      "evidence": "The Project Gutenberg eBook of Alice's Adventures in Wonderland This eBook is for the use of anyone anywhere in the United States and most other parts of the world at no cost and with almost no restrictions whatsoever. You may copy it, give it away or re-use it under the terms of the Project Gutenb…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 0.300 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported"
+      ]
+    },
+    {
+      "id": "ind3-011",
+      "category": "fully-supported-compound",
+      "expected": "supported",
+      "predicted": "supported",
+      "score": 0.9375,
+      "tier_reached": 2,
+      "match": true,
+      "evidence": "Huck Finn is drawn from life; Tom Sawyer also, but not from an individual—he is a combination of the characteristics of three boys whom I knew, and therefore belongs to the composite order of architecture. The odd superstitions touched upon were all prevalent among children and slaves in the West a…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 0.938 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported"
+      ]
+    },
+    {
+      "id": "ind3-012",
+      "category": "fully-supported-compound",
+      "expected": "supported",
+      "predicted": "supported",
+      "score": 0.9333,
+      "tier_reached": 2,
+      "match": true,
+      "evidence": "Huck Finn is drawn from life; Tom Sawyer also, but not from an individual—he is a combination of the characteristics of three boys whom I knew, and therefore belongs to the composite order of architecture. The odd superstitions touched upon were all prevalent among children and slaves in the West a…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 0.933 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported"
+      ]
+    },
+    {
+      "id": "ind3-013",
+      "category": "fully-supported-compound",
+      "expected": "supported",
+      "predicted": "ambiguous",
+      "score": 0.5238,
+      "tier_reached": 2,
+      "match": false,
+      "evidence": "Bennet was so odd a mixture of quick parts, sarcastic humour, reserve, and caprice, that the experience of three-and-twenty years had been insufficient to make his wife understand his character. _Her_ mind was less difficult to develope. She was a woman of mean understanding, little information, an…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 0.524 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported"
+      ]
+    },
+    {
+      "id": "ind3-014",
+      "category": "fully-supported-compound",
+      "expected": "supported",
+      "predicted": "supported",
+      "score": 0.9,
+      "tier_reached": 2,
+      "match": true,
+      "evidence": "Bennet was so odd a mixture of quick parts, sarcastic humour, reserve, and caprice, that the experience of three-and-twenty years had been insufficient to make his wife understand his character. _Her_ mind was less difficult to develope. She was a woman of mean understanding, little information, an…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 0.900 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported"
+      ]
+    },
+    {
+      "id": "ind3-015",
+      "category": "fully-supported-compound",
+      "expected": "supported",
+      "predicted": "supported",
+      "score": 0.7,
+      "tier_reached": 2,
+      "match": true,
+      "evidence": "All red-headed men who are sound in body and mind and above the age of twenty-one years, are eligible. Apply in person on Monday, at eleven o’clock, to Duncan Ross, at the offices of the League, 7 Pope’s Court, Fleet Street.” “What on earth does this mean?” I ejaculated after I had twice read over…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 0.700 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported"
+      ]
+    },
+    {
+      "id": "ind3-016",
+      "category": "fully-supported-compound",
+      "expected": "supported",
+      "predicted": "supported",
+      "score": 0.7143,
+      "tier_reached": 2,
+      "match": true,
+      "evidence": "From what you have told me I think that it is possible that graver issues hang from it than might at first sight appear.” “Grave enough!” said Mr. Jabez Wilson. “Why, I have lost four pound a week.” “As far as you are personally concerned,” remarked Holmes, “I do not see that you have any grievance…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 0.714 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported"
+      ]
+    },
+    {
+      "id": "ind3-017",
+      "category": "fully-supported-compound",
+      "expected": "supported",
+      "predicted": "supported",
+      "score": 0.75,
+      "tier_reached": 2,
+      "match": true,
+      "evidence": "But then he said to himself: “Before it strikes quarter past seven I’ll definitely have to have got properly out of bed. And by then somebody will have come round from work to ask what’s happened to me as well, as they open up at work before seven o’clock.” And so he set himself to the task of swin…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 0.750 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported"
+      ]
+    },
+    {
+      "id": "ind3-018",
+      "category": "fully-supported-compound",
+      "expected": "supported",
+      "predicted": "supported",
+      "score": 0.7143,
+      "tier_reached": 2,
+      "match": true,
+      "evidence": "“Seven o’clock, already”, he said to himself when the clock struck again, “seven o’clock, and there’s still a fog like this.” And he lay there quietly a while longer, breathing lightly as if he perhaps expected the total stillness to bring things back to their real and natural state.",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 0.714 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported"
+      ]
+    },
+    {
+      "id": "ind3-019",
+      "category": "fully-supported-compound",
+      "expected": "supported",
+      "predicted": "supported",
+      "score": 1.0,
+      "tier_reached": 2,
+      "match": true,
+      "evidence": "First, however, she waited for a few minutes to see if she was going to shrink any further: she felt a little nervous about this; “for it might end, you know,” said Alice to herself, “in my going out altogether, like a candle.",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 1.000 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported"
+      ]
+    },
+    {
+      "id": "ind3-020",
+      "category": "fully-supported-compound",
+      "expected": "supported",
+      "predicted": "supported",
+      "score": 0.6364,
+      "tier_reached": 2,
+      "match": true,
+      "evidence": "“Well, I’ll eat it,” said Alice, “and if it makes me grow larger, I can reach the key; and if it makes me grow smaller, I can creep under the door; so either way I’ll get into the garden, and I don’t care which happens!” She ate a little bit, and said anxiously to herself, “Which way?",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 0.636 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported"
+      ]
+    },
+    {
+      "id": "ind3-021",
+      "category": "verbatim-supported",
+      "expected": "supported",
+      "predicted": "supported",
+      "score": 0.9286,
+      "tier_reached": 2,
+      "match": true,
+      "evidence": "All red-headed men who are sound in body and mind and above the age of twenty-one years, are eligible. Apply in person on Monday, at eleven o’clock, to Duncan Ross, at the offices of the League, 7 Pope’s Court, Fleet Street.” “What on earth does this mean?” I ejaculated after I had twice read over…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 0.929 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported"
+      ]
+    },
+    {
+      "id": "ind3-022",
+      "category": "negation-flip",
+      "expected": "unsupported",
+      "predicted": "ambiguous",
+      "score": 0.5625,
+      "tier_reached": 2,
+      "match": false,
+      "evidence": "All red-headed men who are sound in body and mind and above the age of twenty-one years, are eligible. Apply in person on Monday, at eleven o’clock, to Duncan Ross, at the offices of the League, 7 Pope’s Court, Fleet Street.” “What on earth does this mean?” I ejaculated after I had twice read over…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 0.562 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported"
+      ]
+    },
+    {
+      "id": "ind3-023",
+      "category": "entity-swap",
+      "expected": "unsupported",
+      "predicted": "unsupported",
+      "score": 0.25,
+      "tier_reached": 2,
+      "match": true,
+      "evidence": "All red-headed men who are sound in body and mind and above the age of twenty-one years, are eligible. Apply in person on Monday, at eleven o’clock, to Duncan Ross, at the offices of the League, 7 Pope’s Court, Fleet Street.” “What on earth does this mean?” I ejaculated after I had twice read over…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 0.250 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported"
+      ]
+    },
+    {
+      "id": "ind3-024",
+      "category": "verbatim-supported",
+      "expected": "supported",
+      "predicted": "supported",
+      "score": 0.6667,
+      "tier_reached": 2,
+      "match": true,
+      "evidence": "Bennet was so odd a mixture of quick parts, sarcastic humour, reserve, and caprice, that the experience of three-and-twenty years had been insufficient to make his wife understand his character. _Her_ mind was less difficult to develope. She was a woman of mean understanding, little information, an…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 0.667 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported"
+      ]
+    },
+    {
+      "id": "ind3-025",
+      "category": "negation-flip",
+      "expected": "unsupported",
+      "predicted": "ambiguous",
+      "score": 0.4286,
+      "tier_reached": 2,
+      "match": false,
+      "evidence": "After sitting a little while with Jane, on Miss Bingley’s appearance and invitation, the mother and three daughters all attended her into the breakfast parlour. Bingley met them with hopes that Mrs. Bennet had not found Miss Bennet worse than she expected. “Indeed I have, sir,” was her answer. “She…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 0.429 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported"
+      ]
+    },
+    {
+      "id": "ind3-026",
+      "category": "entity-swap",
+      "expected": "unsupported",
+      "predicted": "ambiguous",
+      "score": 0.5789,
+      "tier_reached": 2,
+      "match": false,
+      "evidence": "After sitting a little while with Jane, on Miss Bingley’s appearance and invitation, the mother and three daughters all attended her into the breakfast parlour. Bingley met them with hopes that Mrs. Bennet had not found Miss Bennet worse than she expected. “Indeed I have, sir,” was her answer. “She…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 0.579 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported"
+      ]
+    },
+    {
+      "id": "ind3-027",
+      "category": "verbatim-supported",
+      "expected": "supported",
+      "predicted": "supported",
+      "score": 1.0,
+      "tier_reached": 2,
+      "match": true,
+      "evidence": "Huck Finn is drawn from life; Tom Sawyer also, but not from an individual—he is a combination of the characteristics of three boys whom I knew, and therefore belongs to the composite order of architecture. The odd superstitions touched upon were all prevalent among children and slaves in the West a…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 1.000 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported"
+      ]
+    },
+    {
+      "id": "ind3-028",
+      "category": "negation-flip",
+      "expected": "unsupported",
+      "predicted": "ambiguous",
+      "score": 0.5,
+      "tier_reached": 2,
+      "match": false,
+      "evidence": "Huck Finn is drawn from life; Tom Sawyer also, but not from an individual—he is a combination of the characteristics of three boys whom I knew, and therefore belongs to the composite order of architecture. The odd superstitions touched upon were all prevalent among children and slaves in the West a…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 0.500 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported"
+      ]
+    },
+    {
+      "id": "ind3-029",
+      "category": "entity-swap",
+      "expected": "unsupported",
+      "predicted": "ambiguous",
+      "score": 0.5333,
+      "tier_reached": 2,
+      "match": false,
+      "evidence": "“Huck Finn and Tom Sawyer swears they will keep mum about This and They wish They may Drop down dead in Their Tracks if They ever Tell and Rot.” Huckleberry was filled with admiration of Tom’s facility in writing, and the sublimity of his language. He at once took a pin from his lapel and was going…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 0.533 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported"
+      ]
+    },
+    {
+      "id": "ind3-030",
+      "category": "dead-link",
+      "expected": "unreachable",
+      "predicted": "unreachable",
+      "score": null,
+      "tier_reached": 1,
+      "match": true,
+      "evidence": "Sorry, but our website does not have the page you requested.\nMaybe you have just a wrong url. Go to www.gutenberg.org to see whether the error persists.\nIf you think something is broken, follow the “Contact Information” link at the bottom of this page if you would like to report it.",
+      "notes": [
+        "HTTP 404"
+      ]
+    }
+  ]
+}

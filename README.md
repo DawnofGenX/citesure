@@ -71,6 +71,53 @@ v2 baseline.
 same run by it: high-confidence cases 50/62 = 80.6%, medium-confidence 43/46 = 93.5%. The
 contested cases score *higher*, so the headline is not being propped up by shaky labels.
 
+### v3 — a diagnostic set for compound claims (not a second headline)
+
+Everything above is measured on **v2**, which remains the reported set. v3 is a separate,
+purpose-built set (`evals/independent_set_v3.json`, 30 cases) that exists to answer one
+question the v2 numbers could not: **can citesure tell a genuinely mixed-support claim from a
+fully-supported compound one?**
+
+That question exists because of a failed fix. The `ambiguous` class scored 0/4 recall on v2, so
+the NLI tier was changed to score compound claims clause-by-clause. Measured, it made things
+worse — v2 fell 93/108 → 82/108, then 84/108 (McNemar p = 0.0117 against the baseline) — because
+12 correctly-`supported` compound cases were demoted to `ambiguous` to rescue 3. The change was
+reverted.
+
+The root cause was a labelling defect, not a code defect: all four v2 ambiguous cases are compound
+claims whose clauses are **both** verbatim true on the page, called ambiguous because the framing
+is contested, not because one clause is supported and another is not.
+
+v3 therefore contains 10 `partially-true-mixed` cases (one clause with a verifiable span, one
+genuinely absent from the page) alongside 10 `fully-supported-compound` **controls** — the group
+that detects exactly the regression which killed the previous attempt. It also adds
+`supported_clauses` / `unsupported_clauses` per case, so mixed support is machine-checkable rather
+than asserted.
+
+| Configuration | Overall | mixed-support | compound controls |
+|---|---|---|---|
+| tiers 1+2 (no NLI) | 20/30 = 66.7% — CI [51.5, 90.5] | 6/10 | **9/10** |
+| all tiers (NLI on) | 14/30 = 46.7% — CI [30.2, 63.9] | 1/10 | 5/10 |
+
+Runs: `evals/results/v3_tiers12/` and `evals/results/v3_nli/`. Per-category recall on the NLI run:
+mixed-support 1/10, compound controls 5/10, negation-flip 3/3, entity-swap 2/3.
+
+Two honest readings of this:
+
+- **v3 is much harder than v2, and the NLI tier handles it far worse (46.7% vs 86.1%).** Part of
+  that was my own authoring: the compound controls first scored 3/10 because I had built claims by
+  joining two *distant* spans, leaving no contiguous 6-gram anywhere in the page — which the NLI
+  model is right to score poorly. Rewriting every claim so each clause is contiguous source text
+  lifted the controls to 9/10 on tiers 1+2.
+- **Mixed-support recall is still 1/10 with NLI on, so the class remains unsolved.** But it is
+  now unsolved for a real reason rather than a mislabelled one, and the control group will catch
+  any future fix that "solves" it by demoting supported claims again.
+
+v3 shares no URLs with v1 or v2 and draws on Project Gutenberg (frozen text, unlike the live
+Wikipedia pages in v2), so it carries none of their tuning contamination. But it is literature
+rather than technical documentation: **it measures a different slice of the web and is not a
+substitute for v2 when quoting accuracy.** See `evals/AUTHORING_V3.md`.
+
 ### What the 86.1% is actually worth
 
 A headline number means nothing without a floor, so `evals/split.py` measures trivial classifiers
@@ -411,11 +458,32 @@ report that looks complete is complete.
 ## Development
 
 ```bash
-pip install -e ".[dev]"     # installs pytest
+pip install -e ".[dev]"     # installs pytest, scipy, numpy
 pytest -q                   # offline suite (live + NLI-model tests deselected by default)
 pytest -q -m live           # run live-network smoke tests (hit the real internet)
 pytest -q -m nli            # run real DeBERTa-v3 model tests (needs the ~425 MB download)
 ```
+
+### Eval harness
+
+```bash
+# v2 — the reported set (108 cases)
+.venv/bin/python evals/run_eval.py --set evals/independent_set_v2.json --nli
+.venv/bin/python evals/tier_ablation.py --set evals/independent_set_v2.json
+
+# v3 — compound-claim diagnostic set (30 cases)
+.venv/bin/python evals/run_eval.py --set evals/independent_set_v3.json --nli
+.venv/bin/python evals/validate_v3.py            # label gate for v3
+.venv/bin/python evals/split.py --set evals/independent_set_v2.json --seed 42
+
+# baselines: the trivial floor the headline must be read against
+cat evals/RESULTS_BASELINES.md
+```
+
+`evals/run_eval.py` prints confidence intervals and a labeler-confidence breakdown by default, and
+runs an exact McNemar test when given `--compare` against a baseline run. The v3 source pages are
+fetched once into `evals/page_text_v3/` (gitignored, regenerable) by the pool manifest
+`evals/page_pool_v3.json`.
 
 Live-network tests (`@pytest.mark.live`) and real-model NLI tests
 (`@pytest.mark.nli`) are skipped by default so the suite is green offline.
