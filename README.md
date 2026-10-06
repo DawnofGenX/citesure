@@ -178,7 +178,44 @@ mismatch-by-layer triage, in [`evals/RESULTS_SPLIT_HALVES.md`](evals/RESULTS_SPL
 **What the split exposed:** v2 holds only **4** `partially-true-ambiguous` cases, so a
 cluster-disjoint split leaves **2 per side**. Neither half can gate a fix to the `ambiguous` class
 — the one still open — because a set needs ≥10 such cases to detect the change, not merely survive
-it. Gate that work on a purpose-built set; see `evals/AUTHORING_V3.md`.
+it. Gate that work on a purpose-built set; see `evals/AUTHORING_V3.md`. (v3 cannot serve as that
+gate either: exhausting every split of its 6 URL clusters gives a best case of 5 mixed / 6 controls
+against 5 mixed / **4** controls on the other side.)
+
+### The open defect: entity-swap, and four mechanisms that do not fix it
+
+The five remaining false-supports (5/32 = 15.6% on entity-swap) all share one shape — the page
+states text nearly identical to the claim with **one slot swapped**, and the pipeline keeps the
+entailing pair:
+
+| Claim says | Page says |
+|---|---|
+| ReLU is xΦ(x) | that formula is **GELU**; ReLU gates by sign |
+| In **HTTP/2**, headers are case-insensitive names… | "In **HTTP/1.X**, a header is…" |
+| **Sobolev** type norm → refined **Besov** inequalities | **Besov** type norm → refined **Sobolev** |
+| `ForeignKey` defines many-to-many | ForeignKey is many-**one** |
+| async/await syntax **is a library provided by** asyncio | asyncio **is the library that uses** async/await |
+
+Four mechanisms were probed against all five plus the 26 correctly-supported cases, and **all
+four fail** ([`evals/RESULTS_ENTITY_SWAP_PROBE.md`](evals/RESULTS_ENTITY_SWAP_PROBE.md)):
+
+| Mechanism | Fixes | Breaks | Verdict |
+|---|---|---|---|
+| Disjoint proper nouns (strict) | 0/5 | 0/26 | blind — the swapped slot's counterpart is present |
+| Claim entity absent (weak) | 5/5 | **11/26** | full recall, unusable precision |
+| Missing slot token (version/number) | 1/5 | 7/26 | 7 breaks per fix |
+| Pooled min-entailment / max-contradiction | — | — | signals **overlap completely** |
+
+The pooled-NLI result is the informative one: a correctly-supported claim also has
+min-entailment **0.000**, because every page contains sentences unrelated to the claim. `min` over
+a sentence pool measures pool breadth, not support. So no threshold separates the classes, and the
+highest contradiction among supported cases (0.979) exceeds the false-support it would need to veto.
+
+What survives measurement is the *diagnosis*: the contradicted slot is **present in the evidence
+but bound to a different subject**. Resolving that needs slot-filling or structured comparison
+rather than a string or single-pair entailment operation — a different kind of mechanism, not a
+retuned version of these four. This is a documented limitation, not a bug with a known fix; no fix
+should be scheduled from the present evidence.
 
 Both safety rates rise sharply with the NLI tier off, which is the honest cost of the fast path.
 
