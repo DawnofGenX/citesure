@@ -1,5 +1,25 @@
 # citesure — Build Progress Log
 
+> **This file is a historical phase log, not a live status document.** It was written during
+> the D1–D12 build (Sept 2026) and has not been updated since. For current state read
+> `README.md` (accuracy, install, eval harness) and `evals/RESULTS_*.md` (the measurements).
+>
+> Work after the build phase, absent from the entries below:
+>
+> - **2026-10-02** — corrected baseline to 93/108; measured NLI inference-cost study.
+> - **2026-10-04** — v0.2.x line: light default install (`pip install citesure` needs no
+>   torch), Trusted Publishing workflow, `pip install` path fixed and verified.
+> - **2026-10-05** — uncertainty quantification (Wilson + cluster bootstrap), tier ablation
+>   (all value is in the NLI tier), McNemar on the NLI toggle, trivial-classifier floors,
+>   URL-clustered tune/held-out partition, and the v3 diagnostic set for mixed-support claims.
+> - **2026-10-06** — split-half check **run**, both halves: tune 87.0% vs held-out 85.2%,
+>   Fisher p = 1.000, recombining to exactly 93/108. Found that v2's 4 ambiguous cases leave
+>   only 2 per side, so neither half can gate a fix to the open class. Also fixed a spliced
+>   interval in the v3 results table (two different interval assumptions in one row-pair).
+>
+> The open defect as of 2026-10-06 is unchanged: the `ambiguous` / mixed-support class is
+> unsolved, and it must be gated on a purpose-built set — v2 structurally cannot measure it.
+
 Orchestrator-driven build per PLAN.md. All "Locked Decisions" D1–D12 are binding.
 Each phase entry records what was built, test results the orchestrator ran
 personally, files created, and gaps.
