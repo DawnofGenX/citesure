@@ -53,6 +53,28 @@ as *The Arabian Nights* but the fetched text is Kafka's *Metamorphosis*.
 Corrected in `evals/page_pool_v3.json` before use; no case depends on the
 wrong title.
 
+### Coverage actually achieved (re-derived from the set file)
+
+The pool above is 10 texts; **the 30 shipped cases draw on only 6 of them**:
+
+| URL | Cases |
+|---|---|
+| `pg1661` (Sherlock Holmes) | 8 |
+| `pg1342` (Pride and Prejudice) | 7 |
+| `pg74` (Tom Sawyer) | 8 |
+| `pg11` (Alice in Wonderland) | 4 |
+| `pg5200` (Metamorphosis) | 2 |
+| `pg74-NOSUCHFILE.txt` | 1 (intentional dead link) |
+
+So v3 is 30 cases over **6 unique URLs on 1 distinct netloc**, against a pool of 10 texts on
+the same domain. Three texts (Moby Dick, Frankenstein, Huckleberry Finn, Great Expectations,
+A Tale of Two Cities) contributed no shipped cases.
+
+This concentration is acceptable for what v3 is for - a diagnostic whose job is to make the
+mixed-support class measurable at all, which v2 could not do with 4 such cases - but it is not
+a sample of the web, and the percentages must not be quoted as one. `labeler_confidence` is
+**27 high / 3 medium**, a thinner margin for label error than v2's 62/108.
+
 ## Cases
 
 | id | category | expected | conf | book | sup | unsup |
@@ -90,10 +112,28 @@ wrong title.
 
 ## Measured result
 
-| Configuration | Overall | mixed-support | compound-control |
-|---|---|---|---|
-| tiers 1+2 (no NLI) | 20/30 = 66.7% | 6/10 | **9/10** |
-| all tiers (NLI on) | 14/30 = 46.7% | 1/10 | 5/10 |
+| Configuration | Overall | iid Wilson | Cluster bootstrap | mixed-support | compound-control |
+|---|---|---|---|---|---|
+| tiers 1+2 (no NLI) | 20/30 = 66.7% | [48.8, 80.8] | **[51.5, 90.5]** | 6/10 | **9/10** |
+| all tiers (NLI on) | 14/30 = 46.7% | [30.2, 63.9] | **[30.2, 62.9]** | 1/10 | 5/10 |
+
+Both intervals are published because v3 is **30 cases over 6 unique URLs on a single domain**
+(`www.gutenberg.org`) - the cases are heavily correlated, so the iid interval assumes an
+independence this set does not have. Quote the cluster figure.
+
+The direction is not consistent between the two rows, which is the point of printing both: on
+tiers 1+2 the clustered interval is **wider** ([51.5, 90.5] vs [48.8, 80.8]) because the errors
+sat together in a few books, while on the NLI row it is marginally **narrower** ([30.2, 62.9] vs
+[30.2, 63.9]). Never assume the iid interval is the optimistic one.
+
+### Interval provenance correction
+
+The table as first published cited **[51.5, 90.5] for the tiers-1+2 row but [30.2, 63.9] for
+the NLI row - two different interval assumptions inside one table.** The first figure is the
+cluster bootstrap, the second is the iid Wilson. Both were individually real and each came from
+the very run whose row it sat in, so a provenance check of the form "is this number present in
+a committed result file?" passes on both and cannot see the splice. Only reading both runs'
+`uncertainty` blocks side by side exposes it. Both intervals are now printed per row and named.
 
 Two findings, both about the SET rather than the product:
 

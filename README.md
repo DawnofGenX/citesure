@@ -21,6 +21,12 @@ contrast: each source fact appears three times — verbatim-supported, negation-
 entity-swapped — all sharing one source sentence. The A-vs-B gap isolates polarity handling and
 A-vs-C isolates subject binding, so a drop points at a specific bug class rather than "hard cases".
 
+The headline 86.1% is also **stable under a URL-clustered split** into tune/held-out halves
+(87.0% vs 85.2%, Fisher exact p = 1.000) and sits **26.8 points above the trivial floor** of 59.3%
+— the gap, not the raw figure, is what is attributable to claim-checking. It remains an
+in-sample estimate, for reasons stated under
+[What the 86.1% is actually worth](#what-the-861-is-actually-worth).
+
 ### Tier ablation — what each tier actually contributes
 
 Measured by `evals/tier_ablation.py` on the same 108 cases; committed run
@@ -96,11 +102,24 @@ than asserted.
 
 | Configuration | Overall | mixed-support | compound controls |
 |---|---|---|---|
-| tiers 1+2 (no NLI) | 20/30 = 66.7% — CI [51.5, 90.5] | 6/10 | **9/10** |
-| all tiers (NLI on) | 14/30 = 46.7% — CI [30.2, 63.9] | 1/10 | 5/10 |
+| tiers 1+2 (no NLI) | 20/30 = 66.7% — iid [48.8, 80.8], cluster [51.5, 90.5] | 6/10 | **9/10** |
+| all tiers (NLI on) | 14/30 = 46.7% — iid [30.2, 63.9], cluster [30.2, 62.9] | 1/10 | 5/10 |
 
 Runs: `evals/results/v3_tiers12/` and `evals/results/v3_nli/`. Per-category recall on the NLI run:
 mixed-support 1/10, compound controls 5/10, negation-flip 3/3, entity-swap 2/3.
+
+Both intervals are shown because v3 is **30 cases over only 6 unique URLs, all on one domain**
+(Project Gutenberg), so the cases are heavily correlated and the iid interval assumes
+independence the set does not have. The cluster-bootstrap resamples whole URLs. Note the
+direction is not fixed: on the tiers-1+2 row the clustered interval is *wider* ([51.5, 90.5] vs
+[48.8, 80.8]) because the errors sat together in a few books, while on the NLI row it comes out
+slightly *narrower*. Read the headline off the cluster figure, and treat a 20-point gap between
+the two rows as well inside the uncertainty on n=30 over 6 sources.
+
+Coverage caveat worth stating plainly: at 6 URLs on a single domain, v3's percentages are a
+statement about six Gutenberg texts. It is a diagnostic built to make the mixed-support class
+measurable, not a sample of the web, and 27 of its 30 labels are high-confidence — a thinner
+margin for label error than v2's 62/108.
 
 Two honest readings of this:
 
