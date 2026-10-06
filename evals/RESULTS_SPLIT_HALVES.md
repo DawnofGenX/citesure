@@ -148,11 +148,50 @@ score 0.9957) are flagged as **contestable labels**, not model failures:
   page genuinely states the Pen-y-darren details. The `ambiguous` label rests entirely on the
   labeler's judgment that "first railway journey" is a contested designation, which is a
   defensible-but-debatable call. The system returning `supported` here is arguably correct.
-  Worth an explicit labeler re-review before this case is used to score any fix.
+  **Re-reviewed below — the label was upheld, not changed.**
 
 An eval number is a statement about labels as much as about code. One of the four ambiguous
 labels in the entire reported set is contestable on the evidence, and it moved the held-out
 headline.
+
+### ind-251 label re-review: label UPHELD, not changed
+
+This case was flagged for re-review because it is a held-out miss that `supported` would have
+"fixed". It was re-reviewed against the saved page text and **the `ambiguous` label stands**.
+Recorded here so the reasoning is auditable, because the case looks like free accuracy.
+
+| Check | Result |
+|---|---|
+| Claim content tokens present in page | 22/22 = **100%** |
+| Longest verbatim contiguous span | **14 words** ("Trevithick's steam locomotive hauled 10 tonnes of iron, 70 passengers and five wagons along") |
+| Labeller's own note | "All the details are verbatim true" |
+| Contesting context present on page | **Yes** — "In 1825 George Stephenson built the Locomotion for the Stockton and Darlington Railway. This was the first public steam railway in the world" |
+
+So the page does assert the claim, and it does carry the competing 1825 framing elsewhere. The
+label is a defensible judgment call: `supported` is the right answer *to the sentence*, and
+`ambiguous` is the right answer *to whether the claim's premise is safe to assert*. citesure
+answers the first question, so it is not wrong here.
+
+Relabelling it would have moved held-out from 46/54 to 47/54 (+1.85 points) and tune to 48/54.
+It was rejected on three grounds, in order of weight:
+
+1. **It would fix the wrong thing.** The same re-review applied to **all four** v2 ambiguous
+   cases: every one is 100% token-present, and every labeller wrote "BOTH CLAUSES ARE VERBATIM
+   TRUE". All four are the same shape. Relabelling one to make a number look better would be
+   labelling to a target — the exact defect this project's eval discipline exists to prevent.
+2. **It would leave the category undefined.** One `supported` case sitting inside
+   `partially-true-ambiguous` alongside three `ambiguous` ones means the category no longer
+   denotes anything, and every future comparison against it becomes meaningless.
+3. **v3 already answered this.** v3 defines `partially-true-mixed` as *one clause present, one
+   clause GENUINELY ABSENT from the page*. None of v2's four cases has an absent clause. By v3's
+   own vocabulary these four are `fully-supported-compound`, whose expected status is
+   `supported` — i.e. exactly what the system returned.
+
+The real defect is therefore the **v2 label vocabulary**, not this case: v2 named all-verbatim-true
+compounds "partially-true-ambiguous", so the eval demanded a contested-premise signal that is not
+a partial-support signal at all. That mislabelling is what made the per-clause NLI fix look
+necessary — and that fix demoted 12 correctly-supported cases (v2 fell 93→82→84) before being
+reverted. The four labels are left exactly as they are; the finding is recorded instead.
 
 ## Anomaly: labeler_confidence is inverted
 
