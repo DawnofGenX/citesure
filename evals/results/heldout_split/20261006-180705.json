@@ -1,0 +1,1117 @@
+{
+  "generated_utc": "20261006-180705",
+  "set": "evals/subsets/independent_set_v2_heldout.json",
+  "nli": true,
+  "cache_dir": "/home/hermes/.cache/citesure-eval",
+  "total": 54,
+  "matched": 46,
+  "agreement_pct": 85.19,
+  "confusion_matrix": {
+    "supported": {
+      "supported": 13,
+      "unsupported": 2,
+      "unreachable": 0,
+      "paywalled": 0,
+      "ambiguous": 1,
+      "error": 0
+    },
+    "unsupported": {
+      "supported": 3,
+      "unsupported": 29,
+      "unreachable": 0,
+      "paywalled": 0,
+      "ambiguous": 0,
+      "error": 0
+    },
+    "unreachable": {
+      "supported": 0,
+      "unsupported": 0,
+      "unreachable": 2,
+      "paywalled": 0,
+      "ambiguous": 0,
+      "error": 0
+    },
+    "paywalled": {
+      "supported": 0,
+      "unsupported": 0,
+      "unreachable": 0,
+      "paywalled": 2,
+      "ambiguous": 0,
+      "error": 0
+    },
+    "ambiguous": {
+      "supported": 2,
+      "unsupported": 0,
+      "unreachable": 0,
+      "paywalled": 0,
+      "ambiguous": 0,
+      "error": 0
+    },
+    "error": {
+      "supported": 0,
+      "unsupported": 0,
+      "unreachable": 0,
+      "paywalled": 0,
+      "ambiguous": 0,
+      "error": 0
+    }
+  },
+  "per_category_recall": {
+    "dead-link": {
+      "canonical_status": "unreachable",
+      "total": 2,
+      "correct": 2,
+      "recall": 1.0
+    },
+    "entity-swap": {
+      "canonical_status": "unsupported",
+      "total": 16,
+      "correct": 13,
+      "recall": 0.8125
+    },
+    "false-claim": {
+      "canonical_status": "unsupported",
+      "total": 0,
+      "correct": 0,
+      "recall": NaN
+    },
+    "fully-supported-compound": {
+      "canonical_status": "supported",
+      "total": 0,
+      "correct": 0,
+      "recall": NaN
+    },
+    "negation-flip": {
+      "canonical_status": "unsupported",
+      "total": 16,
+      "correct": 16,
+      "recall": 1.0
+    },
+    "numeric-detail-supported": {
+      "canonical_status": "supported",
+      "total": 0,
+      "correct": 0,
+      "recall": NaN
+    },
+    "paraphrase-supported": {
+      "canonical_status": "supported",
+      "total": 0,
+      "correct": 0,
+      "recall": NaN
+    },
+    "partially-true-ambiguous": {
+      "canonical_status": "ambiguous",
+      "total": 2,
+      "correct": 0,
+      "recall": 0.0
+    },
+    "partially-true-mixed": {
+      "canonical_status": "ambiguous",
+      "total": 0,
+      "correct": 0,
+      "recall": NaN
+    },
+    "paywalled": {
+      "canonical_status": "paywalled",
+      "total": 2,
+      "correct": 2,
+      "recall": 1.0
+    },
+    "verbatim-supported": {
+      "canonical_status": "supported",
+      "total": 16,
+      "correct": 13,
+      "recall": 0.8125
+    }
+  },
+  "per_status_pr": {
+    "supported": {
+      "tp": 13,
+      "fp": 5,
+      "fn": 3,
+      "precision": 0.7222222222222222,
+      "recall": 0.8125
+    },
+    "unsupported": {
+      "tp": 29,
+      "fp": 2,
+      "fn": 3,
+      "precision": 0.9354838709677419,
+      "recall": 0.90625
+    },
+    "unreachable": {
+      "tp": 2,
+      "fp": 0,
+      "fn": 0,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    "paywalled": {
+      "tp": 2,
+      "fp": 0,
+      "fn": 0,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    "ambiguous": {
+      "tp": 0,
+      "fp": 1,
+      "fn": 2,
+      "precision": 0.0,
+      "recall": 0.0
+    },
+    "error": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 0,
+      "precision": NaN,
+      "recall": NaN
+    }
+  },
+  "uncertainty": {
+    "wilson_ci": {
+      "low": 0.734,
+      "high": 0.923,
+      "assumption": "iid cases"
+    },
+    "cluster_bootstrap_ci": {
+      "low": 0.7647,
+      "high": 0.9375,
+      "n_clusters": 20,
+      "assumption": "cases clustered by source URL"
+    },
+    "negation-flip_wilson_ci": {
+      "low": 0.8064,
+      "high": 1.0,
+      "correct": 16,
+      "total": 16
+    },
+    "entity-swap_wilson_ci": {
+      "low": 0.5699,
+      "high": 0.9341,
+      "correct": 13,
+      "total": 16
+    },
+    "by_labeler_confidence": {
+      "high": {
+        "correct": 23,
+        "total": 30,
+        "agreement": 0.7666666666666667
+      },
+      "medium": {
+        "correct": 23,
+        "total": 24,
+        "agreement": 0.9583333333333334
+      }
+    }
+  },
+  "safety": {
+    "negation_flip_false_supported": 0,
+    "negation_flip_total": 16,
+    "negation_flip_rate": 0.0,
+    "entity_swap_false_supported": 3,
+    "entity_swap_total": 16,
+    "entity_swap_rate": 0.1875
+  },
+  "records": [
+    {
+      "id": "ind-194",
+      "category": "verbatim-supported",
+      "expected": "supported",
+      "predicted": "supported",
+      "score": 0.9488,
+      "tier_reached": 3,
+      "match": true,
+      "evidence": "The GELU activation function is $x\\Phi(x)$, where $\\Phi(x)$ the standard Gaussian cumulative distribution function. The GELU nonlinearity weights inputs by their value, rather than gates inputs by their sign as in ReLUs ($x\\mathbf{1}_{x>0}$).",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 1.000 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported",
+        "NLI tier: entailment 0.949 (bands: >= 0.7 supported, >= 0.3 ambiguous, below unsupported)",
+        "NLI tier: contradiction 0.022"
+      ]
+    },
+    {
+      "id": "ind-195",
+      "category": "negation-flip",
+      "expected": "unsupported",
+      "predicted": "unsupported",
+      "score": 0.0327,
+      "tier_reached": 3,
+      "match": true,
+      "evidence": "The GELU activation function is $x\\Phi(x)$, where $\\Phi(x)$ the standard Gaussian cumulative distribution function. The GELU nonlinearity weights inputs by their value, rather than gates inputs by their sign as in ReLUs ($x\\mathbf{1}_{x>0}$).",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 0.778 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported",
+        "NLI tier: entailment 0.033 (bands: >= 0.7 supported, >= 0.3 ambiguous, below unsupported)",
+        "NLI tier: contradiction 0.880",
+        "NLI tier: contradiction 0.880 >= 0.5 — source contradicts claim",
+        "NLI moved verdict supported → unsupported"
+      ]
+    },
+    {
+      "id": "ind-196",
+      "category": "entity-swap",
+      "expected": "unsupported",
+      "predicted": "supported",
+      "score": 0.9788,
+      "tier_reached": 3,
+      "match": false,
+      "evidence": "The GELU activation function is $x\\Phi(x)$, where $\\Phi(x)$ the standard Gaussian cumulative distribution function. The GELU nonlinearity weights inputs by their value, rather than gates inputs by their sign as in ReLUs ($x\\mathbf{1}_{x>0}$).",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 0.700 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported",
+        "NLI tier: entailment 0.979 (bands: >= 0.7 supported, >= 0.3 ambiguous, below unsupported)",
+        "NLI tier: contradiction 0.018"
+      ]
+    },
+    {
+      "id": "ind-170",
+      "category": "verbatim-supported",
+      "expected": "supported",
+      "predicted": "supported",
+      "score": 0.9981,
+      "tier_reached": 3,
+      "match": true,
+      "evidence": "Meanwhile, a new industry began developing, based on radium.[37] The Curies did not patent their discovery and benefited little from this increasingly profitable business.[29][37] Nobel Prizes In December 1903 the Royal Swedish Academy of Sciences awarded Pierre Curie, Marie Curie, and Henri Becque…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 1.000 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported",
+        "NLI tier: entailment 0.998 (bands: >= 0.7 supported, >= 0.3 ambiguous, below unsupported)",
+        "NLI tier: contradiction 0.000"
+      ]
+    },
+    {
+      "id": "ind-171",
+      "category": "negation-flip",
+      "expected": "unsupported",
+      "predicted": "unsupported",
+      "score": 0.9452,
+      "tier_reached": 3,
+      "match": true,
+      "evidence": "Meanwhile, a new industry began developing, based on radium.[37] The Curies did not patent their discovery and benefited little from this increasingly profitable business.[29][37] Nobel Prizes In December 1903 the Royal Swedish Academy of Sciences awarded Pierre Curie, Marie Curie, and Henri Becque…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 1.000 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported",
+        "NLI tier: entailment 0.945 (bands: >= 0.7 supported, >= 0.3 ambiguous, below unsupported)",
+        "NLI tier: contradiction 0.013",
+        "pooled contradiction 0.990 >= 0.5 — a claim-relevant sentence in the evidence contradicts the claim",
+        "NLI moved verdict supported → unsupported"
+      ]
+    },
+    {
+      "id": "ind-172",
+      "category": "entity-swap",
+      "expected": "unsupported",
+      "predicted": "unsupported",
+      "score": 0.0035,
+      "tier_reached": 3,
+      "match": true,
+      "evidence": "Meanwhile, a new industry began developing, based on radium.[37] The Curies did not patent their discovery and benefited little from this increasingly profitable business.[29][37] Nobel Prizes In December 1903 the Royal Swedish Academy of Sciences awarded Pierre Curie, Marie Curie, and Henri Becque…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 0.833 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported",
+        "NLI tier: entailment 0.004 (bands: >= 0.7 supported, >= 0.3 ambiguous, below unsupported)",
+        "NLI tier: contradiction 0.994",
+        "NLI tier: contradiction 0.994 >= 0.5 — source contradicts claim",
+        "NLI moved verdict supported → unsupported"
+      ]
+    },
+    {
+      "id": "ind-250",
+      "category": "partially-true-ambiguous",
+      "expected": "ambiguous",
+      "predicted": "supported",
+      "score": 0.954,
+      "tier_reached": 3,
+      "match": false,
+      "evidence": "While a French citizen, Curie, who used both surnames,[8][9] never lost her sense of Polish identity. She taught her daughters the Polish language and took them on visits to Poland.[10] She named the first chemical element she and Pierre discovered polonium, after her native country.[c] Curie died…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 0.900 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported",
+        "NLI tier: entailment 0.954 (bands: >= 0.7 supported, >= 0.3 ambiguous, below unsupported)",
+        "NLI tier: contradiction 0.002"
+      ]
+    },
+    {
+      "id": "ind-110",
+      "category": "verbatim-supported",
+      "expected": "supported",
+      "predicted": "supported",
+      "score": 0.9959,
+      "tier_reached": 3,
+      "match": true,
+      "evidence": "Promise Baseline Widely available * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015. * Some parts of this feature may have varying levels of support. The Promise object represents the eventual completion (or fa…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 1.000 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported",
+        "NLI tier: entailment 0.996 (bands: >= 0.7 supported, >= 0.3 ambiguous, below unsupported)",
+        "NLI tier: contradiction 0.000"
+      ]
+    },
+    {
+      "id": "ind-111",
+      "category": "negation-flip",
+      "expected": "unsupported",
+      "predicted": "unsupported",
+      "score": 0.9831,
+      "tier_reached": 3,
+      "match": true,
+      "evidence": "Promise Baseline Widely available * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015. * Some parts of this feature may have varying levels of support. The Promise object represents the eventual completion (or fa…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 0.700 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported",
+        "NLI tier: entailment 0.983 (bands: >= 0.7 supported, >= 0.3 ambiguous, below unsupported)",
+        "NLI tier: contradiction 0.002",
+        "pooled contradiction 1.000 >= 0.5 — a claim-relevant sentence in the evidence contradicts the claim",
+        "NLI moved verdict supported → unsupported"
+      ]
+    },
+    {
+      "id": "ind-112",
+      "category": "entity-swap",
+      "expected": "unsupported",
+      "predicted": "unsupported",
+      "score": 0.0021,
+      "tier_reached": 3,
+      "match": true,
+      "evidence": "Promise Baseline Widely available * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015. * Some parts of this feature may have varying levels of support. The Promise object represents the eventual completion (or fa…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 0.667 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported",
+        "NLI tier: entailment 0.002 (bands: >= 0.7 supported, >= 0.3 ambiguous, below unsupported)",
+        "NLI tier: contradiction 0.974",
+        "NLI tier: contradiction 0.974 >= 0.5 — source contradicts claim",
+        "NLI moved verdict supported → unsupported"
+      ]
+    },
+    {
+      "id": "ind-131",
+      "category": "verbatim-supported",
+      "expected": "supported",
+      "predicted": "supported",
+      "score": 0.984,
+      "tier_reached": 3,
+      "match": true,
+      "evidence": "We introduce RAG models where the parametric memory is a pre-trained seq2seq model and the non-parametric memory is a dense vector index of Wikipedia, accessed with a pre-trained neural retriever. We compare two RAG formulations, one which conditions on the same retrieved passages across the whole…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 1.000 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported",
+        "NLI tier: entailment 0.984 (bands: >= 0.7 supported, >= 0.3 ambiguous, below unsupported)",
+        "NLI tier: contradiction 0.003"
+      ]
+    },
+    {
+      "id": "ind-132",
+      "category": "negation-flip",
+      "expected": "unsupported",
+      "predicted": "unsupported",
+      "score": 0.0047,
+      "tier_reached": 3,
+      "match": true,
+      "evidence": "We introduce RAG models where the parametric memory is a pre-trained seq2seq model and the non-parametric memory is a dense vector index of Wikipedia, accessed with a pre-trained neural retriever. We compare two RAG formulations, one which conditions on the same retrieved passages across the whole…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 0.917 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported",
+        "NLI tier: entailment 0.005 (bands: >= 0.7 supported, >= 0.3 ambiguous, below unsupported)",
+        "NLI tier: contradiction 0.017",
+        "NLI moved verdict supported → unsupported"
+      ]
+    },
+    {
+      "id": "ind-133",
+      "category": "entity-swap",
+      "expected": "unsupported",
+      "predicted": "unsupported",
+      "score": 0.0033,
+      "tier_reached": 3,
+      "match": true,
+      "evidence": "We introduce RAG models where the parametric memory is a pre-trained seq2seq model and the non-parametric memory is a dense vector index of Wikipedia, accessed with a pre-trained neural retriever. We compare two RAG formulations, one which conditions on the same retrieved passages across the whole…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 0.923 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported",
+        "NLI tier: entailment 0.003 (bands: >= 0.7 supported, >= 0.3 ambiguous, below unsupported)",
+        "NLI tier: contradiction 0.996",
+        "NLI tier: contradiction 0.996 >= 0.5 — source contradicts claim",
+        "NLI moved verdict supported → unsupported"
+      ]
+    },
+    {
+      "id": "ind-242",
+      "category": "dead-link",
+      "expected": "unreachable",
+      "predicted": "unreachable",
+      "score": null,
+      "tier_reached": 1,
+      "match": true,
+      "evidence": "",
+      "notes": [
+        "ConnectError: [Errno -2] Name or service not known"
+      ]
+    },
+    {
+      "id": "ind-104",
+      "category": "verbatim-supported",
+      "expected": "supported",
+      "predicted": "unsupported",
+      "score": 0.0002,
+      "tier_reached": 3,
+      "match": false,
+      "evidence": "The laws of mechanics had already been shown to be invariant in this way. However, the theory of gravitation was yet to be included.[8]: 19 In 1907, Einstein published a paper proposing his equivalence principle, the hypothesis that inertial mass and gravitational mass have a common cause.",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 1.000 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported",
+        "NLI tier: entailment 0.000 (bands: >= 0.7 supported, >= 0.3 ambiguous, below unsupported)",
+        "NLI tier: contradiction 0.001",
+        "NLI moved verdict supported → unsupported"
+      ]
+    },
+    {
+      "id": "ind-105",
+      "category": "negation-flip",
+      "expected": "unsupported",
+      "predicted": "unsupported",
+      "score": 0.0001,
+      "tier_reached": 3,
+      "match": true,
+      "evidence": "The laws of mechanics had already been shown to be invariant in this way. However, the theory of gravitation was yet to be included.[8]: 19 In 1907, Einstein published a paper proposing his equivalence principle, the hypothesis that inertial mass and gravitational mass have a common cause.",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 0.800 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported",
+        "NLI tier: entailment 0.000 (bands: >= 0.7 supported, >= 0.3 ambiguous, below unsupported)",
+        "NLI tier: contradiction 0.001",
+        "NLI moved verdict supported → unsupported"
+      ]
+    },
+    {
+      "id": "ind-106",
+      "category": "entity-swap",
+      "expected": "unsupported",
+      "predicted": "unsupported",
+      "score": 0.0002,
+      "tier_reached": 3,
+      "match": true,
+      "evidence": "The laws of mechanics had already been shown to be invariant in this way. However, the theory of gravitation was yet to be included.[8]: 19 In 1907, Einstein published a paper proposing his equivalence principle, the hypothesis that inertial mass and gravitational mass have a common cause.",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 0.636 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported",
+        "NLI tier: entailment 0.000 (bands: >= 0.7 supported, >= 0.3 ambiguous, below unsupported)",
+        "NLI tier: contradiction 0.001",
+        "NLI moved verdict supported → unsupported"
+      ]
+    },
+    {
+      "id": "ind-243",
+      "category": "dead-link",
+      "expected": "unreachable",
+      "predicted": "unreachable",
+      "score": null,
+      "tier_reached": 1,
+      "match": true,
+      "evidence": "",
+      "notes": [
+        "HTTP 404"
+      ]
+    },
+    {
+      "id": "ind-101",
+      "category": "verbatim-supported",
+      "expected": "supported",
+      "predicted": "ambiguous",
+      "score": 0.676,
+      "tier_reached": 3,
+      "match": false,
+      "evidence": "ECMAScript is based on several originating technologies, the most well-known being JavaScript (Netscape) and JScript (Microsoft). The language was invented by Brendan Eich at Netscape and first appeared in that company's Navigator 2.0 browser.",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 1.000 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported",
+        "NLI tier: entailment 0.676 (bands: >= 0.7 supported, >= 0.3 ambiguous, below unsupported)",
+        "NLI tier: contradiction 0.000",
+        "NLI moved verdict supported → ambiguous"
+      ]
+    },
+    {
+      "id": "ind-102",
+      "category": "negation-flip",
+      "expected": "unsupported",
+      "predicted": "unsupported",
+      "score": 0.0007,
+      "tier_reached": 3,
+      "match": true,
+      "evidence": "ECMAScript is based on several originating technologies, the most well-known being JavaScript (Netscape) and JScript (Microsoft). The language was invented by Brendan Eich at Netscape and first appeared in that company's Navigator 2.0 browser.",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 0.889 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported",
+        "NLI tier: entailment 0.001 (bands: >= 0.7 supported, >= 0.3 ambiguous, below unsupported)",
+        "NLI tier: contradiction 0.005",
+        "NLI moved verdict supported → unsupported"
+      ]
+    },
+    {
+      "id": "ind-103",
+      "category": "entity-swap",
+      "expected": "unsupported",
+      "predicted": "unsupported",
+      "score": 0.0001,
+      "tier_reached": 3,
+      "match": true,
+      "evidence": "ECMAScript is based on several originating technologies, the most well-known being JavaScript (Netscape) and JScript (Microsoft). The language was invented by Brendan Eich at Netscape and first appeared in that company's Navigator 2.0 browser.",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 0.909 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported",
+        "NLI tier: entailment 0.000 (bands: >= 0.7 supported, >= 0.3 ambiguous, below unsupported)",
+        "NLI tier: contradiction 0.999",
+        "NLI tier: contradiction 0.999 >= 0.5 — source contradicts claim",
+        "NLI moved verdict supported → unsupported"
+      ]
+    },
+    {
+      "id": "ind-248",
+      "category": "paywalled",
+      "expected": "paywalled",
+      "predicted": "paywalled",
+      "score": null,
+      "tier_reached": 1,
+      "match": true,
+      "evidence": "Skip Navigation\nMarkets\nPre-Markets\nU.S. Markets\nEurope Markets\nChina Markets\nAsia Markets\nWorld Markets\nCurrencies\nPrediction Markets\nCryptocurrency\nFutures & Commodities\nBonds\nFunds & ETFs\nBusiness\nEconomy\nFinance\nHealth & Science\nMedia\nReal Estate\nEnergy\nClimate\nTransportation\nInvestigations\nInd…",
+      "notes": [
+        "paywall/login wall detected on the cited page"
+      ]
+    },
+    {
+      "id": "ind-122",
+      "category": "verbatim-supported",
+      "expected": "supported",
+      "predicted": "supported",
+      "score": 0.9903,
+      "tier_reached": 3,
+      "match": true,
+      "evidence": "Participants were Womersley, Turing, Porter from England and a few German researchers like Zuse, Walther, and Billing (for more details see Herbert Bruderer, Konrad Zuse und die Schweiz). In 1948, Turing was appointed reader in the Mathematics Department at the University of Manchester.",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 1.000 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported",
+        "NLI tier: entailment 0.990 (bands: >= 0.7 supported, >= 0.3 ambiguous, below unsupported)",
+        "NLI tier: contradiction 0.001"
+      ]
+    },
+    {
+      "id": "ind-123",
+      "category": "negation-flip",
+      "expected": "unsupported",
+      "predicted": "unsupported",
+      "score": 0.0001,
+      "tier_reached": 3,
+      "match": true,
+      "evidence": "Participants were Womersley, Turing, Porter from England and a few German researchers like Zuse, Walther, and Billing (for more details see Herbert Bruderer, Konrad Zuse und die Schweiz). In 1948, Turing was appointed reader in the Mathematics Department at the University of Manchester.",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 0.889 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported",
+        "NLI tier: entailment 0.000 (bands: >= 0.7 supported, >= 0.3 ambiguous, below unsupported)",
+        "NLI tier: contradiction 0.988",
+        "NLI tier: contradiction 0.988 >= 0.5 — source contradicts claim",
+        "NLI moved verdict supported → unsupported"
+      ]
+    },
+    {
+      "id": "ind-124",
+      "category": "entity-swap",
+      "expected": "unsupported",
+      "predicted": "unsupported",
+      "score": 0.041,
+      "tier_reached": 3,
+      "match": true,
+      "evidence": "In 1948, he joined Max Newman's Computing Machine Laboratory at the University of Manchester, contributing to the development of early Manchester computers.[13] He also turned to mathematical biology, working on the chemical basis of morphogenesis[14][2] and theorizing chemical oscillators independ…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 0.667 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported",
+        "NLI tier: entailment 0.041 (bands: >= 0.7 supported, >= 0.3 ambiguous, below unsupported)",
+        "NLI tier: contradiction 0.789",
+        "NLI tier: contradiction 0.789 >= 0.5 — source contradicts claim",
+        "NLI moved verdict supported → unsupported"
+      ]
+    },
+    {
+      "id": "ind-146",
+      "category": "verbatim-supported",
+      "expected": "supported",
+      "predicted": "supported",
+      "score": 0.9008,
+      "tier_reached": 3,
+      "match": true,
+      "evidence": "1. What is Active Record? Active Record is part of the M in MVC - the model - which is the layer of the system responsible for representing data and business logic. Active Record helps you create and use Ruby objects whose attributes require persistent storage to a database. What is the difference…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 1.000 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported",
+        "NLI tier: entailment 0.901 (bands: >= 0.7 supported, >= 0.3 ambiguous, below unsupported)",
+        "NLI tier: contradiction 0.000"
+      ]
+    },
+    {
+      "id": "ind-147",
+      "category": "negation-flip",
+      "expected": "unsupported",
+      "predicted": "unsupported",
+      "score": 0.0902,
+      "tier_reached": 3,
+      "match": true,
+      "evidence": "It's possible to model data with Ruby objects that do not need to be backed by a database. Active Model is commonly used for that in Rails, making Active Record and Active Model both part of the M in MVC, as well as your own plain Ruby objects. The term \"Active Record\" also refers to a software arc…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 1.000 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported",
+        "NLI tier: entailment 0.090 (bands: >= 0.7 supported, >= 0.3 ambiguous, below unsupported)",
+        "NLI tier: contradiction 0.034",
+        "NLI moved verdict supported → unsupported"
+      ]
+    },
+    {
+      "id": "ind-148",
+      "category": "entity-swap",
+      "expected": "unsupported",
+      "predicted": "unsupported",
+      "score": 0.0182,
+      "tier_reached": 3,
+      "match": true,
+      "evidence": "1. What is Active Record? Active Record is part of the M in MVC - the model - which is the layer of the system responsible for representing data and business logic. Active Record helps you create and use Ruby objects whose attributes require persistent storage to a database. What is the difference…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 0.700 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported",
+        "NLI tier: entailment 0.018 (bands: >= 0.7 supported, >= 0.3 ambiguous, below unsupported)",
+        "NLI tier: contradiction 0.006",
+        "NLI moved verdict supported → unsupported"
+      ]
+    },
+    {
+      "id": "ind-246",
+      "category": "paywalled",
+      "expected": "paywalled",
+      "predicted": "paywalled",
+      "score": null,
+      "tier_reached": 1,
+      "match": true,
+      "evidence": "The Magazine\nOctober 12, 2026\nGoings On\nGoings On\nJustine Kurland’s Photographs Keep Us on Edge\nAlso: the progressive R. & B. of Kelela, the art of Jessica Lange, the Australian Ballet on Oscar Wilde, and more.\nBy Vince Aletti, Mengfei Chen, Brian Seibert, Sheldon Pearce, Emily Nussbaum, Zoë Hopkin…",
+      "notes": [
+        "paywall/login wall detected on the cited page"
+      ]
+    },
+    {
+      "id": "ind-185",
+      "category": "verbatim-supported",
+      "expected": "supported",
+      "predicted": "unsupported",
+      "score": 0.0003,
+      "tier_reached": 3,
+      "match": false,
+      "evidence": "Savery's engine was used in mines, pumping stations and supplying water to water wheels powering textile machinery.[19] One advantage of Savery's engine was its low cost.[20] Bento de Moura Portugal introduced an improvement of Savery's construction \"to render it capable of working itself\", as desc…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 1.000 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported",
+        "NLI tier: entailment 0.000 (bands: >= 0.7 supported, >= 0.3 ambiguous, below unsupported)",
+        "NLI tier: contradiction 0.000",
+        "NLI moved verdict supported → unsupported"
+      ]
+    },
+    {
+      "id": "ind-186",
+      "category": "negation-flip",
+      "expected": "unsupported",
+      "predicted": "unsupported",
+      "score": 0.045,
+      "tier_reached": 3,
+      "match": true,
+      "evidence": "Savery's engine was used in mines, pumping stations and supplying water to water wheels powering textile machinery.[19] One advantage of Savery's engine was its low cost.[20] Bento de Moura Portugal introduced an improvement of Savery's construction \"to render it capable of working itself\", as desc…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 0.933 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported",
+        "NLI tier: entailment 0.045 (bands: >= 0.7 supported, >= 0.3 ambiguous, below unsupported)",
+        "NLI tier: contradiction 0.012",
+        "NLI moved verdict supported → unsupported"
+      ]
+    },
+    {
+      "id": "ind-187",
+      "category": "entity-swap",
+      "expected": "unsupported",
+      "predicted": "unsupported",
+      "score": 0.0005,
+      "tier_reached": 3,
+      "match": true,
+      "evidence": "The first commercially successful engine that could transmit continuous power to a machine was developed in 1712 by Thomas Newcomen. In 1764, James Watt made a critical improvement by removing spent steam to a separate vessel for condensation, greatly improving the amount of work obtained per unit…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 0.824 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported",
+        "NLI tier: entailment 0.000 (bands: >= 0.7 supported, >= 0.3 ambiguous, below unsupported)",
+        "NLI tier: contradiction 0.000",
+        "NLI moved verdict supported → unsupported"
+      ]
+    },
+    {
+      "id": "ind-251",
+      "category": "partially-true-ambiguous",
+      "expected": "ambiguous",
+      "predicted": "supported",
+      "score": 0.9957,
+      "tier_reached": 3,
+      "match": false,
+      "evidence": "The first full-scale working railway steam locomotive was built by Richard Trevithick in the United Kingdom and, on 21 February 1804, the world's first railway journey took place as Trevithick's steam locomotive hauled 10 tonnes of iron, 70 passengers and five wagons along the tramway from the Pen-…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 0.939 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported",
+        "NLI tier: entailment 0.996 (bands: >= 0.7 supported, >= 0.3 ambiguous, below unsupported)",
+        "NLI tier: contradiction 0.000"
+      ]
+    },
+    {
+      "id": "ind-191",
+      "category": "verbatim-supported",
+      "expected": "supported",
+      "predicted": "supported",
+      "score": 0.9938,
+      "tier_reached": 3,
+      "match": true,
+      "evidence": "Mars Relay Network: Communications Bridge Between Mars & Earth NASA Says Farewell to MAVEN, Declares End of Mission The first mission devoted to observing the Martian atmosphere and its evolution, NASA’s MAVEN (Mars Atmosphere and Volatile Evolution) has ended after more than 11 years in orbit at M…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 0.917 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported",
+        "NLI tier: entailment 0.994 (bands: >= 0.7 supported, >= 0.3 ambiguous, below unsupported)",
+        "NLI tier: contradiction 0.000"
+      ]
+    },
+    {
+      "id": "ind-192",
+      "category": "negation-flip",
+      "expected": "unsupported",
+      "predicted": "unsupported",
+      "score": 0.0034,
+      "tier_reached": 3,
+      "match": true,
+      "evidence": "Mars Relay Network: Communications Bridge Between Mars & Earth NASA Says Farewell to MAVEN, Declares End of Mission The first mission devoted to observing the Martian atmosphere and its evolution, NASA’s MAVEN (Mars Atmosphere and Volatile Evolution) has ended after more than 11 years in orbit at M…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 0.733 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported",
+        "NLI tier: entailment 0.003 (bands: >= 0.7 supported, >= 0.3 ambiguous, below unsupported)",
+        "NLI tier: contradiction 0.002",
+        "NLI moved verdict supported → unsupported"
+      ]
+    },
+    {
+      "id": "ind-193",
+      "category": "entity-swap",
+      "expected": "unsupported",
+      "predicted": "unsupported",
+      "score": 0.0099,
+      "tier_reached": 3,
+      "match": true,
+      "evidence": "Mars Relay Network: Communications Bridge Between Mars & Earth NASA Says Farewell to MAVEN, Declares End of Mission The first mission devoted to observing the Martian atmosphere and its evolution, NASA’s MAVEN (Mars Atmosphere and Volatile Evolution) has ended after more than 11 years in orbit at M…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 0.524 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported",
+        "NLI tier: entailment 0.010 (bands: >= 0.7 supported, >= 0.3 ambiguous, below unsupported)",
+        "NLI tier: contradiction 0.824",
+        "NLI tier: contradiction 0.824 >= 0.5 — source contradicts claim",
+        "NLI moved verdict ambiguous → unsupported"
+      ]
+    },
+    {
+      "id": "ind-116",
+      "category": "verbatim-supported",
+      "expected": "supported",
+      "predicted": "supported",
+      "score": 0.9864,
+      "tier_reached": 3,
+      "match": true,
+      "evidence": "Mathematics > Classical Analysis and ODEs [Submitted on 4 Aug 2013 (v1), last revised 11 Dec 2013 (this version, v2)] Title:Refined Sobolev inequalities on manifolds with ends View PDF HTML (experimental) Abstract:By considering a suitable Besov type norm, we obtain refined Sobolev inequalities on…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 1.000 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported",
+        "NLI tier: entailment 0.986 (bands: >= 0.7 supported, >= 0.3 ambiguous, below unsupported)",
+        "NLI tier: contradiction 0.002"
+      ]
+    },
+    {
+      "id": "ind-117",
+      "category": "negation-flip",
+      "expected": "unsupported",
+      "predicted": "unsupported",
+      "score": 0.9794,
+      "tier_reached": 3,
+      "match": true,
+      "evidence": "Mathematics > Classical Analysis and ODEs [Submitted on 4 Aug 2013 (v1), last revised 11 Dec 2013 (this version, v2)] Title:Refined Sobolev inequalities on manifolds with ends View PDF HTML (experimental) Abstract:By considering a suitable Besov type norm, we obtain refined Sobolev inequalities on…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 0.917 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported",
+        "NLI tier: entailment 0.979 (bands: >= 0.7 supported, >= 0.3 ambiguous, below unsupported)",
+        "NLI tier: contradiction 0.009",
+        "pooled contradiction 0.999 >= 0.5 — a claim-relevant sentence in the evidence contradicts the claim",
+        "NLI moved verdict supported → unsupported"
+      ]
+    },
+    {
+      "id": "ind-118",
+      "category": "entity-swap",
+      "expected": "unsupported",
+      "predicted": "supported",
+      "score": 0.9851,
+      "tier_reached": 3,
+      "match": false,
+      "evidence": "Mathematics > Classical Analysis and ODEs [Submitted on 4 Aug 2013 (v1), last revised 11 Dec 2013 (this version, v2)] Title:Refined Sobolev inequalities on manifolds with ends View PDF HTML (experimental) Abstract:By considering a suitable Besov type norm, we obtain refined Sobolev inequalities on…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 1.000 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported",
+        "NLI tier: entailment 0.985 (bands: >= 0.7 supported, >= 0.3 ambiguous, below unsupported)",
+        "NLI tier: contradiction 0.002"
+      ]
+    },
+    {
+      "id": "ind-137",
+      "category": "verbatim-supported",
+      "expected": "supported",
+      "predicted": "supported",
+      "score": 0.9962,
+      "tier_reached": 3,
+      "match": true,
+      "evidence": "After he found a consistent arrangement, his printed table appeared in May 1869 in the journal of the Russian Chemical Society.[209] When elements did not appear to fit in the system, he boldly predicted that either valencies or atomic weights had been measured incorrectly, or that there was a miss…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 1.000 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported",
+        "NLI tier: entailment 0.996 (bands: >= 0.7 supported, >= 0.3 ambiguous, below unsupported)",
+        "NLI tier: contradiction 0.000"
+      ]
+    },
+    {
+      "id": "ind-138",
+      "category": "negation-flip",
+      "expected": "unsupported",
+      "predicted": "unsupported",
+      "score": 0.0227,
+      "tier_reached": 3,
+      "match": true,
+      "evidence": "After he found a consistent arrangement, his printed table appeared in May 1869 in the journal of the Russian Chemical Society.[209] When elements did not appear to fit in the system, he boldly predicted that either valencies or atomic weights had been measured incorrectly, or that there was a miss…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 0.833 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported",
+        "NLI tier: entailment 0.023 (bands: >= 0.7 supported, >= 0.3 ambiguous, below unsupported)",
+        "NLI tier: contradiction 0.975",
+        "NLI tier: contradiction 0.975 >= 0.5 — source contradicts claim",
+        "NLI moved verdict supported → unsupported"
+      ]
+    },
+    {
+      "id": "ind-139",
+      "category": "entity-swap",
+      "expected": "unsupported",
+      "predicted": "unsupported",
+      "score": 0.0051,
+      "tier_reached": 3,
+      "match": true,
+      "evidence": "After he found a consistent arrangement, his printed table appeared in May 1869 in the journal of the Russian Chemical Society.[209] When elements did not appear to fit in the system, he boldly predicted that either valencies or atomic weights had been measured incorrectly, or that there was a miss…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 0.727 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported",
+        "NLI tier: entailment 0.005 (bands: >= 0.7 supported, >= 0.3 ambiguous, below unsupported)",
+        "NLI tier: contradiction 0.993",
+        "NLI tier: contradiction 0.993 >= 0.5 — source contradicts claim",
+        "NLI moved verdict supported → unsupported"
+      ]
+    },
+    {
+      "id": "ind-149",
+      "category": "verbatim-supported",
+      "expected": "supported",
+      "predicted": "supported",
+      "score": 0.9918,
+      "tier_reached": 3,
+      "match": true,
+      "evidence": "Note that if the user blocks cookies, browsers will probably interpret this as an instruction to prevent the page from persisting data. - The origin is not a valid scheme/host/port tuple. This can happen if the origin uses the Description The keys and the values stored with localStorage are in the…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 1.000 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported",
+        "NLI tier: entailment 0.992 (bands: >= 0.7 supported, >= 0.3 ambiguous, below unsupported)",
+        "NLI tier: contradiction 0.001"
+      ]
+    },
+    {
+      "id": "ind-150",
+      "category": "negation-flip",
+      "expected": "unsupported",
+      "predicted": "unsupported",
+      "score": 0.0008,
+      "tier_reached": 3,
+      "match": true,
+      "evidence": "Note that if the user blocks cookies, browsers will probably interpret this as an instruction to prevent the page from persisting data. - The origin is not a valid scheme/host/port tuple. This can happen if the origin uses the Description The keys and the values stored with localStorage are in the…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 1.000 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported",
+        "NLI tier: entailment 0.001 (bands: >= 0.7 supported, >= 0.3 ambiguous, below unsupported)",
+        "NLI tier: contradiction 0.005",
+        "NLI moved verdict supported → unsupported"
+      ]
+    },
+    {
+      "id": "ind-151",
+      "category": "entity-swap",
+      "expected": "unsupported",
+      "predicted": "unsupported",
+      "score": 0.1852,
+      "tier_reached": 3,
+      "match": true,
+      "evidence": "Note that if the user blocks cookies, browsers will probably interpret this as an instruction to prevent the page from persisting data. - The origin is not a valid scheme/host/port tuple. This can happen if the origin uses the Description The keys and the values stored with localStorage are in the…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 0.750 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported",
+        "NLI tier: entailment 0.185 (bands: >= 0.7 supported, >= 0.3 ambiguous, below unsupported)",
+        "NLI tier: contradiction 0.747",
+        "NLI tier: contradiction 0.747 >= 0.5 — source contradicts claim",
+        "NLI moved verdict supported → unsupported"
+      ]
+    },
+    {
+      "id": "ind-188",
+      "category": "verbatim-supported",
+      "expected": "supported",
+      "predicted": "supported",
+      "score": 0.988,
+      "tier_reached": 3,
+      "match": true,
+      "evidence": "HTTP headers HTTP headers let the client and the server pass additional information with a message in a request or response. In HTTP/1.X, a header is a case-insensitive name followed by a colon, then optional whitespace which will be ignored, and finally by its value (for example: Allow: POST).",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 1.000 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported",
+        "NLI tier: entailment 0.988 (bands: >= 0.7 supported, >= 0.3 ambiguous, below unsupported)",
+        "NLI tier: contradiction 0.001"
+      ]
+    },
+    {
+      "id": "ind-189",
+      "category": "negation-flip",
+      "expected": "unsupported",
+      "predicted": "unsupported",
+      "score": 0.0078,
+      "tier_reached": 3,
+      "match": true,
+      "evidence": "HTTP headers HTTP headers let the client and the server pass additional information with a message in a request or response. In HTTP/1.X, a header is a case-insensitive name followed by a colon, then optional whitespace which will be ignored, and finally by its value (for example: Allow: POST).",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 0.818 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported",
+        "NLI tier: entailment 0.008 (bands: >= 0.7 supported, >= 0.3 ambiguous, below unsupported)",
+        "NLI tier: contradiction 0.126",
+        "NLI moved verdict supported → unsupported"
+      ]
+    },
+    {
+      "id": "ind-190",
+      "category": "entity-swap",
+      "expected": "unsupported",
+      "predicted": "supported",
+      "score": 0.9893,
+      "tier_reached": 3,
+      "match": false,
+      "evidence": "HTTP headers HTTP headers let the client and the server pass additional information with a message in a request or response. In HTTP/1.X, a header is a case-insensitive name followed by a colon, then optional whitespace which will be ignored, and finally by its value (for example: Allow: POST).",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 0.727 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported",
+        "NLI tier: entailment 0.989 (bands: >= 0.7 supported, >= 0.3 ambiguous, below unsupported)",
+        "NLI tier: contradiction 0.004"
+      ]
+    },
+    {
+      "id": "ind-140",
+      "category": "verbatim-supported",
+      "expected": "supported",
+      "predicted": "supported",
+      "score": 0.9929,
+      "tier_reached": 3,
+      "match": true,
+      "evidence": "[3] The ISO year consists of 52 or 53 full weeks, and where a week starts on a Monday and ends on a Sunday. The first week of an ISO year is the first (Gregorian) calendar week of a year containing a Thursday. This is called week number 1, and the ISO year of that Thursday is the same as its Gregor…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 1.000 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported",
+        "NLI tier: entailment 0.993 (bands: >= 0.7 supported, >= 0.3 ambiguous, below unsupported)",
+        "NLI tier: contradiction 0.001"
+      ]
+    },
+    {
+      "id": "ind-141",
+      "category": "negation-flip",
+      "expected": "unsupported",
+      "predicted": "unsupported",
+      "score": 0.0608,
+      "tier_reached": 3,
+      "match": true,
+      "evidence": "[3] The ISO year consists of 52 or 53 full weeks, and where a week starts on a Monday and ends on a Sunday. The first week of an ISO year is the first (Gregorian) calendar week of a year containing a Thursday. This is called week number 1, and the ISO year of that Thursday is the same as its Gregor…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 0.818 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported",
+        "NLI tier: entailment 0.061 (bands: >= 0.7 supported, >= 0.3 ambiguous, below unsupported)",
+        "NLI tier: contradiction 0.807",
+        "NLI tier: contradiction 0.807 >= 0.5 — source contradicts claim",
+        "NLI moved verdict supported → unsupported"
+      ]
+    },
+    {
+      "id": "ind-142",
+      "category": "entity-swap",
+      "expected": "unsupported",
+      "predicted": "unsupported",
+      "score": 0.0162,
+      "tier_reached": 3,
+      "match": true,
+      "evidence": "[3] The ISO year consists of 52 or 53 full weeks, and where a week starts on a Monday and ends on a Sunday. The first week of an ISO year is the first (Gregorian) calendar week of a year containing a Thursday. This is called week number 1, and the ISO year of that Thursday is the same as its Gregor…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 0.900 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported",
+        "NLI tier: entailment 0.016 (bands: >= 0.7 supported, >= 0.3 ambiguous, below unsupported)",
+        "NLI tier: contradiction 0.298",
+        "NLI moved verdict supported → unsupported"
+      ]
+    },
+    {
+      "id": "ind-113",
+      "category": "verbatim-supported",
+      "expected": "supported",
+      "predicted": "supported",
+      "score": 0.9917,
+      "tier_reached": 3,
+      "match": true,
+      "evidence": "color CSS property Baseline Widely available This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015. The color CSS property sets the foreground color value of an element's text and text decorations, and sets the curre…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 1.000 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported",
+        "NLI tier: entailment 0.992 (bands: >= 0.7 supported, >= 0.3 ambiguous, below unsupported)",
+        "NLI tier: contradiction 0.000"
+      ]
+    },
+    {
+      "id": "ind-114",
+      "category": "negation-flip",
+      "expected": "unsupported",
+      "predicted": "unsupported",
+      "score": 0.0405,
+      "tier_reached": 3,
+      "match": true,
+      "evidence": "color CSS property Baseline Widely available This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015. The color CSS property sets the foreground color value of an element's text and text decorations, and sets the curre…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 0.667 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported",
+        "NLI tier: entailment 0.040 (bands: >= 0.7 supported, >= 0.3 ambiguous, below unsupported)",
+        "NLI tier: contradiction 0.426",
+        "NLI moved verdict supported → unsupported"
+      ]
+    },
+    {
+      "id": "ind-115",
+      "category": "entity-swap",
+      "expected": "unsupported",
+      "predicted": "unsupported",
+      "score": 0.0656,
+      "tier_reached": 3,
+      "match": true,
+      "evidence": "color CSS property Baseline Widely available This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015. The color CSS property sets the foreground color value of an element's text and text decorations, and sets the curre…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 0.778 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported",
+        "NLI tier: entailment 0.066 (bands: >= 0.7 supported, >= 0.3 ambiguous, below unsupported)",
+        "NLI tier: contradiction 0.055",
+        "NLI moved verdict supported → unsupported"
+      ]
+    }
+  ]
+}

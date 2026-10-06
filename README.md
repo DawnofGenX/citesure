@@ -140,6 +140,27 @@ URL-clustered tune/held-out partition now exists (`evals/splits/`) for future tu
 but it cannot retroactively make the current number held-out. A genuinely clean number needs a v3
 set that has never been used for any model selection. Until then, read 86.1% as optimistic.
 
+### Split-half check: is the number an artifact of one half?
+
+The partition has now been **run**, not merely created. Both halves, NLI on, disjoint URL
+clusters, identical status distributions — `evals/results/{tune_split,heldout_split}/`:
+
+| Half | Agreement | Wilson 95% CI | Cluster-bootstrap 95% CI | Negation-flip false-supported | Entity-swap false-supported |
+|---|---|---|---|---|---|
+| tune | 47/54 = 87.0% | [75.6, 93.6] | [80.0, 94.1] | 0/16 | 2/16 |
+| **held-out** | **46/54 = 85.2%** | **[73.4, 92.3]** | **[76.5, 93.8]** | **0/16** | 3/16 |
+
+Recombined the halves give 93/108 = 86.11%, reproducing the headline exactly. The halves are
+different cases, so the comparison is unpaired: Fisher exact **p = 1.000**, a **1.85-point
+difference with no detectable effect**. So 86.1% is not an artifact of which half you report, and
+the negation-flip safety metric is clean on each side independently. Full write-up, including the
+mismatch-by-layer triage, in [`evals/RESULTS_SPLIT_HALVES.md`](evals/RESULTS_SPLIT_HALVES.md).
+
+**What the split exposed:** v2 holds only **4** `partially-true-ambiguous` cases, so a
+cluster-disjoint split leaves **2 per side**. Neither half can gate a fix to the `ambiguous` class
+— the one still open — because a set needs ≥10 such cases to detect the change, not merely survive
+it. Gate that work on a purpose-built set; see `evals/AUTHORING_V3.md`.
+
 Both safety rates rise sharply with the NLI tier off, which is the honest cost of the fast path.
 
 An exhaustive threshold sweep (support 0.30-0.90 x ambiguous 0.05-support) moved agreement from
@@ -475,6 +496,11 @@ pytest -q -m nli            # run real DeBERTa-v3 model tests (needs the ~425 MB
 .venv/bin/python evals/run_eval.py --set evals/independent_set_v3.json --nli
 .venv/bin/python evals/validate_v3.py            # label gate for v3
 .venv/bin/python evals/split.py --set evals/independent_set_v2.json --seed 42
+
+# split-half check (both halves, URL-disjoint; evals/subsets/ is derived data)
+.venv/bin/python evals/run_eval.py --set evals/subsets/independent_set_v2_heldout.json --nli --out evals/results/heldout_split
+.venv/bin/python evals/run_eval.py --set evals/subsets/independent_set_v2_tune.json     --nli --out evals/results/tune_split
+cat evals/RESULTS_SPLIT_HALVES.md
 
 # baselines: the trivial floor the headline must be read against
 cat evals/RESULTS_BASELINES.md

@@ -1,0 +1,1121 @@
+{
+  "generated_utc": "20261006-180831",
+  "set": "evals/subsets/independent_set_v2_tune.json",
+  "nli": true,
+  "cache_dir": "/home/hermes/.cache/citesure-eval",
+  "total": 54,
+  "matched": 47,
+  "agreement_pct": 87.04,
+  "confusion_matrix": {
+    "supported": {
+      "supported": 13,
+      "unsupported": 3,
+      "unreachable": 0,
+      "paywalled": 0,
+      "ambiguous": 0,
+      "error": 0
+    },
+    "unsupported": {
+      "supported": 2,
+      "unsupported": 30,
+      "unreachable": 0,
+      "paywalled": 0,
+      "ambiguous": 0,
+      "error": 0
+    },
+    "unreachable": {
+      "supported": 0,
+      "unsupported": 0,
+      "unreachable": 2,
+      "paywalled": 0,
+      "ambiguous": 0,
+      "error": 0
+    },
+    "paywalled": {
+      "supported": 0,
+      "unsupported": 0,
+      "unreachable": 0,
+      "paywalled": 2,
+      "ambiguous": 0,
+      "error": 0
+    },
+    "ambiguous": {
+      "supported": 0,
+      "unsupported": 2,
+      "unreachable": 0,
+      "paywalled": 0,
+      "ambiguous": 0,
+      "error": 0
+    },
+    "error": {
+      "supported": 0,
+      "unsupported": 0,
+      "unreachable": 0,
+      "paywalled": 0,
+      "ambiguous": 0,
+      "error": 0
+    }
+  },
+  "per_category_recall": {
+    "dead-link": {
+      "canonical_status": "unreachable",
+      "total": 2,
+      "correct": 2,
+      "recall": 1.0
+    },
+    "entity-swap": {
+      "canonical_status": "unsupported",
+      "total": 16,
+      "correct": 14,
+      "recall": 0.875
+    },
+    "false-claim": {
+      "canonical_status": "unsupported",
+      "total": 0,
+      "correct": 0,
+      "recall": NaN
+    },
+    "fully-supported-compound": {
+      "canonical_status": "supported",
+      "total": 0,
+      "correct": 0,
+      "recall": NaN
+    },
+    "negation-flip": {
+      "canonical_status": "unsupported",
+      "total": 16,
+      "correct": 16,
+      "recall": 1.0
+    },
+    "numeric-detail-supported": {
+      "canonical_status": "supported",
+      "total": 0,
+      "correct": 0,
+      "recall": NaN
+    },
+    "paraphrase-supported": {
+      "canonical_status": "supported",
+      "total": 0,
+      "correct": 0,
+      "recall": NaN
+    },
+    "partially-true-ambiguous": {
+      "canonical_status": "ambiguous",
+      "total": 2,
+      "correct": 0,
+      "recall": 0.0
+    },
+    "partially-true-mixed": {
+      "canonical_status": "ambiguous",
+      "total": 0,
+      "correct": 0,
+      "recall": NaN
+    },
+    "paywalled": {
+      "canonical_status": "paywalled",
+      "total": 2,
+      "correct": 2,
+      "recall": 1.0
+    },
+    "verbatim-supported": {
+      "canonical_status": "supported",
+      "total": 16,
+      "correct": 13,
+      "recall": 0.8125
+    }
+  },
+  "per_status_pr": {
+    "supported": {
+      "tp": 13,
+      "fp": 2,
+      "fn": 3,
+      "precision": 0.8666666666666667,
+      "recall": 0.8125
+    },
+    "unsupported": {
+      "tp": 30,
+      "fp": 5,
+      "fn": 2,
+      "precision": 0.8571428571428571,
+      "recall": 0.9375
+    },
+    "unreachable": {
+      "tp": 2,
+      "fp": 0,
+      "fn": 0,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    "paywalled": {
+      "tp": 2,
+      "fp": 0,
+      "fn": 0,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    "ambiguous": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 2,
+      "precision": NaN,
+      "recall": 0.0
+    },
+    "error": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 0,
+      "precision": NaN,
+      "recall": NaN
+    }
+  },
+  "uncertainty": {
+    "wilson_ci": {
+      "low": 0.7558,
+      "high": 0.9358,
+      "assumption": "iid cases"
+    },
+    "cluster_bootstrap_ci": {
+      "low": 0.8,
+      "high": 0.9412,
+      "n_clusters": 20,
+      "assumption": "cases clustered by source URL"
+    },
+    "negation-flip_wilson_ci": {
+      "low": 0.8064,
+      "high": 1.0,
+      "correct": 16,
+      "total": 16
+    },
+    "entity-swap_wilson_ci": {
+      "low": 0.6398,
+      "high": 0.965,
+      "correct": 14,
+      "total": 16
+    },
+    "by_labeler_confidence": {
+      "high": {
+        "correct": 27,
+        "total": 32,
+        "agreement": 0.84375
+      },
+      "medium": {
+        "correct": 20,
+        "total": 22,
+        "agreement": 0.9090909090909091
+      }
+    }
+  },
+  "safety": {
+    "negation_flip_false_supported": 0,
+    "negation_flip_total": 16,
+    "negation_flip_rate": 0.0,
+    "entity_swap_false_supported": 2,
+    "entity_swap_total": 16,
+    "entity_swap_rate": 0.125
+  },
+  "records": [
+    {
+      "id": "ind-158",
+      "category": "verbatim-supported",
+      "expected": "supported",
+      "predicted": "supported",
+      "score": 0.9951,
+      "tier_reached": 3,
+      "match": true,
+      "evidence": "- JavaScript arrays are zero-indexed: the first element of an array is at index 0 , the second is at index1 , and so on — and the last element is at the value of the array'slength property minus1 . - JavaScript array-copy operations create shallow copies. (All standard built-in copy operations with…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 1.000 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported",
+        "NLI tier: entailment 0.995 (bands: >= 0.7 supported, >= 0.3 ambiguous, below unsupported)",
+        "NLI tier: contradiction 0.000"
+      ]
+    },
+    {
+      "id": "ind-159",
+      "category": "negation-flip",
+      "expected": "unsupported",
+      "predicted": "unsupported",
+      "score": 0.0268,
+      "tier_reached": 3,
+      "match": true,
+      "evidence": "- JavaScript arrays are zero-indexed: the first element of an array is at index 0 , the second is at index1 , and so on — and the last element is at the value of the array'slength property minus1 . - JavaScript array-copy operations create shallow copies. (All standard built-in copy operations with…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 0.875 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported",
+        "NLI tier: entailment 0.027 (bands: >= 0.7 supported, >= 0.3 ambiguous, below unsupported)",
+        "NLI tier: contradiction 0.001",
+        "NLI moved verdict supported → unsupported"
+      ]
+    },
+    {
+      "id": "ind-160",
+      "category": "entity-swap",
+      "expected": "unsupported",
+      "predicted": "unsupported",
+      "score": 0.0087,
+      "tier_reached": 3,
+      "match": true,
+      "evidence": "- JavaScript arrays are zero-indexed: the first element of an array is at index 0 , the second is at index1 , and so on — and the last element is at the value of the array'slength property minus1 . - JavaScript array-copy operations create shallow copies. (All standard built-in copy operations with…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 1.000 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported",
+        "NLI tier: entailment 0.009 (bands: >= 0.7 supported, >= 0.3 ambiguous, below unsupported)",
+        "NLI tier: contradiction 0.012",
+        "NLI moved verdict supported → unsupported"
+      ]
+    },
+    {
+      "id": "ind-176",
+      "category": "verbatim-supported",
+      "expected": "supported",
+      "predicted": "supported",
+      "score": 0.9861,
+      "tier_reached": 3,
+      "match": true,
+      "evidence": "Map Baseline Widely available * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015. * Some parts of this feature may have varying levels of support. The Map object holds key-value pairs and remembers the original…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 1.000 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported",
+        "NLI tier: entailment 0.986 (bands: >= 0.7 supported, >= 0.3 ambiguous, below unsupported)",
+        "NLI tier: contradiction 0.000"
+      ]
+    },
+    {
+      "id": "ind-177",
+      "category": "negation-flip",
+      "expected": "unsupported",
+      "predicted": "unsupported",
+      "score": 0.0001,
+      "tier_reached": 3,
+      "match": true,
+      "evidence": "- Map.prototype.has() - Returns a boolean indicating whether an entry with the specified key exists in this Map or not. - Map.prototype.keys() - Returns a new Iterator object that contains the keys for each element in the Map object in insertion order. - Map.prototype.set() - Adds a new entry with…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 0.875 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported",
+        "NLI tier: entailment 0.000 (bands: >= 0.7 supported, >= 0.3 ambiguous, below unsupported)",
+        "NLI tier: contradiction 0.007",
+        "NLI moved verdict supported → unsupported"
+      ]
+    },
+    {
+      "id": "ind-178",
+      "category": "entity-swap",
+      "expected": "unsupported",
+      "predicted": "unsupported",
+      "score": 0.0148,
+      "tier_reached": 3,
+      "match": true,
+      "evidence": "Map Baseline Widely available * This feature is well established and works across many devices and browser versions. It’s been available across browsers since July 2015. * Some parts of this feature may have varying levels of support. The Map object holds key-value pairs and remembers the original…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 0.667 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported",
+        "NLI tier: entailment 0.015 (bands: >= 0.7 supported, >= 0.3 ambiguous, below unsupported)",
+        "NLI tier: contradiction 0.041",
+        "NLI moved verdict supported → unsupported"
+      ]
+    },
+    {
+      "id": "ind-247",
+      "category": "paywalled",
+      "expected": "paywalled",
+      "predicted": "paywalled",
+      "score": null,
+      "tier_reached": 1,
+      "match": true,
+      "evidence": "Trump is seen from behind, wearing a dark navy suit, walking toward a dark blue stage curtain with a illuminated U.S. flag positioned to the right. Trump's right hand is raised in a thumbs-up gesture.\nAn illustration showing a magnifying glass focusing on silhouetted figures standing along landmass…",
+      "notes": [
+        "paywall/login wall detected on the cited page"
+      ]
+    },
+    {
+      "id": "ind-182",
+      "category": "verbatim-supported",
+      "expected": "supported",
+      "predicted": "supported",
+      "score": 0.9937,
+      "tier_reached": 3,
+      "match": true,
+      "evidence": "Instruments and limited life items were designed as orbital replacement units.[107] Five servicing missions (SM 1, 2, 3A, 3B, and 4) were flown by NASA Space Shuttles, the first in December 1993 and the last in May 2009.[108] Servicing missions were delicate operations that began with maneuvering t…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 1.000 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported",
+        "NLI tier: entailment 0.994 (bands: >= 0.7 supported, >= 0.3 ambiguous, below unsupported)",
+        "NLI tier: contradiction 0.000"
+      ]
+    },
+    {
+      "id": "ind-183",
+      "category": "negation-flip",
+      "expected": "unsupported",
+      "predicted": "unsupported",
+      "score": 0.0051,
+      "tier_reached": 3,
+      "match": true,
+      "evidence": "However, this delay allowed time for engineers to perform extensive tests, swap out a possibly failure-prone battery, and make other improvements.[72] Furthermore, the ground software needed to control Hubble was not ready in 1986, and was barely ready by the 1990 launch.[73] Following the resumpti…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 0.786 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported",
+        "NLI tier: entailment 0.005 (bands: >= 0.7 supported, >= 0.3 ambiguous, below unsupported)",
+        "NLI tier: contradiction 0.850",
+        "NLI tier: contradiction 0.850 >= 0.5 — source contradicts claim",
+        "NLI moved verdict supported → unsupported"
+      ]
+    },
+    {
+      "id": "ind-184",
+      "category": "entity-swap",
+      "expected": "unsupported",
+      "predicted": "unsupported",
+      "score": 0.15,
+      "tier_reached": 3,
+      "match": true,
+      "evidence": "Instruments and limited life items were designed as orbital replacement units.[107] Five servicing missions (SM 1, 2, 3A, 3B, and 4) were flown by NASA Space Shuttles, the first in December 1993 and the last in May 2009.[108] Servicing missions were delicate operations that began with maneuvering t…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 0.667 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported",
+        "NLI tier: entailment 0.150 (bands: >= 0.7 supported, >= 0.3 ambiguous, below unsupported)",
+        "NLI tier: contradiction 0.001",
+        "NLI moved verdict supported → unsupported"
+      ]
+    },
+    {
+      "id": "ind-241",
+      "category": "dead-link",
+      "expected": "unreachable",
+      "predicted": "unreachable",
+      "score": null,
+      "tier_reached": 1,
+      "match": true,
+      "evidence": "",
+      "notes": [
+        "ConnectError: [Errno -2] Name or service not known"
+      ]
+    },
+    {
+      "id": "ind-161",
+      "category": "verbatim-supported",
+      "expected": "supported",
+      "predicted": "unsupported",
+      "score": 0.0007,
+      "tier_reached": 3,
+      "match": false,
+      "evidence": "- os.path.normcase(path, /)¶ - Normalize the case of a pathname. On Windows, convert all characters in the pathname to lowercase, and also convert forward slashes to backward slashes. On other operating systems, return the path unchanged. Changed in version 3.6: Accepts a path-like object.",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 1.000 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported",
+        "NLI tier: entailment 0.001 (bands: >= 0.7 supported, >= 0.3 ambiguous, below unsupported)",
+        "NLI tier: contradiction 0.000",
+        "NLI moved verdict supported → unsupported"
+      ]
+    },
+    {
+      "id": "ind-162",
+      "category": "negation-flip",
+      "expected": "unsupported",
+      "predicted": "unsupported",
+      "score": 0.0008,
+      "tier_reached": 3,
+      "match": true,
+      "evidence": "- os.path.normcase(path, /)¶ - Normalize the case of a pathname. On Windows, convert all characters in the pathname to lowercase, and also convert forward slashes to backward slashes. On other operating systems, return the path unchanged. Changed in version 3.6: Accepts a path-like object.",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 0.875 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported",
+        "NLI tier: entailment 0.001 (bands: >= 0.7 supported, >= 0.3 ambiguous, below unsupported)",
+        "NLI tier: contradiction 0.994",
+        "NLI tier: contradiction 0.994 >= 0.5 — source contradicts claim",
+        "NLI moved verdict supported → unsupported"
+      ]
+    },
+    {
+      "id": "ind-163",
+      "category": "entity-swap",
+      "expected": "unsupported",
+      "predicted": "unsupported",
+      "score": 0.0023,
+      "tier_reached": 3,
+      "match": true,
+      "evidence": "- os.path.expandvars(path)¶ - Return the argument with environment variables expanded. Substrings of the form $name or${name} are replaced by the value of environment variable name. Malformed variable names and references to non-existing variables are left unchanged.On Windows, %name% expansions ar…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 1.000 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported",
+        "NLI tier: entailment 0.002 (bands: >= 0.7 supported, >= 0.3 ambiguous, below unsupported)",
+        "NLI tier: contradiction 0.993",
+        "NLI tier: contradiction 0.993 >= 0.5 — source contradicts claim",
+        "NLI moved verdict supported → unsupported"
+      ]
+    },
+    {
+      "id": "ind-155",
+      "category": "verbatim-supported",
+      "expected": "supported",
+      "predicted": "supported",
+      "score": 0.9958,
+      "tier_reached": 3,
+      "match": true,
+      "evidence": "He further discovered that a mouse could similarly \"injure\" air. He then showed that a plant could restore the air the candle and the mouse had \"injured\".[90] In 1779, Jan Ingenhousz repeated Priestley's experiments.",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 1.000 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported",
+        "NLI tier: entailment 0.996 (bands: >= 0.7 supported, >= 0.3 ambiguous, below unsupported)",
+        "NLI tier: contradiction 0.000"
+      ]
+    },
+    {
+      "id": "ind-156",
+      "category": "negation-flip",
+      "expected": "unsupported",
+      "predicted": "unsupported",
+      "score": 0.0004,
+      "tier_reached": 3,
+      "match": true,
+      "evidence": "He further discovered that a mouse could similarly \"injure\" air. He then showed that a plant could restore the air the candle and the mouse had \"injured\".[90] In 1779, Jan Ingenhousz repeated Priestley's experiments.",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 0.818 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported",
+        "NLI tier: entailment 0.000 (bands: >= 0.7 supported, >= 0.3 ambiguous, below unsupported)",
+        "NLI tier: contradiction 0.008",
+        "NLI moved verdict supported → unsupported"
+      ]
+    },
+    {
+      "id": "ind-157",
+      "category": "entity-swap",
+      "expected": "unsupported",
+      "predicted": "unsupported",
+      "score": 0.0001,
+      "tier_reached": 3,
+      "match": true,
+      "evidence": "He further discovered that a mouse could similarly \"injure\" air. He then showed that a plant could restore the air the candle and the mouse had \"injured\".[90] In 1779, Jan Ingenhousz repeated Priestley's experiments.",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 0.600 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported",
+        "NLI tier: entailment 0.000 (bands: >= 0.7 supported, >= 0.3 ambiguous, below unsupported)",
+        "NLI tier: contradiction 0.042",
+        "NLI moved verdict supported → unsupported"
+      ]
+    },
+    {
+      "id": "ind-252",
+      "category": "partially-true-ambiguous",
+      "expected": "ambiguous",
+      "predicted": "unsupported",
+      "score": 0.0005,
+      "tier_reached": 3,
+      "match": false,
+      "evidence": "For that original and ground-breaking work, a Nobel Prize in Chemistry was awarded to Melvin Calvin in 1961.",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 0.560 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported",
+        "NLI tier: entailment 0.000 (bands: >= 0.7 supported, >= 0.3 ambiguous, below unsupported)",
+        "NLI tier: contradiction 0.010",
+        "NLI moved verdict ambiguous → unsupported"
+      ]
+    },
+    {
+      "id": "ind-244",
+      "category": "dead-link",
+      "expected": "unreachable",
+      "predicted": "unreachable",
+      "score": null,
+      "tier_reached": 1,
+      "match": true,
+      "evidence": "HTML: Markup language\nCSS: Styling language\nJavaScript: Scripting language\nWeb APIs: Programming interfaces\nAll web technology\nLearn web development\nDiscover our tools\nGet to know MDN better\nGo back to the home page",
+      "notes": [
+        "HTTP 404"
+      ]
+    },
+    {
+      "id": "ind-167",
+      "category": "verbatim-supported",
+      "expected": "supported",
+      "predicted": "supported",
+      "score": 0.9949,
+      "tier_reached": 3,
+      "match": true,
+      "evidence": "On the 1924 expedition, George Mallory and Andrew Irvine made a final summit attempt on 8 June but never returned, leading to debate as to whether they were the first to reach the top. Tenzing Norgay and Edmund Hillary made the first documented ascent of Everest in 1953, using the Southeast Ridge r…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 1.000 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported",
+        "NLI tier: entailment 0.995 (bands: >= 0.7 supported, >= 0.3 ambiguous, below unsupported)",
+        "NLI tier: contradiction 0.000"
+      ]
+    },
+    {
+      "id": "ind-168",
+      "category": "negation-flip",
+      "expected": "unsupported",
+      "predicted": "unsupported",
+      "score": 0.9486,
+      "tier_reached": 3,
+      "match": true,
+      "evidence": "On the 1924 expedition, George Mallory and Andrew Irvine made a final summit attempt on 8 June but never returned, leading to debate as to whether they were the first to reach the top. Tenzing Norgay and Edmund Hillary made the first documented ascent of Everest in 1953, using the Southeast Ridge r…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 0.765 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported",
+        "NLI tier: entailment 0.949 (bands: >= 0.7 supported, >= 0.3 ambiguous, below unsupported)",
+        "NLI tier: contradiction 0.001",
+        "pooled contradiction 1.000 >= 0.5 — a claim-relevant sentence in the evidence contradicts the claim",
+        "NLI moved verdict supported → unsupported"
+      ]
+    },
+    {
+      "id": "ind-169",
+      "category": "entity-swap",
+      "expected": "unsupported",
+      "predicted": "unsupported",
+      "score": 0.0,
+      "tier_reached": 3,
+      "match": true,
+      "evidence": "Norgay had reached 8,595 m (28,199 ft) the previous year as a member of the 1952 Swiss expedition. The Chinese mountaineering team of Wang Fuzhou, Gonpo, and Qu Yinhua made the first reported ascent of the peak from the North Ridge on 25 May 1960.[10] Name Mount Everest's Nepali name is सगरमाथा = S…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 0.750 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported",
+        "NLI tier: entailment 0.000 (bands: >= 0.7 supported, >= 0.3 ambiguous, below unsupported)",
+        "NLI tier: contradiction 1.000",
+        "NLI tier: contradiction 1.000 >= 0.5 — source contradicts claim",
+        "NLI moved verdict supported → unsupported"
+      ]
+    },
+    {
+      "id": "ind-249",
+      "category": "partially-true-ambiguous",
+      "expected": "ambiguous",
+      "predicted": "unsupported",
+      "score": 0.0029,
+      "tier_reached": 3,
+      "match": false,
+      "evidence": "Mount Everest Mount Everest (known in Nepali as Sagarmāthā[a], in Sherpa as Chamolangma[4], and in Tibetan as Jomolangma/Čhomolangma[b] is the highest mountain on Earth above sea level. It lies in the Mahalangur Himal sub-range of the Himalayas and marks part of the China–Nepal border at its summit…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 1.000 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported",
+        "NLI tier: entailment 0.003 (bands: >= 0.7 supported, >= 0.3 ambiguous, below unsupported)",
+        "NLI tier: contradiction 0.001",
+        "NLI moved verdict supported → unsupported"
+      ]
+    },
+    {
+      "id": "ind-107",
+      "category": "verbatim-supported",
+      "expected": "supported",
+      "predicted": "supported",
+      "score": 0.9896,
+      "tier_reached": 3,
+      "match": true,
+      "evidence": "Django will automatically capitalize the first letter where it needs to. Relationships¶ Clearly, the power of relational databases lies in relating tables to each other. Django offers ways to define the three most common types of database relationships: many-to-one, many-to-many and one-to-one. Man…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 1.000 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported",
+        "NLI tier: entailment 0.990 (bands: >= 0.7 supported, >= 0.3 ambiguous, below unsupported)",
+        "NLI tier: contradiction 0.002"
+      ]
+    },
+    {
+      "id": "ind-108",
+      "category": "negation-flip",
+      "expected": "unsupported",
+      "predicted": "unsupported",
+      "score": 0.0004,
+      "tier_reached": 3,
+      "match": true,
+      "evidence": "Django will automatically capitalize the first letter where it needs to. Relationships¶ Clearly, the power of relational databases lies in relating tables to each other. Django offers ways to define the three most common types of database relationships: many-to-one, many-to-many and one-to-one. Man…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 0.900 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported",
+        "NLI tier: entailment 0.000 (bands: >= 0.7 supported, >= 0.3 ambiguous, below unsupported)",
+        "NLI tier: contradiction 0.924",
+        "NLI tier: contradiction 0.924 >= 0.5 — source contradicts claim",
+        "NLI moved verdict supported → unsupported"
+      ]
+    },
+    {
+      "id": "ind-109",
+      "category": "entity-swap",
+      "expected": "unsupported",
+      "predicted": "supported",
+      "score": 0.9873,
+      "tier_reached": 3,
+      "match": false,
+      "evidence": "Django will automatically capitalize the first letter where it needs to. Relationships¶ Clearly, the power of relational databases lies in relating tables to each other. Django offers ways to define the three most common types of database relationships: many-to-one, many-to-many and one-to-one. Man…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 0.900 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported",
+        "NLI tier: entailment 0.987 (bands: >= 0.7 supported, >= 0.3 ambiguous, below unsupported)",
+        "NLI tier: contradiction 0.001"
+      ]
+    },
+    {
+      "id": "ind-128",
+      "category": "verbatim-supported",
+      "expected": "supported",
+      "predicted": "unsupported",
+      "score": 0.9952,
+      "tier_reached": 3,
+      "match": false,
+      "evidence": "Expecting property name enclosed in double quotes: line 1 column 2 (char 1) See Command-line interface for detailed documentation. Note JSON is a subset of YAML 1.2. The JSON produced by this module’s default settings (in particular, the default separators value) is also a subset of YAML 1.0 and 1.…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 1.000 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported",
+        "NLI tier: entailment 0.995 (bands: >= 0.7 supported, >= 0.3 ambiguous, below unsupported)",
+        "NLI tier: contradiction 0.000",
+        "pooled contradiction 0.999 >= 0.5 — a claim-relevant sentence in the evidence contradicts the claim",
+        "NLI moved verdict supported → unsupported"
+      ]
+    },
+    {
+      "id": "ind-129",
+      "category": "negation-flip",
+      "expected": "unsupported",
+      "predicted": "unsupported",
+      "score": 0.0564,
+      "tier_reached": 3,
+      "match": true,
+      "evidence": "Expecting property name enclosed in double quotes: line 1 column 2 (char 1) See Command-line interface for detailed documentation. Note JSON is a subset of YAML 1.2. The JSON produced by this module’s default settings (in particular, the default separators value) is also a subset of YAML 1.0 and 1.…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 0.875 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported",
+        "NLI tier: entailment 0.056 (bands: >= 0.7 supported, >= 0.3 ambiguous, below unsupported)",
+        "NLI tier: contradiction 0.415",
+        "NLI moved verdict supported → unsupported"
+      ]
+    },
+    {
+      "id": "ind-130",
+      "category": "entity-swap",
+      "expected": "unsupported",
+      "predicted": "unsupported",
+      "score": 0.009,
+      "tier_reached": 3,
+      "match": true,
+      "evidence": "Expecting property name enclosed in double quotes: line 1 column 2 (char 1) See Command-line interface for detailed documentation. Note JSON is a subset of YAML 1.2. The JSON produced by this module’s default settings (in particular, the default separators value) is also a subset of YAML 1.0 and 1.…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 1.000 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported",
+        "NLI tier: entailment 0.009 (bands: >= 0.7 supported, >= 0.3 ambiguous, below unsupported)",
+        "NLI tier: contradiction 0.004",
+        "NLI moved verdict supported → unsupported"
+      ]
+    },
+    {
+      "id": "ind-173",
+      "category": "verbatim-supported",
+      "expected": "supported",
+      "predicted": "supported",
+      "score": 0.993,
+      "tier_reached": 3,
+      "match": true,
+      "evidence": "Roughly equivalent to: def compress(data, selectors): # compress('ABCDEF', [1,0,1,0,1,1]) → A C E F return (datum for datum, selector in zip(data, selectors) if selector) Added in version 3.1. - itertools.count(start=0, step=1)¶ - Make an iterator that returns evenly spaced values beginning with st…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 1.000 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported",
+        "NLI tier: entailment 0.993 (bands: >= 0.7 supported, >= 0.3 ambiguous, below unsupported)",
+        "NLI tier: contradiction 0.001"
+      ]
+    },
+    {
+      "id": "ind-174",
+      "category": "negation-flip",
+      "expected": "unsupported",
+      "predicted": "unsupported",
+      "score": 0.0115,
+      "tier_reached": 3,
+      "match": true,
+      "evidence": "Roughly equivalent to: def compress(data, selectors): # compress('ABCDEF', [1,0,1,0,1,1]) → A C E F return (datum for datum, selector in zip(data, selectors) if selector) Added in version 3.1. - itertools.count(start=0, step=1)¶ - Make an iterator that returns evenly spaced values beginning with st…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 0.889 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported",
+        "NLI tier: entailment 0.012 (bands: >= 0.7 supported, >= 0.3 ambiguous, below unsupported)",
+        "NLI tier: contradiction 0.033",
+        "NLI moved verdict supported → unsupported"
+      ]
+    },
+    {
+      "id": "ind-175",
+      "category": "entity-swap",
+      "expected": "unsupported",
+      "predicted": "unsupported",
+      "score": 0.0416,
+      "tier_reached": 3,
+      "match": true,
+      "evidence": "Roughly equivalent to: def compress(data, selectors): # compress('ABCDEF', [1,0,1,0,1,1]) → A C E F return (datum for datum, selector in zip(data, selectors) if selector) Added in version 3.1. - itertools.count(start=0, step=1)¶ - Make an iterator that returns evenly spaced values beginning with st…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 0.500 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported",
+        "NLI tier: entailment 0.042 (bands: >= 0.7 supported, >= 0.3 ambiguous, below unsupported)",
+        "NLI tier: contradiction 0.848",
+        "NLI tier: contradiction 0.848 >= 0.5 — source contradicts claim",
+        "NLI moved verdict ambiguous → unsupported"
+      ]
+    },
+    {
+      "id": "ind-125",
+      "category": "verbatim-supported",
+      "expected": "supported",
+      "predicted": "supported",
+      "score": 0.997,
+      "tier_reached": 3,
+      "match": true,
+      "evidence": "In contrast, writes, updates, and deletions only operate on the first mapping. A ChainMap incorporates the underlying mappings by reference. So, if one of the underlying mappings gets updated, those changes will be reflected inChainMap .All of the usual dictionary methods are supported.",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 1.000 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported",
+        "NLI tier: entailment 0.997 (bands: >= 0.7 supported, >= 0.3 ambiguous, below unsupported)",
+        "NLI tier: contradiction 0.000"
+      ]
+    },
+    {
+      "id": "ind-126",
+      "category": "negation-flip",
+      "expected": "unsupported",
+      "predicted": "unsupported",
+      "score": 0.0024,
+      "tier_reached": 3,
+      "match": true,
+      "evidence": "In contrast, writes, updates, and deletions only operate on the first mapping. A ChainMap incorporates the underlying mappings by reference. So, if one of the underlying mappings gets updated, those changes will be reflected inChainMap .All of the usual dictionary methods are supported.",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 0.714 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported",
+        "NLI tier: entailment 0.002 (bands: >= 0.7 supported, >= 0.3 ambiguous, below unsupported)",
+        "NLI tier: contradiction 0.990",
+        "NLI tier: contradiction 0.990 >= 0.5 — source contradicts claim",
+        "NLI moved verdict supported → unsupported"
+      ]
+    },
+    {
+      "id": "ind-127",
+      "category": "entity-swap",
+      "expected": "unsupported",
+      "predicted": "unsupported",
+      "score": 0.0182,
+      "tier_reached": 3,
+      "match": true,
+      "evidence": "ChainMap was dict-like class for creating a single view of multiple mappings. Counter was dict subclass for counting hashable objects. OrderedDict was dict subclass that remembers the order entries were added. defaultdict was dict subclass that calls a factory function to supply missing values. Use…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 0.571 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported",
+        "NLI tier: entailment 0.018 (bands: >= 0.7 supported, >= 0.3 ambiguous, below unsupported)",
+        "NLI tier: contradiction 0.949",
+        "NLI tier: contradiction 0.949 >= 0.5 — source contradicts claim",
+        "NLI moved verdict ambiguous → unsupported"
+      ]
+    },
+    {
+      "id": "ind-245",
+      "category": "paywalled",
+      "expected": "paywalled",
+      "predicted": "paywalled",
+      "score": null,
+      "tier_reached": 1,
+      "match": true,
+      "evidence": "Francis Halzen is a leader in the study of neutrinos, ghostly particles from across the universe that hint at exciting new physics\nScientific American\nPairing artificial intelligence with acoustic technology helped reveal an Etrurian tomb in new light\nDozens of particles from halfway across the uni…",
+      "notes": [
+        "paywall/login wall detected on the cited page"
+      ]
+    },
+    {
+      "id": "ind-179",
+      "category": "verbatim-supported",
+      "expected": "supported",
+      "predicted": "unsupported",
+      "score": 0.0079,
+      "tier_reached": 3,
+      "match": false,
+      "evidence": "On the ImageNet dataset we evaluate residual nets with a depth of up to 152 layers---8x deeper than VGG nets but still having lower complexity. An ensemble of these residual nets achieves 3.57% error on the ImageNet test set. This result won the 1st place on the ILSVRC 2015 classification task. We…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 1.000 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported",
+        "NLI tier: entailment 0.008 (bands: >= 0.7 supported, >= 0.3 ambiguous, below unsupported)",
+        "NLI tier: contradiction 0.003",
+        "NLI moved verdict supported → unsupported"
+      ]
+    },
+    {
+      "id": "ind-180",
+      "category": "negation-flip",
+      "expected": "unsupported",
+      "predicted": "unsupported",
+      "score": 0.0006,
+      "tier_reached": 3,
+      "match": true,
+      "evidence": "On the ImageNet dataset we evaluate residual nets with a depth of up to 152 layers---8x deeper than VGG nets but still having lower complexity. An ensemble of these residual nets achieves 3.57% error on the ImageNet test set. This result won the 1st place on the ILSVRC 2015 classification task. We…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 0.833 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported",
+        "NLI tier: entailment 0.001 (bands: >= 0.7 supported, >= 0.3 ambiguous, below unsupported)",
+        "NLI tier: contradiction 0.001",
+        "NLI moved verdict supported → unsupported"
+      ]
+    },
+    {
+      "id": "ind-181",
+      "category": "entity-swap",
+      "expected": "unsupported",
+      "predicted": "unsupported",
+      "score": 0.0133,
+      "tier_reached": 3,
+      "match": true,
+      "evidence": "Deep residual nets are foundations of our submissions to ILSVRC & COCO 2015 competitions, where we also won the 1st places on the tasks of ImageNet detection, ImageNet localization, COCO detection, and COCO segmentation. References & Citations Loading...",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 0.800 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported",
+        "NLI tier: entailment 0.013 (bands: >= 0.7 supported, >= 0.3 ambiguous, below unsupported)",
+        "NLI tier: contradiction 0.002",
+        "NLI moved verdict supported → unsupported"
+      ]
+    },
+    {
+      "id": "ind-152",
+      "category": "verbatim-supported",
+      "expected": "supported",
+      "predicted": "supported",
+      "score": 0.9947,
+      "tier_reached": 3,
+      "match": true,
+      "evidence": "[Page 1] September 1981 Transmission Control Protocol Introduction TCP is based on concepts first described by Cerf and Kahn in [1]. The TCP fits into a layered protocol architecture just above a basic Internet Protocol [2] which provides a way for the TCP to send and receive variable-length segmen…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 1.000 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported",
+        "NLI tier: entailment 0.995 (bands: >= 0.7 supported, >= 0.3 ambiguous, below unsupported)",
+        "NLI tier: contradiction 0.000"
+      ]
+    },
+    {
+      "id": "ind-153",
+      "category": "negation-flip",
+      "expected": "unsupported",
+      "predicted": "unsupported",
+      "score": 0.0009,
+      "tier_reached": 3,
+      "match": true,
+      "evidence": "[Page 1] September 1981 Transmission Control Protocol Introduction TCP is based on concepts first described by Cerf and Kahn in [1]. The TCP fits into a layered protocol architecture just above a basic Internet Protocol [2] which provides a way for the TCP to send and receive variable-length segmen…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 0.889 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported",
+        "NLI tier: entailment 0.001 (bands: >= 0.7 supported, >= 0.3 ambiguous, below unsupported)",
+        "NLI tier: contradiction 0.972",
+        "NLI tier: contradiction 0.972 >= 0.5 — source contradicts claim",
+        "NLI moved verdict supported → unsupported"
+      ]
+    },
+    {
+      "id": "ind-154",
+      "category": "entity-swap",
+      "expected": "unsupported",
+      "predicted": "unsupported",
+      "score": 0.002,
+      "tier_reached": 3,
+      "match": true,
+      "evidence": "[Page 1] September 1981 Transmission Control Protocol Introduction TCP is based on concepts first described by Cerf and Kahn in [1]. The TCP fits into a layered protocol architecture just above a basic Internet Protocol [2] which provides a way for the TCP to send and receive variable-length segmen…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 0.600 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported",
+        "NLI tier: entailment 0.002 (bands: >= 0.7 supported, >= 0.3 ambiguous, below unsupported)",
+        "NLI tier: contradiction 0.019",
+        "NLI moved verdict supported → unsupported"
+      ]
+    },
+    {
+      "id": "ind-119",
+      "category": "verbatim-supported",
+      "expected": "supported",
+      "predicted": "supported",
+      "score": 0.9917,
+      "tier_reached": 3,
+      "match": true,
+      "evidence": "A feature of HTTP is the typing and negotiation of data representation, allowing systems to be built independently of the data being transferred. HTTP has been in use by the World-Wide Web global information initiative since 1990. This specification defines the protocol referred to as \"HTTP/1.1\", a…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 0.867 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported",
+        "NLI tier: entailment 0.992 (bands: >= 0.7 supported, >= 0.3 ambiguous, below unsupported)",
+        "NLI tier: contradiction 0.001"
+      ]
+    },
+    {
+      "id": "ind-120",
+      "category": "negation-flip",
+      "expected": "unsupported",
+      "predicted": "unsupported",
+      "score": 0.0015,
+      "tier_reached": 3,
+      "match": true,
+      "evidence": "A feature of HTTP is the typing and negotiation of data representation, allowing systems to be built independently of the data being transferred. HTTP has been in use by the World-Wide Web global information initiative since 1990. This specification defines the protocol referred to as \"HTTP/1.1\", a…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 0.857 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported",
+        "NLI tier: entailment 0.001 (bands: >= 0.7 supported, >= 0.3 ambiguous, below unsupported)",
+        "NLI tier: contradiction 0.119",
+        "NLI moved verdict supported → unsupported"
+      ]
+    },
+    {
+      "id": "ind-121",
+      "category": "entity-swap",
+      "expected": "unsupported",
+      "predicted": "unsupported",
+      "score": 0.0032,
+      "tier_reached": 3,
+      "match": true,
+      "evidence": "Standards Track [Page 6] RFC 2616 HTTP/1.1 June 1999 19.4.1 MIME-Version ............................................167 19.4.2 Conversion to Canonical Form ............................167 19.4.3 Conversion of Date Formats ..............................168 19.4.4 Introduction of Content-Encoding ..…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 0.857 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported",
+        "NLI tier: entailment 0.003 (bands: >= 0.7 supported, >= 0.3 ambiguous, below unsupported)",
+        "NLI tier: contradiction 0.006",
+        "NLI moved verdict supported → unsupported"
+      ]
+    },
+    {
+      "id": "ind-143",
+      "category": "verbatim-supported",
+      "expected": "supported",
+      "predicted": "supported",
+      "score": 0.996,
+      "tier_reached": 3,
+      "match": true,
+      "evidence": "# Let's do it differently now and await it: print(await nested()) # will print \"42\". asyncio.run(main()) Important In this documentation the term “coroutine” can be used for two closely related concepts: - a coroutine function: an async def function; - a coroutine object: an object returned by call…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 1.000 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported",
+        "NLI tier: entailment 0.996 (bands: >= 0.7 supported, >= 0.3 ambiguous, below unsupported)",
+        "NLI tier: contradiction 0.000"
+      ]
+    },
+    {
+      "id": "ind-144",
+      "category": "negation-flip",
+      "expected": "unsupported",
+      "predicted": "unsupported",
+      "score": 0.0002,
+      "tier_reached": 3,
+      "match": true,
+      "evidence": "# Let's do it differently now and await it: print(await nested()) # will print \"42\". asyncio.run(main()) Important In this documentation the term “coroutine” can be used for two closely related concepts: - a coroutine function: an async def function; - a coroutine object: an object returned by call…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 0.857 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported",
+        "NLI tier: entailment 0.000 (bands: >= 0.7 supported, >= 0.3 ambiguous, below unsupported)",
+        "NLI tier: contradiction 0.998",
+        "NLI tier: contradiction 0.998 >= 0.5 — source contradicts claim",
+        "NLI moved verdict supported → unsupported"
+      ]
+    },
+    {
+      "id": "ind-145",
+      "category": "entity-swap",
+      "expected": "unsupported",
+      "predicted": "unsupported",
+      "score": 0.9915,
+      "tier_reached": 3,
+      "match": true,
+      "evidence": "# Let's do it differently now and await it: print(await nested()) # will print \"42\". asyncio.run(main()) Important In this documentation the term “coroutine” can be used for two closely related concepts: - a coroutine function: an async def function; - a coroutine object: an object returned by call…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 0.667 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported",
+        "NLI tier: entailment 0.991 (bands: >= 0.7 supported, >= 0.3 ambiguous, below unsupported)",
+        "NLI tier: contradiction 0.002",
+        "pooled contradiction 0.999 >= 0.5 — a claim-relevant sentence in the evidence contradicts the claim",
+        "NLI moved verdict supported → unsupported"
+      ]
+    },
+    {
+      "id": "ind-134",
+      "category": "verbatim-supported",
+      "expected": "supported",
+      "predicted": "supported",
+      "score": 0.9949,
+      "tier_reached": 3,
+      "match": true,
+      "evidence": "asyncio — Asynchronous I/O¶ asyncio is a library to write concurrent code using the async/await syntax. asyncio is used as a foundation for multiple Python asynchronous frameworks that provide high-performance network and web-servers, database connection libraries, distributed task queues, etc. asy…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 1.000 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported",
+        "NLI tier: entailment 0.995 (bands: >= 0.7 supported, >= 0.3 ambiguous, below unsupported)",
+        "NLI tier: contradiction 0.001"
+      ]
+    },
+    {
+      "id": "ind-135",
+      "category": "negation-flip",
+      "expected": "unsupported",
+      "predicted": "unsupported",
+      "score": 0.0004,
+      "tier_reached": 3,
+      "match": true,
+      "evidence": "asyncio — Asynchronous I/O¶ asyncio is a library to write concurrent code using the async/await syntax. asyncio is used as a foundation for multiple Python asynchronous frameworks that provide high-performance network and web-servers, database connection libraries, distributed task queues, etc. asy…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 0.667 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported",
+        "NLI tier: entailment 0.000 (bands: >= 0.7 supported, >= 0.3 ambiguous, below unsupported)",
+        "NLI tier: contradiction 0.997",
+        "NLI tier: contradiction 0.997 >= 0.5 — source contradicts claim",
+        "NLI moved verdict supported → unsupported"
+      ]
+    },
+    {
+      "id": "ind-136",
+      "category": "entity-swap",
+      "expected": "unsupported",
+      "predicted": "supported",
+      "score": 0.9983,
+      "tier_reached": 3,
+      "match": false,
+      "evidence": "asyncio — Asynchronous I/O¶ asyncio is a library to write concurrent code using the async/await syntax. asyncio is used as a foundation for multiple Python asynchronous frameworks that provide high-performance network and web-servers, database connection libraries, distributed task queues, etc. asy…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 0.778 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported",
+        "NLI tier: entailment 0.998 (bands: >= 0.7 supported, >= 0.3 ambiguous, below unsupported)",
+        "NLI tier: contradiction 0.000"
+      ]
+    },
+    {
+      "id": "ind-164",
+      "category": "verbatim-supported",
+      "expected": "supported",
+      "predicted": "supported",
+      "score": 0.9943,
+      "tier_reached": 3,
+      "match": true,
+      "evidence": "Empirical results demonstrate that Adam works well in practice and compares favorably to other stochastic optimization methods. Finally, we discuss AdaMax, a variant of Adam based on the infinity norm. Submission history From: Diederik P Kingma M.Sc.",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 1.000 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported",
+        "NLI tier: entailment 0.994 (bands: >= 0.7 supported, >= 0.3 ambiguous, below unsupported)",
+        "NLI tier: contradiction 0.000"
+      ]
+    },
+    {
+      "id": "ind-165",
+      "category": "negation-flip",
+      "expected": "unsupported",
+      "predicted": "unsupported",
+      "score": 0.0009,
+      "tier_reached": 3,
+      "match": true,
+      "evidence": "Empirical results demonstrate that Adam works well in practice and compares favorably to other stochastic optimization methods. Finally, we discuss AdaMax, a variant of Adam based on the infinity norm. Submission history From: Diederik P Kingma M.Sc.",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 0.833 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported",
+        "NLI tier: entailment 0.001 (bands: >= 0.7 supported, >= 0.3 ambiguous, below unsupported)",
+        "NLI tier: contradiction 0.763",
+        "NLI tier: contradiction 0.763 >= 0.5 — source contradicts claim",
+        "NLI moved verdict supported → unsupported"
+      ]
+    },
+    {
+      "id": "ind-166",
+      "category": "entity-swap",
+      "expected": "unsupported",
+      "predicted": "unsupported",
+      "score": 0.0041,
+      "tier_reached": 3,
+      "match": true,
+      "evidence": "Empirical results demonstrate that Adam works well in practice and compares favorably to other stochastic optimization methods. Finally, we discuss AdaMax, a variant of Adam based on the infinity norm. Submission history From: Diederik P Kingma M.Sc.",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 1.000 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported",
+        "NLI tier: entailment 0.004 (bands: >= 0.7 supported, >= 0.3 ambiguous, below unsupported)",
+        "NLI tier: contradiction 0.989",
+        "NLI tier: contradiction 0.989 >= 0.5 — source contradicts claim",
+        "NLI moved verdict supported → unsupported"
+      ]
+    }
+  ]
+}

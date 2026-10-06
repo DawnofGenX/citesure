@@ -1,0 +1,488 @@
+[
+  {
+    "id": "ind-194",
+    "category": "verbatim-supported",
+    "expected_status": "supported",
+    "labeler_confidence": "high",
+    "url": "https://arxiv.org/abs/1606.08415",
+    "claim": "The GELU activation function is xΦ(x), where Φ(x) the standard Gaussian cumulative distribution function.",
+    "notes": "Source sentence copied verbatim from the abstract in evals/page_text/arxiv.org_abs_1606.08415.txt (rendered without LaTeX markup in the extraction)."
+  },
+  {
+    "id": "ind-195",
+    "category": "negation-flip",
+    "expected_status": "unsupported",
+    "labeler_confidence": "high",
+    "url": "https://arxiv.org/abs/1606.08415",
+    "claim": "The GELU activation function is not xΦ(x), but instead gates inputs by their sign.",
+    "notes": "Mutation of ind-194: polarity reversed ('is not xΦ(x)') and the sign-gating tail borrowed from the page's ReLU description, so the combined negated claim cannot match. Grepped lowercased text for 'is not' adjacent to 'xφ(x)' region via 6-gram check -> absent."
+  },
+  {
+    "id": "ind-196",
+    "category": "entity-swap",
+    "expected_status": "unsupported",
+    "labeler_confidence": "high",
+    "url": "https://arxiv.org/abs/1606.08415",
+    "claim": "The ReLU activation function is defined as xΦ(x), with Φ(x) being a standard Gaussian cumulative distribution function.",
+    "notes": "Form-1 entity-swap of ind-194: GELU's defining formula re-attributed to ReLU, which the paper mentions but says gates inputs by their sign. First draft ('...is xΦ(x), where Φ(x) the standard Gaussian...') shared a 6-gram with real abstract text and was rejected by the 6-gram check; reworded the tail ('is defined as ... with ... being a ...') and re-verified -> absent."
+  },
+  {
+    "id": "ind-170",
+    "category": "verbatim-supported",
+    "expected_status": "supported",
+    "labeler_confidence": "high",
+    "url": "https://en.wikipedia.org/wiki/Marie_Curie",
+    "claim": "Marie Curie was the first woman to be awarded a Nobel Prize.",
+    "notes": "Provenance: source sentence copied verbatim from evals/page_text/en.wikipedia.org_wiki_Marie_Curie.txt (Nobel Prize section, 'Marie Curie was the first woman to be awarded a Nobel Prize.')."
+  },
+  {
+    "id": "ind-171",
+    "category": "negation-flip",
+    "expected_status": "unsupported",
+    "labeler_confidence": "medium",
+    "url": "https://en.wikipedia.org/wiki/Marie_Curie",
+    "claim": "Marie Curie was not the first woman to receive a Nobel Prize.",
+    "notes": "Mutation of the source sentence 'Marie Curie was the first woman to be awarded a Nobel Prize.': polarity reversed at the copula (was -> was not); 'awarded' lightly reworded to 'receive'. Grepped for 'not the first woman' (absent); 6-gram check confirmed absence."
+  },
+  {
+    "id": "ind-172",
+    "category": "entity-swap",
+    "expected_status": "unsupported",
+    "labeler_confidence": "medium",
+    "url": "https://en.wikipedia.org/wiki/Marie_Curie",
+    "claim": "Henri Becquerel was the first female Nobel laureate, awarded in 1903.",
+    "notes": "Mutation of the source sentence: detail (first-woman Nobel laureate, 1903 — the year on the page) re-attributed to Henri Becquerel, who appears on the page as Curie's co-laureate for the 1903 Physics prize and is male; the page never calls him the first female laureate. 6-gram check confirmed absence."
+  },
+  {
+    "id": "ind-250",
+    "category": "partially-true-ambiguous",
+    "expected_status": "ambiguous",
+    "labeler_confidence": "high",
+    "url": "https://en.wikipedia.org/wiki/Marie_Curie",
+    "claim": "Marie Curie died in 1934, aged 66, of aplastic anaemia, and she was the first woman to be entombed on her own merits in the Paris Pantheon.",
+    "notes": "Compound claim built from extracted text line 7. BOTH clauses are verbatim true. Ambiguity: a verifier matching only the death clause returns supported and silently ignores the entombment clause, and the entombment claim (1995) is the more consequential and more falsifiable of the two. True half: death in 1934 aged 66 of aplastic anaemia. Contested half: 'first woman to be entombed on her own merits' is a superlative that the page asserts but that depends on how 'merits' is defined."
+  },
+  {
+    "id": "ind-110",
+    "category": "verbatim-supported",
+    "expected_status": "supported",
+    "labeler_confidence": "high",
+    "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise",
+    "claim": "The Promise object represents the eventual completion (or failure) of an asynchronous operation and its resulting value.",
+    "notes": "Source sentence (intro): \"The Promise object represents the eventual completion (or failure) of an asynchronous operation and its resulting value.\" Copied verbatim. Text file: evals/page_text/developer.mozilla.org_en-US_docs_Web_JavaScript_Reference_Global_Objects_Promise.txt."
+  },
+  {
+    "id": "ind-111",
+    "category": "negation-flip",
+    "expected_status": "unsupported",
+    "labeler_confidence": "medium",
+    "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise",
+    "claim": "The Promise object does not represent an asynchronous operation's eventual completion or failure.",
+    "notes": "Negation-flip of A: 'does not represent an asynchronous operation's eventual completion or failure'. Checked via 6-gram overlap against the saved text: absent. Text file: evals/page_text/developer.mozilla.org_en-US_docs_Web_JavaScript_Reference_Global_Objects_Promise.txt."
+  },
+  {
+    "id": "ind-112",
+    "category": "entity-swap",
+    "expected_status": "unsupported",
+    "labeler_confidence": "medium",
+    "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise",
+    "claim": "AbortController is the object that represents an asynchronous operation's eventual completion or failure.",
+    "notes": "Entity-swap (form 1): subject replaced with 'AbortController' (named on the page as the cancellation mechanism) keeping the completion-or-failure detail. Checked via 6-gram overlap: absent. Text file: evals/page_text/developer.mozilla.org_en-US_docs_Web_JavaScript_Reference_Global_Objects_Promise.txt."
+  },
+  {
+    "id": "ind-131",
+    "category": "verbatim-supported",
+    "expected_status": "supported",
+    "labeler_confidence": "high",
+    "url": "https://arxiv.org/abs/2005.11401",
+    "claim": "We introduce RAG models where the parametric memory is a pre-trained seq2seq model and the non-parametric memory is a dense vector index of Wikipedia, accessed with a pre-trained neural retriever.",
+    "notes": "Provenance: abstract of arXiv:2005.11401 (RAG paper) at evals/page_text/arxiv.org_abs_2005.11401.txt line 5, copied verbatim. Entities: RAG, Wikipedia, seq2seq; checkable detail: parametric=seq2seq / non-parametric=dense Wikipedia index assignment."
+  },
+  {
+    "id": "ind-132",
+    "category": "negation-flip",
+    "expected_status": "unsupported",
+    "labeler_confidence": "medium",
+    "url": "https://arxiv.org/abs/2005.11401",
+    "claim": "RAG models do not use a dense vector index of Wikipedia as their non-parametric memory.",
+    "notes": "Mutation of ind-131: polarity reversed at the main verb — asserts the opposite of the abstract's core design claim. Verified: grep for 'not use a dense' / 'do not' variants around the phrase returns 0 matches; 6-gram check vs page text: absent."
+  },
+  {
+    "id": "ind-133",
+    "category": "entity-swap",
+    "expected_status": "unsupported",
+    "labeler_confidence": "medium",
+    "url": "https://arxiv.org/abs/2005.11401",
+    "claim": "RAG models use a dense Wikipedia vector index as their parametric memory rather than their non-parametric memory.",
+    "notes": "Form 2 (re-target the relation): the dense Wikipedia index detail (ind-131) re-attached to the wrong slot — parametric instead of non-parametric memory; all terms exist on the page but the pairing is inverted. Verified: grep for 'parametric memory is a dense' returns 0 matches; 6-gram check vs page text: absent."
+  },
+  {
+    "id": "ind-242",
+    "category": "dead-link",
+    "expected_status": "unreachable",
+    "labeler_confidence": "high",
+    "url": "https://nonexistent-citesure-v2-7q2z9k.com/dead-page",
+    "claim": "The citesure v2 dead-page fixture explains unreachable citation handling.",
+    "notes": "Nonexistent registrable domain. Pool fetch recorded ConnectError: Name or service not known. Claim is arbitrary because the host cannot resolve."
+  },
+  {
+    "id": "ind-104",
+    "category": "verbatim-supported",
+    "expected_status": "supported",
+    "labeler_confidence": "high",
+    "url": "https://en.wikipedia.org/wiki/Black_hole",
+    "claim": "In 1907, Einstein published a paper proposing his equivalence principle, the hypothesis that inertial mass and gravitational mass have a common cause.",
+    "notes": "Source sentence (History section): \"In 1907, Einstein published a paper proposing his equivalence principle, the hypothesis that inertial mass and gravitational mass have a common cause.\" Copied verbatim. Text file: evals/page_text/en.wikipedia.org_wiki_Black_hole.txt."
+  },
+  {
+    "id": "ind-105",
+    "category": "negation-flip",
+    "expected_status": "unsupported",
+    "labeler_confidence": "medium",
+    "url": "https://en.wikipedia.org/wiki/Black_hole",
+    "claim": "Einstein did not publish the 1907 paper proposing his equivalence principle.",
+    "notes": "Negation-flip of A: 'did not publish the 1907 paper proposing his equivalence principle'. Checked via 6-gram overlap against the saved text: absent. Text file: evals/page_text/en.wikipedia.org_wiki_Black_hole.txt."
+  },
+  {
+    "id": "ind-106",
+    "category": "entity-swap",
+    "expected_status": "unsupported",
+    "labeler_confidence": "medium",
+    "url": "https://en.wikipedia.org/wiki/Black_hole",
+    "claim": "In 1907, Karl Schwarzschild published a paper proposing the equivalence principle.",
+    "notes": "Entity-swap (form 1): subject replaced with 'Karl Schwarzschild' (named on the page) while keeping the 1907/equivalence-principle detail. Checked via 6-gram overlap: absent. Text file: evals/page_text/en.wikipedia.org_wiki_Black_hole.txt."
+  },
+  {
+    "id": "ind-243",
+    "category": "dead-link",
+    "expected_status": "unreachable",
+    "labeler_confidence": "high",
+    "url": "https://docs.python.org/3/library/definitely_not_a_module_zzz9.html",
+    "claim": "The definitely_not_a_module_zzz9 module provides helpers for working with zip archives.",
+    "notes": "Real 404 on a stable live domain (docs.python.org), per pool fetch. Claim is plausible-sounding but the module does not exist, so the page is unreachable regardless of content."
+  },
+  {
+    "id": "ind-101",
+    "category": "verbatim-supported",
+    "expected_status": "supported",
+    "labeler_confidence": "high",
+    "url": "https://tc39.es/ecma262/",
+    "claim": "The language was invented by Brendan Eich at Netscape and first appeared in that company's Navigator 2.0 browser.",
+    "notes": "Source sentence (near top of page text): \"The language was invented by Brendan Eich at Netscape and first appeared in that company's Navigator 2.0 browser.\" Copied verbatim. Text file: evals/page_text/tc39.es_ecma262_.txt."
+  },
+  {
+    "id": "ind-102",
+    "category": "negation-flip",
+    "expected_status": "unsupported",
+    "labeler_confidence": "medium",
+    "url": "https://tc39.es/ecma262/",
+    "claim": "The ECMAScript language was not invented by Brendan Eich.",
+    "notes": "Negation-flip of A: main verb reversed to 'was not invented by Brendan Eich'. Checked via 6-gram overlap against the saved text (evals/page_text/tc39.es_ecma262_.txt): absent. Text file: evals/page_text/tc39.es_ecma262_.txt."
+  },
+  {
+    "id": "ind-103",
+    "category": "entity-swap",
+    "expected_status": "unsupported",
+    "labeler_confidence": "medium",
+    "url": "https://tc39.es/ecma262/",
+    "claim": "Microsoft invented the language and first shipped it in the Navigator 2.0 browser.",
+    "notes": "Entity-swap (form 1): 'Microsoft' (named on the page as the JScript vendor) claimed as the inventor who shipped Navigator 2.0; Netscape/Brendan Eich detail re-attributed. 6-gram overlap checked: absent. Text file: evals/page_text/tc39.es_ecma262_.txt."
+  },
+  {
+    "id": "ind-248",
+    "category": "paywalled",
+    "expected_status": "paywalled",
+    "labeler_confidence": "high",
+    "url": "https://www.cnbc.com/",
+    "claim": "CNBC provides financial news and market coverage.",
+    "notes": "Pool fetch recorded paywall_detected=true (11156 chars), triggered by DynamicPaywallSignUpModal CSS. Subscription-gated front page."
+  },
+  {
+    "id": "ind-122",
+    "category": "verbatim-supported",
+    "expected_status": "supported",
+    "labeler_confidence": "high",
+    "url": "https://en.wikipedia.org/wiki/Alan_Turing",
+    "claim": "In 1948, Turing was appointed reader in the Mathematics Department at the University of Manchester.",
+    "notes": "Provenance: sentence at evals/page_text/en.wikipedia.org_wiki_Alan_Turing.txt line 73, copied verbatim. Entity: Turing; checkable detail: 1948 + the reader appointment at the University of Manchester."
+  },
+  {
+    "id": "ind-123",
+    "category": "negation-flip",
+    "expected_status": "unsupported",
+    "labeler_confidence": "medium",
+    "url": "https://en.wikipedia.org/wiki/Alan_Turing",
+    "claim": "Turing was never appointed reader at the University of Manchester.",
+    "notes": "Mutation of ind-122: polarity reversed at the main verb ('was appointed' -> 'was never appointed'), remainder trimmed. Verified: grep -io 'never appointed' on the text file returns 0 matches; 6-gram check vs page text: absent."
+  },
+  {
+    "id": "ind-124",
+    "category": "entity-swap",
+    "expected_status": "unsupported",
+    "labeler_confidence": "medium",
+    "url": "https://en.wikipedia.org/wiki/Alan_Turing",
+    "claim": "Max Newman was appointed reader at the University of Manchester in 1948.",
+    "notes": "Form 1 (re-attribute): the 1948 reader appointment (ind-122's detail) re-assigned to Max Newman, who appears on the page (line 4/29/66, 'Max Newman's Computing Machine Laboratory') but is never said to have been appointed reader. Verified: grep for 'Newman was appointed' returns 0 matches; 6-gram check vs page text: absent."
+  },
+  {
+    "id": "ind-146",
+    "category": "verbatim-supported",
+    "expected_status": "supported",
+    "labeler_confidence": "high",
+    "url": "https://guides.rubyonrails.org/active_record_basics.html",
+    "claim": "Active Record is part of the M in MVC - the model - which is the layer of the system responsible for representing data and business logic.",
+    "notes": "Provenance: opening sentence of 'What is Active Record?' in evals/page_text/guides.rubyonrails.org_active_record_basics.html.txt; copied verbatim, confirmed present via 6-gram overlap."
+  },
+  {
+    "id": "ind-147",
+    "category": "negation-flip",
+    "expected_status": "unsupported",
+    "labeler_confidence": "medium",
+    "url": "https://guides.rubyonrails.org/active_record_basics.html",
+    "claim": "Active Record is not part of the M in MVC.",
+    "notes": "Mutation of ind-146: polarity reversed at the main verb (is -> is not), tail truncated. Grepped the saved text: the negated sentence absent and 6-gram overlap check against the page returned no shared shingle."
+  },
+  {
+    "id": "ind-148",
+    "category": "entity-swap",
+    "expected_status": "unsupported",
+    "labeler_confidence": "medium",
+    "url": "https://guides.rubyonrails.org/active_record_basics.html",
+    "claim": "Active Model is the model layer in Rails and is responsible for database persistence.",
+    "notes": "Mutation of ind-146 (form 2 re-target): the model-layer/database-persistence role re-attributed to Active Model, which the page explicitly says is for objects that do NOT need database backing. First attempt 'Active Record is part of the V in MVC.' was rejected by the 6-gram check (shared shingle 'active record is part of the' with real text), so this re-targeted form was used; final claim confirmed absent via 6-gram overlap check."
+  },
+  {
+    "id": "ind-246",
+    "category": "paywalled",
+    "expected_status": "paywalled",
+    "labeler_confidence": "high",
+    "url": "https://www.newyorker.com/magazine",
+    "claim": "The New Yorker magazine publishes longform journalism and commentary.",
+    "notes": "Pool fetch recorded paywall_detected=true (4322 chars). Subscription-gated longform section; claim sits behind the paywall."
+  },
+  {
+    "id": "ind-185",
+    "category": "verbatim-supported",
+    "expected_status": "supported",
+    "labeler_confidence": "high",
+    "url": "https://en.wikipedia.org/wiki/Steam_engine",
+    "claim": "The first commercially successful engine that could transmit continuous power to a machine was the atmospheric engine invented by Thomas Newcomen around 1712.",
+    "notes": "Source sentence in evals/page_text/en.wikipedia.org_wiki_Steam_engine.txt (Newcomen paragraph): 'The first commercially successful engine that could transmit continuous power to a machine was the atmospheric engine (or \"fire engine\"), invented by Thomas Newcomen around 1712.' Only the '(or \"fire engine\")' gloss was dropped; the claim shares a long verbatim word run with the text."
+  },
+  {
+    "id": "ind-186",
+    "category": "negation-flip",
+    "expected_status": "unsupported",
+    "labeler_confidence": "high",
+    "url": "https://en.wikipedia.org/wiki/Steam_engine",
+    "claim": "The atmospheric engine invented by Thomas Newcomen was not the first commercially successful engine to transmit continuous power to a machine.",
+    "notes": "Mutation of ind-185: polarity reversed ('was not the first'). Grepped lowercased text for 'not the first commercially' -> absent."
+  },
+  {
+    "id": "ind-187",
+    "category": "entity-swap",
+    "expected_status": "unsupported",
+    "labeler_confidence": "high",
+    "url": "https://en.wikipedia.org/wiki/Steam_engine",
+    "claim": "The atmospheric engine invented by James Watt around 1712 was the first commercially successful engine to transmit continuous power to a machine.",
+    "notes": "Form-1 entity-swap of ind-185: the 1712/first-commercial-success detail re-attributed to James Watt, who appears elsewhere in the article but is never credited with the atmospheric engine or 1712. Grepped for 'invented by James Watt' -> absent."
+  },
+  {
+    "id": "ind-251",
+    "category": "partially-true-ambiguous",
+    "expected_status": "ambiguous",
+    "labeler_confidence": "high",
+    "url": "https://en.wikipedia.org/wiki/Steam_engine",
+    "claim": "The world's first railway journey took place on 21 February 1804, when Trevithick's steam locomotive hauled 10 tonnes of iron, 70 passengers and five wagons along a tramway in south Wales.",
+    "notes": "Compound claim built from extracted text line 40. All the details are verbatim true. Ambiguity: the precise passenger and tonnage counts vary between accounts of the Pen-y-darren run, and 'first railway journey' is a contested designation (the Stockton and Darlington line of 1825 is also called the first public railway). The page asserts this framing rather than qualifying it, so a verifier matching the date and tonnage would return supported without surfacing the contested premise."
+  },
+  {
+    "id": "ind-191",
+    "category": "verbatim-supported",
+    "expected_status": "supported",
+    "labeler_confidence": "high",
+    "url": "https://science.nasa.gov/mars/",
+    "claim": "The first mission devoted to observing the Martian atmosphere and its evolution, NASA's MAVEN (Mars Atmosphere and Volatile Evolution) has ended after more than 11 years in orbit at Mars.",
+    "notes": "Source sentence in evals/page_text/science.nasa.gov_mars_.txt (MAVEN end-of-mission section); truncated after 'in orbit at Mars', dropping only the trailing 'and a decade beyond its primary, one-year mission' clause. The retained span is verbatim."
+  },
+  {
+    "id": "ind-192",
+    "category": "negation-flip",
+    "expected_status": "unsupported",
+    "labeler_confidence": "high",
+    "url": "https://science.nasa.gov/mars/",
+    "claim": "NASA's MAVEN mission has not ended; it remains in orbit at Mars after more than 11 years.",
+    "notes": "Mutation of ind-191: polarity reversed ('has not ended'). Grepped lowercased text for 'maven mission has' and 'has not ended' -> absent (page says 'has ended')."
+  },
+  {
+    "id": "ind-193",
+    "category": "entity-swap",
+    "expected_status": "unsupported",
+    "labeler_confidence": "high",
+    "url": "https://science.nasa.gov/mars/",
+    "claim": "NASA's Mars Reconnaissance Orbiter, the first mission to observe the Martian atmosphere, served for over 11 years in orbit around the planet.",
+    "notes": "Form-1 entity-swap of ind-191: the 'first mission to observe the Martian atmosphere / 11 years in orbit' detail re-attributed to Mars Reconnaissance Orbiter, which the page mentions but describes as searching for evidence of water, not as the first atmosphere mission. Grepped for 'the first mission to observe' -> absent."
+  },
+  {
+    "id": "ind-116",
+    "category": "verbatim-supported",
+    "expected_status": "supported",
+    "labeler_confidence": "high",
+    "url": "https://arxiv.org/abs/1308.0853",
+    "claim": "By considering a suitable Besov type norm, we obtain refined Sobolev inequalities on a family of Riemannian manifolds with (possibly exponentially large) ends.",
+    "notes": "Source sentence (abstract): \"By considering a suitable Besov type norm, we obtain refined Sobolev inequalities on a family of Riemannian manifolds with (possibly exponentially large) ends.\" Copied verbatim. Text file: evals/page_text/arxiv.org_abs_1308.0853.txt."
+  },
+  {
+    "id": "ind-117",
+    "category": "negation-flip",
+    "expected_status": "unsupported",
+    "labeler_confidence": "medium",
+    "url": "https://arxiv.org/abs/1308.0853",
+    "claim": "We do not obtain refined Sobolev inequalities on Riemannian manifolds with exponentially large ends.",
+    "notes": "Negation-flip of A: 'We do not obtain refined Sobolev inequalities on Riemannian manifolds with exponentially large ends'. Checked via 6-gram overlap against the saved text: absent. Text file: evals/page_text/arxiv.org_abs_1308.0853.txt."
+  },
+  {
+    "id": "ind-118",
+    "category": "entity-swap",
+    "expected_status": "unsupported",
+    "labeler_confidence": "medium",
+    "url": "https://arxiv.org/abs/1308.0853",
+    "claim": "By considering a suitable Sobolev type norm, we obtain refined Besov inequalities on manifolds with exponentially large ends.",
+    "notes": "Form 2 fallback (relation re-target): Besov/Sobolev roles swapped — claims a 'Sobolev type norm' yields 'refined Besov inequalities'. Checked via 6-gram overlap: absent. Text file: evals/page_text/arxiv.org_abs_1308.0853.txt."
+  },
+  {
+    "id": "ind-137",
+    "category": "verbatim-supported",
+    "expected_status": "supported",
+    "labeler_confidence": "high",
+    "url": "https://en.wikipedia.org/wiki/Periodic_table",
+    "claim": "In 1871, Mendeleev published a long article, including an updated form of his table, that made his predictions for unknown elements explicit.",
+    "notes": "Provenance: sentence from evals/page_text/en.wikipedia.org_wiki_Periodic_table.txt (Mendeleev section); copied verbatim, confirmed present via 6-gram overlap."
+  },
+  {
+    "id": "ind-138",
+    "category": "negation-flip",
+    "expected_status": "unsupported",
+    "labeler_confidence": "medium",
+    "url": "https://en.wikipedia.org/wiki/Periodic_table",
+    "claim": "In 1871, Mendeleev did not publish a long article containing his predictions for unknown elements.",
+    "notes": "Mutation of ind-137: polarity reversed at the main verb (published -> did not publish), article clause condensed. Grepped the saved text: this exact string absent, and 6-gram overlap check against the page returned no shared shingle."
+  },
+  {
+    "id": "ind-139",
+    "category": "entity-swap",
+    "expected_status": "unsupported",
+    "labeler_confidence": "medium",
+    "url": "https://en.wikipedia.org/wiki/Periodic_table",
+    "claim": "In 1871, Meyer published a long article containing his predictions for unknown elements.",
+    "notes": "Mutation of ind-137 (form 1 re-attribution): the 1871 long-article/predictions detail kept, subject swapped Mendeleev -> Meyer. Meyer is mentioned on the page ('including Meyer') but the page never attributes this publication to him. 6-gram overlap check against the page returned no shared shingle."
+  },
+  {
+    "id": "ind-149",
+    "category": "verbatim-supported",
+    "expected_status": "supported",
+    "labeler_confidence": "high",
+    "url": "https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage",
+    "claim": "The keys and the values stored with localStorage are in the UTF-16 string format.",
+    "notes": "Provenance: sentence from the Description section of evals/page_text/developer.mozilla.org_en-US_docs_Web_API_Window_localStorage.txt; copied verbatim, confirmed present via 6-gram overlap."
+  },
+  {
+    "id": "ind-150",
+    "category": "negation-flip",
+    "expected_status": "unsupported",
+    "labeler_confidence": "medium",
+    "url": "https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage",
+    "claim": "The keys and values stored with localStorage are not in the UTF-16 string format.",
+    "notes": "Mutation of ind-149: polarity reversed at the main verb (are -> are not). Grepped the saved text for the negated phrasing: absent, and 6-gram overlap check against the page returned no shared shingle."
+  },
+  {
+    "id": "ind-151",
+    "category": "entity-swap",
+    "expected_status": "unsupported",
+    "labeler_confidence": "medium",
+    "url": "https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage",
+    "claim": "When using sessionStorage, the keys and values are stored as UTF-16 strings.",
+    "notes": "Mutation of ind-149 (form 1 re-attribution): the UTF-16 storage detail re-attributed to sessionStorage, which the page mentions but only in its expiration contrast with localStorage; the page never states sessionStorage's storage format. 6-gram overlap check against the page returned no shared shingle."
+  },
+  {
+    "id": "ind-188",
+    "category": "verbatim-supported",
+    "expected_status": "supported",
+    "labeler_confidence": "high",
+    "url": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers",
+    "claim": "In HTTP/1.X, a header is a case-insensitive name followed by a colon, then optional whitespace which will be ignored, and finally by its value (for example: Allow: POST).",
+    "notes": "Source sentence copied verbatim from evals/page_text/developer.mozilla.org_en-US_docs_Web_HTTP_Headers.txt (HTTP/1.X header syntax paragraph)."
+  },
+  {
+    "id": "ind-189",
+    "category": "negation-flip",
+    "expected_status": "unsupported",
+    "labeler_confidence": "high",
+    "url": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers",
+    "claim": "In HTTP/1.X, a header is not a case-insensitive name with a colon before its value.",
+    "notes": "Mutation of ind-188: polarity reversed at 'is' -> 'is not'. Grepped lowercased text for 'is not a case-insensitive' -> absent."
+  },
+  {
+    "id": "ind-190",
+    "category": "entity-swap",
+    "expected_status": "unsupported",
+    "labeler_confidence": "high",
+    "url": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers",
+    "claim": "In HTTP/2, headers are case-insensitive names followed by a colon and optional whitespace.",
+    "notes": "Form-1 entity-swap of ind-188: the HTTP/1.X syntax detail re-attributed to HTTP/2, which the page discusses (lowercase display, pseudo-headers) but never with this name/colon/whitespace syntax sentence. Grepped for 'case-insensitive names' -> absent."
+  },
+  {
+    "id": "ind-140",
+    "category": "verbatim-supported",
+    "expected_status": "supported",
+    "labeler_confidence": "high",
+    "url": "https://docs.python.org/3/library/datetime.html",
+    "claim": "The ISO year consists of 52 or 53 full weeks.",
+    "notes": "Provenance: leading clause of the sentence in the isocalendar section of evals/page_text/docs.python.org_3_library_datetime.html.txt ('The ISO year consists of 52 or 53 full weeks, and where a week starts on a Monday...'); copied verbatim, confirmed present via 6-gram overlap."
+  },
+  {
+    "id": "ind-141",
+    "category": "negation-flip",
+    "expected_status": "unsupported",
+    "labeler_confidence": "medium",
+    "url": "https://docs.python.org/3/library/datetime.html",
+    "claim": "The ISO year does not consist of 52 or 53 full weeks.",
+    "notes": "Mutation of ind-140: polarity reversed at the main verb (consists -> does not consist). Grepped the saved text for the negated phrasing: absent, and 6-gram overlap check against the page returned no shared shingle."
+  },
+  {
+    "id": "ind-142",
+    "category": "entity-swap",
+    "expected_status": "unsupported",
+    "labeler_confidence": "medium",
+    "url": "https://docs.python.org/3/library/datetime.html",
+    "claim": "A Gregorian year always has 52 or 53 full weeks.",
+    "notes": "Mutation of ind-140 (form 1 re-attribution): the 52-or-53-weeks detail kept verbatim but re-attributed from the ISO year to the Gregorian year, which the page also discusses. The page states only the ISO year has this property. 6-gram overlap check against the page returned no shared shingle."
+  },
+  {
+    "id": "ind-113",
+    "category": "verbatim-supported",
+    "expected_status": "supported",
+    "labeler_confidence": "high",
+    "url": "https://developer.mozilla.org/en-US/docs/Web/CSS/color",
+    "claim": "The color CSS property sets the foreground color value of an element's text and text decorations, and sets the currentColor value.",
+    "notes": "Source sentence (intro): \"The color CSS property sets the foreground color value of an element's text and text decorations, and sets the currentColor value.\" Copied verbatim. Text file: evals/page_text/developer.mozilla.org_en-US_docs_Web_CSS_color.txt."
+  },
+  {
+    "id": "ind-114",
+    "category": "negation-flip",
+    "expected_status": "unsupported",
+    "labeler_confidence": "medium",
+    "url": "https://developer.mozilla.org/en-US/docs/Web/CSS/color",
+    "claim": "The color CSS property does not set the foreground text color of an element.",
+    "notes": "Negation-flip of A: 'does not set the foreground text color of an element'. Checked via 6-gram overlap against the saved text: absent. Text file: evals/page_text/developer.mozilla.org_en-US_docs_Web_CSS_color.txt."
+  },
+  {
+    "id": "ind-115",
+    "category": "entity-swap",
+    "expected_status": "unsupported",
+    "labeler_confidence": "medium",
+    "url": "https://developer.mozilla.org/en-US/docs/Web/CSS/color",
+    "claim": "The border-color CSS property sets the foreground text color of an element.",
+    "notes": "Entity-swap (form 1): subject swapped to 'border-color' (named on the page as one of the other color properties) which does not set foreground text color. Checked via 6-gram overlap: absent. Text file: evals/page_text/developer.mozilla.org_en-US_docs_Web_CSS_color.txt."
+  }
+]
