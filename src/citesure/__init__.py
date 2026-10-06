@@ -37,7 +37,7 @@ from .overlap import (
 )
 from .reachability import classify_reachability, verify_citations
 
-__version__ = "0.2.1"
+__version__ = "0.2.2"
 
 __all__ = [
     "__version__",
