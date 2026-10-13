@@ -569,3 +569,5 @@ fetched once into `evals/page_text_v3/` (gitignored, regenerable) by the pool ma
 
 Live-network tests (`@pytest.mark.live`) and real-model NLI tests
 (`@pytest.mark.nli`) are skipped by default so the suite is green offline.
+
+More writing on this stack: https://dev.to/dawnofgenx
