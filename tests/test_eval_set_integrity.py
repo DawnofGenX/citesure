@@ -13,7 +13,12 @@ REQUIRED_KEYS = {
     "id", "category", "expected_status", "labeler_confidence", "url", "claim", "notes",
 }
 VALID_STATUS = {"supported", "unsupported", "unreachable", "paywalled", "ambiguous"}
-SETS = ["evals/independent_set.json", "evals/independent_set_v2.json"]
+SETS = [
+    "evals/independent_set.json",
+    "evals/independent_set_v2.json",
+    "evals/independent_set_v3.json",
+    "evals/independent_set_v4.json",
+]
 
 
 def _load(rel: str) -> list[dict]:
@@ -88,3 +93,54 @@ def test_sets_do_not_overlap_ids() -> None:
     old = _load("evals/independent_set.json")
     new = _load("evals/independent_set_v2.json")
     assert not ({c["id"] for c in old} & {c["id"] for c in new}), "id collision between sets"
+
+
+# ---------------------------------------------------------------------------
+# v4: the held-out, constructively-labelled set (see evals/AUTHORING_V4.md)
+# ---------------------------------------------------------------------------
+
+FAKE_HOST_SUFFIXES = ("example.com", "example.org", "example.invalid")
+
+
+def _real_hosts(cases: list[dict]) -> set[str]:
+    hosts = {urlparse(c["url"]).netloc for c in cases}
+    return {h for h in hosts if not h.endswith(FAKE_HOST_SUFFIXES)}
+
+
+def test_v4_uses_domains_no_earlier_set_touched() -> None:
+    """The whole point of v4 is that nobody tuned against these pages."""
+    v4 = _load("evals/independent_set_v4.json")
+    earlier: list[dict] = []
+    for rel in ("evals/independent_set.json", "evals/independent_set_v2.json",
+                "evals/independent_set_v3.json"):
+        earlier.extend(_load(rel))
+    overlap = _real_hosts(v4) & _real_hosts(earlier)
+    assert not overlap, f"v4 reuses domain(s) already in v1/v2/v3: {sorted(overlap)}"
+    shared = {c["url"] for c in v4} & {c["url"] for c in earlier}
+    assert not shared, f"v4 reuses URL(s): {sorted(shared)[:3]}"
+    assert len(_real_hosts(v4)) >= 8, f"only {len(_real_hosts(v4))} fresh domains in v4"
+
+
+def test_v4_claims_agree_with_the_saved_page_text() -> None:
+    """A label that contradicts the saved text is a labelling defect, not a model error.
+
+    Mapping-free on purpose: a supported claim must appear verbatim in at least one saved
+    page (that is how it was constructed), and an unsupported claim must appear in none
+    (the transformation removed the contiguous source span). If either fails, the case's
+    label is wrong and every number computed on the set inherits the error.
+    """
+    cases = _load("evals/independent_set_v4.json")
+    text_dir = REPO / "evals" / "page_text_v4"
+    texts = {p.name: p.read_text(encoding="utf-8") for p in text_dir.glob("*.txt")}
+    assert texts, "no saved page text to check v4 labels against"
+
+    bad: list[str] = []
+    for c in cases:
+        claim = c["claim"]
+        if c["category"] == "verbatim-supported":
+            if not any(claim in t for t in texts.values()):
+                bad.append(f"{c['id']}: labelled supported, but the claim is not verbatim in any saved page")
+        elif c["category"] in CONTRAST_CATEGORIES:
+            if any(claim in t for t in texts.values()):
+                bad.append(f"{c['id']}: labelled unsupported, but the claim appears verbatim in a saved page")
+    assert not bad, "; ".join(bad[:5])

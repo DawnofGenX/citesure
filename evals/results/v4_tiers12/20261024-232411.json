@@ -1,0 +1,1065 @@
+{
+  "generated_utc": "20261024-232411",
+  "set": "evals/independent_set_v4.json",
+  "nli": false,
+  "cache_dir": "/home/hermes/.cache/citesure-eval",
+  "total": 61,
+  "matched": 24,
+  "agreement_pct": 39.34,
+  "confusion_matrix": {
+    "supported": {
+      "supported": 22,
+      "unsupported": 0,
+      "unreachable": 0,
+      "paywalled": 0,
+      "ambiguous": 2,
+      "error": 0
+    },
+    "unsupported": {
+      "supported": 32,
+      "unsupported": 0,
+      "unreachable": 0,
+      "paywalled": 0,
+      "ambiguous": 3,
+      "error": 0
+    },
+    "unreachable": {
+      "supported": 0,
+      "unsupported": 0,
+      "unreachable": 2,
+      "paywalled": 0,
+      "ambiguous": 0,
+      "error": 0
+    },
+    "paywalled": {
+      "supported": 0,
+      "unsupported": 0,
+      "unreachable": 0,
+      "paywalled": 0,
+      "ambiguous": 0,
+      "error": 0
+    },
+    "ambiguous": {
+      "supported": 0,
+      "unsupported": 0,
+      "unreachable": 0,
+      "paywalled": 0,
+      "ambiguous": 0,
+      "error": 0
+    },
+    "error": {
+      "supported": 0,
+      "unsupported": 0,
+      "unreachable": 0,
+      "paywalled": 0,
+      "ambiguous": 0,
+      "error": 0
+    }
+  },
+  "per_category_recall": {
+    "dead-link": {
+      "canonical_status": "unreachable",
+      "total": 2,
+      "correct": 2,
+      "recall": 1.0
+    },
+    "entity-swap": {
+      "canonical_status": "unsupported",
+      "total": 13,
+      "correct": 0,
+      "recall": 0.0
+    },
+    "false-claim": {
+      "canonical_status": "unsupported",
+      "total": 0,
+      "correct": 0,
+      "recall": NaN
+    },
+    "fully-supported-compound": {
+      "canonical_status": "supported",
+      "total": 0,
+      "correct": 0,
+      "recall": NaN
+    },
+    "negation-flip": {
+      "canonical_status": "unsupported",
+      "total": 22,
+      "correct": 0,
+      "recall": 0.0
+    },
+    "numeric-detail-supported": {
+      "canonical_status": "supported",
+      "total": 0,
+      "correct": 0,
+      "recall": NaN
+    },
+    "paraphrase-supported": {
+      "canonical_status": "supported",
+      "total": 0,
+      "correct": 0,
+      "recall": NaN
+    },
+    "partially-true-ambiguous": {
+      "canonical_status": "ambiguous",
+      "total": 0,
+      "correct": 0,
+      "recall": NaN
+    },
+    "partially-true-mixed": {
+      "canonical_status": "ambiguous",
+      "total": 0,
+      "correct": 0,
+      "recall": NaN
+    },
+    "paywalled": {
+      "canonical_status": "paywalled",
+      "total": 0,
+      "correct": 0,
+      "recall": NaN
+    },
+    "verbatim-supported": {
+      "canonical_status": "supported",
+      "total": 24,
+      "correct": 22,
+      "recall": 0.9166666666666666
+    }
+  },
+  "per_status_pr": {
+    "supported": {
+      "tp": 22,
+      "fp": 32,
+      "fn": 2,
+      "precision": 0.4074074074074074,
+      "recall": 0.9166666666666666
+    },
+    "unsupported": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 35,
+      "precision": NaN,
+      "recall": 0.0
+    },
+    "unreachable": {
+      "tp": 2,
+      "fp": 0,
+      "fn": 0,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    "paywalled": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 0,
+      "precision": NaN,
+      "recall": NaN
+    },
+    "ambiguous": {
+      "tp": 0,
+      "fp": 5,
+      "fn": 0,
+      "precision": 0.0,
+      "recall": NaN
+    },
+    "error": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 0,
+      "precision": NaN,
+      "recall": NaN
+    }
+  },
+  "uncertainty": {
+    "wilson_ci": {
+      "low": 0.2807,
+      "high": 0.5188,
+      "assumption": "iid cases"
+    },
+    "cluster_bootstrap_ci": {
+      "low": 0.3182,
+      "high": 0.46,
+      "n_clusters": 14,
+      "assumption": "cases clustered by source URL"
+    },
+    "negation-flip_wilson_ci": {
+      "low": 0.0,
+      "high": 0.1487,
+      "correct": 0,
+      "total": 22
+    },
+    "entity-swap_wilson_ci": {
+      "low": 0.0,
+      "high": 0.2281,
+      "correct": 0,
+      "total": 13
+    },
+    "by_labeler_confidence": {
+      "high": {
+        "correct": 24,
+        "total": 61,
+        "agreement": 0.39344262295081966
+      }
+    }
+  },
+  "safety": {
+    "negation_flip_false_supported": 20,
+    "negation_flip_total": 22,
+    "negation_flip_rate": 0.9091,
+    "entity_swap_false_supported": 12,
+    "entity_swap_total": 13,
+    "entity_swap_rate": 0.9231
+  },
+  "records": [
+    {
+      "id": "ind4-001",
+      "category": "verbatim-supported",
+      "expected": "supported",
+      "predicted": "supported",
+      "score": 1.0,
+      "tier_reached": 2,
+      "match": true,
+      "evidence": "Revision was 58. This annex describes normalization forms for Unicode text. When implementations keep strings in a normalized form, they can be assured that equivalent strings have a unique binary representation. This annex also provides examples, additional specifications regarding normalization o…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 1.000 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported"
+      ]
+    },
+    {
+      "id": "ind4-002",
+      "category": "verbatim-supported",
+      "expected": "supported",
+      "predicted": "supported",
+      "score": 1.0,
+      "tier_reached": 2,
+      "match": true,
+      "evidence": "It describes canonical and compatibility equivalence and the four normalization forms, providing examples, and elaborates on the formal specification of Unicode normalization, with further explanations and implementation notes. This document also provides the formal specification of the Stream-Safe…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 1.000 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported"
+      ]
+    },
+    {
+      "id": "ind4-003",
+      "category": "negation-flip",
+      "expected": "unsupported",
+      "predicted": "supported",
+      "score": 0.9231,
+      "tier_reached": 2,
+      "match": false,
+      "evidence": "(In NFKC and NFKD, a K is used to stand for compatibility to avoid confusion with the C standing for composition.) Both types of normalization can be useful in different circumstances. Figures 3 through 6 illustrate different ways in which source text can be normalized.",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 0.923 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported"
+      ]
+    },
+    {
+      "id": "ind4-004",
+      "category": "negation-flip",
+      "expected": "unsupported",
+      "predicted": "supported",
+      "score": 0.9474,
+      "tier_reached": 2,
+      "match": false,
+      "evidence": "Normalization Form C uses canonical composite characters where possible, and maintains the distinction between characters that are compatibility equivalents. Typical strings of composite accented Unicode characters are already in Normalization Form C. Implementations of Unicode that restrict themse…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 0.947 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported"
+      ]
+    },
+    {
+      "id": "ind4-005",
+      "category": "entity-swap",
+      "expected": "unsupported",
+      "predicted": "supported",
+      "score": 0.8889,
+      "tier_reached": 2,
+      "match": false,
+      "evidence": "Revision was 58. This annex describes normalization forms for Unicode text. When implementations keep strings in a normalized form, they can be assured that equivalent strings have a unique binary representation. This annex also provides examples, additional specifications regarding normalization o…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 0.889 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported"
+      ]
+    },
+    {
+      "id": "ind4-006",
+      "category": "verbatim-supported",
+      "expected": "supported",
+      "predicted": "ambiguous",
+      "score": 0.5,
+      "tier_reached": 2,
+      "match": false,
+      "evidence": "In addition, there’s a design choice that’s implied by this: Rust will never automatically create “deep” copies of your data. Therefore, any automatic copying can be assumed to be inexpensive in terms of runtime performance. Scope and Assignment The inverse of this is true for the relationship betw…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 0.500 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported"
+      ]
+    },
+    {
+      "id": "ind4-007",
+      "category": "verbatim-supported",
+      "expected": "supported",
+      "predicted": "ambiguous",
+      "score": 0.3,
+      "tier_reached": 2,
+      "match": false,
+      "evidence": "2 let s1 = String::from(\"hello\");. -- move occurs because `s1` has type `String`, which does not implement the `Copy` trait. 3 let s2 = s1;. -- value moved here. 5 println!(\"{s1}, world!\");. ^^ value borrowed here after move. 3 let s2 = s1.clone();. ++++++++. For more information about this error,…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 0.300 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported"
+      ]
+    },
+    {
+      "id": "ind4-008",
+      "category": "negation-flip",
+      "expected": "unsupported",
+      "predicted": "ambiguous",
+      "score": 0.4545,
+      "tier_reached": 2,
+      "match": false,
+      "evidence": "In addition, there’s a design choice that’s implied by this: Rust will never automatically create “deep” copies of your data. Therefore, any automatic copying can be assumed to be inexpensive in terms of runtime performance. Scope and Assignment The inverse of this is true for the relationship betw…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 0.455 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported"
+      ]
+    },
+    {
+      "id": "ind4-009",
+      "category": "negation-flip",
+      "expected": "unsupported",
+      "predicted": "ambiguous",
+      "score": 0.3,
+      "tier_reached": 2,
+      "match": false,
+      "evidence": "2 let s1 = String::from(\"hello\");. -- move occurs because `s1` has type `String`, which does not implement the `Copy` trait. 3 let s2 = s1;. -- value moved here. 5 println!(\"{s1}, world!\");. ^^ value borrowed here after move. 3 let s2 = s1.clone();. ++++++++. For more information about this error,…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 0.300 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported"
+      ]
+    },
+    {
+      "id": "ind4-010",
+      "category": "entity-swap",
+      "expected": "unsupported",
+      "predicted": "ambiguous",
+      "score": 0.3,
+      "tier_reached": 2,
+      "match": false,
+      "evidence": "In addition, there’s a design choice that’s implied by this: Rust will never automatically create “deep” copies of your data. Therefore, any automatic copying can be assumed to be inexpensive in terms of runtime performance. Scope and Assignment The inverse of this is true for the relationship betw…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 0.300 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported"
+      ]
+    },
+    {
+      "id": "ind4-011",
+      "category": "verbatim-supported",
+      "expected": "supported",
+      "predicted": "supported",
+      "score": 1.0,
+      "tier_reached": 2,
+      "match": true,
+      "evidence": "The origins of PostgreSQL date back to 1986 as part of the POSTGRES project at the University of California at Berkeley and has nearly 40 years of active development on the core platform.",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 1.000 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported"
+      ]
+    },
+    {
+      "id": "ind4-012",
+      "category": "verbatim-supported",
+      "expected": "supported",
+      "predicted": "supported",
+      "score": 1.0,
+      "tier_reached": 2,
+      "match": true,
+      "evidence": "PostgreSQL runs on all major operating systems, has been ACID-compliant since 2001, and has powerful add-ons such as the popular PostGIS geospatial database extender. It is no surprise that PostgreSQL has become the open source relational database of choice for many people and organisations.",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 1.000 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported"
+      ]
+    },
+    {
+      "id": "ind4-013",
+      "category": "negation-flip",
+      "expected": "unsupported",
+      "predicted": "supported",
+      "score": 0.9615,
+      "tier_reached": 2,
+      "match": false,
+      "evidence": "The origins of PostgreSQL date back to 1986 as part of the POSTGRES project at the University of California at Berkeley and has nearly 40 years of active development on the core platform.",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 0.962 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported"
+      ]
+    },
+    {
+      "id": "ind4-014",
+      "category": "negation-flip",
+      "expected": "unsupported",
+      "predicted": "supported",
+      "score": 0.9524,
+      "tier_reached": 2,
+      "match": false,
+      "evidence": "PostgreSQL runs on all major operating systems, has been ACID-compliant since 2001, and has powerful add-ons such as the popular PostGIS geospatial database extender. It is no surprise that PostgreSQL has become the open source relational database of choice for many people and organisations.",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 0.952 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported"
+      ]
+    },
+    {
+      "id": "ind4-015",
+      "category": "entity-swap",
+      "expected": "unsupported",
+      "predicted": "supported",
+      "score": 0.92,
+      "tier_reached": 2,
+      "match": false,
+      "evidence": "The origins of PostgreSQL date back to 1986 as part of the POSTGRES project at the University of California at Berkeley and has nearly 40 years of active development on the core platform.",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 0.920 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported"
+      ]
+    },
+    {
+      "id": "ind4-016",
+      "category": "verbatim-supported",
+      "expected": "supported",
+      "predicted": "supported",
+      "score": 1.0,
+      "tier_reached": 2,
+      "match": true,
+      "evidence": "At the moment, though, the point is that in his paper, Turing explicitly lays down the call for building machines that would provide an existence proof of an affirmative answer to his question. The call even includes a suggestion for how such construction should proceed.",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 1.000 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported"
+      ]
+    },
+    {
+      "id": "ind4-017",
+      "category": "verbatim-supported",
+      "expected": "supported",
+      "predicted": "supported",
+      "score": 1.0,
+      "tier_reached": 2,
+      "match": true,
+      "evidence": "For example, neither AlphaGo nor Watson can understand the rules of Go written in plain-and-simple English and produce a computer program that can play the game. It’s interesting that there is one endeavor in AI that tackles a narrow version of this very problem: In general game playing, a machine…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 1.000 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported"
+      ]
+    },
+    {
+      "id": "ind4-018",
+      "category": "negation-flip",
+      "expected": "unsupported",
+      "predicted": "supported",
+      "score": 0.9444,
+      "tier_reached": 2,
+      "match": false,
+      "evidence": "At the moment, though, the point is that in his paper, Turing explicitly lays down the call for building machines that would provide an existence proof of an affirmative answer to his question. The call even includes a suggestion for how such construction should proceed.",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 0.944 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported"
+      ]
+    },
+    {
+      "id": "ind4-019",
+      "category": "negation-flip",
+      "expected": "unsupported",
+      "predicted": "supported",
+      "score": 0.9524,
+      "tier_reached": 2,
+      "match": false,
+      "evidence": "For example, neither AlphaGo nor Watson can understand the rules of Go written in plain-and-simple English and produce a computer program that can play the game. It’s interesting that there is one endeavor in AI that tackles a narrow version of this very problem: In general game playing, a machine…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 0.952 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported"
+      ]
+    },
+    {
+      "id": "ind4-020",
+      "category": "entity-swap",
+      "expected": "unsupported",
+      "predicted": "supported",
+      "score": 0.9,
+      "tier_reached": 2,
+      "match": false,
+      "evidence": "For example, neither AlphaGo nor Watson can understand the rules of Go written in plain-and-simple English and produce a computer program that can play the game. It’s interesting that there is one endeavor in AI that tackles a narrow version of this very problem: In general game playing, a machine…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 0.900 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported"
+      ]
+    },
+    {
+      "id": "ind4-021",
+      "category": "verbatim-supported",
+      "expected": "supported",
+      "predicted": "supported",
+      "score": 1.0,
+      "tier_reached": 2,
+      "match": true,
+      "evidence": "Overview Outdoor air pollution is a major environmental health problem affecting everyone in low-, middle-, and high-income countries.",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 1.000 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported"
+      ]
+    },
+    {
+      "id": "ind4-022",
+      "category": "verbatim-supported",
+      "expected": "supported",
+      "predicted": "supported",
+      "score": 1.0,
+      "tier_reached": 2,
+      "match": true,
+      "evidence": "People living in low- and middle-income countries disproportionately experience the burden of outdoor air pollution with 89% (of the 4.2 million premature deaths) occurring in these areas. The greatest burden is found in the WHO South-East Asia and Western Pacific Regions. The latest burden estimat…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 1.000 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported"
+      ]
+    },
+    {
+      "id": "ind4-023",
+      "category": "negation-flip",
+      "expected": "unsupported",
+      "predicted": "supported",
+      "score": 0.9412,
+      "tier_reached": 2,
+      "match": false,
+      "evidence": "Overview Outdoor air pollution is a major environmental health problem affecting everyone in low-, middle-, and high-income countries.",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 0.941 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported"
+      ]
+    },
+    {
+      "id": "ind4-024",
+      "category": "negation-flip",
+      "expected": "unsupported",
+      "predicted": "supported",
+      "score": 0.9286,
+      "tier_reached": 2,
+      "match": false,
+      "evidence": "People living in low- and middle-income countries disproportionately experience the burden of outdoor air pollution with 89% (of the 4.2 million premature deaths) occurring in these areas. The greatest burden is found in the WHO South-East Asia and Western Pacific Regions. The latest burden estimat…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 0.929 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported"
+      ]
+    },
+    {
+      "id": "ind4-025",
+      "category": "entity-swap",
+      "expected": "unsupported",
+      "predicted": "supported",
+      "score": 0.875,
+      "tier_reached": 2,
+      "match": false,
+      "evidence": "Overview Outdoor air pollution is a major environmental health problem affecting everyone in low-, middle-, and high-income countries.",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 0.875 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported"
+      ]
+    },
+    {
+      "id": "ind4-026",
+      "category": "verbatim-supported",
+      "expected": "supported",
+      "predicted": "supported",
+      "score": 1.0,
+      "tier_reached": 2,
+      "match": true,
+      "evidence": "You can assign the created instance to a mutable (var) or read-only (val) variable: It's possible to create instances wherever you need them, inside the main() function, within other functions, or inside another class. Additionally, you can create instances inside another function and call that fun…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 1.000 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported"
+      ]
+    },
+    {
+      "id": "ind4-027",
+      "category": "verbatim-supported",
+      "expected": "supported",
+      "predicted": "supported",
+      "score": 1.0,
+      "tier_reached": 2,
+      "match": true,
+      "evidence": "Constructors and initializer blocks When you create a class instance, you call one of its constructors. A class in Kotlin can have a primary constructor and one or more secondary constructors. The primary constructor is the main way to initialize a class. You declare it in the class header. A secon…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 1.000 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported"
+      ]
+    },
+    {
+      "id": "ind4-028",
+      "category": "negation-flip",
+      "expected": "unsupported",
+      "predicted": "supported",
+      "score": 0.875,
+      "tier_reached": 2,
+      "match": false,
+      "evidence": "Constructors and initializer blocks When you create a class instance, you call one of its constructors. A class in Kotlin can have a primary constructor and one or more secondary constructors. The primary constructor is the main way to initialize a class. You declare it in the class header. A secon…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 0.875 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported"
+      ]
+    },
+    {
+      "id": "ind4-029",
+      "category": "negation-flip",
+      "expected": "unsupported",
+      "predicted": "supported",
+      "score": 0.9231,
+      "tier_reached": 2,
+      "match": false,
+      "evidence": "Secondary constructors are useful when you need multiple ways to initialize a class or for Java interoperability. To declare a secondary constructor, use the constructor keyword inside the class body with the constructor parameters within parentheses ().",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 0.923 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported"
+      ]
+    },
+    {
+      "id": "ind4-030",
+      "category": "entity-swap",
+      "expected": "unsupported",
+      "predicted": "supported",
+      "score": 0.7778,
+      "tier_reached": 2,
+      "match": false,
+      "evidence": "You can assign the created instance to a mutable (var) or read-only (val) variable: It's possible to create instances wherever you need them, inside the main() function, within other functions, or inside another class. Additionally, you can create instances inside another function and call that fun…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 0.778 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported"
+      ]
+    },
+    {
+      "id": "ind4-031",
+      "category": "verbatim-supported",
+      "expected": "supported",
+      "predicted": "supported",
+      "score": 1.0,
+      "tier_reached": 2,
+      "match": true,
+      "evidence": "EFF fights in the courts and Congress to maintain your privacy rights in the digital world, and works with partners around the globe to support the development of privacy-protecting technologies. Your cell phone helps you keep in touch with friends and family, but it also makes it easier for the go…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 1.000 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported"
+      ]
+    },
+    {
+      "id": "ind4-032",
+      "category": "verbatim-supported",
+      "expected": "supported",
+      "predicted": "supported",
+      "score": 1.0,
+      "tier_reached": 2,
+      "match": true,
+      "evidence": "Read our work on privacy issues below, and join EFF to help support our efforts. For information about the law and technology of government surveillance in the United States check out EFF's Surveillance Self-Defense project.",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 1.000 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported"
+      ]
+    },
+    {
+      "id": "ind4-033",
+      "category": "entity-swap",
+      "expected": "unsupported",
+      "predicted": "supported",
+      "score": 0.8947,
+      "tier_reached": 2,
+      "match": false,
+      "evidence": "EFF fights in the courts and Congress to maintain your privacy rights in the digital world, and works with partners around the globe to support the development of privacy-protecting technologies. Your cell phone helps you keep in touch with friends and family, but it also makes it easier for the go…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 0.895 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported"
+      ]
+    },
+    {
+      "id": "ind4-034",
+      "category": "entity-swap",
+      "expected": "unsupported",
+      "predicted": "supported",
+      "score": 0.8824,
+      "tier_reached": 2,
+      "match": false,
+      "evidence": "Read our work on privacy issues below, and join EFF to help support our efforts. For information about the law and technology of government surveillance in the United States check out EFF's Surveillance Self-Defense project.",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 0.882 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported"
+      ]
+    },
+    {
+      "id": "ind4-035",
+      "category": "verbatim-supported",
+      "expected": "supported",
+      "predicted": "supported",
+      "score": 1.0,
+      "tier_reached": 2,
+      "match": true,
+      "evidence": "Climate Change is one of the defining issues of our time and we are at a pivotal moment. From shifting weather patterns that threaten food production, to rising sea levels that increase the risk of catastrophic flooding, the impacts of climate change are global in scope and unprecedented in scale.",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 1.000 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported"
+      ]
+    },
+    {
+      "id": "ind4-036",
+      "category": "verbatim-supported",
+      "expected": "supported",
+      "predicted": "supported",
+      "score": 1.0,
+      "tier_reached": 2,
+      "match": true,
+      "evidence": "Although some climate variations occur naturally, human activities have been the main driver of climate change since the 1800s, mainly through the burning of fossil fuels such as coal, oil, and gas. These activities release greenhouse gas emissions into the atmosphere, trapping heat from the sun an…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 1.000 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported"
+      ]
+    },
+    {
+      "id": "ind4-037",
+      "category": "negation-flip",
+      "expected": "unsupported",
+      "predicted": "supported",
+      "score": 0.9,
+      "tier_reached": 2,
+      "match": false,
+      "evidence": "Climate Change is one of the defining issues of our time and we are at a pivotal moment. From shifting weather patterns that threaten food production, to rising sea levels that increase the risk of catastrophic flooding, the impacts of climate change are global in scope and unprecedented in scale.",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 0.900 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported"
+      ]
+    },
+    {
+      "id": "ind4-038",
+      "category": "negation-flip",
+      "expected": "unsupported",
+      "predicted": "supported",
+      "score": 0.9545,
+      "tier_reached": 2,
+      "match": false,
+      "evidence": "Although some climate variations occur naturally, human activities have been the main driver of climate change since the 1800s, mainly through the burning of fossil fuels such as coal, oil, and gas. These activities release greenhouse gas emissions into the atmosphere, trapping heat from the sun an…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 0.955 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported"
+      ]
+    },
+    {
+      "id": "ind4-039",
+      "category": "entity-swap",
+      "expected": "unsupported",
+      "predicted": "supported",
+      "score": 0.7778,
+      "tier_reached": 2,
+      "match": false,
+      "evidence": "Climate Change is one of the defining issues of our time and we are at a pivotal moment. From shifting weather patterns that threaten food production, to rising sea levels that increase the risk of catastrophic flooding, the impacts of climate change are global in scope and unprecedented in scale.",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 0.778 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported"
+      ]
+    },
+    {
+      "id": "ind4-040",
+      "category": "verbatim-supported",
+      "expected": "supported",
+      "predicted": "supported",
+      "score": 1.0,
+      "tier_reached": 2,
+      "match": true,
+      "evidence": "The Definition of Cancer Cancer is a disease in which some of the body’s cells grow uncontrollably and spread to other parts of the body. Cancer can start almost anywhere in the human body, which is made up of trillions of cells. Normally, human cells grow and multiply (through a process called cel…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 1.000 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported"
+      ]
+    },
+    {
+      "id": "ind4-041",
+      "category": "verbatim-supported",
+      "expected": "supported",
+      "predicted": "supported",
+      "score": 1.0,
+      "tier_reached": 2,
+      "match": true,
+      "evidence": "When removed, benign tumors usually don’t grow back, whereas cancerous tumors sometimes do. Benign tumors can sometimes be quite large, however. Some can cause serious symptoms or be life threatening, such as benign tumors in the brain. Differences between Cancer Cells and Normal Cells Cancer cells…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 1.000 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported"
+      ]
+    },
+    {
+      "id": "ind4-042",
+      "category": "negation-flip",
+      "expected": "unsupported",
+      "predicted": "supported",
+      "score": 0.9167,
+      "tier_reached": 2,
+      "match": false,
+      "evidence": "The Definition of Cancer Cancer is a disease in which some of the body’s cells grow uncontrollably and spread to other parts of the body. Cancer can start almost anywhere in the human body, which is made up of trillions of cells. Normally, human cells grow and multiply (through a process called cel…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 0.917 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported"
+      ]
+    },
+    {
+      "id": "ind4-043",
+      "category": "negation-flip",
+      "expected": "unsupported",
+      "predicted": "supported",
+      "score": 0.9231,
+      "tier_reached": 2,
+      "match": false,
+      "evidence": "When Cancer Spreads A cancer that has spread from the place where it first formed to another place in the body is called metastatic cancer. The process by which cancer cells spread to other parts of the body is called metastasis. Metastatic cancer has the same name and the same type of cancer cells…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 0.923 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported"
+      ]
+    },
+    {
+      "id": "ind4-044",
+      "category": "entity-swap",
+      "expected": "unsupported",
+      "predicted": "supported",
+      "score": 0.8182,
+      "tier_reached": 2,
+      "match": false,
+      "evidence": "The Definition of Cancer Cancer is a disease in which some of the body’s cells grow uncontrollably and spread to other parts of the body. Cancer can start almost anywhere in the human body, which is made up of trillions of cells. Normally, human cells grow and multiply (through a process called cel…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 0.818 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported"
+      ]
+    },
+    {
+      "id": "ind4-045",
+      "category": "verbatim-supported",
+      "expected": "supported",
+      "predicted": "supported",
+      "score": 1.0,
+      "tier_reached": 2,
+      "match": true,
+      "evidence": "To learn more about the community, see the OpenStreetMap Blog, user diaries, community blogs, and the OSM Foundation website. Open Data OpenStreetMap is open data: you are free to use it for any purpose as long as you credit OpenStreetMap and its contributors. If you alter or build upon the data in…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 1.000 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported"
+      ]
+    },
+    {
+      "id": "ind4-046",
+      "category": "verbatim-supported",
+      "expected": "supported",
+      "predicted": "supported",
+      "score": 1.0,
+      "tier_reached": 2,
+      "match": true,
+      "evidence": "See the Copyright and License page for details. Legal This site and many other related services are formally operated by the OpenStreetMap Foundation (OSMF) on behalf of the community. Use of all OSMF operated services is subject to our Terms of Use, Acceptable Use Policies and our Privacy Policy.",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 1.000 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported"
+      ]
+    },
+    {
+      "id": "ind4-047",
+      "category": "negation-flip",
+      "expected": "unsupported",
+      "predicted": "supported",
+      "score": 0.9474,
+      "tier_reached": 2,
+      "match": false,
+      "evidence": "See the Copyright and License page for details. Legal This site and many other related services are formally operated by the OpenStreetMap Foundation (OSMF) on behalf of the community. Use of all OSMF operated services is subject to our Terms of Use, Acceptable Use Policies and our Privacy Policy.",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 0.947 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported"
+      ]
+    },
+    {
+      "id": "ind4-048",
+      "category": "negation-flip",
+      "expected": "unsupported",
+      "predicted": "supported",
+      "score": 1.0,
+      "tier_reached": 2,
+      "match": false,
+      "evidence": "If you would like to use OpenStreetMap maps or data please make sure to attribute OpenStreetMap—refer to Attribution Guidelines for more information. Specifically for using a screenshot from OpenStreetMap directly in your book, publication, film or TV show, you do not need to ask for permission as…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 1.000 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported"
+      ]
+    },
+    {
+      "id": "ind4-049",
+      "category": "entity-swap",
+      "expected": "unsupported",
+      "predicted": "supported",
+      "score": 0.875,
+      "tier_reached": 2,
+      "match": false,
+      "evidence": "To learn more about the community, see the OpenStreetMap Blog, user diaries, community blogs, and the OSM Foundation website. Open Data OpenStreetMap is open data: you are free to use it for any purpose as long as you credit OpenStreetMap and its contributors. If you alter or build upon the data in…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 0.875 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported"
+      ]
+    },
+    {
+      "id": "ind4-050",
+      "category": "verbatim-supported",
+      "expected": "supported",
+      "predicted": "supported",
+      "score": 1.0,
+      "tier_reached": 2,
+      "match": true,
+      "evidence": "About ICANN If you're new to ICANN, this page is for you. It contains resources to help you quickly understand who we are and what we do. Overview ICANN is a California-based nonprofit, public-benefit organization accountable to a global community of stakeholders. Its enduring mission is to ensure…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 1.000 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported"
+      ]
+    },
+    {
+      "id": "ind4-051",
+      "category": "verbatim-supported",
+      "expected": "supported",
+      "predicted": "supported",
+      "score": 1.0,
+      "tier_reached": 2,
+      "match": true,
+      "evidence": "About ICANN If you're new to ICANN, this page is for you. It contains resources to help you quickly understand who we are and what we do. Overview ICANN is a California-based nonprofit, public-benefit organization accountable to a global community of stakeholders. Its enduring mission is to ensure…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 1.000 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported"
+      ]
+    },
+    {
+      "id": "ind4-052",
+      "category": "negation-flip",
+      "expected": "unsupported",
+      "predicted": "supported",
+      "score": 0.9286,
+      "tier_reached": 2,
+      "match": false,
+      "evidence": "About ICANN If you're new to ICANN, this page is for you. It contains resources to help you quickly understand who we are and what we do. Overview ICANN is a California-based nonprofit, public-benefit organization accountable to a global community of stakeholders. Its enduring mission is to ensure…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 0.929 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported"
+      ]
+    },
+    {
+      "id": "ind4-053",
+      "category": "negation-flip",
+      "expected": "unsupported",
+      "predicted": "supported",
+      "score": 0.9167,
+      "tier_reached": 2,
+      "match": false,
+      "evidence": "About ICANN If you're new to ICANN, this page is for you. It contains resources to help you quickly understand who we are and what we do. Overview ICANN is a California-based nonprofit, public-benefit organization accountable to a global community of stakeholders. Its enduring mission is to ensure…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 0.917 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported"
+      ]
+    },
+    {
+      "id": "ind4-054",
+      "category": "entity-swap",
+      "expected": "unsupported",
+      "predicted": "supported",
+      "score": 0.8462,
+      "tier_reached": 2,
+      "match": false,
+      "evidence": "About ICANN If you're new to ICANN, this page is for you. It contains resources to help you quickly understand who we are and what we do. Overview ICANN is a California-based nonprofit, public-benefit organization accountable to a global community of stakeholders. Its enduring mission is to ensure…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 0.846 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported"
+      ]
+    },
+    {
+      "id": "ind4-055",
+      "category": "verbatim-supported",
+      "expected": "supported",
+      "predicted": "supported",
+      "score": 1.0,
+      "tier_reached": 2,
+      "match": true,
+      "evidence": "The Reserve Bank of India was established on April 1, 1935 in accordance with the provisions of the Reserve Bank of India Act, 1934. The Central Office of the Reserve Bank was initially established in Kolkata but was permanently moved to Mumbai in 1937. The Central Office is where the Governor sits…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 1.000 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported"
+      ]
+    },
+    {
+      "id": "ind4-056",
+      "category": "verbatim-supported",
+      "expected": "supported",
+      "predicted": "supported",
+      "score": 1.0,
+      "tier_reached": 2,
+      "match": true,
+      "evidence": "The Reserve Bank of India was established on April 1, 1935 in accordance with the provisions of the Reserve Bank of India Act, 1934. The Central Office of the Reserve Bank was initially established in Kolkata but was permanently moved to Mumbai in 1937. The Central Office is where the Governor sits…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 1.000 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported"
+      ]
+    },
+    {
+      "id": "ind4-057",
+      "category": "negation-flip",
+      "expected": "unsupported",
+      "predicted": "supported",
+      "score": 0.9474,
+      "tier_reached": 2,
+      "match": false,
+      "evidence": "The Reserve Bank of India was established on April 1, 1935 in accordance with the provisions of the Reserve Bank of India Act, 1934. The Central Office of the Reserve Bank was initially established in Kolkata but was permanently moved to Mumbai in 1937. The Central Office is where the Governor sits…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 0.947 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported"
+      ]
+    },
+    {
+      "id": "ind4-058",
+      "category": "negation-flip",
+      "expected": "unsupported",
+      "predicted": "supported",
+      "score": 0.9,
+      "tier_reached": 2,
+      "match": false,
+      "evidence": "The Reserve Bank of India was established on April 1, 1935 in accordance with the provisions of the Reserve Bank of India Act, 1934. The Central Office of the Reserve Bank was initially established in Kolkata but was permanently moved to Mumbai in 1937. The Central Office is where the Governor sits…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 0.900 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported"
+      ]
+    },
+    {
+      "id": "ind4-059",
+      "category": "entity-swap",
+      "expected": "unsupported",
+      "predicted": "supported",
+      "score": 0.8889,
+      "tier_reached": 2,
+      "match": false,
+      "evidence": "The Reserve Bank of India was established on April 1, 1935 in accordance with the provisions of the Reserve Bank of India Act, 1934. The Central Office of the Reserve Bank was initially established in Kolkata but was permanently moved to Mumbai in 1937. The Central Office is where the Governor sits…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 0.889 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported"
+      ]
+    },
+    {
+      "id": "ind4-060",
+      "category": "dead-link",
+      "expected": "unreachable",
+      "predicted": "unreachable",
+      "score": null,
+      "tier_reached": 1,
+      "match": true,
+      "evidence": "",
+      "notes": [
+        "ConnectError: [Errno -5] No address associated with hostname"
+      ]
+    },
+    {
+      "id": "ind4-061",
+      "category": "dead-link",
+      "expected": "unreachable",
+      "predicted": "unreachable",
+      "score": null,
+      "tier_reached": 1,
+      "match": true,
+      "evidence": "",
+      "notes": [
+        "ConnectError: [Errno -5] No address associated with hostname"
+      ]
+    }
+  ]
+}

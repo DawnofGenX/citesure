@@ -27,6 +27,24 @@ The headline 86.1% is also **stable under a URL-clustered split** into tune/held
 in-sample estimate, for reasons stated under
 [What the 86.1% is actually worth](#what-the-861-is-actually-worth).
 
+### Held-out check on fresh domains (v4, 2026-10-24)
+
+The 86.1% is in-sample. A first **held-out** measurement now exists: 61 cases over 12 pages on 12
+domains that v1/v2/v3 never touch, labelled constructively (verbatim span → supported; inserted
+negation or swapped subject whose straddling wording is absent → unsupported) and validated
+against the exact text the verifier fetches. Result: **48/61 = 78.7%** with NLI on (cluster
+bootstrap [67.8, 89.2]), against 86.1% in-sample.
+
+Per family the picture is not uniform: negation 21/22 (95.5%), **entity-swap 8/13 (61.5%)**,
+verbatim 17/24 (70.8%) — of those 7 verbatim demotions, 5 are NLI false negatives on text the
+verifier held and 2 are extraction artefacts, so the cleanest reading is **48/59 = 81.4%**. Entity
+swapping fails *confidently* (five false-supports at 0.86–0.996), which is a real defect rather
+than a threshold artefact.
+
+Full working, including the build bug that made the first version of the set invalid and what was
+done about it: [`evals/RESULTS_v4.md`](evals/RESULTS_v4.md). Set builder:
+`evals/build_v4.py`; authoring rules: `evals/AUTHORING_V4.md`.
+
 ### Tier ablation — what each tier actually contributes
 
 Measured by `evals/tier_ablation.py` on the same 108 cases; committed run

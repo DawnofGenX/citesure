@@ -1,0 +1,791 @@
+[
+  {
+    "id": "ind4-001",
+    "category": "verbatim-supported",
+    "expected_status": "supported",
+    "labeler_confidence": "high",
+    "url": "https://www.unicode.org/reports/tr15/",
+    "claim": "This annex also provides examples, additional specifications regarding normalization of Unicode text, and information about conformance testing for Unicode normalization forms.",
+    "notes": "Constructive label: the claim is a contiguous span of the saved page text.",
+    "supported_clauses": [
+      "This annex also provides examples, additional specifications regarding normalization of Unicode text, and information about conformance testing for Unicode normalization forms."
+    ],
+    "unsupported_clauses": []
+  },
+  {
+    "id": "ind4-002",
+    "category": "verbatim-supported",
+    "expected_status": "supported",
+    "labeler_confidence": "high",
+    "url": "https://www.unicode.org/reports/tr15/",
+    "claim": "This document also provides the formal specification of the Stream-Safe Text Format and of the Normalization Process for Stabilized Strings.",
+    "notes": "Constructive label: the claim is a contiguous span of the saved page text.",
+    "supported_clauses": [
+      "This document also provides the formal specification of the Stream-Safe Text Format and of the Normalization Process for Stabilized Strings."
+    ],
+    "unsupported_clauses": []
+  },
+  {
+    "id": "ind4-003",
+    "category": "negation-flip",
+    "expected_status": "unsupported",
+    "labeler_confidence": "high",
+    "url": "https://www.unicode.org/reports/tr15/",
+    "claim": "Figures 3 through 6 illustrate different ways in which source text can not be normalized.",
+    "notes": "Constructive label: a negation was inserted and no 6-gram spanning the insertion occurs in the saved page text.",
+    "supported_clauses": [],
+    "unsupported_clauses": [
+      "Figures 3 through 6 illustrate different ways in which source text can not be normalized."
+    ]
+  },
+  {
+    "id": "ind4-004",
+    "category": "negation-flip",
+    "expected_status": "unsupported",
+    "labeler_confidence": "high",
+    "url": "https://www.unicode.org/reports/tr15/",
+    "claim": "Implementations of Unicode that restrict themselves to a repertoire containing no combining marks are not already typically using Normalization Form C.",
+    "notes": "Constructive label: a negation was inserted and no 6-gram spanning the insertion occurs in the saved page text.",
+    "supported_clauses": [],
+    "unsupported_clauses": [
+      "Implementations of Unicode that restrict themselves to a repertoire containing no combining marks are not already typically using Normalization Form C."
+    ]
+  },
+  {
+    "id": "ind4-005",
+    "category": "entity-swap",
+    "expected_status": "unsupported",
+    "labeler_confidence": "high",
+    "url": "https://www.unicode.org/reports/tr15/",
+    "claim": "This annex also provides examples, additional specifications regarding normalization of Marlowe text, and information about conformance testing for Unicode normalization forms.",
+    "notes": "Constructive label: the named subject was replaced with 'Marlowe', which does not appear in the saved page text, and no 6-gram spanning the replacement occurs there.",
+    "supported_clauses": [],
+    "unsupported_clauses": [
+      "This annex also provides examples, additional specifications regarding normalization of Marlowe text, and information about conformance testing for Unicode normalization forms."
+    ]
+  },
+  {
+    "id": "ind4-006",
+    "category": "verbatim-supported",
+    "expected_status": "supported",
+    "labeler_confidence": "high",
+    "url": "https://doc.rust-lang.org/book/ch04-01-what-is-ownership.html",
+    "claim": "Ownership is a set of rules that govern how a Rust program manages memory.",
+    "notes": "Constructive label: the claim is a contiguous span of the saved page text.",
+    "supported_clauses": [
+      "Ownership is a set of rules that govern how a Rust program manages memory."
+    ],
+    "unsupported_clauses": []
+  },
+  {
+    "id": "ind4-007",
+    "category": "verbatim-supported",
+    "expected_status": "supported",
+    "labeler_confidence": "high",
+    "url": "https://doc.rust-lang.org/book/ch04-01-what-is-ownership.html",
+    "claim": "The good news is that the more experienced you become with Rust and the rules of the ownership system, the easier you’ll find it to naturally develop code that is safe and efficient.",
+    "notes": "Constructive label: the claim is a contiguous span of the saved page text.",
+    "supported_clauses": [
+      "The good news is that the more experienced you become with Rust and the rules of the ownership system, the easier you’ll find it to naturally develop code that is safe and efficient."
+    ],
+    "unsupported_clauses": []
+  },
+  {
+    "id": "ind4-008",
+    "category": "negation-flip",
+    "expected_status": "unsupported",
+    "labeler_confidence": "high",
+    "url": "https://doc.rust-lang.org/book/ch04-01-what-is-ownership.html",
+    "claim": "Ownership is not a set of rules that govern how a Rust program manages memory.",
+    "notes": "Constructive label: a negation was inserted and no 6-gram spanning the insertion occurs in the saved page text.",
+    "supported_clauses": [],
+    "unsupported_clauses": [
+      "Ownership is not a set of rules that govern how a Rust program manages memory."
+    ]
+  },
+  {
+    "id": "ind4-009",
+    "category": "negation-flip",
+    "expected_status": "unsupported",
+    "labeler_confidence": "high",
+    "url": "https://doc.rust-lang.org/book/ch04-01-what-is-ownership.html",
+    "claim": "The good news is not that the more experienced you become with Rust and the rules of the ownership system, the easier you’ll find it to naturally develop code that is safe and efficient.",
+    "notes": "Constructive label: a negation was inserted and no 6-gram spanning the insertion occurs in the saved page text.",
+    "supported_clauses": [],
+    "unsupported_clauses": [
+      "The good news is not that the more experienced you become with Rust and the rules of the ownership system, the easier you’ll find it to naturally develop code that is safe and efficient."
+    ]
+  },
+  {
+    "id": "ind4-010",
+    "category": "entity-swap",
+    "expected_status": "unsupported",
+    "labeler_confidence": "high",
+    "url": "https://doc.rust-lang.org/book/ch04-01-what-is-ownership.html",
+    "claim": "Ownership is a set of rules that govern how a Marlowe program manages memory.",
+    "notes": "Constructive label: the named subject was replaced with 'Marlowe', which does not appear in the saved page text, and no 6-gram spanning the replacement occurs there.",
+    "supported_clauses": [],
+    "unsupported_clauses": [
+      "Ownership is a set of rules that govern how a Marlowe program manages memory."
+    ]
+  },
+  {
+    "id": "ind4-011",
+    "category": "verbatim-supported",
+    "expected_status": "supported",
+    "labeler_confidence": "high",
+    "url": "https://www.postgresql.org/about/",
+    "claim": "The origins of PostgreSQL date back to 1986 as part of the POSTGRES project at the University of California at Berkeley and has nearly 40 years of active development on the core platform.",
+    "notes": "Constructive label: the claim is a contiguous span of the saved page text.",
+    "supported_clauses": [
+      "The origins of PostgreSQL date back to 1986 as part of the POSTGRES project at the University of California at Berkeley and has nearly 40 years of active development on the core platform."
+    ],
+    "unsupported_clauses": []
+  },
+  {
+    "id": "ind4-012",
+    "category": "verbatim-supported",
+    "expected_status": "supported",
+    "labeler_confidence": "high",
+    "url": "https://www.postgresql.org/about/",
+    "claim": "PostgreSQL runs on all major operating systems, has been ACID-compliant since 2001, and has powerful add-ons such as the popular PostGIS geospatial database extender.",
+    "notes": "Constructive label: the claim is a contiguous span of the saved page text.",
+    "supported_clauses": [
+      "PostgreSQL runs on all major operating systems, has been ACID-compliant since 2001, and has powerful add-ons such as the popular PostGIS geospatial database extender."
+    ],
+    "unsupported_clauses": []
+  },
+  {
+    "id": "ind4-013",
+    "category": "negation-flip",
+    "expected_status": "unsupported",
+    "labeler_confidence": "high",
+    "url": "https://www.postgresql.org/about/",
+    "claim": "The origins of PostgreSQL date back to 1986 as part of the POSTGRES project at the University of California at Berkeley and has not nearly 40 years of active development on the core platform.",
+    "notes": "Constructive label: a negation was inserted and no 6-gram spanning the insertion occurs in the saved page text.",
+    "supported_clauses": [],
+    "unsupported_clauses": [
+      "The origins of PostgreSQL date back to 1986 as part of the POSTGRES project at the University of California at Berkeley and has not nearly 40 years of active development on the core platform."
+    ]
+  },
+  {
+    "id": "ind4-014",
+    "category": "negation-flip",
+    "expected_status": "unsupported",
+    "labeler_confidence": "high",
+    "url": "https://www.postgresql.org/about/",
+    "claim": "PostgreSQL runs on all major operating systems, has not been ACID-compliant since 2001, and has powerful add-ons such as the popular PostGIS geospatial database extender.",
+    "notes": "Constructive label: a negation was inserted and no 6-gram spanning the insertion occurs in the saved page text.",
+    "supported_clauses": [],
+    "unsupported_clauses": [
+      "PostgreSQL runs on all major operating systems, has not been ACID-compliant since 2001, and has powerful add-ons such as the popular PostGIS geospatial database extender."
+    ]
+  },
+  {
+    "id": "ind4-015",
+    "category": "entity-swap",
+    "expected_status": "unsupported",
+    "labeler_confidence": "high",
+    "url": "https://www.postgresql.org/about/",
+    "claim": "The origins of MarloweSQL date back to 1986 as part of the POSTGRES project at the University of California at Berkeley and has nearly 40 years of active development on the core platform.",
+    "notes": "Constructive label: the named subject was replaced with 'Marlowe', which does not appear in the saved page text, and no 6-gram spanning the replacement occurs there.",
+    "supported_clauses": [],
+    "unsupported_clauses": [
+      "The origins of MarloweSQL date back to 1986 as part of the POSTGRES project at the University of California at Berkeley and has nearly 40 years of active development on the core platform."
+    ]
+  },
+  {
+    "id": "ind4-016",
+    "category": "verbatim-supported",
+    "expected_status": "supported",
+    "labeler_confidence": "high",
+    "url": "https://plato.stanford.edu/entries/artificial-intelligence/",
+    "claim": "At the moment, though, the point is that in his paper, Turing explicitly lays down the call for building machines that would provide an existence proof of an affirmative answer to his question.",
+    "notes": "Constructive label: the claim is a contiguous span of the saved page text.",
+    "supported_clauses": [
+      "At the moment, though, the point is that in his paper, Turing explicitly lays down the call for building machines that would provide an existence proof of an affirmative answer to his question."
+    ],
+    "unsupported_clauses": []
+  },
+  {
+    "id": "ind4-017",
+    "category": "verbatim-supported",
+    "expected_status": "supported",
+    "labeler_confidence": "high",
+    "url": "https://plato.stanford.edu/entries/artificial-intelligence/",
+    "claim": "For example, neither AlphaGo nor Watson can understand the rules of Go written in plain-and-simple English and produce a computer program that can play the game.",
+    "notes": "Constructive label: the claim is a contiguous span of the saved page text.",
+    "supported_clauses": [
+      "For example, neither AlphaGo nor Watson can understand the rules of Go written in plain-and-simple English and produce a computer program that can play the game."
+    ],
+    "unsupported_clauses": []
+  },
+  {
+    "id": "ind4-018",
+    "category": "negation-flip",
+    "expected_status": "unsupported",
+    "labeler_confidence": "high",
+    "url": "https://plato.stanford.edu/entries/artificial-intelligence/",
+    "claim": "At the moment, though, the point is not that in his paper, Turing explicitly lays down the call for building machines that would provide an existence proof of an affirmative answer to his question.",
+    "notes": "Constructive label: a negation was inserted and no 6-gram spanning the insertion occurs in the saved page text.",
+    "supported_clauses": [],
+    "unsupported_clauses": [
+      "At the moment, though, the point is not that in his paper, Turing explicitly lays down the call for building machines that would provide an existence proof of an affirmative answer to his question."
+    ]
+  },
+  {
+    "id": "ind4-019",
+    "category": "negation-flip",
+    "expected_status": "unsupported",
+    "labeler_confidence": "high",
+    "url": "https://plato.stanford.edu/entries/artificial-intelligence/",
+    "claim": "For example, neither AlphaGo nor Watson can not understand the rules of Go written in plain-and-simple English and produce a computer program that can play the game.",
+    "notes": "Constructive label: a negation was inserted and no 6-gram spanning the insertion occurs in the saved page text.",
+    "supported_clauses": [],
+    "unsupported_clauses": [
+      "For example, neither AlphaGo nor Watson can not understand the rules of Go written in plain-and-simple English and produce a computer program that can play the game."
+    ]
+  },
+  {
+    "id": "ind4-020",
+    "category": "entity-swap",
+    "expected_status": "unsupported",
+    "labeler_confidence": "high",
+    "url": "https://plato.stanford.edu/entries/artificial-intelligence/",
+    "claim": "For example, neither MarloweGo nor Watson can understand the rules of Go written in plain-and-simple English and produce a computer program that can play the game.",
+    "notes": "Constructive label: the named subject was replaced with 'Marlowe', which does not appear in the saved page text, and no 6-gram spanning the replacement occurs there.",
+    "supported_clauses": [],
+    "unsupported_clauses": [
+      "For example, neither MarloweGo nor Watson can understand the rules of Go written in plain-and-simple English and produce a computer program that can play the game."
+    ]
+  },
+  {
+    "id": "ind4-021",
+    "category": "verbatim-supported",
+    "expected_status": "supported",
+    "labeler_confidence": "high",
+    "url": "https://www.who.int/news-room/fact-sheets/detail/ambient-(outdoor)-air-quality-and-health",
+    "claim": "Overview Outdoor air pollution is a major environmental health problem affecting everyone in low-, middle-, and high-income countries.",
+    "notes": "Constructive label: the claim is a contiguous span of the saved page text.",
+    "supported_clauses": [
+      "Overview Outdoor air pollution is a major environmental health problem affecting everyone in low-, middle-, and high-income countries."
+    ],
+    "unsupported_clauses": []
+  },
+  {
+    "id": "ind4-022",
+    "category": "verbatim-supported",
+    "expected_status": "supported",
+    "labeler_confidence": "high",
+    "url": "https://www.who.int/news-room/fact-sheets/detail/ambient-(outdoor)-air-quality-and-health",
+    "claim": "The greatest burden is found in the WHO South-East Asia and Western Pacific Regions.",
+    "notes": "Constructive label: the claim is a contiguous span of the saved page text.",
+    "supported_clauses": [
+      "The greatest burden is found in the WHO South-East Asia and Western Pacific Regions."
+    ],
+    "unsupported_clauses": []
+  },
+  {
+    "id": "ind4-023",
+    "category": "negation-flip",
+    "expected_status": "unsupported",
+    "labeler_confidence": "high",
+    "url": "https://www.who.int/news-room/fact-sheets/detail/ambient-(outdoor)-air-quality-and-health",
+    "claim": "Overview Outdoor air pollution is not a major environmental health problem affecting everyone in low-, middle-, and high-income countries.",
+    "notes": "Constructive label: a negation was inserted and no 6-gram spanning the insertion occurs in the saved page text.",
+    "supported_clauses": [],
+    "unsupported_clauses": [
+      "Overview Outdoor air pollution is not a major environmental health problem affecting everyone in low-, middle-, and high-income countries."
+    ]
+  },
+  {
+    "id": "ind4-024",
+    "category": "negation-flip",
+    "expected_status": "unsupported",
+    "labeler_confidence": "high",
+    "url": "https://www.who.int/news-room/fact-sheets/detail/ambient-(outdoor)-air-quality-and-health",
+    "claim": "The greatest burden is not found in the WHO South-East Asia and Western Pacific Regions.",
+    "notes": "Constructive label: a negation was inserted and no 6-gram spanning the insertion occurs in the saved page text.",
+    "supported_clauses": [],
+    "unsupported_clauses": [
+      "The greatest burden is not found in the WHO South-East Asia and Western Pacific Regions."
+    ]
+  },
+  {
+    "id": "ind4-025",
+    "category": "entity-swap",
+    "expected_status": "unsupported",
+    "labeler_confidence": "high",
+    "url": "https://www.who.int/news-room/fact-sheets/detail/ambient-(outdoor)-air-quality-and-health",
+    "claim": "Overview Marlowe air pollution is a major environmental health problem affecting everyone in low-, middle-, and high-income countries.",
+    "notes": "Constructive label: the named subject was replaced with 'Marlowe', which does not appear in the saved page text, and no 6-gram spanning the replacement occurs there.",
+    "supported_clauses": [],
+    "unsupported_clauses": [
+      "Overview Marlowe air pollution is a major environmental health problem affecting everyone in low-, middle-, and high-income countries."
+    ]
+  },
+  {
+    "id": "ind4-026",
+    "category": "verbatim-supported",
+    "expected_status": "supported",
+    "labeler_confidence": "high",
+    "url": "https://kotlinlang.org/docs/classes.html",
+    "claim": "The following code declares a Person class with a property for storing a name.",
+    "notes": "Constructive label: the claim is a contiguous span of the saved page text.",
+    "supported_clauses": [
+      "The following code declares a Person class with a property for storing a name."
+    ],
+    "unsupported_clauses": []
+  },
+  {
+    "id": "ind4-027",
+    "category": "verbatim-supported",
+    "expected_status": "supported",
+    "labeler_confidence": "high",
+    "url": "https://kotlinlang.org/docs/classes.html",
+    "claim": "Constructors and initializer blocks When you create a class instance, you call one of its constructors.",
+    "notes": "Constructive label: the claim is a contiguous span of the saved page text.",
+    "supported_clauses": [
+      "Constructors and initializer blocks When you create a class instance, you call one of its constructors."
+    ],
+    "unsupported_clauses": []
+  },
+  {
+    "id": "ind4-028",
+    "category": "negation-flip",
+    "expected_status": "unsupported",
+    "labeler_confidence": "high",
+    "url": "https://kotlinlang.org/docs/classes.html",
+    "claim": "A class in Kotlin can not have a primary constructor and one or more secondary constructors.",
+    "notes": "Constructive label: a negation was inserted and no 6-gram spanning the insertion occurs in the saved page text.",
+    "supported_clauses": [],
+    "unsupported_clauses": [
+      "A class in Kotlin can not have a primary constructor and one or more secondary constructors."
+    ]
+  },
+  {
+    "id": "ind4-029",
+    "category": "negation-flip",
+    "expected_status": "unsupported",
+    "labeler_confidence": "high",
+    "url": "https://kotlinlang.org/docs/classes.html",
+    "claim": "Secondary constructors are not useful when you need multiple ways to initialize a class or for Java interoperability.",
+    "notes": "Constructive label: a negation was inserted and no 6-gram spanning the insertion occurs in the saved page text.",
+    "supported_clauses": [],
+    "unsupported_clauses": [
+      "Secondary constructors are not useful when you need multiple ways to initialize a class or for Java interoperability."
+    ]
+  },
+  {
+    "id": "ind4-030",
+    "category": "entity-swap",
+    "expected_status": "unsupported",
+    "labeler_confidence": "high",
+    "url": "https://kotlinlang.org/docs/classes.html",
+    "claim": "The following code declares a Marlowe class with a property for storing a name.",
+    "notes": "Constructive label: the named subject was replaced with 'Marlowe', which does not appear in the saved page text, and no 6-gram spanning the replacement occurs there.",
+    "supported_clauses": [],
+    "unsupported_clauses": [
+      "The following code declares a Marlowe class with a property for storing a name."
+    ]
+  },
+  {
+    "id": "ind4-031",
+    "category": "verbatim-supported",
+    "expected_status": "supported",
+    "labeler_confidence": "high",
+    "url": "https://www.eff.org/issues/privacy",
+    "claim": "EFF fights in the courts and Congress to maintain your privacy rights in the digital world, and works with partners around the globe to support the development of privacy-protecting technologies.",
+    "notes": "Constructive label: the claim is a contiguous span of the saved page text.",
+    "supported_clauses": [
+      "EFF fights in the courts and Congress to maintain your privacy rights in the digital world, and works with partners around the globe to support the development of privacy-protecting technologies."
+    ],
+    "unsupported_clauses": []
+  },
+  {
+    "id": "ind4-032",
+    "category": "verbatim-supported",
+    "expected_status": "supported",
+    "labeler_confidence": "high",
+    "url": "https://www.eff.org/issues/privacy",
+    "claim": "For information about the law and technology of government surveillance in the United States check out EFF's Surveillance Self-Defense project.",
+    "notes": "Constructive label: the claim is a contiguous span of the saved page text.",
+    "supported_clauses": [
+      "For information about the law and technology of government surveillance in the United States check out EFF's Surveillance Self-Defense project."
+    ],
+    "unsupported_clauses": []
+  },
+  {
+    "id": "ind4-033",
+    "category": "entity-swap",
+    "expected_status": "unsupported",
+    "labeler_confidence": "high",
+    "url": "https://www.eff.org/issues/privacy",
+    "claim": "EFF fights in the courts and Marlowe to maintain your privacy rights in the digital world, and works with partners around the globe to support the development of privacy-protecting technologies.",
+    "notes": "Constructive label: the named subject was replaced with 'Marlowe', which does not appear in the saved page text, and no 6-gram spanning the replacement occurs there.",
+    "supported_clauses": [],
+    "unsupported_clauses": [
+      "EFF fights in the courts and Marlowe to maintain your privacy rights in the digital world, and works with partners around the globe to support the development of privacy-protecting technologies."
+    ]
+  },
+  {
+    "id": "ind4-034",
+    "category": "entity-swap",
+    "expected_status": "unsupported",
+    "labeler_confidence": "high",
+    "url": "https://www.eff.org/issues/privacy",
+    "claim": "For information about the law and technology of government surveillance in the Zenith States check out EFF's Surveillance Self-Defense project.",
+    "notes": "Constructive label: the named subject was replaced with 'Zenith', which does not appear in the saved page text, and no 6-gram spanning the replacement occurs there.",
+    "supported_clauses": [],
+    "unsupported_clauses": [
+      "For information about the law and technology of government surveillance in the Zenith States check out EFF's Surveillance Self-Defense project."
+    ]
+  },
+  {
+    "id": "ind4-035",
+    "category": "verbatim-supported",
+    "expected_status": "supported",
+    "labeler_confidence": "high",
+    "url": "https://www.un.org/en/global-issues/climate-change",
+    "claim": "Climate Change is one of the defining issues of our time and we are at a pivotal moment.",
+    "notes": "Constructive label: the claim is a contiguous span of the saved page text.",
+    "supported_clauses": [
+      "Climate Change is one of the defining issues of our time and we are at a pivotal moment."
+    ],
+    "unsupported_clauses": []
+  },
+  {
+    "id": "ind4-036",
+    "category": "verbatim-supported",
+    "expected_status": "supported",
+    "labeler_confidence": "high",
+    "url": "https://www.un.org/en/global-issues/climate-change",
+    "claim": "Although some climate variations occur naturally, human activities have been the main driver of climate change since the 1800s, mainly through the burning of fossil fuels such as coal, oil, and gas.",
+    "notes": "Constructive label: the claim is a contiguous span of the saved page text.",
+    "supported_clauses": [
+      "Although some climate variations occur naturally, human activities have been the main driver of climate change since the 1800s, mainly through the burning of fossil fuels such as coal, oil, and gas."
+    ],
+    "unsupported_clauses": []
+  },
+  {
+    "id": "ind4-037",
+    "category": "negation-flip",
+    "expected_status": "unsupported",
+    "labeler_confidence": "high",
+    "url": "https://www.un.org/en/global-issues/climate-change",
+    "claim": "Climate Change is not one of the defining issues of our time and we are at a pivotal moment.",
+    "notes": "Constructive label: a negation was inserted and no 6-gram spanning the insertion occurs in the saved page text.",
+    "supported_clauses": [],
+    "unsupported_clauses": [
+      "Climate Change is not one of the defining issues of our time and we are at a pivotal moment."
+    ]
+  },
+  {
+    "id": "ind4-038",
+    "category": "negation-flip",
+    "expected_status": "unsupported",
+    "labeler_confidence": "high",
+    "url": "https://www.un.org/en/global-issues/climate-change",
+    "claim": "Although some climate variations occur naturally, human activities have not been the main driver of climate change since the 1800s, mainly through the burning of fossil fuels such as coal, oil, and gas.",
+    "notes": "Constructive label: a negation was inserted and no 6-gram spanning the insertion occurs in the saved page text.",
+    "supported_clauses": [],
+    "unsupported_clauses": [
+      "Although some climate variations occur naturally, human activities have not been the main driver of climate change since the 1800s, mainly through the burning of fossil fuels such as coal, oil, and gas."
+    ]
+  },
+  {
+    "id": "ind4-039",
+    "category": "entity-swap",
+    "expected_status": "unsupported",
+    "labeler_confidence": "high",
+    "url": "https://www.un.org/en/global-issues/climate-change",
+    "claim": "Climate Marlowe is one of the defining issues of our time and we are at a pivotal moment.",
+    "notes": "Constructive label: the named subject was replaced with 'Marlowe', which does not appear in the saved page text, and no 6-gram spanning the replacement occurs there.",
+    "supported_clauses": [],
+    "unsupported_clauses": [
+      "Climate Marlowe is one of the defining issues of our time and we are at a pivotal moment."
+    ]
+  },
+  {
+    "id": "ind4-040",
+    "category": "verbatim-supported",
+    "expected_status": "supported",
+    "labeler_confidence": "high",
+    "url": "https://www.cancer.gov/about-cancer/understanding/what-is-cancer",
+    "claim": "The Definition of Cancer Cancer is a disease in which some of the body’s cells grow uncontrollably and spread to other parts of the body.",
+    "notes": "Constructive label: the claim is a contiguous span of the saved page text.",
+    "supported_clauses": [
+      "The Definition of Cancer Cancer is a disease in which some of the body’s cells grow uncontrollably and spread to other parts of the body."
+    ],
+    "unsupported_clauses": []
+  },
+  {
+    "id": "ind4-041",
+    "category": "verbatim-supported",
+    "expected_status": "supported",
+    "labeler_confidence": "high",
+    "url": "https://www.cancer.gov/about-cancer/understanding/what-is-cancer",
+    "claim": "Differences between Cancer Cells and Normal Cells Cancer cells differ from normal cells in many ways.",
+    "notes": "Constructive label: the claim is a contiguous span of the saved page text.",
+    "supported_clauses": [
+      "Differences between Cancer Cells and Normal Cells Cancer cells differ from normal cells in many ways."
+    ],
+    "unsupported_clauses": []
+  },
+  {
+    "id": "ind4-042",
+    "category": "negation-flip",
+    "expected_status": "unsupported",
+    "labeler_confidence": "high",
+    "url": "https://www.cancer.gov/about-cancer/understanding/what-is-cancer",
+    "claim": "The Definition of Cancer Cancer is not a disease in which some of the body’s cells grow uncontrollably and spread to other parts of the body.",
+    "notes": "Constructive label: a negation was inserted and no 6-gram spanning the insertion occurs in the saved page text.",
+    "supported_clauses": [],
+    "unsupported_clauses": [
+      "The Definition of Cancer Cancer is not a disease in which some of the body’s cells grow uncontrollably and spread to other parts of the body."
+    ]
+  },
+  {
+    "id": "ind4-043",
+    "category": "negation-flip",
+    "expected_status": "unsupported",
+    "labeler_confidence": "high",
+    "url": "https://www.cancer.gov/about-cancer/understanding/what-is-cancer",
+    "claim": "When Cancer Spreads A cancer that has spread from the place where it first formed to another place in the body is not called metastatic cancer.",
+    "notes": "Constructive label: a negation was inserted and no 6-gram spanning the insertion occurs in the saved page text.",
+    "supported_clauses": [],
+    "unsupported_clauses": [
+      "When Cancer Spreads A cancer that has spread from the place where it first formed to another place in the body is not called metastatic cancer."
+    ]
+  },
+  {
+    "id": "ind4-044",
+    "category": "entity-swap",
+    "expected_status": "unsupported",
+    "labeler_confidence": "high",
+    "url": "https://www.cancer.gov/about-cancer/understanding/what-is-cancer",
+    "claim": "The Marlowe of Cancer Cancer is a disease in which some of the body’s cells grow uncontrollably and spread to other parts of the body.",
+    "notes": "Constructive label: the named subject was replaced with 'Marlowe', which does not appear in the saved page text, and no 6-gram spanning the replacement occurs there.",
+    "supported_clauses": [],
+    "unsupported_clauses": [
+      "The Marlowe of Cancer Cancer is a disease in which some of the body’s cells grow uncontrollably and spread to other parts of the body."
+    ]
+  },
+  {
+    "id": "ind4-045",
+    "category": "verbatim-supported",
+    "expected_status": "supported",
+    "labeler_confidence": "high",
+    "url": "https://www.openstreetmap.org/about",
+    "claim": "To learn more about the community, see the OpenStreetMap Blog, user diaries, community blogs, and the OSM Foundation website.",
+    "notes": "Constructive label: the claim is a contiguous span of the saved page text.",
+    "supported_clauses": [
+      "To learn more about the community, see the OpenStreetMap Blog, user diaries, community blogs, and the OSM Foundation website."
+    ],
+    "unsupported_clauses": []
+  },
+  {
+    "id": "ind4-046",
+    "category": "verbatim-supported",
+    "expected_status": "supported",
+    "labeler_confidence": "high",
+    "url": "https://www.openstreetmap.org/about",
+    "claim": "Use of all OSMF operated services is subject to our Terms of Use, Acceptable Use Policies and our Privacy Policy.",
+    "notes": "Constructive label: the claim is a contiguous span of the saved page text.",
+    "supported_clauses": [
+      "Use of all OSMF operated services is subject to our Terms of Use, Acceptable Use Policies and our Privacy Policy."
+    ],
+    "unsupported_clauses": []
+  },
+  {
+    "id": "ind4-047",
+    "category": "negation-flip",
+    "expected_status": "unsupported",
+    "labeler_confidence": "high",
+    "url": "https://www.openstreetmap.org/about",
+    "claim": "Use of all OSMF operated services is not subject to our Terms of Use, Acceptable Use Policies and our Privacy Policy.",
+    "notes": "Constructive label: a negation was inserted and no 6-gram spanning the insertion occurs in the saved page text.",
+    "supported_clauses": [],
+    "unsupported_clauses": [
+      "Use of all OSMF operated services is not subject to our Terms of Use, Acceptable Use Policies and our Privacy Policy."
+    ]
+  },
+  {
+    "id": "ind4-048",
+    "category": "negation-flip",
+    "expected_status": "unsupported",
+    "labeler_confidence": "high",
+    "url": "https://www.openstreetmap.org/about",
+    "claim": "Specifically for using a screenshot from OpenStreetMap directly in your book, publication, film or TV show, you do not need to ask for permission as data in OpenStreetMap is not open for all to use.",
+    "notes": "Constructive label: a negation was inserted and no 6-gram spanning the insertion occurs in the saved page text.",
+    "supported_clauses": [],
+    "unsupported_clauses": [
+      "Specifically for using a screenshot from OpenStreetMap directly in your book, publication, film or TV show, you do not need to ask for permission as data in OpenStreetMap is not open for all to use."
+    ]
+  },
+  {
+    "id": "ind4-049",
+    "category": "entity-swap",
+    "expected_status": "unsupported",
+    "labeler_confidence": "high",
+    "url": "https://www.openstreetmap.org/about",
+    "claim": "To learn more about the community, see the MarloweStreetMap Blog, user diaries, community blogs, and the OSM Foundation website.",
+    "notes": "Constructive label: the named subject was replaced with 'Marlowe', which does not appear in the saved page text, and no 6-gram spanning the replacement occurs there.",
+    "supported_clauses": [],
+    "unsupported_clauses": [
+      "To learn more about the community, see the MarloweStreetMap Blog, user diaries, community blogs, and the OSM Foundation website."
+    ]
+  },
+  {
+    "id": "ind4-050",
+    "category": "verbatim-supported",
+    "expected_status": "supported",
+    "labeler_confidence": "high",
+    "url": "https://www.icann.org/resources/pages/welcome-2012-02-25-en",
+    "claim": "Overview ICANN is a California-based nonprofit, public-benefit organization accountable to a global community of stakeholders.",
+    "notes": "Constructive label: the claim is a contiguous span of the saved page text.",
+    "supported_clauses": [
+      "Overview ICANN is a California-based nonprofit, public-benefit organization accountable to a global community of stakeholders."
+    ],
+    "unsupported_clauses": []
+  },
+  {
+    "id": "ind4-051",
+    "category": "verbatim-supported",
+    "expected_status": "supported",
+    "labeler_confidence": "high",
+    "url": "https://www.icann.org/resources/pages/welcome-2012-02-25-en",
+    "claim": "Its enduring mission is to ensure the stable, secure operation of the Internet's unique identifier systems.",
+    "notes": "Constructive label: the claim is a contiguous span of the saved page text.",
+    "supported_clauses": [
+      "Its enduring mission is to ensure the stable, secure operation of the Internet's unique identifier systems."
+    ],
+    "unsupported_clauses": []
+  },
+  {
+    "id": "ind4-052",
+    "category": "negation-flip",
+    "expected_status": "unsupported",
+    "labeler_confidence": "high",
+    "url": "https://www.icann.org/resources/pages/welcome-2012-02-25-en",
+    "claim": "Overview ICANN is not a California-based nonprofit, public-benefit organization accountable to a global community of stakeholders.",
+    "notes": "Constructive label: a negation was inserted and no 6-gram spanning the insertion occurs in the saved page text.",
+    "supported_clauses": [],
+    "unsupported_clauses": [
+      "Overview ICANN is not a California-based nonprofit, public-benefit organization accountable to a global community of stakeholders."
+    ]
+  },
+  {
+    "id": "ind4-053",
+    "category": "negation-flip",
+    "expected_status": "unsupported",
+    "labeler_confidence": "high",
+    "url": "https://www.icann.org/resources/pages/welcome-2012-02-25-en",
+    "claim": "Its enduring mission is not to ensure the stable, secure operation of the Internet's unique identifier systems.",
+    "notes": "Constructive label: a negation was inserted and no 6-gram spanning the insertion occurs in the saved page text.",
+    "supported_clauses": [],
+    "unsupported_clauses": [
+      "Its enduring mission is not to ensure the stable, secure operation of the Internet's unique identifier systems."
+    ]
+  },
+  {
+    "id": "ind4-054",
+    "category": "entity-swap",
+    "expected_status": "unsupported",
+    "labeler_confidence": "high",
+    "url": "https://www.icann.org/resources/pages/welcome-2012-02-25-en",
+    "claim": "Overview ICANN is a Marlowe-based nonprofit, public-benefit organization accountable to a global community of stakeholders.",
+    "notes": "Constructive label: the named subject was replaced with 'Marlowe', which does not appear in the saved page text, and no 6-gram spanning the replacement occurs there.",
+    "supported_clauses": [],
+    "unsupported_clauses": [
+      "Overview ICANN is a Marlowe-based nonprofit, public-benefit organization accountable to a global community of stakeholders."
+    ]
+  },
+  {
+    "id": "ind4-055",
+    "category": "verbatim-supported",
+    "expected_status": "supported",
+    "labeler_confidence": "high",
+    "url": "https://www.rbi.org.in/Scripts/AboutUsDisplay.aspx",
+    "claim": "The Central Office of the Reserve Bank was initially established in Kolkata but was permanently moved to Mumbai in 1937.",
+    "notes": "Constructive label: the claim is a contiguous span of the saved page text.",
+    "supported_clauses": [
+      "The Central Office of the Reserve Bank was initially established in Kolkata but was permanently moved to Mumbai in 1937."
+    ],
+    "unsupported_clauses": []
+  },
+  {
+    "id": "ind4-056",
+    "category": "verbatim-supported",
+    "expected_status": "supported",
+    "labeler_confidence": "high",
+    "url": "https://www.rbi.org.in/Scripts/AboutUsDisplay.aspx",
+    "claim": "The Central Office is where the Governor sits and where policies are formulated.",
+    "notes": "Constructive label: the claim is a contiguous span of the saved page text.",
+    "supported_clauses": [
+      "The Central Office is where the Governor sits and where policies are formulated."
+    ],
+    "unsupported_clauses": []
+  },
+  {
+    "id": "ind4-057",
+    "category": "negation-flip",
+    "expected_status": "unsupported",
+    "labeler_confidence": "high",
+    "url": "https://www.rbi.org.in/Scripts/AboutUsDisplay.aspx",
+    "claim": "The Central Office of the Reserve Bank was not initially established in Kolkata but was permanently moved to Mumbai in 1937.",
+    "notes": "Constructive label: a negation was inserted and no 6-gram spanning the insertion occurs in the saved page text.",
+    "supported_clauses": [],
+    "unsupported_clauses": [
+      "The Central Office of the Reserve Bank was not initially established in Kolkata but was permanently moved to Mumbai in 1937."
+    ]
+  },
+  {
+    "id": "ind4-058",
+    "category": "negation-flip",
+    "expected_status": "unsupported",
+    "labeler_confidence": "high",
+    "url": "https://www.rbi.org.in/Scripts/AboutUsDisplay.aspx",
+    "claim": "The Central Office is not where the Governor sits and where policies are formulated.",
+    "notes": "Constructive label: a negation was inserted and no 6-gram spanning the insertion occurs in the saved page text.",
+    "supported_clauses": [],
+    "unsupported_clauses": [
+      "The Central Office is not where the Governor sits and where policies are formulated."
+    ]
+  },
+  {
+    "id": "ind4-059",
+    "category": "entity-swap",
+    "expected_status": "unsupported",
+    "labeler_confidence": "high",
+    "url": "https://www.rbi.org.in/Scripts/AboutUsDisplay.aspx",
+    "claim": "The Marlowe Office of the Reserve Bank was initially established in Kolkata but was permanently moved to Mumbai in 1937.",
+    "notes": "Constructive label: the named subject was replaced with 'Marlowe', which does not appear in the saved page text, and no 6-gram spanning the replacement occurs there.",
+    "supported_clauses": [],
+    "unsupported_clauses": [
+      "The Marlowe Office of the Reserve Bank was initially established in Kolkata but was permanently moved to Mumbai in 1937."
+    ]
+  },
+  {
+    "id": "ind4-060",
+    "category": "dead-link",
+    "expected_status": "unreachable",
+    "labeler_confidence": "high",
+    "url": "https://nonexistent-citesure-v4-a9f2.example.com/report",
+    "claim": "This host publishes an annual report on the scheme.",
+    "notes": "Constructive label: the host does not resolve.",
+    "supported_clauses": [],
+    "unsupported_clauses": []
+  },
+  {
+    "id": "ind4-061",
+    "category": "dead-link",
+    "expected_status": "unreachable",
+    "labeler_confidence": "high",
+    "url": "https://nonexistent-citesure-v4-b7c1.example.org/page",
+    "claim": "This host publishes an annual report on the scheme.",
+    "notes": "Constructive label: the host does not resolve.",
+    "supported_clauses": [],
+    "unsupported_clauses": []
+  }
+]
