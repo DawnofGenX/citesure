@@ -1,11 +1,11 @@
 {
-  "generated_utc": "20261024-232411",
+  "generated_utc": "20261025-101907",
   "set": "evals/independent_set_v4.json",
   "nli": false,
   "cache_dir": "/home/hermes/.cache/citesure-eval",
-  "total": 61,
-  "matched": 24,
-  "agreement_pct": 39.34,
+  "total": 83,
+  "matched": 27,
+  "agreement_pct": 32.53,
   "confusion_matrix": {
     "supported": {
       "supported": 22,
@@ -16,11 +16,11 @@
       "error": 0
     },
     "unsupported": {
-      "supported": 32,
+      "supported": 42,
       "unsupported": 0,
       "unreachable": 0,
       "paywalled": 0,
-      "ambiguous": 3,
+      "ambiguous": 4,
       "error": 0
     },
     "unreachable": {
@@ -40,11 +40,11 @@
       "error": 0
     },
     "ambiguous": {
-      "supported": 0,
+      "supported": 8,
       "unsupported": 0,
       "unreachable": 0,
       "paywalled": 0,
-      "ambiguous": 0,
+      "ambiguous": 3,
       "error": 0
     },
     "error": {
@@ -65,7 +65,7 @@
     },
     "entity-swap": {
       "canonical_status": "unsupported",
-      "total": 13,
+      "total": 24,
       "correct": 0,
       "recall": 0.0
     },
@@ -107,9 +107,9 @@
     },
     "partially-true-mixed": {
       "canonical_status": "ambiguous",
-      "total": 0,
-      "correct": 0,
-      "recall": NaN
+      "total": 11,
+      "correct": 3,
+      "recall": 0.2727272727272727
     },
     "paywalled": {
       "canonical_status": "paywalled",
@@ -127,15 +127,15 @@
   "per_status_pr": {
     "supported": {
       "tp": 22,
-      "fp": 32,
+      "fp": 50,
       "fn": 2,
-      "precision": 0.4074074074074074,
+      "precision": 0.3055555555555556,
       "recall": 0.9166666666666666
     },
     "unsupported": {
       "tp": 0,
       "fp": 0,
-      "fn": 35,
+      "fn": 46,
       "precision": NaN,
       "recall": 0.0
     },
@@ -154,11 +154,11 @@
       "recall": NaN
     },
     "ambiguous": {
-      "tp": 0,
-      "fp": 5,
-      "fn": 0,
-      "precision": 0.0,
-      "recall": NaN
+      "tp": 3,
+      "fp": 6,
+      "fn": 8,
+      "precision": 0.3333333333333333,
+      "recall": 0.2727272727272727
     },
     "error": {
       "tp": 0,
@@ -170,13 +170,13 @@
   },
   "uncertainty": {
     "wilson_ci": {
-      "low": 0.2807,
-      "high": 0.5188,
+      "low": 0.2342,
+      "high": 0.4319,
       "assumption": "iid cases"
     },
     "cluster_bootstrap_ci": {
-      "low": 0.3182,
-      "high": 0.46,
+      "low": 0.2791,
+      "high": 0.3824,
       "n_clusters": 14,
       "assumption": "cases clustered by source URL"
     },
@@ -188,15 +188,15 @@
     },
     "entity-swap_wilson_ci": {
       "low": 0.0,
-      "high": 0.2281,
+      "high": 0.138,
       "correct": 0,
-      "total": 13
+      "total": 24
     },
     "by_labeler_confidence": {
       "high": {
-        "correct": 24,
-        "total": 61,
-        "agreement": 0.39344262295081966
+        "correct": 27,
+        "total": 83,
+        "agreement": 0.3253012048192771
       }
     }
   },
@@ -204,9 +204,9 @@
     "negation_flip_false_supported": 20,
     "negation_flip_total": 22,
     "negation_flip_rate": 0.9091,
-    "entity_swap_false_supported": 12,
-    "entity_swap_total": 13,
-    "entity_swap_rate": 0.9231
+    "entity_swap_false_supported": 22,
+    "entity_swap_total": 24,
+    "entity_swap_rate": 0.9167
   },
   "records": [
     {
@@ -231,7 +231,7 @@
       "score": 1.0,
       "tier_reached": 2,
       "match": true,
-      "evidence": "It describes canonical and compatibility equivalence and the four normalization forms, providing examples, and elaborates on the formal specification of Unicode normalization, with further explanations and implementation notes. This document also provides the formal specification of the Stream-Safe…",
+      "evidence": "The Unicode Standard may require conformance to normative content in a Unicode Standard Annex, if so specified in the Conformance chapter of that version of the Unicode Standard. The version number of a UAX document corresponds to the version of the Unicode Standard of which it forms a part. Please…",
       "notes": [
         "page fetched; reachable with no red flags (tier 1)",
         "overlap tier: score 1.000 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported"
@@ -242,20 +242,6 @@
       "category": "negation-flip",
       "expected": "unsupported",
       "predicted": "supported",
-      "score": 0.9231,
-      "tier_reached": 2,
-      "match": false,
-      "evidence": "(In NFKC and NFKD, a K is used to stand for compatibility to avoid confusion with the C standing for composition.) Both types of normalization can be useful in different circumstances. Figures 3 through 6 illustrate different ways in which source text can be normalized.",
-      "notes": [
-        "page fetched; reachable with no red flags (tier 1)",
-        "overlap tier: score 0.923 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported"
-      ]
-    },
-    {
-      "id": "ind4-004",
-      "category": "negation-flip",
-      "expected": "unsupported",
-      "predicted": "supported",
       "score": 0.9474,
       "tier_reached": 2,
       "match": false,
@@ -263,6 +249,20 @@
       "notes": [
         "page fetched; reachable with no red flags (tier 1)",
         "overlap tier: score 0.947 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported"
+      ]
+    },
+    {
+      "id": "ind4-004",
+      "category": "negation-flip",
+      "expected": "unsupported",
+      "predicted": "supported",
+      "score": 0.9231,
+      "tier_reached": 2,
+      "match": false,
+      "evidence": "Full decomposition involves recursive application of the Decomposition_Mapping values, because in some cases a complex composite character may have a Decomposition_Mapping into a sequence of characters, one of which may also have its own non-trivial Decomposition_Mapping value. The type of full dec…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 0.923 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported"
       ]
     },
     {
@@ -281,6 +281,34 @@
     },
     {
       "id": "ind4-006",
+      "category": "entity-swap",
+      "expected": "unsupported",
+      "predicted": "supported",
+      "score": 0.8333,
+      "tier_reached": 2,
+      "match": false,
+      "evidence": "The Unicode Standard may require conformance to normative content in a Unicode Standard Annex, if so specified in the Conformance chapter of that version of the Unicode Standard. The version number of a UAX document corresponds to the version of the Unicode Standard of which it forms a part. Please…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 0.833 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported"
+      ]
+    },
+    {
+      "id": "ind4-007",
+      "category": "partially-true-mixed",
+      "expected": "ambiguous",
+      "predicted": "supported",
+      "score": 0.6452,
+      "tier_reached": 2,
+      "match": false,
+      "evidence": "Revision was 58. This annex describes normalization forms for Unicode text. When implementations keep strings in a normalized form, they can be assured that equivalent strings have a unique binary representation. This annex also provides examples, additional specifications regarding normalization o…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 0.645 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported"
+      ]
+    },
+    {
+      "id": "ind4-008",
       "category": "verbatim-supported",
       "expected": "supported",
       "predicted": "ambiguous",
@@ -294,7 +322,7 @@
       ]
     },
     {
-      "id": "ind4-007",
+      "id": "ind4-009",
       "category": "verbatim-supported",
       "expected": "supported",
       "predicted": "ambiguous",
@@ -308,7 +336,7 @@
       ]
     },
     {
-      "id": "ind4-008",
+      "id": "ind4-010",
       "category": "negation-flip",
       "expected": "unsupported",
       "predicted": "ambiguous",
@@ -322,7 +350,7 @@
       ]
     },
     {
-      "id": "ind4-009",
+      "id": "ind4-011",
       "category": "negation-flip",
       "expected": "unsupported",
       "predicted": "ambiguous",
@@ -336,7 +364,7 @@
       ]
     },
     {
-      "id": "ind4-010",
+      "id": "ind4-012",
       "category": "entity-swap",
       "expected": "unsupported",
       "predicted": "ambiguous",
@@ -350,7 +378,35 @@
       ]
     },
     {
-      "id": "ind4-011",
+      "id": "ind4-013",
+      "category": "entity-swap",
+      "expected": "unsupported",
+      "predicted": "ambiguous",
+      "score": 0.3,
+      "tier_reached": 2,
+      "match": false,
+      "evidence": "2 let s1 = String::from(\"hello\");. -- move occurs because `s1` has type `String`, which does not implement the `Copy` trait. 3 let s2 = s1;. -- value moved here. 5 println!(\"{s1}, world!\");. ^^ value borrowed here after move. 3 let s2 = s1.clone();. ++++++++. For more information about this error,…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 0.300 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported"
+      ]
+    },
+    {
+      "id": "ind4-014",
+      "category": "partially-true-mixed",
+      "expected": "ambiguous",
+      "predicted": "ambiguous",
+      "score": 0.3125,
+      "tier_reached": 2,
+      "match": true,
+      "evidence": "In addition, there’s a design choice that’s implied by this: Rust will never automatically create “deep” copies of your data. Therefore, any automatic copying can be assumed to be inexpensive in terms of runtime performance. Scope and Assignment The inverse of this is true for the relationship betw…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 0.312 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported"
+      ]
+    },
+    {
+      "id": "ind4-015",
       "category": "verbatim-supported",
       "expected": "supported",
       "predicted": "supported",
@@ -364,7 +420,7 @@
       ]
     },
     {
-      "id": "ind4-012",
+      "id": "ind4-016",
       "category": "verbatim-supported",
       "expected": "supported",
       "predicted": "supported",
@@ -378,7 +434,7 @@
       ]
     },
     {
-      "id": "ind4-013",
+      "id": "ind4-017",
       "category": "negation-flip",
       "expected": "unsupported",
       "predicted": "supported",
@@ -392,7 +448,7 @@
       ]
     },
     {
-      "id": "ind4-014",
+      "id": "ind4-018",
       "category": "negation-flip",
       "expected": "unsupported",
       "predicted": "supported",
@@ -406,7 +462,7 @@
       ]
     },
     {
-      "id": "ind4-015",
+      "id": "ind4-019",
       "category": "entity-swap",
       "expected": "unsupported",
       "predicted": "supported",
@@ -420,7 +476,35 @@
       ]
     },
     {
-      "id": "ind4-016",
+      "id": "ind4-020",
+      "category": "entity-swap",
+      "expected": "unsupported",
+      "predicted": "supported",
+      "score": 0.9,
+      "tier_reached": 2,
+      "match": false,
+      "evidence": "PostgreSQL runs on all major operating systems, has been ACID-compliant since 2001, and has powerful add-ons such as the popular PostGIS geospatial database extender. It is no surprise that PostgreSQL has become the open source relational database of choice for many people and organisations.",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 0.900 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported"
+      ]
+    },
+    {
+      "id": "ind4-021",
+      "category": "partially-true-mixed",
+      "expected": "ambiguous",
+      "predicted": "supported",
+      "score": 0.8333,
+      "tier_reached": 2,
+      "match": false,
+      "evidence": "The origins of PostgreSQL date back to 1986 as part of the POSTGRES project at the University of California at Berkeley and has nearly 40 years of active development on the core platform.",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 0.833 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported"
+      ]
+    },
+    {
+      "id": "ind4-022",
       "category": "verbatim-supported",
       "expected": "supported",
       "predicted": "supported",
@@ -434,21 +518,21 @@
       ]
     },
     {
-      "id": "ind4-017",
+      "id": "ind4-023",
       "category": "verbatim-supported",
       "expected": "supported",
       "predicted": "supported",
       "score": 1.0,
       "tier_reached": 2,
       "match": true,
-      "evidence": "For example, neither AlphaGo nor Watson can understand the rules of Go written in plain-and-simple English and produce a computer program that can play the game. It’s interesting that there is one endeavor in AI that tackles a narrow version of this very problem: In general game playing, a machine…",
+      "evidence": "Closely following Watson’s victory, in March 2016, Google DeepMind’s AlphaGo defeated one of Go’s top-ranked players, Lee Seedol, in four out of five matches.",
       "notes": [
         "page fetched; reachable with no red flags (tier 1)",
         "overlap tier: score 1.000 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported"
       ]
     },
     {
-      "id": "ind4-018",
+      "id": "ind4-024",
       "category": "negation-flip",
       "expected": "unsupported",
       "predicted": "supported",
@@ -462,35 +546,63 @@
       ]
     },
     {
-      "id": "ind4-019",
+      "id": "ind4-025",
       "category": "negation-flip",
       "expected": "unsupported",
       "predicted": "supported",
-      "score": 0.9524,
+      "score": 0.9333,
       "tier_reached": 2,
       "match": false,
-      "evidence": "For example, neither AlphaGo nor Watson can understand the rules of Go written in plain-and-simple English and produce a computer program that can play the game. It’s interesting that there is one endeavor in AI that tackles a narrow version of this very problem: In general game playing, a machine…",
+      "evidence": "2005). However, the description in question is expressed in a formal language, and the machine has to manage to play the game from this description. Note that this is still far from understanding even a simple description of a game in English well enough to play it.",
       "notes": [
         "page fetched; reachable with no red flags (tier 1)",
-        "overlap tier: score 0.952 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported"
+        "overlap tier: score 0.933 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported"
       ]
     },
     {
-      "id": "ind4-020",
+      "id": "ind4-026",
       "category": "entity-swap",
       "expected": "unsupported",
       "predicted": "supported",
-      "score": 0.9,
+      "score": 0.9286,
       "tier_reached": 2,
       "match": false,
-      "evidence": "For example, neither AlphaGo nor Watson can understand the rules of Go written in plain-and-simple English and produce a computer program that can play the game. It’s interesting that there is one endeavor in AI that tackles a narrow version of this very problem: In general game playing, a machine…",
+      "evidence": "Closely following Watson’s victory, in March 2016, Google DeepMind’s AlphaGo defeated one of Go’s top-ranked players, Lee Seedol, in four out of five matches.",
       "notes": [
         "page fetched; reachable with no red flags (tier 1)",
-        "overlap tier: score 0.900 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported"
+        "overlap tier: score 0.929 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported"
       ]
     },
     {
-      "id": "ind4-021",
+      "id": "ind4-027",
+      "category": "entity-swap",
+      "expected": "unsupported",
+      "predicted": "supported",
+      "score": 0.8571,
+      "tier_reached": 2,
+      "match": false,
+      "evidence": "2005). However, the description in question is expressed in a formal language, and the machine has to manage to play the game from this description. Note that this is still far from understanding even a simple description of a game in English well enough to play it.",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 0.857 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported"
+      ]
+    },
+    {
+      "id": "ind4-028",
+      "category": "partially-true-mixed",
+      "expected": "ambiguous",
+      "predicted": "ambiguous",
+      "score": 0.5806,
+      "tier_reached": 2,
+      "match": true,
+      "evidence": "At the moment, though, the point is that in his paper, Turing explicitly lays down the call for building machines that would provide an existence proof of an affirmative answer to his question. The call even includes a suggestion for how such construction should proceed.",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 0.581 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported"
+      ]
+    },
+    {
+      "id": "ind4-029",
       "category": "verbatim-supported",
       "expected": "supported",
       "predicted": "supported",
@@ -504,7 +616,7 @@
       ]
     },
     {
-      "id": "ind4-022",
+      "id": "ind4-030",
       "category": "verbatim-supported",
       "expected": "supported",
       "predicted": "supported",
@@ -518,7 +630,7 @@
       ]
     },
     {
-      "id": "ind4-023",
+      "id": "ind4-031",
       "category": "negation-flip",
       "expected": "unsupported",
       "predicted": "supported",
@@ -532,7 +644,7 @@
       ]
     },
     {
-      "id": "ind4-024",
+      "id": "ind4-032",
       "category": "negation-flip",
       "expected": "unsupported",
       "predicted": "supported",
@@ -546,7 +658,7 @@
       ]
     },
     {
-      "id": "ind4-025",
+      "id": "ind4-033",
       "category": "entity-swap",
       "expected": "unsupported",
       "predicted": "supported",
@@ -560,7 +672,35 @@
       ]
     },
     {
-      "id": "ind4-026",
+      "id": "ind4-034",
+      "category": "entity-swap",
+      "expected": "unsupported",
+      "predicted": "supported",
+      "score": 0.8462,
+      "tier_reached": 2,
+      "match": false,
+      "evidence": "People living in low- and middle-income countries disproportionately experience the burden of outdoor air pollution with 89% (of the 4.2 million premature deaths) occurring in these areas. The greatest burden is found in the WHO South-East Asia and Western Pacific Regions. The latest burden estimat…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 0.846 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported"
+      ]
+    },
+    {
+      "id": "ind4-035",
+      "category": "partially-true-mixed",
+      "expected": "ambiguous",
+      "predicted": "supported",
+      "score": 0.6333,
+      "tier_reached": 2,
+      "match": false,
+      "evidence": "People living in low- and middle-income countries disproportionately experience the burden of outdoor air pollution with 89% (of the 4.2 million premature deaths) occurring in these areas. The greatest burden is found in the WHO South-East Asia and Western Pacific Regions. The latest burden estimat…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 0.633 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported"
+      ]
+    },
+    {
+      "id": "ind4-036",
       "category": "verbatim-supported",
       "expected": "supported",
       "predicted": "supported",
@@ -574,7 +714,7 @@
       ]
     },
     {
-      "id": "ind4-027",
+      "id": "ind4-037",
       "category": "verbatim-supported",
       "expected": "supported",
       "predicted": "supported",
@@ -588,7 +728,7 @@
       ]
     },
     {
-      "id": "ind4-028",
+      "id": "ind4-038",
       "category": "negation-flip",
       "expected": "unsupported",
       "predicted": "supported",
@@ -602,7 +742,7 @@
       ]
     },
     {
-      "id": "ind4-029",
+      "id": "ind4-039",
       "category": "negation-flip",
       "expected": "unsupported",
       "predicted": "supported",
@@ -616,7 +756,7 @@
       ]
     },
     {
-      "id": "ind4-030",
+      "id": "ind4-040",
       "category": "entity-swap",
       "expected": "unsupported",
       "predicted": "supported",
@@ -630,7 +770,35 @@
       ]
     },
     {
-      "id": "ind4-031",
+      "id": "ind4-041",
+      "category": "entity-swap",
+      "expected": "unsupported",
+      "predicted": "supported",
+      "score": 0.8,
+      "tier_reached": 2,
+      "match": false,
+      "evidence": "Constructors and initializer blocks When you create a class instance, you call one of its constructors. A class in Kotlin can have a primary constructor and one or more secondary constructors. The primary constructor is the main way to initialize a class. You declare it in the class header. A secon…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 0.800 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported"
+      ]
+    },
+    {
+      "id": "ind4-042",
+      "category": "partially-true-mixed",
+      "expected": "ambiguous",
+      "predicted": "ambiguous",
+      "score": 0.5625,
+      "tier_reached": 2,
+      "match": true,
+      "evidence": "You can assign the created instance to a mutable (var) or read-only (val) variable: It's possible to create instances wherever you need them, inside the main() function, within other functions, or inside another class. Additionally, you can create instances inside another function and call that fun…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 0.562 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported"
+      ]
+    },
+    {
+      "id": "ind4-043",
       "category": "verbatim-supported",
       "expected": "supported",
       "predicted": "supported",
@@ -644,7 +812,7 @@
       ]
     },
     {
-      "id": "ind4-032",
+      "id": "ind4-044",
       "category": "verbatim-supported",
       "expected": "supported",
       "predicted": "supported",
@@ -658,7 +826,7 @@
       ]
     },
     {
-      "id": "ind4-033",
+      "id": "ind4-045",
       "category": "entity-swap",
       "expected": "unsupported",
       "predicted": "supported",
@@ -672,7 +840,7 @@
       ]
     },
     {
-      "id": "ind4-034",
+      "id": "ind4-046",
       "category": "entity-swap",
       "expected": "unsupported",
       "predicted": "supported",
@@ -686,7 +854,7 @@
       ]
     },
     {
-      "id": "ind4-035",
+      "id": "ind4-047",
       "category": "verbatim-supported",
       "expected": "supported",
       "predicted": "supported",
@@ -700,7 +868,7 @@
       ]
     },
     {
-      "id": "ind4-036",
+      "id": "ind4-048",
       "category": "verbatim-supported",
       "expected": "supported",
       "predicted": "supported",
@@ -714,7 +882,7 @@
       ]
     },
     {
-      "id": "ind4-037",
+      "id": "ind4-049",
       "category": "negation-flip",
       "expected": "unsupported",
       "predicted": "supported",
@@ -728,7 +896,7 @@
       ]
     },
     {
-      "id": "ind4-038",
+      "id": "ind4-050",
       "category": "negation-flip",
       "expected": "unsupported",
       "predicted": "supported",
@@ -742,7 +910,7 @@
       ]
     },
     {
-      "id": "ind4-039",
+      "id": "ind4-051",
       "category": "entity-swap",
       "expected": "unsupported",
       "predicted": "supported",
@@ -756,7 +924,35 @@
       ]
     },
     {
-      "id": "ind4-040",
+      "id": "ind4-052",
+      "category": "entity-swap",
+      "expected": "unsupported",
+      "predicted": "supported",
+      "score": 0.8571,
+      "tier_reached": 2,
+      "match": false,
+      "evidence": "Although some climate variations occur naturally, human activities have been the main driver of climate change since the 1800s, mainly through the burning of fossil fuels such as coal, oil, and gas. These activities release greenhouse gas emissions into the atmosphere, trapping heat from the sun an…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 0.857 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported"
+      ]
+    },
+    {
+      "id": "ind4-053",
+      "category": "partially-true-mixed",
+      "expected": "ambiguous",
+      "predicted": "supported",
+      "score": 0.6923,
+      "tier_reached": 2,
+      "match": false,
+      "evidence": "Climate Change is one of the defining issues of our time and we are at a pivotal moment. From shifting weather patterns that threaten food production, to rising sea levels that increase the risk of catastrophic flooding, the impacts of climate change are global in scope and unprecedented in scale.",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 0.692 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported"
+      ]
+    },
+    {
+      "id": "ind4-054",
       "category": "verbatim-supported",
       "expected": "supported",
       "predicted": "supported",
@@ -770,7 +966,7 @@
       ]
     },
     {
-      "id": "ind4-041",
+      "id": "ind4-055",
       "category": "verbatim-supported",
       "expected": "supported",
       "predicted": "supported",
@@ -784,7 +980,7 @@
       ]
     },
     {
-      "id": "ind4-042",
+      "id": "ind4-056",
       "category": "negation-flip",
       "expected": "unsupported",
       "predicted": "supported",
@@ -798,7 +994,7 @@
       ]
     },
     {
-      "id": "ind4-043",
+      "id": "ind4-057",
       "category": "negation-flip",
       "expected": "unsupported",
       "predicted": "supported",
@@ -812,7 +1008,7 @@
       ]
     },
     {
-      "id": "ind4-044",
+      "id": "ind4-058",
       "category": "entity-swap",
       "expected": "unsupported",
       "predicted": "supported",
@@ -826,7 +1022,35 @@
       ]
     },
     {
-      "id": "ind4-045",
+      "id": "ind4-059",
+      "category": "entity-swap",
+      "expected": "unsupported",
+      "predicted": "supported",
+      "score": 0.8571,
+      "tier_reached": 2,
+      "match": false,
+      "evidence": "When removed, benign tumors usually don’t grow back, whereas cancerous tumors sometimes do. Benign tumors can sometimes be quite large, however. Some can cause serious symptoms or be life threatening, such as benign tumors in the brain. Differences between Cancer Cells and Normal Cells Cancer cells…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 0.857 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported"
+      ]
+    },
+    {
+      "id": "ind4-060",
+      "category": "partially-true-mixed",
+      "expected": "ambiguous",
+      "predicted": "supported",
+      "score": 0.7,
+      "tier_reached": 2,
+      "match": false,
+      "evidence": "When Cancer Spreads A cancer that has spread from the place where it first formed to another place in the body is called metastatic cancer. The process by which cancer cells spread to other parts of the body is called metastasis. Metastatic cancer has the same name and the same type of cancer cells…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 0.700 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported"
+      ]
+    },
+    {
+      "id": "ind4-061",
       "category": "verbatim-supported",
       "expected": "supported",
       "predicted": "supported",
@@ -840,7 +1064,7 @@
       ]
     },
     {
-      "id": "ind4-046",
+      "id": "ind4-062",
       "category": "verbatim-supported",
       "expected": "supported",
       "predicted": "supported",
@@ -854,7 +1078,7 @@
       ]
     },
     {
-      "id": "ind4-047",
+      "id": "ind4-063",
       "category": "negation-flip",
       "expected": "unsupported",
       "predicted": "supported",
@@ -868,7 +1092,7 @@
       ]
     },
     {
-      "id": "ind4-048",
+      "id": "ind4-064",
       "category": "negation-flip",
       "expected": "unsupported",
       "predicted": "supported",
@@ -882,7 +1106,7 @@
       ]
     },
     {
-      "id": "ind4-049",
+      "id": "ind4-065",
       "category": "entity-swap",
       "expected": "unsupported",
       "predicted": "supported",
@@ -896,7 +1120,35 @@
       ]
     },
     {
-      "id": "ind4-050",
+      "id": "ind4-066",
+      "category": "entity-swap",
+      "expected": "unsupported",
+      "predicted": "supported",
+      "score": 0.8889,
+      "tier_reached": 2,
+      "match": false,
+      "evidence": "See the Copyright and License page for details. Legal This site and many other related services are formally operated by the OpenStreetMap Foundation (OSMF) on behalf of the community. Use of all OSMF operated services is subject to our Terms of Use, Acceptable Use Policies and our Privacy Policy.",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 0.889 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported"
+      ]
+    },
+    {
+      "id": "ind4-067",
+      "category": "partially-true-mixed",
+      "expected": "ambiguous",
+      "predicted": "supported",
+      "score": 0.6667,
+      "tier_reached": 2,
+      "match": false,
+      "evidence": "To learn more about the community, see the OpenStreetMap Blog, user diaries, community blogs, and the OSM Foundation website. Open Data OpenStreetMap is open data: you are free to use it for any purpose as long as you credit OpenStreetMap and its contributors. If you alter or build upon the data in…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 0.667 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported"
+      ]
+    },
+    {
+      "id": "ind4-068",
       "category": "verbatim-supported",
       "expected": "supported",
       "predicted": "supported",
@@ -910,7 +1162,7 @@
       ]
     },
     {
-      "id": "ind4-051",
+      "id": "ind4-069",
       "category": "verbatim-supported",
       "expected": "supported",
       "predicted": "supported",
@@ -924,7 +1176,7 @@
       ]
     },
     {
-      "id": "ind4-052",
+      "id": "ind4-070",
       "category": "negation-flip",
       "expected": "unsupported",
       "predicted": "supported",
@@ -938,7 +1190,7 @@
       ]
     },
     {
-      "id": "ind4-053",
+      "id": "ind4-071",
       "category": "negation-flip",
       "expected": "unsupported",
       "predicted": "supported",
@@ -952,7 +1204,7 @@
       ]
     },
     {
-      "id": "ind4-054",
+      "id": "ind4-072",
       "category": "entity-swap",
       "expected": "unsupported",
       "predicted": "supported",
@@ -966,7 +1218,35 @@
       ]
     },
     {
-      "id": "ind4-055",
+      "id": "ind4-073",
+      "category": "entity-swap",
+      "expected": "unsupported",
+      "predicted": "supported",
+      "score": 0.8182,
+      "tier_reached": 2,
+      "match": false,
+      "evidence": "About ICANN If you're new to ICANN, this page is for you. It contains resources to help you quickly understand who we are and what we do. Overview ICANN is a California-based nonprofit, public-benefit organization accountable to a global community of stakeholders. Its enduring mission is to ensure…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 0.818 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported"
+      ]
+    },
+    {
+      "id": "ind4-074",
+      "category": "partially-true-mixed",
+      "expected": "ambiguous",
+      "predicted": "supported",
+      "score": 0.9444,
+      "tier_reached": 2,
+      "match": false,
+      "evidence": "About ICANN If you're new to ICANN, this page is for you. It contains resources to help you quickly understand who we are and what we do. Overview ICANN is a California-based nonprofit, public-benefit organization accountable to a global community of stakeholders. Its enduring mission is to ensure…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 0.944 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported"
+      ]
+    },
+    {
+      "id": "ind4-075",
       "category": "verbatim-supported",
       "expected": "supported",
       "predicted": "supported",
@@ -980,7 +1260,7 @@
       ]
     },
     {
-      "id": "ind4-056",
+      "id": "ind4-076",
       "category": "verbatim-supported",
       "expected": "supported",
       "predicted": "supported",
@@ -994,7 +1274,7 @@
       ]
     },
     {
-      "id": "ind4-057",
+      "id": "ind4-077",
       "category": "negation-flip",
       "expected": "unsupported",
       "predicted": "supported",
@@ -1008,7 +1288,7 @@
       ]
     },
     {
-      "id": "ind4-058",
+      "id": "ind4-078",
       "category": "negation-flip",
       "expected": "unsupported",
       "predicted": "supported",
@@ -1022,7 +1302,7 @@
       ]
     },
     {
-      "id": "ind4-059",
+      "id": "ind4-079",
       "category": "entity-swap",
       "expected": "unsupported",
       "predicted": "supported",
@@ -1036,7 +1316,35 @@
       ]
     },
     {
-      "id": "ind4-060",
+      "id": "ind4-080",
+      "category": "entity-swap",
+      "expected": "unsupported",
+      "predicted": "supported",
+      "score": 0.7778,
+      "tier_reached": 2,
+      "match": false,
+      "evidence": "The Reserve Bank of India was established on April 1, 1935 in accordance with the provisions of the Reserve Bank of India Act, 1934. The Central Office of the Reserve Bank was initially established in Kolkata but was permanently moved to Mumbai in 1937. The Central Office is where the Governor sits…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 0.778 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported"
+      ]
+    },
+    {
+      "id": "ind4-081",
+      "category": "partially-true-mixed",
+      "expected": "ambiguous",
+      "predicted": "supported",
+      "score": 0.9583,
+      "tier_reached": 2,
+      "match": false,
+      "evidence": "The Reserve Bank of India was established on April 1, 1935 in accordance with the provisions of the Reserve Bank of India Act, 1934. The Central Office of the Reserve Bank was initially established in Kolkata but was permanently moved to Mumbai in 1937. The Central Office is where the Governor sits…",
+      "notes": [
+        "page fetched; reachable with no red flags (tier 1)",
+        "overlap tier: score 0.958 against fetched page; thresholds: >= 0.6 supported, >= 0.3 ambiguous, below unsupported"
+      ]
+    },
+    {
+      "id": "ind4-082",
       "category": "dead-link",
       "expected": "unreachable",
       "predicted": "unreachable",
@@ -1049,7 +1357,7 @@
       ]
     },
     {
-      "id": "ind4-061",
+      "id": "ind4-083",
       "category": "dead-link",
       "expected": "unreachable",
       "predicted": "unreachable",

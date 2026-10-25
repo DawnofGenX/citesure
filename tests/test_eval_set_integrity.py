@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import json
+import re
 from collections import Counter
 from pathlib import Path
 from urllib.parse import urlparse
@@ -134,6 +135,14 @@ def test_v4_claims_agree_with_the_saved_page_text() -> None:
     texts = {p.name: p.read_text(encoding="utf-8") for p in text_dir.glob("*.txt")}
     assert texts, "no saved page text to check v4 labels against"
 
+    def grams(text: str, n: int = 6) -> set[tuple[str, ...]]:
+        toks = re.findall(r"[a-z0-9]+", text.lower())
+        return {tuple(toks[i:i + n]) for i in range(max(0, len(toks) - n + 1))}
+
+    page_grams: set[tuple[str, ...]] = set()
+    for t in texts.values():
+        page_grams |= grams(t)
+
     bad: list[str] = []
     for c in cases:
         claim = c["claim"]
@@ -143,4 +152,11 @@ def test_v4_claims_agree_with_the_saved_page_text() -> None:
         elif c["category"] in CONTRAST_CATEGORIES:
             if any(claim in t for t in texts.values()):
                 bad.append(f"{c['id']}: labelled unsupported, but the claim appears verbatim in a saved page")
+        elif c["category"] == "partially-true-mixed":
+            # Half true by construction: it must not appear as contiguous page text, but it
+            # must share real 6-grams with the page (its verbatim first clause).
+            if any(claim in t for t in texts.values()):
+                bad.append(f"{c['id']}: mixed claim appears verbatim in a page")
+            if not (grams(claim) & page_grams):
+                bad.append(f"{c['id']}: mixed claim shares no 6-gram with any page, so nothing in it is supported")
     assert not bad, "; ".join(bad[:5])

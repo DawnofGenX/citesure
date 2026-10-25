@@ -212,7 +212,45 @@ def make_swap(sentence: str, page: str, used: set[str]) -> tuple[str, int, str] 
     return None
 
 
-def author_for_page(slug: str, url: str, page: str, per_page: int = 6) -> tuple[list[dict], list[str]]:
+def make_mixed(sentence_a: str, pages_sentences: list[str], page: str) -> tuple[str, int] | None:
+    """Build a claim whose first clause is verbatim and second is a negated absent clause.
+
+    This is the constructively-labelled version of v3's `partially-true-mixed`: one clause
+    the page supports, one it does not. Expected status is `ambiguous`, and the label comes
+    from the construction rather than from a judgement about framing.
+    """
+    # clause A is the whole first sentence: it is guaranteed long enough to share a 6-gram
+    # with the page. (Splitting it at the first comma often produced a fragment too short to
+    # satisfy that, which is why the first two builds produced no mixed cases at all.)
+    clause_a = sentence_a.strip().rstrip(".")
+    for other in pages_sentences:
+        if other == sentence_a:
+            continue
+        neg = make_negation(other)
+        if not neg:
+            continue
+        neg_claim, edit = neg
+        if not _crossing_ngrams_absent(neg_claim, page, edit):
+            continue
+        clause_b = neg_claim.split(",")[0].strip().rstrip(".")
+        if len(clause_b.split()) < 5:
+            continue
+        claim = f"{clause_a}, and {clause_b[0].lower() + clause_b[1:]}."
+        # The joined claim must not appear as contiguous page text (only its first clause
+        # may), the first clause must be verbatim, and the negated half must be absent.
+        # Checking `not _shares_ngram(claim, page)` here would reject every candidate: the
+        # verbatim first clause contributes its own 6-grams by construction.
+        if claim in page:
+            continue
+        if not _shares_ngram(clause_a, page):
+            continue
+        if not _crossing_ngrams_absent(neg_claim, page, edit):
+            continue
+        return claim, edit
+    return None
+
+
+def author_for_page(slug: str, url: str, page: str, per_page: int = 7) -> tuple[list[dict], list[str]]:
     """Author up to `per_page` cases for one page, covering all three families.
 
     Three passes rather than one: a single pass fills the quota with whatever family
@@ -274,6 +312,22 @@ def author_for_page(slug: str, url: str, page: str, per_page: int = 6) -> tuple[
             f"Constructive label: the named subject was replaced with {name!r}, which does not "
             "appear in the saved page text, and no 6-gram spanning the replacement occurs there.")
 
+    # 4. partially-true-mixed: one verbatim clause + one negated absent clause -> ambiguous.
+    #    Without this family v4 could say nothing about the class v2 scored 0/4 on and v3
+    #    scored 1/10 on, which is the class most likely to hurt a real user: a claim that is
+    #    half true reads as verified unless the tool handles mixture.
+    for idx, sentence in enumerate(spread):
+        if sum(1 for c in cases if c["category"] == "partially-true-mixed") >= 1:
+            break
+        made = make_mixed(sentence, spread[idx + 1:] + spread[:idx], page)
+        if not made:
+            continue
+        claim, _edit = made
+        add("partially-true-mixed", "ambiguous", claim,
+            "Constructive label: the first clause is a verbatim span of the page and the second "
+            "is a negated clause whose straddling 6-grams are absent, so the claim as a whole is "
+            "neither supported nor refuted by the page.")
+
     if len(cases) < 3:
         dropped.append(f"{slug}: only {len(cases)} cases authorable")
         return [], dropped
@@ -283,7 +337,9 @@ def author_for_page(slug: str, url: str, page: str, per_page: int = 6) -> tuple[
 def main(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--dry-run", action="store_true")
-    ap.add_argument("--per-page", type=int, default=5)
+    # 7 = two verbatim + two negation + two swap + one mixed. A lower default silently dropped
+    # the mixed family (it is authored last), which is why the first two builds reported none.
+    ap.add_argument("--per-page", type=int, default=7)
     args = ap.parse_args(argv)
 
     cases: list[dict] = []
@@ -382,9 +438,11 @@ def main(argv: list[str] | None = None) -> int:
         "Growing the set is a matter of adding source classes that serve plain HTML — .edu",
         "documentation, standards bodies without bot walls — not of relaxing the assertions.",
         "", "## What v4 does NOT claim", "",
-        "- **No ambiguous/mixed class.** That class needs human adjudication; adding it here",
-        "  without a second annotator would repeat v2's labelling defect. v4 measures polarity",
-        "  and subject binding only, so it is not directly comparable to v2's 86.1%.",
+        "- **The mixed class is constructed, not adjudicated.** `partially-true-mixed` cases join a",
+        "  verbatim clause to a negated clause that is absent from the page, so 'half true' is",
+        "  mechanical here. Real mixed claims often hinge on framing (a superlative, an",
+        "  attribution) which this cannot represent — v3's hand-labelled class is still the",
+        "  better test of that, and it scored 1/10.",
         "- **Single annotator, constructive labels.** Inter-annotator agreement is not measured;",
         "  the 6-gram assertions are what replace it for these families.",
         "- **Live pages.** Unlike v3's frozen Gutenberg texts these can change; the saved text in",

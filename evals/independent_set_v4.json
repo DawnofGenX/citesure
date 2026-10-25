@@ -18,10 +18,10 @@
     "expected_status": "supported",
     "labeler_confidence": "high",
     "url": "https://www.unicode.org/reports/tr15/",
-    "claim": "This document also provides the formal specification of the Stream-Safe Text Format and of the Normalization Process for Stabilized Strings.",
+    "claim": "The version number of a UAX document corresponds to the version of the Unicode Standard of which it forms a part.",
     "notes": "Constructive label: the claim is a contiguous span of the saved page text.",
     "supported_clauses": [
-      "This document also provides the formal specification of the Stream-Safe Text Format and of the Normalization Process for Stabilized Strings."
+      "The version number of a UAX document corresponds to the version of the Unicode Standard of which it forms a part."
     ],
     "unsupported_clauses": []
   },
@@ -31,11 +31,11 @@
     "expected_status": "unsupported",
     "labeler_confidence": "high",
     "url": "https://www.unicode.org/reports/tr15/",
-    "claim": "Figures 3 through 6 illustrate different ways in which source text can not be normalized.",
+    "claim": "Implementations of Unicode that restrict themselves to a repertoire containing no combining marks are not already typically using Normalization Form C.",
     "notes": "Constructive label: a negation was inserted and no 6-gram spanning the insertion occurs in the saved page text.",
     "supported_clauses": [],
     "unsupported_clauses": [
-      "Figures 3 through 6 illustrate different ways in which source text can not be normalized."
+      "Implementations of Unicode that restrict themselves to a repertoire containing no combining marks are not already typically using Normalization Form C."
     ]
   },
   {
@@ -44,11 +44,11 @@
     "expected_status": "unsupported",
     "labeler_confidence": "high",
     "url": "https://www.unicode.org/reports/tr15/",
-    "claim": "Implementations of Unicode that restrict themselves to a repertoire containing no combining marks are not already typically using Normalization Form C.",
+    "claim": "The type of full decomposition chosen depends on which Unicode Normalization Form is not involved.",
     "notes": "Constructive label: a negation was inserted and no 6-gram spanning the insertion occurs in the saved page text.",
     "supported_clauses": [],
     "unsupported_clauses": [
-      "Implementations of Unicode that restrict themselves to a repertoire containing no combining marks are not already typically using Normalization Form C."
+      "The type of full decomposition chosen depends on which Unicode Normalization Form is not involved."
     ]
   },
   {
@@ -66,6 +66,32 @@
   },
   {
     "id": "ind4-006",
+    "category": "entity-swap",
+    "expected_status": "unsupported",
+    "labeler_confidence": "high",
+    "url": "https://www.unicode.org/reports/tr15/",
+    "claim": "The version number of a UAX document corresponds to the version of the Zenith Standard of which it forms a part.",
+    "notes": "Constructive label: the named subject was replaced with 'Zenith', which does not appear in the saved page text, and no 6-gram spanning the replacement occurs there.",
+    "supported_clauses": [],
+    "unsupported_clauses": [
+      "The version number of a UAX document corresponds to the version of the Zenith Standard of which it forms a part."
+    ]
+  },
+  {
+    "id": "ind4-007",
+    "category": "partially-true-mixed",
+    "expected_status": "ambiguous",
+    "labeler_confidence": "high",
+    "url": "https://www.unicode.org/reports/tr15/",
+    "claim": "This annex also provides examples, additional specifications regarding normalization of Unicode text, and information about conformance testing for Unicode normalization forms, and implementations of Unicode that restrict themselves to a repertoire containing no combining marks are not already typically using Normalization Form C.",
+    "notes": "Constructive label: the first clause is a verbatim span of the page and the second is a negated clause whose straddling 6-grams are absent, so the claim as a whole is neither supported nor refuted by the page.",
+    "supported_clauses": [],
+    "unsupported_clauses": [
+      "This annex also provides examples, additional specifications regarding normalization of Unicode text, and information about conformance testing for Unicode normalization forms, and implementations of Unicode that restrict themselves to a repertoire containing no combining marks are not already typically using Normalization Form C."
+    ]
+  },
+  {
+    "id": "ind4-008",
     "category": "verbatim-supported",
     "expected_status": "supported",
     "labeler_confidence": "high",
@@ -78,7 +104,7 @@
     "unsupported_clauses": []
   },
   {
-    "id": "ind4-007",
+    "id": "ind4-009",
     "category": "verbatim-supported",
     "expected_status": "supported",
     "labeler_confidence": "high",
@@ -91,7 +117,7 @@
     "unsupported_clauses": []
   },
   {
-    "id": "ind4-008",
+    "id": "ind4-010",
     "category": "negation-flip",
     "expected_status": "unsupported",
     "labeler_confidence": "high",
@@ -104,7 +130,7 @@
     ]
   },
   {
-    "id": "ind4-009",
+    "id": "ind4-011",
     "category": "negation-flip",
     "expected_status": "unsupported",
     "labeler_confidence": "high",
@@ -117,7 +143,7 @@
     ]
   },
   {
-    "id": "ind4-010",
+    "id": "ind4-012",
     "category": "entity-swap",
     "expected_status": "unsupported",
     "labeler_confidence": "high",
@@ -130,7 +156,33 @@
     ]
   },
   {
-    "id": "ind4-011",
+    "id": "ind4-013",
+    "category": "entity-swap",
+    "expected_status": "unsupported",
+    "labeler_confidence": "high",
+    "url": "https://doc.rust-lang.org/book/ch04-01-what-is-ownership.html",
+    "claim": "The good news is that the more experienced you become with Zenith and the rules of the ownership system, the easier you’ll find it to naturally develop code that is safe and efficient.",
+    "notes": "Constructive label: the named subject was replaced with 'Zenith', which does not appear in the saved page text, and no 6-gram spanning the replacement occurs there.",
+    "supported_clauses": [],
+    "unsupported_clauses": [
+      "The good news is that the more experienced you become with Zenith and the rules of the ownership system, the easier you’ll find it to naturally develop code that is safe and efficient."
+    ]
+  },
+  {
+    "id": "ind4-014",
+    "category": "partially-true-mixed",
+    "expected_status": "ambiguous",
+    "labeler_confidence": "high",
+    "url": "https://doc.rust-lang.org/book/ch04-01-what-is-ownership.html",
+    "claim": "Ownership is a set of rules that govern how a Rust program manages memory, and the good news is not that the more experienced you become with Rust and the rules of the ownership system.",
+    "notes": "Constructive label: the first clause is a verbatim span of the page and the second is a negated clause whose straddling 6-grams are absent, so the claim as a whole is neither supported nor refuted by the page.",
+    "supported_clauses": [],
+    "unsupported_clauses": [
+      "Ownership is a set of rules that govern how a Rust program manages memory, and the good news is not that the more experienced you become with Rust and the rules of the ownership system."
+    ]
+  },
+  {
+    "id": "ind4-015",
     "category": "verbatim-supported",
     "expected_status": "supported",
     "labeler_confidence": "high",
@@ -143,7 +195,7 @@
     "unsupported_clauses": []
   },
   {
-    "id": "ind4-012",
+    "id": "ind4-016",
     "category": "verbatim-supported",
     "expected_status": "supported",
     "labeler_confidence": "high",
@@ -156,7 +208,7 @@
     "unsupported_clauses": []
   },
   {
-    "id": "ind4-013",
+    "id": "ind4-017",
     "category": "negation-flip",
     "expected_status": "unsupported",
     "labeler_confidence": "high",
@@ -169,7 +221,7 @@
     ]
   },
   {
-    "id": "ind4-014",
+    "id": "ind4-018",
     "category": "negation-flip",
     "expected_status": "unsupported",
     "labeler_confidence": "high",
@@ -182,7 +234,7 @@
     ]
   },
   {
-    "id": "ind4-015",
+    "id": "ind4-019",
     "category": "entity-swap",
     "expected_status": "unsupported",
     "labeler_confidence": "high",
@@ -195,7 +247,33 @@
     ]
   },
   {
-    "id": "ind4-016",
+    "id": "ind4-020",
+    "category": "entity-swap",
+    "expected_status": "unsupported",
+    "labeler_confidence": "high",
+    "url": "https://www.postgresql.org/about/",
+    "claim": "PostgreSQL runs on all major operating systems, has been ACID-compliant since 2001, and has powerful add-ons such as the popular ZenithGIS geospatial database extender.",
+    "notes": "Constructive label: the named subject was replaced with 'Zenith', which does not appear in the saved page text, and no 6-gram spanning the replacement occurs there.",
+    "supported_clauses": [],
+    "unsupported_clauses": [
+      "PostgreSQL runs on all major operating systems, has been ACID-compliant since 2001, and has powerful add-ons such as the popular ZenithGIS geospatial database extender."
+    ]
+  },
+  {
+    "id": "ind4-021",
+    "category": "partially-true-mixed",
+    "expected_status": "ambiguous",
+    "labeler_confidence": "high",
+    "url": "https://www.postgresql.org/about/",
+    "claim": "The origins of PostgreSQL date back to 1986 as part of the POSTGRES project at the University of California at Berkeley and has nearly 40 years of active development on the core platform, and postgreSQL runs on all major operating systems.",
+    "notes": "Constructive label: the first clause is a verbatim span of the page and the second is a negated clause whose straddling 6-grams are absent, so the claim as a whole is neither supported nor refuted by the page.",
+    "supported_clauses": [],
+    "unsupported_clauses": [
+      "The origins of PostgreSQL date back to 1986 as part of the POSTGRES project at the University of California at Berkeley and has nearly 40 years of active development on the core platform, and postgreSQL runs on all major operating systems."
+    ]
+  },
+  {
+    "id": "ind4-022",
     "category": "verbatim-supported",
     "expected_status": "supported",
     "labeler_confidence": "high",
@@ -208,20 +286,20 @@
     "unsupported_clauses": []
   },
   {
-    "id": "ind4-017",
+    "id": "ind4-023",
     "category": "verbatim-supported",
     "expected_status": "supported",
     "labeler_confidence": "high",
     "url": "https://plato.stanford.edu/entries/artificial-intelligence/",
-    "claim": "For example, neither AlphaGo nor Watson can understand the rules of Go written in plain-and-simple English and produce a computer program that can play the game.",
+    "claim": "Closely following Watson’s victory, in March 2016, Google DeepMind’s AlphaGo defeated one of Go’s top-ranked players, Lee Seedol, in four out of five matches.",
     "notes": "Constructive label: the claim is a contiguous span of the saved page text.",
     "supported_clauses": [
-      "For example, neither AlphaGo nor Watson can understand the rules of Go written in plain-and-simple English and produce a computer program that can play the game."
+      "Closely following Watson’s victory, in March 2016, Google DeepMind’s AlphaGo defeated one of Go’s top-ranked players, Lee Seedol, in four out of five matches."
     ],
     "unsupported_clauses": []
   },
   {
-    "id": "ind4-018",
+    "id": "ind4-024",
     "category": "negation-flip",
     "expected_status": "unsupported",
     "labeler_confidence": "high",
@@ -234,33 +312,59 @@
     ]
   },
   {
-    "id": "ind4-019",
+    "id": "ind4-025",
     "category": "negation-flip",
     "expected_status": "unsupported",
     "labeler_confidence": "high",
     "url": "https://plato.stanford.edu/entries/artificial-intelligence/",
-    "claim": "For example, neither AlphaGo nor Watson can not understand the rules of Go written in plain-and-simple English and produce a computer program that can play the game.",
+    "claim": "Note that this is not still far from understanding even a simple description of a game in English well enough to play it.",
     "notes": "Constructive label: a negation was inserted and no 6-gram spanning the insertion occurs in the saved page text.",
     "supported_clauses": [],
     "unsupported_clauses": [
-      "For example, neither AlphaGo nor Watson can not understand the rules of Go written in plain-and-simple English and produce a computer program that can play the game."
+      "Note that this is not still far from understanding even a simple description of a game in English well enough to play it."
     ]
   },
   {
-    "id": "ind4-020",
+    "id": "ind4-026",
     "category": "entity-swap",
     "expected_status": "unsupported",
     "labeler_confidence": "high",
     "url": "https://plato.stanford.edu/entries/artificial-intelligence/",
-    "claim": "For example, neither MarloweGo nor Watson can understand the rules of Go written in plain-and-simple English and produce a computer program that can play the game.",
+    "claim": "Closely following Marlowe’s victory, in March 2016, Google DeepMind’s AlphaGo defeated one of Go’s top-ranked players, Lee Seedol, in four out of five matches.",
     "notes": "Constructive label: the named subject was replaced with 'Marlowe', which does not appear in the saved page text, and no 6-gram spanning the replacement occurs there.",
     "supported_clauses": [],
     "unsupported_clauses": [
-      "For example, neither MarloweGo nor Watson can understand the rules of Go written in plain-and-simple English and produce a computer program that can play the game."
+      "Closely following Marlowe’s victory, in March 2016, Google DeepMind’s AlphaGo defeated one of Go’s top-ranked players, Lee Seedol, in four out of five matches."
     ]
   },
   {
-    "id": "ind4-021",
+    "id": "ind4-027",
+    "category": "entity-swap",
+    "expected_status": "unsupported",
+    "labeler_confidence": "high",
+    "url": "https://plato.stanford.edu/entries/artificial-intelligence/",
+    "claim": "Note that this is still far from understanding even a simple description of a game in Zenith well enough to play it.",
+    "notes": "Constructive label: the named subject was replaced with 'Zenith', which does not appear in the saved page text, and no 6-gram spanning the replacement occurs there.",
+    "supported_clauses": [],
+    "unsupported_clauses": [
+      "Note that this is still far from understanding even a simple description of a game in Zenith well enough to play it."
+    ]
+  },
+  {
+    "id": "ind4-028",
+    "category": "partially-true-mixed",
+    "expected_status": "ambiguous",
+    "labeler_confidence": "high",
+    "url": "https://plato.stanford.edu/entries/artificial-intelligence/",
+    "claim": "At the moment, though, the point is that in his paper, Turing explicitly lays down the call for building machines that would provide an existence proof of an affirmative answer to his question, and note that this is not still far from understanding even a simple description of a game in English well enough to play it.",
+    "notes": "Constructive label: the first clause is a verbatim span of the page and the second is a negated clause whose straddling 6-grams are absent, so the claim as a whole is neither supported nor refuted by the page.",
+    "supported_clauses": [],
+    "unsupported_clauses": [
+      "At the moment, though, the point is that in his paper, Turing explicitly lays down the call for building machines that would provide an existence proof of an affirmative answer to his question, and note that this is not still far from understanding even a simple description of a game in English well enough to play it."
+    ]
+  },
+  {
+    "id": "ind4-029",
     "category": "verbatim-supported",
     "expected_status": "supported",
     "labeler_confidence": "high",
@@ -273,7 +377,7 @@
     "unsupported_clauses": []
   },
   {
-    "id": "ind4-022",
+    "id": "ind4-030",
     "category": "verbatim-supported",
     "expected_status": "supported",
     "labeler_confidence": "high",
@@ -286,7 +390,7 @@
     "unsupported_clauses": []
   },
   {
-    "id": "ind4-023",
+    "id": "ind4-031",
     "category": "negation-flip",
     "expected_status": "unsupported",
     "labeler_confidence": "high",
@@ -299,7 +403,7 @@
     ]
   },
   {
-    "id": "ind4-024",
+    "id": "ind4-032",
     "category": "negation-flip",
     "expected_status": "unsupported",
     "labeler_confidence": "high",
@@ -312,7 +416,7 @@
     ]
   },
   {
-    "id": "ind4-025",
+    "id": "ind4-033",
     "category": "entity-swap",
     "expected_status": "unsupported",
     "labeler_confidence": "high",
@@ -325,7 +429,33 @@
     ]
   },
   {
-    "id": "ind4-026",
+    "id": "ind4-034",
+    "category": "entity-swap",
+    "expected_status": "unsupported",
+    "labeler_confidence": "high",
+    "url": "https://www.who.int/news-room/fact-sheets/detail/ambient-(outdoor)-air-quality-and-health",
+    "claim": "The greatest burden is found in the WHO South-East Zenith and Western Pacific Regions.",
+    "notes": "Constructive label: the named subject was replaced with 'Zenith', which does not appear in the saved page text, and no 6-gram spanning the replacement occurs there.",
+    "supported_clauses": [],
+    "unsupported_clauses": [
+      "The greatest burden is found in the WHO South-East Zenith and Western Pacific Regions."
+    ]
+  },
+  {
+    "id": "ind4-035",
+    "category": "partially-true-mixed",
+    "expected_status": "ambiguous",
+    "labeler_confidence": "high",
+    "url": "https://www.who.int/news-room/fact-sheets/detail/ambient-(outdoor)-air-quality-and-health",
+    "claim": "Overview Outdoor air pollution is a major environmental health problem affecting everyone in low-, middle-, and high-income countries, and the greatest burden is not found in the WHO South-East Asia and Western Pacific Regions.",
+    "notes": "Constructive label: the first clause is a verbatim span of the page and the second is a negated clause whose straddling 6-grams are absent, so the claim as a whole is neither supported nor refuted by the page.",
+    "supported_clauses": [],
+    "unsupported_clauses": [
+      "Overview Outdoor air pollution is a major environmental health problem affecting everyone in low-, middle-, and high-income countries, and the greatest burden is not found in the WHO South-East Asia and Western Pacific Regions."
+    ]
+  },
+  {
+    "id": "ind4-036",
     "category": "verbatim-supported",
     "expected_status": "supported",
     "labeler_confidence": "high",
@@ -338,7 +468,7 @@
     "unsupported_clauses": []
   },
   {
-    "id": "ind4-027",
+    "id": "ind4-037",
     "category": "verbatim-supported",
     "expected_status": "supported",
     "labeler_confidence": "high",
@@ -351,7 +481,7 @@
     "unsupported_clauses": []
   },
   {
-    "id": "ind4-028",
+    "id": "ind4-038",
     "category": "negation-flip",
     "expected_status": "unsupported",
     "labeler_confidence": "high",
@@ -364,7 +494,7 @@
     ]
   },
   {
-    "id": "ind4-029",
+    "id": "ind4-039",
     "category": "negation-flip",
     "expected_status": "unsupported",
     "labeler_confidence": "high",
@@ -377,7 +507,7 @@
     ]
   },
   {
-    "id": "ind4-030",
+    "id": "ind4-040",
     "category": "entity-swap",
     "expected_status": "unsupported",
     "labeler_confidence": "high",
@@ -390,7 +520,33 @@
     ]
   },
   {
-    "id": "ind4-031",
+    "id": "ind4-041",
+    "category": "entity-swap",
+    "expected_status": "unsupported",
+    "labeler_confidence": "high",
+    "url": "https://kotlinlang.org/docs/classes.html",
+    "claim": "Constructors and initializer blocks Zenith you create a class instance, you call one of its constructors.",
+    "notes": "Constructive label: the named subject was replaced with 'Zenith', which does not appear in the saved page text, and no 6-gram spanning the replacement occurs there.",
+    "supported_clauses": [],
+    "unsupported_clauses": [
+      "Constructors and initializer blocks Zenith you create a class instance, you call one of its constructors."
+    ]
+  },
+  {
+    "id": "ind4-042",
+    "category": "partially-true-mixed",
+    "expected_status": "ambiguous",
+    "labeler_confidence": "high",
+    "url": "https://kotlinlang.org/docs/classes.html",
+    "claim": "The following code declares a Person class with a property for storing a name, and a class in Kotlin can not have a primary constructor and one or more secondary constructors.",
+    "notes": "Constructive label: the first clause is a verbatim span of the page and the second is a negated clause whose straddling 6-grams are absent, so the claim as a whole is neither supported nor refuted by the page.",
+    "supported_clauses": [],
+    "unsupported_clauses": [
+      "The following code declares a Person class with a property for storing a name, and a class in Kotlin can not have a primary constructor and one or more secondary constructors."
+    ]
+  },
+  {
+    "id": "ind4-043",
     "category": "verbatim-supported",
     "expected_status": "supported",
     "labeler_confidence": "high",
@@ -403,7 +559,7 @@
     "unsupported_clauses": []
   },
   {
-    "id": "ind4-032",
+    "id": "ind4-044",
     "category": "verbatim-supported",
     "expected_status": "supported",
     "labeler_confidence": "high",
@@ -416,7 +572,7 @@
     "unsupported_clauses": []
   },
   {
-    "id": "ind4-033",
+    "id": "ind4-045",
     "category": "entity-swap",
     "expected_status": "unsupported",
     "labeler_confidence": "high",
@@ -429,7 +585,7 @@
     ]
   },
   {
-    "id": "ind4-034",
+    "id": "ind4-046",
     "category": "entity-swap",
     "expected_status": "unsupported",
     "labeler_confidence": "high",
@@ -442,7 +598,7 @@
     ]
   },
   {
-    "id": "ind4-035",
+    "id": "ind4-047",
     "category": "verbatim-supported",
     "expected_status": "supported",
     "labeler_confidence": "high",
@@ -455,7 +611,7 @@
     "unsupported_clauses": []
   },
   {
-    "id": "ind4-036",
+    "id": "ind4-048",
     "category": "verbatim-supported",
     "expected_status": "supported",
     "labeler_confidence": "high",
@@ -468,7 +624,7 @@
     "unsupported_clauses": []
   },
   {
-    "id": "ind4-037",
+    "id": "ind4-049",
     "category": "negation-flip",
     "expected_status": "unsupported",
     "labeler_confidence": "high",
@@ -481,7 +637,7 @@
     ]
   },
   {
-    "id": "ind4-038",
+    "id": "ind4-050",
     "category": "negation-flip",
     "expected_status": "unsupported",
     "labeler_confidence": "high",
@@ -494,7 +650,7 @@
     ]
   },
   {
-    "id": "ind4-039",
+    "id": "ind4-051",
     "category": "entity-swap",
     "expected_status": "unsupported",
     "labeler_confidence": "high",
@@ -507,7 +663,33 @@
     ]
   },
   {
-    "id": "ind4-040",
+    "id": "ind4-052",
+    "category": "entity-swap",
+    "expected_status": "unsupported",
+    "labeler_confidence": "high",
+    "url": "https://www.un.org/en/global-issues/climate-change",
+    "claim": "These activities release greenhouse gas emissions into the atmosphere, trapping heat from the sun and causing the Zenith’s temperature to rise.",
+    "notes": "Constructive label: the named subject was replaced with 'Zenith', which does not appear in the saved page text, and no 6-gram spanning the replacement occurs there.",
+    "supported_clauses": [],
+    "unsupported_clauses": [
+      "These activities release greenhouse gas emissions into the atmosphere, trapping heat from the sun and causing the Zenith’s temperature to rise."
+    ]
+  },
+  {
+    "id": "ind4-053",
+    "category": "partially-true-mixed",
+    "expected_status": "ambiguous",
+    "labeler_confidence": "high",
+    "url": "https://www.un.org/en/global-issues/climate-change",
+    "claim": "Climate Change is one of the defining issues of our time and we are at a pivotal moment, and although some climate variations occur naturally.",
+    "notes": "Constructive label: the first clause is a verbatim span of the page and the second is a negated clause whose straddling 6-grams are absent, so the claim as a whole is neither supported nor refuted by the page.",
+    "supported_clauses": [],
+    "unsupported_clauses": [
+      "Climate Change is one of the defining issues of our time and we are at a pivotal moment, and although some climate variations occur naturally."
+    ]
+  },
+  {
+    "id": "ind4-054",
     "category": "verbatim-supported",
     "expected_status": "supported",
     "labeler_confidence": "high",
@@ -520,7 +702,7 @@
     "unsupported_clauses": []
   },
   {
-    "id": "ind4-041",
+    "id": "ind4-055",
     "category": "verbatim-supported",
     "expected_status": "supported",
     "labeler_confidence": "high",
@@ -533,7 +715,7 @@
     "unsupported_clauses": []
   },
   {
-    "id": "ind4-042",
+    "id": "ind4-056",
     "category": "negation-flip",
     "expected_status": "unsupported",
     "labeler_confidence": "high",
@@ -546,7 +728,7 @@
     ]
   },
   {
-    "id": "ind4-043",
+    "id": "ind4-057",
     "category": "negation-flip",
     "expected_status": "unsupported",
     "labeler_confidence": "high",
@@ -559,7 +741,7 @@
     ]
   },
   {
-    "id": "ind4-044",
+    "id": "ind4-058",
     "category": "entity-swap",
     "expected_status": "unsupported",
     "labeler_confidence": "high",
@@ -572,7 +754,33 @@
     ]
   },
   {
-    "id": "ind4-045",
+    "id": "ind4-059",
+    "category": "entity-swap",
+    "expected_status": "unsupported",
+    "labeler_confidence": "high",
+    "url": "https://www.cancer.gov/about-cancer/understanding/what-is-cancer",
+    "claim": "Differences between Zenith Cells and Normal Cells Cancer cells differ from normal cells in many ways.",
+    "notes": "Constructive label: the named subject was replaced with 'Zenith', which does not appear in the saved page text, and no 6-gram spanning the replacement occurs there.",
+    "supported_clauses": [],
+    "unsupported_clauses": [
+      "Differences between Zenith Cells and Normal Cells Cancer cells differ from normal cells in many ways."
+    ]
+  },
+  {
+    "id": "ind4-060",
+    "category": "partially-true-mixed",
+    "expected_status": "ambiguous",
+    "labeler_confidence": "high",
+    "url": "https://www.cancer.gov/about-cancer/understanding/what-is-cancer",
+    "claim": "The Definition of Cancer Cancer is a disease in which some of the body’s cells grow uncontrollably and spread to other parts of the body, and when Cancer Spreads A cancer that has spread from the place where it first formed to another place in the body is not called metastatic cancer.",
+    "notes": "Constructive label: the first clause is a verbatim span of the page and the second is a negated clause whose straddling 6-grams are absent, so the claim as a whole is neither supported nor refuted by the page.",
+    "supported_clauses": [],
+    "unsupported_clauses": [
+      "The Definition of Cancer Cancer is a disease in which some of the body’s cells grow uncontrollably and spread to other parts of the body, and when Cancer Spreads A cancer that has spread from the place where it first formed to another place in the body is not called metastatic cancer."
+    ]
+  },
+  {
+    "id": "ind4-061",
     "category": "verbatim-supported",
     "expected_status": "supported",
     "labeler_confidence": "high",
@@ -585,7 +793,7 @@
     "unsupported_clauses": []
   },
   {
-    "id": "ind4-046",
+    "id": "ind4-062",
     "category": "verbatim-supported",
     "expected_status": "supported",
     "labeler_confidence": "high",
@@ -598,7 +806,7 @@
     "unsupported_clauses": []
   },
   {
-    "id": "ind4-047",
+    "id": "ind4-063",
     "category": "negation-flip",
     "expected_status": "unsupported",
     "labeler_confidence": "high",
@@ -611,7 +819,7 @@
     ]
   },
   {
-    "id": "ind4-048",
+    "id": "ind4-064",
     "category": "negation-flip",
     "expected_status": "unsupported",
     "labeler_confidence": "high",
@@ -624,7 +832,7 @@
     ]
   },
   {
-    "id": "ind4-049",
+    "id": "ind4-065",
     "category": "entity-swap",
     "expected_status": "unsupported",
     "labeler_confidence": "high",
@@ -637,7 +845,33 @@
     ]
   },
   {
-    "id": "ind4-050",
+    "id": "ind4-066",
+    "category": "entity-swap",
+    "expected_status": "unsupported",
+    "labeler_confidence": "high",
+    "url": "https://www.openstreetmap.org/about",
+    "claim": "Use of all OSMF operated services is subject to our Zenith of Use, Acceptable Use Policies and our Privacy Policy.",
+    "notes": "Constructive label: the named subject was replaced with 'Zenith', which does not appear in the saved page text, and no 6-gram spanning the replacement occurs there.",
+    "supported_clauses": [],
+    "unsupported_clauses": [
+      "Use of all OSMF operated services is subject to our Zenith of Use, Acceptable Use Policies and our Privacy Policy."
+    ]
+  },
+  {
+    "id": "ind4-067",
+    "category": "partially-true-mixed",
+    "expected_status": "ambiguous",
+    "labeler_confidence": "high",
+    "url": "https://www.openstreetmap.org/about",
+    "claim": "To learn more about the community, see the OpenStreetMap Blog, user diaries, community blogs, and the OSM Foundation website, and use of all OSMF operated services is not subject to our Terms of Use.",
+    "notes": "Constructive label: the first clause is a verbatim span of the page and the second is a negated clause whose straddling 6-grams are absent, so the claim as a whole is neither supported nor refuted by the page.",
+    "supported_clauses": [],
+    "unsupported_clauses": [
+      "To learn more about the community, see the OpenStreetMap Blog, user diaries, community blogs, and the OSM Foundation website, and use of all OSMF operated services is not subject to our Terms of Use."
+    ]
+  },
+  {
+    "id": "ind4-068",
     "category": "verbatim-supported",
     "expected_status": "supported",
     "labeler_confidence": "high",
@@ -650,7 +884,7 @@
     "unsupported_clauses": []
   },
   {
-    "id": "ind4-051",
+    "id": "ind4-069",
     "category": "verbatim-supported",
     "expected_status": "supported",
     "labeler_confidence": "high",
@@ -663,7 +897,7 @@
     "unsupported_clauses": []
   },
   {
-    "id": "ind4-052",
+    "id": "ind4-070",
     "category": "negation-flip",
     "expected_status": "unsupported",
     "labeler_confidence": "high",
@@ -676,7 +910,7 @@
     ]
   },
   {
-    "id": "ind4-053",
+    "id": "ind4-071",
     "category": "negation-flip",
     "expected_status": "unsupported",
     "labeler_confidence": "high",
@@ -689,7 +923,7 @@
     ]
   },
   {
-    "id": "ind4-054",
+    "id": "ind4-072",
     "category": "entity-swap",
     "expected_status": "unsupported",
     "labeler_confidence": "high",
@@ -702,7 +936,33 @@
     ]
   },
   {
-    "id": "ind4-055",
+    "id": "ind4-073",
+    "category": "entity-swap",
+    "expected_status": "unsupported",
+    "labeler_confidence": "high",
+    "url": "https://www.icann.org/resources/pages/welcome-2012-02-25-en",
+    "claim": "Its enduring mission is to ensure the stable, secure operation of the Zenith's unique identifier systems.",
+    "notes": "Constructive label: the named subject was replaced with 'Zenith', which does not appear in the saved page text, and no 6-gram spanning the replacement occurs there.",
+    "supported_clauses": [],
+    "unsupported_clauses": [
+      "Its enduring mission is to ensure the stable, secure operation of the Zenith's unique identifier systems."
+    ]
+  },
+  {
+    "id": "ind4-074",
+    "category": "partially-true-mixed",
+    "expected_status": "ambiguous",
+    "labeler_confidence": "high",
+    "url": "https://www.icann.org/resources/pages/welcome-2012-02-25-en",
+    "claim": "Overview ICANN is a California-based nonprofit, public-benefit organization accountable to a global community of stakeholders, and its enduring mission is not to ensure the stable.",
+    "notes": "Constructive label: the first clause is a verbatim span of the page and the second is a negated clause whose straddling 6-grams are absent, so the claim as a whole is neither supported nor refuted by the page.",
+    "supported_clauses": [],
+    "unsupported_clauses": [
+      "Overview ICANN is a California-based nonprofit, public-benefit organization accountable to a global community of stakeholders, and its enduring mission is not to ensure the stable."
+    ]
+  },
+  {
+    "id": "ind4-075",
     "category": "verbatim-supported",
     "expected_status": "supported",
     "labeler_confidence": "high",
@@ -715,7 +975,7 @@
     "unsupported_clauses": []
   },
   {
-    "id": "ind4-056",
+    "id": "ind4-076",
     "category": "verbatim-supported",
     "expected_status": "supported",
     "labeler_confidence": "high",
@@ -728,7 +988,7 @@
     "unsupported_clauses": []
   },
   {
-    "id": "ind4-057",
+    "id": "ind4-077",
     "category": "negation-flip",
     "expected_status": "unsupported",
     "labeler_confidence": "high",
@@ -741,7 +1001,7 @@
     ]
   },
   {
-    "id": "ind4-058",
+    "id": "ind4-078",
     "category": "negation-flip",
     "expected_status": "unsupported",
     "labeler_confidence": "high",
@@ -754,7 +1014,7 @@
     ]
   },
   {
-    "id": "ind4-059",
+    "id": "ind4-079",
     "category": "entity-swap",
     "expected_status": "unsupported",
     "labeler_confidence": "high",
@@ -767,7 +1027,33 @@
     ]
   },
   {
-    "id": "ind4-060",
+    "id": "ind4-080",
+    "category": "entity-swap",
+    "expected_status": "unsupported",
+    "labeler_confidence": "high",
+    "url": "https://www.rbi.org.in/Scripts/AboutUsDisplay.aspx",
+    "claim": "The Zenith Office is where the Governor sits and where policies are formulated.",
+    "notes": "Constructive label: the named subject was replaced with 'Zenith', which does not appear in the saved page text, and no 6-gram spanning the replacement occurs there.",
+    "supported_clauses": [],
+    "unsupported_clauses": [
+      "The Zenith Office is where the Governor sits and where policies are formulated."
+    ]
+  },
+  {
+    "id": "ind4-081",
+    "category": "partially-true-mixed",
+    "expected_status": "ambiguous",
+    "labeler_confidence": "high",
+    "url": "https://www.rbi.org.in/Scripts/AboutUsDisplay.aspx",
+    "claim": "The Central Office of the Reserve Bank was initially established in Kolkata but was permanently moved to Mumbai in 1937, and the Central Office is not where the Governor sits and where policies are formulated.",
+    "notes": "Constructive label: the first clause is a verbatim span of the page and the second is a negated clause whose straddling 6-grams are absent, so the claim as a whole is neither supported nor refuted by the page.",
+    "supported_clauses": [],
+    "unsupported_clauses": [
+      "The Central Office of the Reserve Bank was initially established in Kolkata but was permanently moved to Mumbai in 1937, and the Central Office is not where the Governor sits and where policies are formulated."
+    ]
+  },
+  {
+    "id": "ind4-082",
     "category": "dead-link",
     "expected_status": "unreachable",
     "labeler_confidence": "high",
@@ -778,7 +1064,7 @@
     "unsupported_clauses": []
   },
   {
-    "id": "ind4-061",
+    "id": "ind4-083",
     "category": "dead-link",
     "expected_status": "unreachable",
     "labeler_confidence": "high",

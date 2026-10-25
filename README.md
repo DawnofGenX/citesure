@@ -27,22 +27,22 @@ The headline 86.1% is also **stable under a URL-clustered split** into tune/held
 in-sample estimate, for reasons stated under
 [What the 86.1% is actually worth](#what-the-861-is-actually-worth).
 
-### Held-out check on fresh domains (v4, 2026-10-24)
+### Held-out check on fresh domains (v4, 2026-10-25)
 
-The 86.1% is in-sample. A first **held-out** measurement now exists: 61 cases over 12 pages on 12
+The 86.1% is in-sample. A **held-out** measurement now exists: 83 cases over 12 pages on 12
 domains that v1/v2/v3 never touch, labelled constructively (verbatim span → supported; inserted
-negation or swapped subject whose straddling wording is absent → unsupported) and validated
-against the exact text the verifier fetches. Result: **48/61 = 78.7%** with NLI on (cluster
-bootstrap [67.8, 89.2]), against 86.1% in-sample.
+negation or swapped subject whose straddling wording is absent → unsupported; verbatim clause
+joined to a negated absent clause → ambiguous) and validated against the exact text the verifier
+fetches. Result: **59/83 = 71.1%** with NLI on (cluster bootstrap [64.0, 77.9]), against 86.1%
+in-sample — the optimistic estimate was ~15 points optimistic.
 
-Per family the picture is not uniform: negation 21/22 (95.5%), **entity-swap 8/13 (61.5%)**,
-verbatim 17/24 (70.8%) — of those 7 verbatim demotions, 5 are NLI false negatives on text the
-verifier held and 2 are extraction artefacts, so the cleanest reading is **48/59 = 81.4%**. Entity
-swapping fails *confidently* (five false-supports at 0.86–0.996), which is a real defect rather
-than a threshold artefact.
+Per family: negation 22/22 (100%), entity-swap 18/24 (75%), verbatim 17/24 (70.8%, of which 2 are
+extraction artefacts → 59/81 = 72.8% on verifiable labels), **partially-true-mixed 0/11 (0%)**.
+Mixed claims are the clearest product gap: the tool reports every half-true claim as
+`unsupported`, which is safe but wrong, and it reproduces v3's 1/10 on hand-labelled cases.
 
-Full working, including the build bug that made the first version of the set invalid and what was
-done about it: [`evals/RESULTS_v4.md`](evals/RESULTS_v4.md). Set builder:
+Full working, including the two build bugs that made earlier versions of the set invalid and what
+was done about them: [`evals/RESULTS_v4.md`](evals/RESULTS_v4.md). Set builder:
 `evals/build_v4.py`; authoring rules: `evals/AUTHORING_V4.md`.
 
 ### Tier ablation — what each tier actually contributes
