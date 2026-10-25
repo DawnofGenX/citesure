@@ -1,5 +1,20 @@
 # Clause-mixture rule — negative result (reverted)
 
+> **Correction, same day: this experiment's premise was wrong.** The v4 family it set out to fix
+> (`partially-true-mixed`, expected `ambiguous`) was **mislabelled in the set**: its second clause
+> negates a sentence the page *does* state, so the conjunction is contradicted by the page and
+> `unsupported` is the correct verdict — which is what citesure was already returning. The family is
+> now `mixed-false-conjunct` with `expected_status: unsupported` and passes 10/10
+> (`RESULTS_v4.md`). That is why this rule "gained" 8 mixed cases at the cost of 20 correctly
+> `unsupported` ones: it was demoting correct verdicts to rescue a label that was wrong.
+>
+> The measurements below are real and were made against the superseded 83-case set with the old
+> labels; the method and the gate stand, only the motivation does not. The one durable output is
+> the diagnosis: the trigger "one verbatim clause plus one non-verbatim clause" is structurally
+> identical across mixed, negation-flip and entity-swap claims, so no rule built on that shape can
+> separate them.
+
+
 Date: 2026-10-25 · Status: **attempted, measured, REVERTED** · Product code unchanged.
 
 ## What was attempted

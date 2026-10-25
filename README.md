@@ -29,21 +29,24 @@ in-sample estimate, for reasons stated under
 
 ### Held-out check on fresh domains (v4, 2026-10-25)
 
-The 86.1% is in-sample. A **held-out** measurement now exists: 83 cases over 12 pages on 12
-domains that v1/v2/v3 never touch, labelled constructively (verbatim span → supported; inserted
-negation or swapped subject whose straddling wording is absent → unsupported; verbatim clause
-joined to a negated absent clause → ambiguous) and validated against the exact text the verifier
-fetches. Result: **59/83 = 71.1%** with NLI on (cluster bootstrap [64.0, 77.9]), against 86.1%
-in-sample — the optimistic estimate was ~15 points optimistic.
+The 86.1% is in-sample. A **held-out** measurement now exists: 76 cases over 11 pages on 11
+domains that v1/v2/v3 never touch, labelled constructively and validated against the exact text
+the verifier fetches. Result: **64/76 = 84.2%** with NLI on (cluster bootstrap [76.0, 92.4]),
+against 86.1% in-sample — a 1.9-point difference with overlapping intervals, i.e. no material gap
+detected. On the 74 cases whose labels are verifiable against what the product saw: 86.5%.
 
-Per family: negation 22/22 (100%), entity-swap 18/24 (75%), verbatim 17/24 (70.8%, of which 2 are
-extraction artefacts → 59/81 = 72.8% on verifiable labels), **partially-true-mixed 0/11 (0%)**.
-Mixed claims are the clearest product gap: the tool reports every half-true claim as
-`unsupported`, which is safe but wrong, and it reproduces v3's 1/10 on hand-labelled cases.
+Per family: negation 20/20 (100%), entity-swap 17/22 (77%), verbatim 15/22 (68%, of which 2 are
+extraction artefacts), mixed-false-conjunct 10/10. **Two caveats worth reading:** entity-swap is
+the class that still fails (5 confidently-wrong `supported` verdicts), and genuinely *ambiguous*
+claims are **not** tested by v4 at all — that needs a claim the page neither supports nor
+contradicts, which cannot be built mechanically; v3's hand-labelled class remains the only test.
 
-Full working, including the two build bugs that made earlier versions of the set invalid and what
-was done about them: [`evals/RESULTS_v4.md`](evals/RESULTS_v4.md). Set builder:
-`evals/build_v4.py`; authoring rules: `evals/AUTHORING_V4.md`.
+An earlier version of this section reported 71.1% and called mixed claims "the clearest product
+gap at 0/11". That was a **labelling error in the set, not a product defect**: the family was
+built by negating a sentence the page *does* state, so the conjunction is contradicted and
+`unsupported` is the right verdict. The family is relabelled and now passes 10/10; the full
+correction, including how it was detected, is in [`evals/RESULTS_v4.md`](evals/RESULTS_v4.md).
+Set builder: `evals/build_v4.py`; authoring rules: `evals/AUTHORING_V4.md`.
 
 ### Tier ablation — what each tier actually contributes
 

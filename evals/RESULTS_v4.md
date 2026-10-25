@@ -1,78 +1,96 @@
 # v4 — held-out measurement on fresh domains
 
-Set: `evals/independent_set_v4.json` — **83 cases over 12 pages on 12 domains** that v1, v2 and v3
+Set: `evals/independent_set_v4.json` — **76 cases over 11 pages on 11 domains** that v1, v2 and v3
 never touch, built reproducibly by `evals/build_v4.py`. Authoring rules and the dropped-source
 list: `AUTHORING_V4.md`.
 
-Families: 24 verbatim-supported, 22 negation-flip, 24 entity-swap, 11 partially-true-mixed,
+Families: 22 verbatim-supported, 20 negation-flip, 22 entity-swap, 10 mixed-false-conjunct,
 2 dead-link.
 
 ## Headline
 
 | Configuration | Overall | Cluster bootstrap (by URL) |
 |---|---|---|
-| tiers 1+2, no NLI | **27/83 = 32.5%** | — |
-| all tiers, NLI on (default path) | **59/83 = 71.1%** | **[64.0, 77.9]** |
+| tiers 1+2, no NLI | **22/76 = 28.9%** | — |
+| all tiers, NLI on (default path) | **64/76 = 84.2%** | **[76.0, 92.4]** |
 
-Against v2's in-sample 86.1% (CI [78.3, 91.4]) the held-out figure is **15 points lower**, and the
-intervals do not overlap. That is the honest cost of measuring on material nobody tuned against.
+Against v2's in-sample 86.1% (CI [78.3, 91.4]), the held-out figure is **1.9 points lower** and the
+intervals overlap. On the 74 cases whose labels are verifiable against the text the product
+actually fetched, it is **64/74 = 86.5%**. The in-sample number was not inflated to any material
+degree — which is not what the previous version of this document said, and the reason is below.
 
 | Family | v2 (in-sample) | v4 (held-out) |
 |---|---|---|
-| negation-flip | 32/32 = 100% | **22/22 = 100%** |
-| entity-swap | 27/32 = 84% | **18/24 = 75%** |
-| verbatim-supported | 26/26 = 100% | **17/24 = 70.8%** |
-| partially-true-mixed | 0/4 = 0% (v2) · 1/10 (v3) | **0/11 = 0%** |
+| negation-flip | 32/32 = 100% | **20/20 = 100%** |
+| entity-swap | 27/32 = 84% | **17/22 = 77%** |
+| verbatim-supported | 26/26 = 100% | **15/22 = 68%** |
+| mixed-false-conjunct | — (new family) | **10/10 = 100%** |
 | dead-link | 8/8 | **2/2** |
 
-## Three findings
+## The correction this version carries
 
-**1. Mixed claims are unsolved, and now measured on fresh material.** All 11 half-true claims were
-reported `unsupported`. That is the safe direction — nothing false was endorsed — but the wrong
-answer, because the claim is neither supported nor refuted. v3 said 1/10 on hand-labelled mixed
-cases; v4 says 0/11 on constructively-labelled ones. Two different constructions, same verdict:
-this is a product gap, not a labelling artefact.
+The previous version of this document reported **71.1%** and called the mixed class "the clearest
+product gap: 0/11". **That was a labelling error in this set, mine, and it inverted the conclusion.**
 
-**2. Entity swapping still fails, sometimes confidently.** 6 of 24 swapped-entity claims are
-reported `supported`. It is the strongest of the unsupported families on fresh domains (75%), but
-it is the class an attacker uses, and it is the class the 2026-10-06 probe tried and failed to
-improve on v2.
+The family was built as a verbatim clause A joined to clause B, where B is a *negated copy of a
+sentence that is in the page*. The label was `ambiguous`, on the assumption that "half true" means
+"indeterminate". It does not:
 
-**3. Verbatim claims are still demoted — 7 of 24.** Split by cause rather than reported as one
-number:
+- the claim asserts `A ∧ ¬B`;
+- the page asserts `B`;
+- so the conjunction is **contradicted by the page** — it is false, not undecidable;
+- `unsupported` is therefore the correct verdict, and citesure returned exactly that for all 11.
+
+Measured on the shipped set, both directions: the affirmative form of clause B is present in the
+page in **9 of 11** cases and the negated form in **0 of 11**.
+
+The family is now `mixed-false-conjunct` with `expected_status: unsupported`, and it passes 10/10.
+The earlier "0/11 gap" was the test being wrong, not the product — and the clause-mixture rule that
+was written and reverted to "fix" it (`RESULTS_CLAUSE_MIXTURE.md`) was, in effect, demoting correct
+verdicts: consistent with it costing 20 correctly-`unsupported` cases while "gaining" 8.
+
+**Genuine ambiguity is still untested here.** It is not mechanically constructible the way the
+other families are, because it requires a claim that the page neither supports nor contradicts.
+v3's hand-labelled class remains the only test of it (1/10).
+
+## Two real gaps that survive
+
+**1. Entity swapping still fails, sometimes confidently.** 5 of 22 swapped-entity claims are
+reported `supported`. This is the class an attacker uses, and the class the 2026-10-06 probe tried
+and failed to improve on v2 — now confirmed on material nobody tuned against.
+
+**2. Verbatim claims are demoted — 7 of 22.** Split by cause:
 
 | Cause | Count | Evidence |
 |---|---|---|
 | Claim **is** in the text the verifier fetched; NLI rejects it anyway | **5** | claim found in `~/.cache/citesure-eval/*.json` |
 | Claim is **not** in that text (extraction mismatch on the page) | **2** | `doc.rust-lang.org`: pipeline text 6,722 chars, missing the chapter's opening line |
 
-On the 81 cases whose labels are verifiable against what the product actually saw:
-**59/81 = 72.8%**. Both numbers stand: dropping the two silently would be exactly the post-hoc
-tidying this repo's own docs warn about.
+Both numbers stand: dropping the two silently would be the post-hoc tidying this repo's own docs
+warn about. The 5 are a real NLI false-negative rate on long sentences from unfamiliar domains.
 
-## Two build bugs found while doing this (recorded, not hidden)
+## Build bugs found along the way (recorded, not hidden)
 
 1. **The extractor did not match the product's.** The first build used
    `trafilatura.extract(..., favor_precision=True)`; the product calls
    `trafilatura.extract(html, include_comments=False)` (`src/citesure/fetcher.py:431`). Some claims
-   were verbatim in the builder's copy and absent from the verifier's — so "unsupported" was the
-   correct product answer and a wrong label. Rebuilt against the verifier's own extraction.
+   were verbatim in the builder's copy and absent from the verifier's. Rebuilt against the
+   verifier's extraction.
 2. **The mixed family was silently truncated.** `--per-page` defaulted to 5 while the authoring
-   adds up to 7 (2 verbatim + 2 negation + 2 swap + 1 mixed), so the last family was always cut
-   off. Two builds reported "no mixed cases" for that reason alone. The default is now 7 and the
-   truncation is noted in the code — a set can lose a whole family and still look complete.
+   emits up to 7, so the last family was cut off in every earlier build. Two builds reported "no
+   mixed cases" for that reason alone. A set can lose a whole family and still look complete.
+3. **The mixed label was wrong** (above). This is the third instance in this lineage of a
+   plausible-but-unverifiable label — v2's ambiguous class and v3's first drafting pass were the
+   others. Constructive labelling reduces the risk but does not remove it: the label still rests on
+   an argument about what a verdict *should* be, and that argument can be wrong even when the
+   construction is mechanical.
 
 ## What v4 does not claim
 
-- **The mixed class is constructed, not adjudicated.** A verbatim clause joined to a negated
-  absent clause is "half true" mechanically. Real mixed claims often hinge on framing (a
-  superlative, an attribution), which this cannot represent — v3's hand-labelled class remains the
-  better test of that, and it scored 1/10.
-- **83 cases over 12 domains is small.** 14 clusters; a few points either way is noise. Do not
-  treat 71.1 vs 86.1 as a precise ranking, only as evidence that the in-sample figure was
-  optimistic.
-- **Single author, constructive labels.** No inter-annotator agreement is measured; the 6-gram
-  assertions plus the extraction cross-check stand in for it.
+- **No ambiguity class.** See above; v3 is the only test of it.
+- **76 cases over 11 domains is small.** 13 clusters. Treat 84.2 vs 86.1 as "no material gap
+  detected", not as a precise ranking.
+- **Single author, constructive labels.** No inter-annotator agreement is measured.
 - **Live pages.** Re-fetching later can legitimately change a verdict.
 
 ## Reproduce

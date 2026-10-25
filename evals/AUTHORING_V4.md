@@ -1,6 +1,6 @@
 # v4 Authoring Notes
 
-Generated 2026-10-25T10:18:42.343039+00:00 by `evals/build_v4.py` (committed, reproducible).
+Generated 2026-10-25T21:54:03.174976+00:00 by `evals/build_v4.py` (committed, reproducible).
 
 ## Why v4 exists
 
@@ -33,8 +33,8 @@ A case that fails its own assertion is dropped and counted below, never hand-rep
 
 ## What was built
 
-- **83 cases** over **12 fresh pages** on **14 domains**.
-- Categories: {'dead-link': 2, 'entity-swap': 24, 'negation-flip': 22, 'partially-true-mixed': 11, 'verbatim-supported': 24}.
+- **76 cases** over **11 fresh pages** on **13 domains**.
+- Categories: {'dead-link': 2, 'entity-swap': 22, 'mixed-false-conjunct': 10, 'negation-flip': 20, 'verbatim-supported': 22}.
 
 | page | URL | chars | cases |
 |---|---|---|---|
@@ -49,11 +49,10 @@ A case that fails its own assertion is dropped and counted below, never hand-rep
 | cancer-gov | https://www.cancer.gov/about-cancer/understanding/what-is-cancer | 14,134 | 7 |
 | osm-about | https://www.openstreetmap.org/about | 2,076 | 7 |
 | icann | https://www.icann.org/resources/pages/welcome-2012-02-25-en | 4,352 | 7 |
-| rbi | https://www.rbi.org.in/Scripts/AboutUsDisplay.aspx | 6,445 | 7 |
 
 ## Size, and why it is below the target
 
-The target was ≥100 cases over ≥30 fresh domains. This build got 83 cases over 14 domains, and the shortfall is
+The target was ≥100 cases over ≥30 fresh domains. This build got 76 cases over 13 domains, and the shortfall is
 source availability, not authoring: of the candidate URLs, several returned 403 to a
 Python client (w3.org, cisa.gov, hhs.gov, oecd.org, rbi.org.in), returned 404/202
 (gov.uk, ftc.gov, federalreserve.gov, legislation.gov.uk), or extracted under 2 KB of
@@ -64,11 +63,11 @@ documentation, standards bodies without bot walls — not of relaxing the assert
 
 ## What v4 does NOT claim
 
-- **The mixed class is constructed, not adjudicated.** `partially-true-mixed` cases join a
-  verbatim clause to a negated clause that is absent from the page, so 'half true' is
-  mechanical here. Real mixed claims often hinge on framing (a superlative, an
-  attribution) which this cannot represent — v3's hand-labelled class is still the
-  better test of that, and it scored 1/10.
+- **The mixed class here is contradicted, not ambiguous.** `mixed-false-conjunct` cases join
+  a verbatim clause to a clause that negates a sentence the page states, so the conjunction
+  is false and `unsupported` is correct. That label was wrong in the first build of this set
+  (it said `ambiguous` and produced a phantom '0/11 gap'). Genuine ambiguity is not
+  mechanically constructible; v3's hand-labelled class remains the only test of it (1/10).
 - **Single annotator, constructive labels.** Inter-annotator agreement is not measured;
   the 6-gram assertions are what replace it for these families.
 - **Live pages.** Unlike v3's frozen Gutenberg texts these can change; the saved text in
@@ -91,4 +90,5 @@ documentation, standards bodies without bot walls — not of relaxing the assert
 - worldbank (www.worldbank.org): extracted too little text (970 chars)
 - oecd-ai (www.oecd.org): HTTP 403
 - redcross-uk (www.redcross.org.uk): extracted too little text (1473 chars)
+- rbi (www.rbi.org.in): HTTP 403
 - weather-gov (www.weather.gov): extracted too little text (1544 chars)

@@ -152,11 +152,15 @@ def test_v4_claims_agree_with_the_saved_page_text() -> None:
         elif c["category"] in CONTRAST_CATEGORIES:
             if any(claim in t for t in texts.values()):
                 bad.append(f"{c['id']}: labelled unsupported, but the claim appears verbatim in a saved page")
-        elif c["category"] == "partially-true-mixed":
-            # Half true by construction: it must not appear as contiguous page text, but it
-            # must share real 6-grams with the page (its verbatim first clause).
+        elif c["category"] == "mixed-false-conjunct":
+            # Half true by construction: a verbatim first clause joined to a clause that negates
+            # a sentence the page does state. It must not appear as contiguous page text, but it
+            # must share real 6-grams with the page (its verbatim first clause) — and the label
+            # is `unsupported` because the second conjunct is contradicted, not undecidable.
             if any(claim in t for t in texts.values()):
-                bad.append(f"{c['id']}: mixed claim appears verbatim in a page")
+                bad.append(f"{c['id']}: mixed-false-conjunct claim appears verbatim in a page")
             if not (grams(claim) & page_grams):
                 bad.append(f"{c['id']}: mixed claim shares no 6-gram with any page, so nothing in it is supported")
+            if c["expected_status"] != "unsupported":
+                bad.append(f"{c['id']}: a contradicted conjunction must be labelled unsupported")
     assert not bad, "; ".join(bad[:5])

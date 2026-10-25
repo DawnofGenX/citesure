@@ -312,21 +312,28 @@ def author_for_page(slug: str, url: str, page: str, per_page: int = 7) -> tuple[
             f"Constructive label: the named subject was replaced with {name!r}, which does not "
             "appear in the saved page text, and no 6-gram spanning the replacement occurs there.")
 
-    # 4. partially-true-mixed: one verbatim clause + one negated absent clause -> ambiguous.
-    #    Without this family v4 could say nothing about the class v2 scored 0/4 on and v3
-    #    scored 1/10 on, which is the class most likely to hurt a real user: a claim that is
-    #    half true reads as verified unless the tool handles mixture.
+    # 4. mixed-false-conjunct: one verbatim clause + one clause that contradicts the page.
+    #    LABEL CORRECTED 2026-10-25. This family was built as `partially-true-mixed` with expected
+    #    `ambiguous`, on the assumption that "half true" means "indeterminate". It does not: the
+    #    second clause is a NEGATED copy of a sentence that IS in the page, so the claim asserts
+    #    A and not-B where the page asserts B. A conjunction with a contradicted conjunct is
+    #    false, so `unsupported` is the correct verdict for it — which is exactly what citesure
+    #    returns. Measured on the shipped set: the affirmative clause is present in the page in
+    #    9 of 11 cases and the negated form in 0 of 11.
+    #
+    #    Genuine ambiguity (neither supported nor contradicted) is not mechanically constructible
+    #    from page text the way this is; v3's hand-labelled class remains the only test of it.
     for idx, sentence in enumerate(spread):
-        if sum(1 for c in cases if c["category"] == "partially-true-mixed") >= 1:
+        if sum(1 for c in cases if c["category"] == "mixed-false-conjunct") >= 1:
             break
         made = make_mixed(sentence, spread[idx + 1:] + spread[:idx], page)
         if not made:
             continue
         claim, _edit = made
-        add("partially-true-mixed", "ambiguous", claim,
-            "Constructive label: the first clause is a verbatim span of the page and the second "
-            "is a negated clause whose straddling 6-grams are absent, so the claim as a whole is "
-            "neither supported nor refuted by the page.")
+        add("mixed-false-conjunct", "unsupported", claim,
+            "Constructive label: the first clause is verbatim from the page; the second negates a "
+            "sentence the page does state, so the conjunction is contradicted by the page and is "
+            "unsupported rather than ambiguous.")
 
     if len(cases) < 3:
         dropped.append(f"{slug}: only {len(cases)} cases authorable")
@@ -438,11 +445,11 @@ def main(argv: list[str] | None = None) -> int:
         "Growing the set is a matter of adding source classes that serve plain HTML — .edu",
         "documentation, standards bodies without bot walls — not of relaxing the assertions.",
         "", "## What v4 does NOT claim", "",
-        "- **The mixed class is constructed, not adjudicated.** `partially-true-mixed` cases join a",
-        "  verbatim clause to a negated clause that is absent from the page, so 'half true' is",
-        "  mechanical here. Real mixed claims often hinge on framing (a superlative, an",
-        "  attribution) which this cannot represent — v3's hand-labelled class is still the",
-        "  better test of that, and it scored 1/10.",
+        "- **The mixed class here is contradicted, not ambiguous.** `mixed-false-conjunct` cases join",
+        "  a verbatim clause to a clause that negates a sentence the page states, so the conjunction",
+        "  is false and `unsupported` is correct. That label was wrong in the first build of this set",
+        "  (it said `ambiguous` and produced a phantom '0/11 gap'). Genuine ambiguity is not",
+        "  mechanically constructible; v3's hand-labelled class remains the only test of it (1/10).",
         "- **Single annotator, constructive labels.** Inter-annotator agreement is not measured;",
         "  the 6-gram assertions are what replace it for these families.",
         "- **Live pages.** Unlike v3's frozen Gutenberg texts these can change; the saved text in",
