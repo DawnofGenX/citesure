@@ -214,8 +214,18 @@ def test_mcp_no_lingering_processes_after_session(tmp_path):
 
     async def run():
         async with Client(params, read_timeout_seconds=60) as client:
+            # use_nli=False keeps this process-hygiene test decoupled from the
+            # NLI model download. With NLI auto-detected ON (the venv ships the
+            # [nli] extra) and CITECHECK_CACHE_DIR pointed at a fresh tmp dir,
+            # the first tool call must download + load the ~425 MB
+            # cross-encoder (~57 s measured) before it can answer, which
+            # exceeds the 60 s read_timeout below and times out the call for
+            # reasons unrelated to process hygiene. The NLI tier itself is
+            # covered by the @pytest.mark.nli tests in test_nli.py. Tiers 1+2
+            # still run here, so this remains a real end-to-end MCP round-trip.
             return await client.call_tool(
-                "verify_markdown", {"markdown": f"[x]({_uri('page1.html')})"}
+                "verify_markdown",
+                {"markdown": f"[x]({_uri('page1.html')})", "use_nli": False},
             )
 
     result = _run(run())
