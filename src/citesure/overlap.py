@@ -669,6 +669,129 @@ def has_slot_conflict(claim: str, sentence: str) -> bool:
     return False
 
 
+#: A claim reproduces itself "verbatim" in the page when ONE contiguous token run
+#: covers at least this fraction of the claim's tokens. 1.0 means the whole claim,
+#: in order, with punctuation/whitespace ignored — deliberately strict: at 0.8 the
+#: rule fires on 66 of 76 v4 cases and forces 39 wrong supports (half-sentences
+#: share most of their vocabulary), while at 1.0 it fires on 22 and every one of
+#: them is genuinely supported.
+VERBATIM_SPAN_MIN_COVERAGE = 1.0
+#: ...and that run is at least this many tokens long. Below either bound the
+#: overlap is ordinary shared vocabulary, not the page stating the claim.
+VERBATIM_SPAN_MIN_TOKENS = 10
+
+_VERBATIM_TOKEN_RE = re.compile(r"[0-9A-Za-z]+(?:[._'-][0-9A-Za-z]+)*")
+
+
+def _token_spans(text: str) -> list[tuple[str, int, int]]:
+    """Lowercased tokens of ``text`` with their character offsets."""
+    return [
+        (m.group(0).lower(), m.start(), m.end())
+        for m in _VERBATIM_TOKEN_RE.finditer(text or "")
+    ]
+
+
+def find_verbatim_span(
+    claim: str,
+    text: str,
+    min_tokens: int = VERBATIM_SPAN_MIN_TOKENS,
+    min_coverage: float = VERBATIM_SPAN_MIN_COVERAGE,
+) -> str | None:
+    """The page's own substring that reproduces ``claim`` verbatim, or ``None``.
+
+    The interesting failure this exposes is a PRESENTATION one: when a page
+    contains the claim's sentence word-for-word, the pipeline still handed the
+    cross-encoder a *different* sentence (the one with best term coverage, then
+    expanded), and the claim was demoted. Measured on the v4 held-out set: 7 of
+    22 ``verbatim-supported`` cases were demoted to unsupported/ambiguous while
+    the claim's sentence sat unmodified in the fetched text, at NLI scores
+    0.000-0.390.
+
+    Returning the span (not a score) lets the caller score the claim against the
+    page's OWN sentence, so the model stays on the decision path. Matching is
+    token-based and case-insensitive, one contiguous run, so punctuation and
+    whitespace differences do not matter.
+    """
+    claim_tokens = [m.group(0).lower() for m in _VERBATIM_TOKEN_RE.finditer(claim or "")]
+    n = len(claim_tokens)
+    if n < min_tokens:
+        return None
+    page_tokens = _token_spans(text)
+    if not page_tokens:
+        return None
+    positions: dict[str, list[int]] = {}
+    for j, (tok, _s, _e) in enumerate(page_tokens):
+        positions.setdefault(tok, []).append(j)
+
+    best_len = 0
+    best_span: str | None = None
+    i = 0
+    while i < n:
+        run = 0
+        best_j = -1
+        for j in positions.get(claim_tokens[i], ()):
+            k = 0
+            while (
+                i + k < n
+                and j + k < len(page_tokens)
+                and claim_tokens[i + k] == page_tokens[j + k][0]
+            ):
+                k += 1
+            if k > run:
+                run, best_j = k, j
+        if run > best_len and best_j >= 0:
+            best_len = run
+            best_span = text[page_tokens[best_j][1] : page_tokens[best_j + run - 1][2]]
+        i += max(run, 1)
+
+    if best_len < min_tokens or best_len / n < min_coverage:
+        return None
+    return best_span
+
+
+def ungrounded_proper_nouns(claim: str, text: str) -> list[str]:
+    """Proper nouns the claim names that the page text never mentions.
+
+    This is the entity-mismatch guard of Longpre et al. (Findings EMNLP 2021,
+    arXiv:2109.05052) applied as a terminal veto: if the claim attributes
+    something to a named entity the page does not mention anywhere, the page
+    cannot be supporting that claim.
+
+    Why the whole page and not the evidence window: an earlier probe measured
+    "claim entity absent from the evidence" at 5/5 fixes and 11/26 false
+    rejects, because a clipped snippet legitimately omits a name the page does
+    mention elsewhere. Measured on the full fetched text as a veto on
+    `supported`, it fixes 4 of the 5 entity-swap false-supports on the v4
+    held-out set and 1 on v2 with **zero** correctly-supported cases lost on
+    either set. The known cost is the mirror case not present in either set: a
+    claim naming a source ("the React docs say ...") when the page omits the
+    name would be vetoed — that shape is untested here.
+    """
+    low = (text or "").lower()
+    if not low:
+        return []
+    out: list[str] = []
+    for match in _PROPER_NOUN_RE.finditer(claim or ""):
+        words = match.group(0).split()
+        # A sentence-initial "This Arnold said ..." is captured as one phrase and
+        # then skipped by proper_nouns() because its head is a determiner. Strip
+        # the leading non-name words instead of dropping the phrase, or a swapped
+        # name at the start of a claim is invisible to this guard.
+        while words and words[0].lower() in _NOT_PROPER_NOUN:
+            words.pop(0)
+        if not words:
+            continue
+        phrase = " ".join(words)
+        tokens = [
+            t
+            for t in _WORD_RE.findall(phrase.lower())
+            if len(t) >= 3 and t not in _STOPWORDS
+        ]
+        if tokens and any(t not in low for t in tokens):
+            out.append(phrase)
+    return out
+
+
 def rank_passages(
     claim: str, passages: list[str], top_k: int = DEFAULT_TOP_K
 ) -> list[tuple[float, str]]:
@@ -798,6 +921,15 @@ async def _verify_one(
                     "passages": [p for _, p in ranked],  # all top-k full text
                     "target_text": target,  # original text for context expansion
                     "marker_locatable": True,
+                    # Entity-mismatch guard input: names the claim uses that the
+                    # page never mentions. Measured as a terminal veto on
+                    # `supported` on the v4 held-out set: fixes 4 of the 5
+                    # entity-swap false-supports, loses 0 correctly-supported.
+                    "ungrounded": ungrounded_proper_nouns(citation.claim, target),
+                    # The page's own copy of the claim's sentence, when it states
+                    # it verbatim — scored as an extra premise instead of letting
+                    # a wrong selection demote a page that quotes the claim.
+                    "verbatim_span": find_verbatim_span(citation.claim, target),
                 }
 
     return (
@@ -852,6 +984,7 @@ async def verify_citations(
             # across all citations. Track which citation each pair belongs to.
             flat_pairs = []
             pair_owner = []  # citation index for each pair
+            verbatim_cited: set[int] = set()
             for ci, ctx in eligible:
                 target_text = ctx.get("target_text", "")
                 for passage in ctx.get("passages", [ctx["passage"]]):
@@ -868,6 +1001,31 @@ async def verify_citations(
                     expanded = expand_passage_in_text(selected, target_text, radius=1)
                     flat_pairs.append((ctx["claim"], expanded))
                     pair_owner.append(ci)
+
+                # IMP-4 (2026-10-27): the claim's OWN sentence competes as a
+                # premise when the page states it verbatim. A PRESENTATION
+                # failure: the pipeline used to hand the model the
+                # best-term-coverage sentence (then expanded), which is not the
+                # claim's sentence, and a page quoting the claim was demoted on
+                # that unrelated premise. Measured on the v4 held-out set: 7 of
+                # 22 verbatim-supported cases sat at NLI 0.000-0.390 with their
+                # own sentence unmodified in the fetched text. Adding the span as
+                # one more candidate cannot lower a verdict (max entailment) and
+                # cannot fire on a negative family, whose claims share no 6-gram
+                # with their page by construction.
+                span = ctx.get("verbatim_span")
+                if span:
+                    # Deliberately NOT expanded. The 1-sentence context expansion
+                    # this pipeline uses elsewhere (IMP-2, for pronoun resolution)
+                    # poisons an exact quote: measured on ind4-001, the claim's own
+                    # sentence plus its two neighbours (459 chars) scores 0.0223
+                    # entailment, while the same sentence alone scores 0.9911. The
+                    # same pattern holds on every v4 verbatim demotion (expanded
+                    # 0.007-0.390 vs unexpanded 0.983-0.994), so the span is scored
+                    # as-is.
+                    flat_pairs.append((ctx["claim"], span))
+                    pair_owner.append(ci)
+                    verbatim_cited.add(ci)
 
             # Score all pairs in one batched pass
             all_scores = score_nli_batch_all(encoder, flat_pairs)
@@ -920,6 +1078,11 @@ async def verify_citations(
                         contradiction=best_con,
                         pooled_contradiction=pooled_by_citation.get(ci),
                     )
+                    if ci in verbatim_cited:
+                        notes.append(
+                            "verbatim span: the fetched page states this claim "
+                            "verbatim — its own sentence was scored as a premise"
+                        )
                     verdicts[ci] = Verdict(
                         citation_id=verdict.citation_id,
                         url=verdict.url,
@@ -929,5 +1092,34 @@ async def verify_citations(
                         evidence=verdict.evidence,
                         notes=notes,
                     )
+
+    # Entity-mismatch guard (2026-10-27) — terminal, at ANY tier depth: a claim
+    # that attributes something to a named entity the page never mentions cannot
+    # be supported by that page. This is the entity-swap / subject-binding
+    # failure mode, which no lexical-absence rule caught when measured against
+    # the evidence WINDOW (5/5 fixes but 11/26 false rejects) because a clipped
+    # snippet legitimately omits names the page mentions elsewhere. Measured on
+    # the full fetched text, as a veto on `supported` only: v4 held-out fixes 4
+    # of 5 entity-swap false-supports and loses 0 correctly-supported; v2 fixes
+    # 1 and loses 0.
+    for i, v in enumerate(verdicts):
+        context = results[i][1]
+        ungrounded = (context or {}).get("ungrounded") or []
+        if v.status is Status.SUPPORTED and ungrounded:
+            notes = list(v.notes)
+            notes.append(
+                "ungrounded entity: the claim names "
+                + ", ".join(sorted(ungrounded))
+                + " but the fetched page never does — support vetoed"
+            )
+            verdicts[i] = Verdict(
+                citation_id=v.citation_id,
+                url=v.url,
+                status=Status.UNSUPPORTED,
+                tier_reached=v.tier_reached,
+                score=v.score,
+                evidence=v.evidence,
+                notes=notes,
+            )
 
     return Report.from_verdicts(verdicts)

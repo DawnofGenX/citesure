@@ -35,11 +35,40 @@ the verifier fetches. Result: **64/76 = 84.2%** with NLI on (cluster bootstrap [
 against 86.1% in-sample — a 1.9-point difference with overlapping intervals, i.e. no material gap
 detected. On the 74 cases whose labels are verifiable against what the product saw: 86.5%.
 
-Per family: negation 20/20 (100%), entity-swap 17/22 (77%), verbatim 15/22 (68%, of which 2 are
-extraction artefacts), mixed-false-conjunct 10/10. **Two caveats worth reading:** entity-swap is
-the class that still fails (5 confidently-wrong `supported` verdicts), and genuinely *ambiguous*
-claims are **not** tested by v4 at all — that needs a claim the page neither supports nor
-contradicts, which cannot be built mechanically; v3's hand-labelled class remains the only test.
+Per family (before this session's fixes): negation 20/20 (100%), entity-swap 17/22 (77%),
+verbatim 15/22 (68%, of which 2 are extraction artefacts), mixed-false-conjunct 10/10.
+**Two caveats worth reading:** entity-swap was the class that still failed (5 confidently-wrong
+`supported` verdicts), and genuinely *ambiguous* claims are **not** tested by v4 at all — that
+needs a claim the page neither supports nor contradicts, which cannot be built mechanically;
+v3's hand-labelled class remains the only test.
+
+### v4 gaps closed (2026-10-27)
+
+Two defects from the table above were fixed, both after a replay gate that reproduced the
+84.2% baseline with zero per-case differences:
+
+| Configuration | v4 | v2 (in-sample, regression) |
+|---|---|---|
+| baseline | 64/76 = 84.2% | 93/108 = 86.1% |
+| **both fixes** | **74/76 = 97.4%** [90.9, 99.3] | **96/108 = 88.9%** [81.6, 93.5] |
+
+- **Verbatim demotions (presentation layer).** The pipeline scored a *different* sentence than
+  the claim's own, then expanded it by one sentence each side — and that expansion destroys
+  entailment on an exact quote: 0.0223 against the claim's sentence *plus neighbours* versus
+  0.9911 against the sentence alone. A page that states the claim word-for-word now has that span
+  scored as an extra premise. Fixes 5 of the 7 demotions on v4 and 3 cases on v2; the 2 remaining
+  v4 misses are `doc.rust-lang.org` extraction artefacts.
+- **Entity-swap false-supports.** A claim naming a proper noun the fetched page never mentions
+  anywhere cannot be supported by it; that veto is terminal at every tier. Clears 5/5 on v4 with
+  nothing lost — **but v4 builds its swaps from a fixed fake-name pool, so this is partly an
+  artefact of the family's construction**: the same guard catches **0 of the 5** real-name swaps
+  that still fail on v2 (ReLU/GELU, HTTP/2 vs HTTP/1.X, Sobolev/Besov, ForeignKey, asyncio).
+
+So 97.4% is **not** "entity-swap is solved". The shape that survives — the contradicted slot is
+present in the evidence but bound to a different subject — remains open, and the v4 floor is
+**68.4%** (always-`unsupported`), so the attributable gap is 29 points, not 97.4.
+Full ledger, per-case evidence and the list of what these fixes do *not* establish:
+[`evals/RESULTS_V4_GAPS.md`](evals/RESULTS_V4_GAPS.md).
 
 An earlier version of this section reported 71.1% and called mixed claims "the clearest product
 gap at 0/11". That was a **labelling error in the set, not a product defect**: the family was

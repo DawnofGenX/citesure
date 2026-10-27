@@ -512,17 +512,25 @@ def test_pipeline_nli_batch_scores_all_eligible_once(_clean_cache, monkeypatch):
     # Two eligible pages + one unreachable: exactly one batched call with all
     # top-k passage pairs per citation; the unreachable citation keeps its
     # tier-1 status untouched.
+    #
+    # Citation 2's claim is grounded in unsup1.html's own subject on purpose.
+    # The original claim ("Python 3.12 was released on ...") names entities the
+    # coffee page never mentions, so the ungrounded-entity guard -- added
+    # 2026-10-27 -- correctly vetoes the mocked `supported` verdict and this
+    # test, which is about BATCHING, would be measuring the guard instead. A
+    # grounded claim keeps the property under test (mocked NLI lifts a
+    # non-supporting page to `supported`) without tripping it.
     report, enc = _run_pipeline(
         monkeypatch,
         [
             Citation("1", str(FIXTURES / "pages" / "page1.html"),
                      "Python 3.12 was released on October 2, 2023."),
             Citation("2", str(FIXTURES / "pages" / "unsup1.html"),
-                     "Python 3.12 was released on October 2, 2023."),
+                     "Coffee is one of the most popular beverages in the world."),
             Citation("3", "https://unreachable-citesure-test.invalid/z",
                      "Some claim about nothing."),
         ],
-        mapping={"python": 0.8},
+        mapping={"python": 0.8, "coffee": 0.8},
     )
     by_id = {v.citation_id: v for v in report.verdicts}
     assert by_id["1"].tier_reached == 3 and by_id["1"].status is Status.SUPPORTED

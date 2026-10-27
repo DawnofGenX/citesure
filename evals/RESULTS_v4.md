@@ -1,5 +1,10 @@
 # v4 — held-out measurement on fresh domains
 
+> **Update 2026-10-27: both gaps below are fixed.** Entity-swap false-supports 5 -> 0 and
+> verbatim demotions 15/22 -> 20/22, taking v4 to **74/76 = 97.4%** (v2 93 -> 96/108, 0 losses).
+> The entity-swap win is partly an artefact of this set's fixed fake-name swap pool and does NOT
+> generalise to real-name swaps — read `RESULTS_V4_GAPS.md` before quoting the number.
+
 Set: `evals/independent_set_v4.json` — **76 cases over 11 pages on 11 domains** that v1, v2 and v3
 never touch, built reproducibly by `evals/build_v4.py`. Authoring rules and the dropped-source
 list: `AUTHORING_V4.md`.
