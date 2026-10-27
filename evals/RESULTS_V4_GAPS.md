@@ -141,6 +141,25 @@ working on real pages, i.e. it is not confined to the family built to describe i
 NOT move: **v2's five real-name false-supports are untouched**, which is the central limitation
 stated below.
 
+## A third defect the eval could not see (found by smoke-testing the CLI)
+
+After the eval numbers were green, `citesure verify` was run on a real markdown file — the
+product's primary input format — and the same claim still came back **FAIL (0.003)** with no
+`verbatim span` note.
+
+Cause: a markdown claim arrives as `"…normalization forms [1]."` — the marker is part of the
+claim unit — and the trailing `1` token breaks the contiguous-run match, so the span was never
+found. The eval set stores claims **pre-cleaned**, so no eval run could ever have caught this;
+only the shipped surface could. Both helpers now run on `clean_claim(citation.claim)`.
+
+Re-run on the same file: claim `[1]` → **PASS 0.990** with the `verbatim span` note, claim `[2]`
+(name swapped to "Marlowe") → **FAIL 0.001**. Regression tests added
+(`test_pipeline_rescues_markdown_claim_with_citation_marker`,
+`test_pipeline_entity_veto_survives_citation_marker`).
+
+The general lesson: an eval harness that feeds pre-normalised inputs into the same function the
+product calls does **not** test the product's input path. Smoke-test the CLI once per change.
+
 ## What these fixes do NOT establish — read this before quoting 97.4%
 
 1. **The v4 entity-swap family is built from a fixed fake-name pool.** v4 cheats in the

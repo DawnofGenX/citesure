@@ -925,11 +925,21 @@ async def _verify_one(
                     # page never mentions. Measured as a terminal veto on
                     # `supported` on the v4 held-out set: fixes 4 of the 5
                     # entity-swap false-supports, loses 0 correctly-supported.
-                    "ungrounded": ungrounded_proper_nouns(citation.claim, target),
+                    "ungrounded": ungrounded_proper_nouns(
+                        clean_claim(citation.claim), target
+                    ),
                     # The page's own copy of the claim's sentence, when it states
                     # it verbatim — scored as an extra premise instead of letting
                     # a wrong selection demote a page that quotes the claim.
-                    "verbatim_span": find_verbatim_span(citation.claim, target),
+                    #
+                    # CLEANED claim, not the raw one: a markdown claim arrives as
+                    # "...normalization forms [1]." and the trailing marker token
+                    # breaks the contiguous-run match, so the CLI's own input
+                    # format would silently never fire this path while the eval
+                    # set (whose claims are stored pre-cleaned) always could.
+                    "verbatim_span": find_verbatim_span(
+                        clean_claim(citation.claim), target
+                    ),
                 }
 
     return (

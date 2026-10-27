@@ -189,6 +189,28 @@ def test_pipeline_veto_applies_with_nli_off(tmp_path, monkeypatch):
     assert any("ungrounded entity" in n for n in v.notes)
 
 
+def test_pipeline_rescues_markdown_claim_with_citation_marker(tmp_path, monkeypatch):
+    """The CLI's own input format appends the marker to the claim.
+
+    Found by smoke-testing `citesure verify` on a .md file: the eval set stores
+    claims pre-cleaned, so only the product surface showed that a trailing
+    "[1]." token defeats the contiguous-run span match. The helpers must run on
+    the CLEANED claim.
+    """
+    enc = _PremiseEncoder(needle="This annex also provides examples")
+    report = _run(tmp_path, monkeypatch, CLAIM + " [1].", enc)
+    v = report.verdicts[0]
+    assert v.status is Status.SUPPORTED
+    assert any("verbatim span" in n for n in v.notes)
+
+
+def test_pipeline_entity_veto_survives_citation_marker(tmp_path, monkeypatch):
+    claim = CLAIM.replace("This annex", "This Marlowe") + " [2]."
+    enc = _PremiseEncoder(needle="This annex also provides examples")
+    report = _run(tmp_path, monkeypatch, claim, enc)
+    assert any("ungrounded entity" in n for n in report.verdicts[0].notes)
+
+
 def test_pipeline_keeps_supported_claim_with_grounded_entities(tmp_path, monkeypatch):
     enc = _PremiseEncoder(needle="This annex also provides examples")
     report = _run(tmp_path, monkeypatch, CLAIM, enc)
